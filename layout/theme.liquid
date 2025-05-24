@@ -303,6 +303,11 @@
       {{ 'accessibility.skip_to_text' | t }}
     </a>
 
+    {% comment %}
+    <!-- custom code -->      
+    {% section 'Custom_topbar' %} 
+    {% endcomment %}
+    
     {%- if settings.cart_type == 'drawer' -%}
       {%- render 'cart-drawer' -%}
     {%- endif -%}
