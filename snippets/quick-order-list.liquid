@@ -28,8 +28,8 @@
       method="post"
       id="QuickOrderList"
     >
-      {% paginate product.variants by section.settings.variants_per_page %}
-        <div class="quick-order-list__container" id="main-variant-items">
+      <div class="quick-order-list__container" id="main-variant-items">
+        <div class="js-contents">
           <table class="quick-order-list__table">
             <caption class="visually-hidden">
               {{ 'sections.cart.title' | t }}
@@ -99,10 +99,7 @@
             </tbody>
           </table>
         </div>
-        <div class="js-paginate">
-          {% render 'pagination', paginate: paginate %}
-        </div>
-      {%- endpaginate -%}
+      </div>
 
       <p
         class="visually-hidden"
@@ -121,7 +118,7 @@
       </p>
     </form>
 
-    {%- if product.has_only_default_variant or product.variants_count == 1 -%}
+    {%- if product.has_only_default_variant or product.variants.size == 1 -%}
       <span class="quick-order-list-error">
         {% comment %} Populated by JS {% endcomment %}
       </span>
@@ -142,8 +139,8 @@
               <div class="variant-remove-total{% if items_in_cart == 0 %} variant-remove-total--empty{% endif %}">
                 {%- render 'loading-spinner' -%}
                 <quick-order-list-remove-all-button
+                  class="no-js-hidden"
                   data-action="confirm"
-                  class="{% if items_in_cart == 0 %}hidden{% endif %}"
                 >
                   <button class="button button--tertiary" type="button">
                     <span class="svg-wrapper">
@@ -233,7 +230,7 @@
               <div class="variant-remove-total">
                 {%- render 'loading-spinner' -%}
                 <quick-order-list-remove-all-button
-                  class="{% if items_in_cart == 0 %}hidden{% endif %}"
+                  class="no-js-hidden"
                   data-action="confirm"
                 >
                   <button class="button button--tertiary" type="button">
@@ -284,17 +281,11 @@
             </button>
           </quick-order-list-remove-all-button>
         </div>
-
-        <script type="application/json" data-cart-contents>
-          {{ cart | line_items_for: product | map: "variant_id" | json }}
-        </script>
       </div>
     {%- endif -%}
   </quick-order-list>
   <template id="QuickOrderListErrorTemplate-{{ product.id }}">
-    <span class="svg-wrapper">
-      {{ 'icon-error.svg' | inline_asset_content }}
-    </span>
+    {{ 'icon-error.svg' | inline_asset_content }}
     <span class="quick-order-list-error-message caption-large" role="alert"></span>
   </template>
 </div>

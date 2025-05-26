@@ -124,12 +124,29 @@
       </small>
     </div>
     {%- if show_badges -%}
-      <span class="badge price__badge-sale color-{{ settings.sale_badge_color_scheme }}">
-        {{ 'products.product.on_sale' | t }}
-      </span>
+      
+        <!-- custom logic for discount % -->
+        {% if compare_at_price > price %}
+          {% assign raw_discount = compare_at_price | minus: price | times: 100.0 | divided_by: compare_at_price %}
+          {% assign decimal_part = raw_discount | modulo: 1 %}
+
+          {% if decimal_part >= 0.5 %}
+            {% assign discount = raw_discount | ceil %}
+          {% else %}
+            {% assign discount = raw_discount | floor %}
+          {% endif %}
+          <span class="badge price__badge-discount">
+          Save {{ discount }}%
+          </span>
+        {% endif %}
 
       <span class="badge price__badge-sold-out color-{{ settings.sold_out_badge_color_scheme }}">
         {{ 'products.product.sold_out' | t }}
+      </span>
+    
+      <!-- <span class="badge price__badge-sale animate-badge color-{{ settings.sold_out_badge_color_scheme }}"> -->
+      <span class="badge price__badge-sale animate-badge">
+      {{ 'products.product.on_sale' | t }}
       </span>
     {%- endif -%}
   </div>

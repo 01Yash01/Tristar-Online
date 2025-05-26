@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "general": {
     "password_page": {
@@ -174,8 +183,8 @@
         "title": "Objemové ceny",
         "note": "Dostupné objemové ceny",
         "minimum": "{{ quantity }}+",
-        "price_range": "{{ minimum }} – {{ maximum }}",
-        "price_at_each_html": "{{ price }}/kus"
+        "price_at_each": "{{ price }}/kus",
+        "price_range": "{{ minimum }} – {{ maximum }}"
       },
       "taxes_included": "Vrátane daní.",
       "duties_included": "Vrátane ciel.",

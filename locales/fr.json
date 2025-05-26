@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "general": {
     "password_page": {
@@ -173,8 +182,8 @@
         "title": "Tarification basée sur le volume",
         "note": "La tarification basée sur le volume est disponible",
         "minimum": "{{ quantity }} ou plus",
-        "price_range": "{{ minimum }} - {{ maximum }}",
-        "price_at_each_html": "à {{ price }}/pièce"
+        "price_at_each": "à {{ price }}/pièce",
+        "price_range": "{{ minimum }} - {{ maximum }}"
       },
       "taxes_included": "Taxes incluses.",
       "duties_included": "Frais de douane inclus.",

@@ -1,3 +1,6 @@
+/* ========================= */
+/* Mega Menu General Styles */
+/* ========================= */
 .mega-menu {
   position: static;
 }
@@ -9,21 +12,25 @@
   border-right: 0;
   left: 0;
   overflow-y: auto;
-  padding-bottom: 3rem;
-  padding-top: 3rem;
+  padding-bottom: 0rem;
+  padding-top: 0rem;
   position: absolute;
   right: 0;
   top: 100%;
+  z-index: 1000; /* Ensure the mega menu appears above other content */
 }
 
+/* Sticky Mega Menu Content */
 .shopify-section-header-sticky .mega-menu__content {
   max-height: calc(100vh - var(--header-bottom-position-desktop, 20rem) - 4rem);
 }
 
+/* Border bottom removal for specific headers */
 .header-wrapper--border-bottom .mega-menu__content {
-  border-top: 0;
+  border-bottom: none !important;
 }
 
+/* JavaScript triggered animation for mega-menu */
 .js .mega-menu__content {
   opacity: 0;
   transform: translateY(-1.5rem);
@@ -34,28 +41,55 @@
   transform: translateY(0);
 }
 
+/* Mega Menu List */
 .mega-menu__list {
   display: grid;
   gap: 1.8rem 4rem;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   list-style: none;
+  align-items: stretch; /* Make all li items equal height */
 }
 
+/* Mega Menu Links */
 .mega-menu__link {
-  color: rgba(var(--color-foreground), 0.75);
+  color: rgba(var(--color-foreground), .85);
   display: block;
   line-height: calc(1 + 0.3 / var(--font-body-scale));
   padding-bottom: 0.6rem;
   padding-top: 0.6rem;
-  text-decoration: none;
-  transition: text-decoration var(--duration-short) ease;
+  font-size: 1.1rem;
   word-wrap: break-word;
+  position: relative;
+  text-decoration: none !important;
+  transition: text-decoration var(--duration-short) ease;
 }
 
+/* Hover effect for links */
+.mega-menu__link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 7px;
+  height: .05rem;
+  width: 50%;
+  background-color: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s ease;
+  pointer-events: none;
+}
+
+.mega-menu__link:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Bold styling for Level 2 Links */
 .mega-menu__link--level-2 {
   font-weight: bold;
 }
 
+/* Center-aligned mega-menu for certain header styles */
 .header--top-center .mega-menu__list {
   display: flex;
   justify-content: center;
@@ -68,20 +102,98 @@
   padding-right: 2.4rem;
 }
 
+/* Active or Hovered Link Styling */
 .mega-menu__link:hover,
 .mega-menu__link--active {
   color: rgb(var(--color-foreground));
-  text-decoration: underline;
+  /* text-decoration: underline; */
 }
 
 .mega-menu__link--active:hover {
   text-decoration-thickness: 0.2rem;
 }
 
+/* Condensed List Style */
 .mega-menu .mega-menu__list--condensed {
   display: block;
 }
 
-.mega-menu__list--condensed .mega-menu__link {
-  font-weight: normal;
+/* ========================= */
+/* Full-Height Vertical Divider Lines */
+/* ========================= */
+.mega-menu__list > li {
+  position: relative;
+  padding-left: 4rem;
+}
+
+/* Divider between columns (except last item) */
+.mega-menu__list > li:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0; /* Full height stretch */
+  right: 0;
+  width: .05rem;
+  background-color: rgba(var(--color-foreground), 0.3);
+}
+
+/* Default state: Lighter font weight for li elements */
+.mega-menu__list > li {
+  font-weight: 200; /* Lighter font weight for list items */
+  transition: font-weight 0.3s ease; /* Smooth transition */
+}
+
+.mega-menu__list > li:hover {
+  font-weight: 700;
+}
+
+
+/* ========================= */
+/* Mobile Responsiveness */
+/* ========================= */
+@media (max-width: 1024px) {
+  .mega-menu__list {
+    grid-template-columns: repeat(3, minmax(0, 1fr)); /* 3 columns on medium screens */
+  }
+
+  .mega-menu__link {
+    font-size: 1rem; /* Slightly smaller font size for better readability */
+  }
+}
+
+@media (max-width: 768px) {
+  .mega-menu__list {
+    grid-template-columns: repeat(2, minmax(0, 1fr)); /* 2 columns on smaller screens */
+    gap: 1rem 2rem; /* Reduce gap for better spacing */
+  }
+
+  .mega-menu__link {
+    font-size: 0.95rem; /* Further reduce font size for smaller screens */
+  }
+
+  .mega-menu__content {
+    position: relative; /* Change to relative positioning for mobile */
+    top: auto; /* Adjust top positioning */
+  }
+
+  .header--top-center .mega-menu__list {
+    display: block;
+    justify-content: flex-start;
+  }
+
+  .header--top-center .mega-menu__list > li {
+    width: 100%; /* Full width for each item */
+    padding-right: 0; /* Remove padding on mobile */
+  }
+}
+
+@media (max-width: 480px) {
+  .mega-menu__list {
+    grid-template-columns: 1fr; /* 1 column on very small screens */
+    gap: 1rem;
+  }
+
+  .mega-menu__link {
+    font-size: 0.9rem; /* Even smaller font size for very small screens */
+  }
 }

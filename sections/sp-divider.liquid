@@ -1,0 +1,147 @@
+{% comment %}
+  © Sections Pro. You are free to use this section in your store. You may not redistribute this section in another Shopify app.
+{% endcomment %}
+<style>
+
+  {%- capture sp_content -%} 
+  
+  #spro-{{ section.id }} {
+    background-image: {{ section.settings.background_color }};
+    width: 100%;
+  }
+  
+  #spro-{{ section.id }} {
+    position: relative;
+    margin: 0 auto;
+    max-width: 100%; 
+    padding: {{ section.settings.padding_top }}px {{ section.settings.padding_right }}px {{ section.settings.padding_bottom }}px {{ section.settings.padding_left }}px;
+  }
+
+  #spro-{{ section.id }} .spro-container {
+    max-width: {{ section.settings.max_width }}px;
+    margin: 0 auto;
+    padding: 0;
+    text-align: center;
+  }
+
+  #spro-{{ section.id }} .spro-pill {
+    display: inline-block;
+    background-image: {{ section.settings.divider_color }};
+    width: {{ section.settings.divider_width }}%;
+    height: {{ section.settings.divider_height }}px;
+    border-radius: {{ section.settings.divider_radius }}px;
+  }
+
+  {%- endcapture -%} 
+
+  {%- liquid
+    assign chunks = sp_content | strip_newlines | split: ' ' | join: ' ' | split: '*/'
+    for chunk in chunks
+      assign mini = chunk | split: '/*' | first | strip | replace: ': ', ':' | replace: '; ', ';' | replace: '} ', '}' | replace: '{ ', '{' | replace: ' {', '{' | replace: ';}', '}'
+      echo mini
+    endfor
+  %}
+</style>
+
+<div id="spro-{{ section.id }}" class="spro-section" spro-section>
+  <div class="spro-container" spro-container>
+    <div class="spro-pill"></div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "🚀 Divider",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Colors",
+        "info": "Set colors for the section."
+      },
+      {
+        "type": "color_background",
+        "id": "background_color",
+        "default": "linear-gradient(164deg, #fff 0%, #fff 0%)",
+        "label": "Background"
+      },
+      {
+        "type": "color_background",
+        "id": "divider_color",
+        "default": "linear-gradient(164deg, #ccc 0%, #ccc 0%)",
+        "label": "Divider Color"
+      },
+      {
+        "type": "header",
+        "content": "Dimensions",
+        "info": "Set the section dimensions in pixels."
+      },
+      {
+        "type": "number",
+        "id": "max_width",
+        "default": 1000,
+        "label": "Max Width of Section"
+      },
+      {
+        "type": "range",
+        "id": "divider_height",
+        "min": 0,
+        "max": 25,
+        "step": 1,
+        "unit": "px",
+        "label": "Divider Height",
+        "default": 5
+      },
+      {
+        "type": "range",
+        "id": "divider_width",
+        "min": 0,
+        "max": 100,
+        "step": 5,
+        "unit": "%",
+        "label": "Divider Width",
+        "default": 25
+      },
+      {
+        "type": "range",
+        "id": "divider_radius",
+        "min": 0,
+        "max": 25,
+        "step": 1,
+        "unit": "px",
+        "label": "Divider Border Radius",
+        "default": 3
+      },
+      {
+        "type": "number",
+        "id": "padding_top",
+        "default": 25,
+        "label": "Padding Top"
+      },
+      {
+        "type": "number",
+        "id": "padding_bottom",
+        "default": 25,
+        "label": "Padding Bottom"
+      },
+      {
+        "type": "number",
+        "id": "padding_left",
+        "default": 10,
+        "label": "Padding Left"
+      },
+      {
+        "type": "number",
+        "id": "padding_right",
+        "default": 10,
+        "label": "Padding Right"
+      }
+    ],
+	"blocks": [],
+	"presets": [
+      {
+        "name": "🚀 Divider",
+        "category": "Custom"
+      }
+    ]
+  }
+{% endschema %}

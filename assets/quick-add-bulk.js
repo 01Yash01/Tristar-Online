@@ -18,6 +18,8 @@ if (!customElements.get('quick-add-bulk')) {
         this.listenForActiveInput();
         this.listenForKeydown();
         this.lastActiveInputId = null;
+        const pageParams = new URLSearchParams(window.location.search);
+        window.pageNumber = decodeURIComponent(pageParams.get('page') || '');
       }
 
       connectedCallback() {
@@ -43,7 +45,7 @@ if (!customElements.get('quick-add-bulk')) {
         }
       }
 
-      get input() {
+      getInput() {
         return this.querySelector('quantity-input input');
       }
 
@@ -53,15 +55,15 @@ if (!customElements.get('quick-add-bulk')) {
 
       listenForActiveInput() {
         if (!this.classList.contains('hidden')) {
-          this.input?.addEventListener('focusin', (event) => event.target.select());
+          this.getInput().addEventListener('focusin', (event) => event.target.select());
         }
         this.isEnterPressed = false;
       }
 
       listenForKeydown() {
-        this.input?.addEventListener('keydown', (event) => {
+        this.getInput().addEventListener('keydown', (event) => {
           if (event.key === 'Enter') {
-            this.input?.blur();
+            this.getInput().blur();
             this.isEnterPressed = true;
           }
         });
@@ -77,21 +79,15 @@ if (!customElements.get('quick-add-bulk')) {
         );
       }
 
-      get sectionId() {
-        if (!this._sectionId) {
-          this._sectionId = this.closest('.collection-quick-add-bulk').dataset.id;
-        }
-
-        return this._sectionId;
-      }
-
       onCartUpdate() {
         return new Promise((resolve, reject) => {
-          fetch(`${this.getSectionsUrl()}?section_id=${this.sectionId}`)
+          fetch(`${this.getSectionsUrl()}?section_id=${this.closest('.collection').dataset.id}`)
             .then((response) => response.text())
             .then((responseText) => {
               const html = new DOMParser().parseFromString(responseText, 'text/html');
-              const sourceQty = html.querySelector(`#quick-add-bulk-${this.dataset.index}-${this.sectionId}`);
+              const sourceQty = html.querySelector(
+                `#quick-add-bulk-${this.dataset.id}-${this.closest('.collection').dataset.id}`
+              );
               if (sourceQty) {
                 this.innerHTML = sourceQty.innerHTML;
               }
@@ -102,13 +98,6 @@ if (!customElements.get('quick-add-bulk')) {
               reject(e);
             });
         });
-      }
-
-      getSectionsUrl() {
-        const pageParams = new URLSearchParams(window.location.search);
-        const pageNumber = decodeURIComponent(pageParams.get('page') || '');
-
-        return `${window.location.pathname}${pageNumber ? `?page=${pageNumber}` : ''}`;
       }
 
       updateMultipleQty(items) {
@@ -141,16 +130,16 @@ if (!customElements.get('quick-add-bulk')) {
           })
           .finally(() => {
             this.selectProgressBar().classList.add('hidden');
-            this.setRequestStarted(false);
+            this.requestStarted = false;
           });
       }
 
       getSectionsToRender() {
         return [
           {
-            id: `quick-add-bulk-${this.dataset.index}-${this.sectionId}`,
-            section: this.sectionId,
-            selector: `#quick-add-bulk-${this.dataset.index}-${this.sectionId}`,
+            id: `quick-add-bulk-${this.dataset.id}-${this.closest('.collection-quick-add-bulk').dataset.id}`,
+            section: this.closest('.collection-quick-add-bulk').dataset.id,
+            selector: `#quick-add-bulk-${this.dataset.id}-${this.closest('.collection-quick-add-bulk').dataset.id}`,
           },
           {
             id: 'cart-icon-bubble',
@@ -159,7 +148,7 @@ if (!customElements.get('quick-add-bulk')) {
           },
           {
             id: 'CartDrawer',
-            selector: '.drawer__inner',
+            selector: '#CartDrawer',
             section: 'cart-drawer',
           },
         ];
@@ -170,8 +159,18 @@ if (!customElements.get('quick-add-bulk')) {
         if (intersection.length !== 0) return;
         this.getSectionsToRender().forEach((section) => {
           const sectionElement = document.getElementById(section.id);
-          if (section.section === 'cart-drawer') {
-            sectionElement.closest('cart-drawer')?.classList.toggle('is-empty', parsedState.items.length.length === 0);
+          if (
+            sectionElement &&
+            sectionElement.parentElement &&
+            sectionElement.parentElement.classList.contains('drawer')
+          ) {
+            parsedState.items.length > 0
+              ? sectionElement.parentElement.classList.remove('is-empty')
+              : sectionElement.parentElement.classList.add('is-empty');
+
+            setTimeout(() => {
+              document.querySelector('#CartDrawer-Overlay').addEventListener('click', this.cart.close.bind(this.cart));
+            });
           }
           const elementToReplace =
             sectionElement && sectionElement.querySelector(section.selector)

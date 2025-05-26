@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "general": {
     "password_page": {
@@ -172,8 +181,8 @@
         "title": "批量定价",
         "note": "提供批量定价",
         "minimum": "{{ quantity }}+",
-        "price_range": "{{ minimum }} - {{ maximum }}",
-        "price_at_each_html": "{{ price }}/件"
+        "price_at_each": "{{ price }}/件",
+        "price_range": "{{ minimum }} - {{ maximum }}"
       },
       "taxes_included": "已含税费。",
       "duties_included": "已含关税。",

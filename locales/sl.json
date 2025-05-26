@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "general": {
     "password_page": {
@@ -174,8 +183,8 @@
         "title": "Količinski popust",
         "note": "Na voljo je količinski popust",
         "minimum": "{{ quantity }} in več",
-        "price_range": "{{ minimum }}–{{ maximum }}",
-        "price_at_each_html": "po ceni {{ price }}/kos"
+        "price_at_each": "po ceni {{ price }}/kos",
+        "price_range": "{{ minimum }}–{{ maximum }}"
       },
       "taxes_included": "Davki vključeni.",
       "duties_included": "Dajatve vključene.",

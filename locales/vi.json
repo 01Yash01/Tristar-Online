@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "general": {
     "password_page": {
@@ -172,8 +181,8 @@
         "title": "Định giá theo số lượng",
         "note": "Có sẵn định giá theo số lượng",
         "minimum": "Hơn {{ quantity }}",
-        "price_range": "{{ minimum }} - {{ maximum }}",
-        "price_at_each_html": "với giá {{ price }}/sản phẩm"
+        "price_at_each": "với giá {{ price }}/chiếc",
+        "price_range": "{{ minimum }} - {{ maximum }}"
       },
       "taxes_included": "Đã bao gồm thuế.",
       "duties_included": "Đã bao gồm thuế nhập khẩu.",

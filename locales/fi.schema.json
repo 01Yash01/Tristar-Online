@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin language editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "settings_schema": {
     "colors": {
@@ -31,7 +40,8 @@
       "name": "Typografia",
       "settings": {
         "type_header_font": {
-          "label": "Fontti"
+          "label": "Fontti",
+          "info": "Muun fontin valitseminen voi vaikuttaa kauppasi nopeuteen. [Lue lisää järjestelmäfonteista.](https://help.shopify.com/manual/online-store/os/store-speed/improving-speed#fonts)"
         },
         "header__1": {
           "content": "Otsikot"
@@ -40,13 +50,14 @@
           "content": "Leipäteksti"
         },
         "type_body_font": {
-          "label": "Fontti"
+          "label": "Fontti",
+          "info": "Muun fontin valitseminen voi vaikuttaa kauppasi nopeuteen. [Lue lisää järjestelmäfonteista.](https://help.shopify.com/manual/online-store/os/store-speed/improving-speed#fonts)"
         },
         "heading_scale": {
-          "label": "Skaalaa"
+          "label": "Fonttikoon skaala"
         },
         "body_scale": {
-          "label": "Skaalaa"
+          "label": "Fonttikoon skaala"
         }
       }
     },
@@ -97,10 +108,11 @@
     "currency_format": {
       "name": "Valuutan muoto",
       "settings": {
+        "content": "Valuuttakoodit",
         "currency_code_enabled": {
-          "label": "Valuuttakoodit"
+          "label": "Näytä valuuttakoodit"
         },
-        "paragraph": "Ostoskorin ja kassan hinnat näyttävät aina valuuttakoodit"
+        "paragraph": "Ostoskorin ja kassan hinnat näyttävät aina valuuttakoodit. Esimerkki: $1.00 USD."
       }
     },
     "layout": {
@@ -116,7 +128,7 @@
           "content": "Ruudukko"
         },
         "paragraph__grid": {
-          "content": "Vaikuttaa alueisiin, joissa on monta saraketta tai riviä"
+          "content": "Vaikuttaa alueisiin, joissa on monta saraketta tai riviä."
         },
         "spacing_grid_horizontal": {
           "label": "Vaakasuuntainen tila"
@@ -129,16 +141,19 @@
     "search_input": {
       "name": "Hakukäyttäytyminen",
       "settings": {
+        "header": {
+          "content": "Hakuehdotukset"
+        },
         "predictive_search_enabled": {
-          "label": "Hakuehdotukset"
+          "label": "Ota hakuehdotukset käyttöön"
         },
         "predictive_search_show_vendor": {
-          "label": "Tuotteen myyjä",
-          "info": "Näytetään, kun hakuehdotukset ovat käytössä"
+          "label": "Näytä tuotteen myyjä",
+          "info": "Näkyy, kun hakuehdotukset ovat käytössä."
         },
         "predictive_search_show_price": {
-          "label": "Tuotteen hinta",
-          "info": "Näytetään, kun hakuehdotukset ovat käytössä"
+          "label": "Näytä tuotteen nimi",
+          "info": "Näkyy, kun hakuehdotukset ovat käytössä."
         }
       }
     },
@@ -230,7 +245,7 @@
     },
     "variant_pills": {
       "name": "Versioiden kuvakkeet",
-      "paragraph": "Versiokuvakkeet ovat yksi tapa näyttää [tuoteversiot](https://help.shopify.com/manual/online-store/themes/theme-structure/page-types/product-pages#variant-picker-block)"
+      "paragraph": "Versiopillerit ovat yksi tapa näyttää tuoteversiosi asiakkaille. [Lisätietoja](https://help.shopify.com/en/manual/online-store/themes/theme-structure/page-types#variant-picker-block)"
     },
     "inputs": {
       "name": "Syötteet"
@@ -240,7 +255,7 @@
     },
     "popups": {
       "name": "Alasvetovalikot ja ponnahdusikkunat",
-      "paragraph": "Vaikuttaa navigoinnin alasvetovalikoiden, modaalisiin ponnahdusikkunoiden ja ostoskorin kaltaisiin alueisiin"
+      "paragraph": "Vaikuttaa navigoinnin alasvetovalikoiden, modaalisiin ponnahdusikkunoiden ja ostoskorin kaltaisiin alueisiin."
     },
     "media": {
       "name": "Tietovälineet"
@@ -252,7 +267,7 @@
       "name": "Ostoskori",
       "settings": {
         "cart_type": {
-          "label": "Tyyppi",
+          "label": "Ostoskorin tyyppi",
           "drawer": {
             "label": "Laatikko"
           },
@@ -264,16 +279,16 @@
           }
         },
         "show_vendor": {
-          "label": "Myyjä"
+          "label": "Näytä myyjä"
         },
         "show_cart_note": {
-          "label": "Tilauskommentti"
+          "label": "Ota tilauskommentit käyttöön"
         },
         "cart_drawer": {
           "header": "Veto-ostoskori",
           "collection": {
             "label": "Kokoelma",
-            "info": "Näytetään, kun veto-ostoskori on tyhjä"
+            "info": "Näkyy, kun veto-ostoskori on tyhjä."
           }
         }
       }
@@ -313,11 +328,12 @@
           "label": "Logo"
         },
         "logo_width": {
-          "label": "Leveys"
+          "label": "Työpöytälogon leveys",
+          "info": "Logon leveys optimoidaan automaattisesti mobiililaitteille."
         },
         "favicon": {
-          "label": "Favicon",
-          "info": "Näytetään koossa 32 x 32px"
+          "label": "Favicon-kuva",
+          "info": "Skaalataan 32 x 32 pikseliin"
         }
       }
     },
@@ -337,7 +353,7 @@
           "label": "Kuvan leveys"
         },
         "paragraph": {
-          "content": "Näytetään alatunnisteen bränditietolohkossa"
+          "content": "Lisää brändin kuvaus kauppasi alatunnisteeseen."
         }
       }
     },
@@ -355,7 +371,7 @@
             "label": "Pystysuora nosto"
           },
           "label": "Osoitusefekti",
-          "info": "Vaikuttaa kortteihin ja painikkeisiin",
+          "info": "Vaikuttaa kortteihin ja painikkeisiin.",
           "options__3": {
             "label": "3D-nosto"
           }
@@ -366,9 +382,9 @@
   "sections": {
     "all": {
       "padding": {
-        "section_padding_heading": "Puskuri",
-        "padding_top": "Yläreuna",
-        "padding_bottom": "Alareuna"
+        "section_padding_heading": "Osion täyttö",
+        "padding_top": "Yläosan täyttö",
+        "padding_bottom": "Alaosan täyttö"
       },
       "spacing": "Väli",
       "colors": {
@@ -418,7 +434,8 @@
         "options__8": {
           "label": "Pyörylä"
         },
-        "label": "Kuvan muoto"
+        "label": "Kuvan muoto",
+        "info": "Vakiomallisissa korteissa ei ole reunuksia, kun kuvan muoto on aktiivinen."
       },
       "animation": {
         "content": "Animaatiot",
@@ -429,7 +446,7 @@
           "options__2": {
             "label": "Ympäristön liike"
           },
-          "label": "Animaatio",
+          "label": "Kuvan käyttäytyminen",
           "options__3": {
             "label": "Kiinteä taustasijainti"
           },
@@ -469,28 +486,34 @@
       },
       "settings": {
         "auto_rotate": {
-          "label": "Käännä ilmoitukset automaattisesti"
+          "label": "Kierrä ilmoituksia automaattisesti"
         },
         "change_slides_speed": {
           "label": "Vaihda joka"
         },
+        "header__1": {
+          "content": "Some-kuvakkeet",
+          "info": "Jos haluat näyttää sosiaalisen median tilisi, linkitä ne [teema-asetuksistasi](/editor?context=theme&category=social%20media)."
+        },
+        "header__2": {
+          "content": "Ilmoitukset"
+        },
         "show_social": {
-          "label": "Somekuvakkeet",
-          "info": "[Hallinnoi sometilejä](/editor?context=theme&category=social%20media)"
+          "label": "Näytä työpöydällä olevat kuvakkeet"
+        },
+        "header__3": {
+          "content": "Maa-/aluevalitsin",
+          "info": "Lisää maa/alue siirtymällä [markkina-asetuksiisi.](/admin/settings/markets)"
         },
         "enable_country_selector": {
-          "label": "Maa-/aluevalitsin",
-          "info": "[Hallinnoi maita/alueita](/admin/settings/markets)"
+          "label": "Ota käyttöön maa-/aluevalitsin"
+        },
+        "header__4": {
+          "content": "Kielivalitsin",
+          "info": "Lisää kieli siirtymällä [kieliasetuksiisi.](/admin/settings/languages)"
         },
         "enable_language_selector": {
-          "label": "Kielivalitsin",
-          "info": "[Hallinnoi kieliä](/admin/settings/languages)"
-        },
-        "heading_utilities": {
-          "content": "Apuohjelmat"
-        },
-        "paragraph": {
-          "content": "Näytetään vain suurilla näytöillä"
+          "label": "Ota kielivalitsin käyttöön"
         }
       },
       "presets": {
@@ -505,12 +528,12 @@
           "default": "Multimediakollaasi"
         },
         "desktop_layout": {
-          "label": "Asettelu",
+          "label": "Työpöytäasettelu",
           "options__1": {
-            "label": "Suuri lohko ensimmäisenä"
+            "label": "Vasemmanpuoleinen suuri lohko"
           },
           "options__2": {
-            "label": "Suuri lohko viimeisenä"
+            "label": "Oikeanpuoleinen suuri lohko"
           }
         },
         "mobile_layout": {
@@ -524,16 +547,13 @@
         },
         "card_styles": {
           "label": "Kortin tyyli",
-          "info": "Hallinnoi yksittäisiä korttityylejä [teema-asetuksissa](/editor?context=theme&category=product%20cards)",
+          "info": "Voit muuttaa tuote‑, kokoelma‑ ja blogikorttien tyylejä teema-asetuksista.",
           "options__1": {
             "label": "Käytä yksittäisiä korttityylejä"
           },
           "options__2": {
             "label": "Muuta kaikki tuotekorteiksi"
           }
-        },
-        "header_layout": {
-          "content": "Asettelu"
         }
       },
       "blocks": {
@@ -607,32 +627,29 @@
           },
           "options__3": {
             "label": "Neliö"
-          }
+          },
+          "info": "Lisää kuvia kokoelmiasi muokkaamalla. [Lisätietoja](https://help.shopify.com/manual/products/collections)"
         },
         "swipe_on_mobile": {
-          "label": "Karuselli"
+          "label": "Ota pyyhkäisy käyttöön mobiililaitteessa"
         },
         "show_view_all": {
-          "label": "Näytä kaikki ‑painike",
-          "info": "Näkyvissä, jos luettelossa on näytettyä enemmän kokoelmia"
+          "label": "Ota Näytä kaikki ‑painike käyttöön, jos luettelo sisältää useampia kokoelmia kuin mitä on näkyvissä"
         },
         "columns_desktop": {
-          "label": "Sarakkeet"
+          "label": "Sarakkeiden määrä työpöydällä"
         },
         "header_mobile": {
-          "content": "Mobiiliasettelu"
+          "content": "Mobiilipohja"
         },
         "columns_mobile": {
-          "label": "Sarakkeet",
+          "label": "Sarakkeiden määrä mobiilissa",
           "options__1": {
-            "label": "1"
+            "label": "1 sarake"
           },
           "options__2": {
-            "label": "2"
+            "label": "2 saraketta"
           }
-        },
-        "header_layout": {
-          "content": "Asettelu"
         }
       },
       "blocks": {
@@ -684,29 +701,23 @@
           "label": "Blogi"
         },
         "post_limit": {
-          "label": "Postausten määrä"
+          "label": "Näytettävien blogipostausten määrä"
         },
         "show_view_all": {
-          "label": "Näytä kaikki ‑painike",
-          "info": "Näkyvissä, jos blogissa on näytettyä enemmän postauksia"
+          "label": "Ota Näytä kaikki ‑painike käyttöön, jos blogi sisältää useampia blogipostauksia kuin mitä on näkyvissä"
         },
         "show_image": {
-          "label": "Esittelykuva"
+          "label": "Näytä esittelykuva",
+          "info": "Saat parhaat tulokset käyttämällä kuvaa, jonka kuvasuhde on 3:2. [Lisätietoja](https://help.shopify.com/manual/shopify-admin/productivity-tools/image-editor#understanding-image-aspect-ratio)"
         },
         "show_date": {
-          "label": "Päivämäärä"
+          "label": "Näytä päivämäärä"
         },
         "show_author": {
-          "label": "Tekijä"
+          "label": "Näytä tekijä"
         },
         "columns_desktop": {
-          "label": "Sarakkeet"
-        },
-        "layout_header": {
-          "content": "Asettelu"
-        },
-        "text_header": {
-          "content": "Teksti"
+          "label": "Sarakkeiden määrä työpöydällä"
         }
       },
       "presets": {
@@ -724,11 +735,10 @@
           "label": "Kokoelma"
         },
         "products_to_show": {
-          "label": "Tuotemäärä"
+          "label": "Näytettävien tuotteiden enimmäismäärä"
         },
         "show_view_all": {
-          "label": "Näytä kaikki ‑painike",
-          "info": "Näkyvissä, jos kokoelmassa on näytettyä enemmän tuotteita"
+          "label": "Ota ”Katso kaikki” käyttöön, jos kokoelma sisältää enemmän kuin näkyvissä olevat tuotteet"
         },
         "header": {
           "content": "Tuotekortti"
@@ -749,20 +759,20 @@
           "label": "Näytä toinen kuva osoittaessa"
         },
         "show_vendor": {
-          "label": "Myyjä"
+          "label": "Näytä myyjä"
         },
         "show_rating": {
-          "label": "Tuotearvio",
-          "info": "Arviot edellyttävät sovellusta. [Lue lisää:](https://help.shopify.com/manual/online-store/themes/theme-structure/theme-features#featured-collection-show-product-rating)"
+          "label": "Näytä tuotteen luokitus",
+          "info": "Näytä luokitus lisäämällä tuotearviointisovellus. [Lisätietoja](https://help.shopify.com/manual/online-store/themes/theme-structure/theme-features#featured-collection-show-product-rating)"
         },
         "columns_desktop": {
-          "label": "Sarakkeet"
+          "label": "Sarakkeiden määrä työpöydällä"
         },
         "description": {
           "label": "Kuvaus"
         },
         "show_description": {
-          "label": "Näytä kokoelman kuvaus Administa"
+          "label": "Näytä kokoelman kuvaus adminissa"
         },
         "description_style": {
           "label": "Kuvauksen tyyli",
@@ -789,34 +799,29 @@
           }
         },
         "enable_desktop_slider": {
-          "label": "Karuselli"
+          "label": "Ota karuselli käyttöön työpöydällä"
         },
         "full_width": {
-          "label": "Täyden leveyden tuotteet"
+          "label": "Tee tuotteista täysleveitä"
         },
         "header_mobile": {
-          "content": "Mobiiliasettelu"
+          "content": "Mobiilipohja"
         },
         "columns_mobile": {
-          "label": "Sarakkeet",
+          "label": "Sarakkeiden määrä mobiilissa",
           "options__1": {
-            "label": "1"
+            "label": "1 sarake"
           },
           "options__2": {
-            "label": "2"
+            "label": "2 saraketta"
           }
         },
         "swipe_on_mobile": {
-          "label": "Karuselli"
+          "label": "Ota pyyhkäisy käyttöön mobiililaitteessa"
         },
         "enable_quick_buy": {
-          "label": "Pikalisäys"
-        },
-        "header_text": {
-          "content": "Teksti"
-        },
-        "header_collection": {
-          "content": "Kokoelma-asettelu"
+          "label": "Ota pikalisäyspainike käyttöön",
+          "info": "Ihanteellinen ponnahdusikkuna- tai laatikkotyyppisten ostokorien kanssa."
         }
       },
       "presets": {
@@ -834,7 +839,8 @@
               "default": "Pikalinkit"
             },
             "menu": {
-              "label": "Valikko"
+              "label": "Valikko",
+              "info": "Näytetään vain ylimmän tason valikkokohdat."
             }
           }
         },
@@ -855,55 +861,77 @@
           "name": "Bränditiedot",
           "settings": {
             "paragraph": {
-              "content": "Hallinnoi bränditietoja [teema-asetuksissa](/editor?context=theme&category=brand%20information)"
+              "content": "Bränditietosi näkyvät tässä lohkossa. [Muokkaa bränditietoja.](/editor?context=theme&category=brand%20information)"
+            },
+            "header__1": {
+              "content": "Some-kuvakkeet"
             },
             "show_social": {
-              "label": "Somekuvakkeet",
-              "info": "[Hallinnoi sometilejä](/editor?context=theme&category=social%20media)"
+              "label": "Näytä some-kuvakkeet",
+              "info": "Jos haluat näyttää sosiaalisen median tilisi, linkitä ne [teema-asetuksistasi](/editor?context=theme&category=social%20media)."
             }
           }
         }
       },
       "settings": {
         "newsletter_enable": {
-          "label": "Sähköpostirekisteröityminen"
+          "label": "Näytä sähköpostirekisteröityminen"
         },
         "newsletter_heading": {
           "label": "Otsikko",
           "default": "Tilaa sähköpostiviestejämme"
         },
         "header__1": {
-          "content": "Sähköpostirekisteröityminen",
-          "info": "Rekisteröitymiset lisäävät [asiakasprofiilit](https://help.shopify.com/manual/customers/manage-customers)"
+          "content": "Sähköpostitilaaja",
+          "info": "Tilaajat lisättiin automaattisesti \"markkinoinnin hyväksyneiden\" asiakasluetteloon. [Lisätietoja](https://help.shopify.com/manual/customers/manage-customers)"
+        },
+        "header__2": {
+          "content": "Some-kuvakkeet",
+          "info": "Jos haluat näyttää sosiaalisen median tilisi, linkitä ne [teema-asetuksistasi](/editor?context=theme&category=social%20media)."
         },
         "show_social": {
-          "label": "Somekuvakkeet",
-          "info": "[Hallinnoi sometilejä](/editor?context=theme&category=social%20media)"
+          "label": "Näytä some-kuvakkeet"
+        },
+        "header__3": {
+          "content": "Maa-/aluevalitsin"
+        },
+        "header__4": {
+          "info": "Lisää maa/alue siirtymällä [markkina-asetuksiisi.](/admin/settings/markets)"
         },
         "enable_country_selector": {
-          "label": "Maa-/aluevalitsin",
-          "info": "[Hallinnoi maita/alueita](/admin/settings/markets)"
+          "label": "Näytä maa-/aluevalitsin"
+        },
+        "header__5": {
+          "content": "Kielivalitsin"
+        },
+        "header__6": {
+          "info": "Lisää kieli siirtymällä [kieliasetuksiisi.](/admin/settings/languages)"
         },
         "enable_language_selector": {
-          "label": "Kielivalitsin",
-          "info": "[Hallinnoi kieliä](/admin/settings/languages)"
+          "label": "Ota kielivalitsin käyttöön"
+        },
+        "header__7": {
+          "content": "Maksutavat"
         },
         "payment_enable": {
-          "label": "Maksutapakuvakkeet"
+          "label": "Näytä maksukuvakkeet"
         },
         "margin_top": {
           "label": "Yläreunus"
         },
+        "header__8": {
+          "content": "Käytäntöjen linkit",
+          "info": "Jos haluat lisätä kaupan käytännöt, siirry [käytäntöjen asetuksiin](/admin/settings/legal)."
+        },
         "show_policy": {
-          "label": "Käytäntöjen linkit",
-          "info": "[Hallinnoi käytäntöjä](/admin/settings/legal)"
+          "label": "Näytä käytäntöjen linkit"
         },
         "header__9": {
-          "content": "Apuohjelmat"
+          "content": "Seuraa Shopissa",
+          "info": "Shop Pay on otettava käyttöön, jotta asiakkaat voivat seurata kauppaasi Shop-sovelluksessa myyntipaikkasi kautta. [Lisätietoja](https://help.shopify.com/manual/online-store/themes/customizing-themes/follow-on-shop)"
         },
         "enable_follow_on_shop": {
-          "label": "Seuraa Shopissa",
-          "info": "Shop Payn täytyy olla käytössä [Lue lisää:](https://help.shopify.com/manual/online-store/themes/customizing-themes/follow-on-shop)"
+          "label": "Ota Seuraa Shopissa käyttöön"
         }
       }
     },
@@ -911,7 +939,7 @@
       "name": "Ylätunniste",
       "settings": {
         "logo_position": {
-          "label": "Logon sijainti",
+          "label": "Logon sijainti tietokoneella",
           "options__1": {
             "label": "Keskellä vasemmalla"
           },
@@ -929,13 +957,14 @@
           "label": "Valikko"
         },
         "show_line_separator": {
-          "label": "Erotinviiva"
+          "label": "Näytä erotinviiva"
         },
         "margin_bottom": {
           "label": "Alareunus"
         },
         "menu_type_desktop": {
-          "label": "Valikkotyyppi",
+          "label": "Pöytäkoneen valikkotyyppi",
+          "info": "Valikkotyyppi optimoidaan automaattisesti mobiililaitteilla.",
           "options__1": {
             "label": "Pudotusvalikko"
           },
@@ -945,6 +974,9 @@
           "options__3": {
             "label": "Laatikko"
           }
+        },
+        "mobile_layout": {
+          "content": "Mobiiliasettelu"
         },
         "mobile_logo_position": {
           "label": "Logon asettelu mobiilissa",
@@ -956,7 +988,7 @@
           }
         },
         "logo_help": {
-          "content": "Muokkaa logoa [teeman asetuksissa](/editor?context=theme&category=logo)"
+          "content": "Muokkaa logoa [teeman asetuksissa](/editor?context=theme&category=logo)."
         },
         "sticky_header_type": {
           "label": "Paikallaan pysyvä ylätunniste",
@@ -973,13 +1005,23 @@
             "label": "Aina, pienennä logon kokoa"
           }
         },
+        "header__3": {
+          "content": "Maa-/aluevalitsin"
+        },
+        "header__4": {
+          "info": "Lisää maa/alue siirtymällä [markkina-asetuksiisi.](/admin/settings/markets)"
+        },
         "enable_country_selector": {
-          "label": "Maa-/aluevalitsin",
-          "info": "[Hallinnoi maita/alueita](/admin/settings/markets)"
+          "label": "Ota käyttöön maa-/aluevalitsin"
+        },
+        "header__5": {
+          "content": "Kielivalitsin"
+        },
+        "header__6": {
+          "info": "Lisää kieli siirtymällä [kieliasetuksiisi.](/admin/settings/languages)"
         },
         "enable_language_selector": {
-          "label": "Kielivalitsin",
-          "info": "[Hallinnoi kieliä](/admin/settings/languages)"
+          "label": "Ota kielivalitsin käyttöön"
         },
         "header__1": {
           "content": "Väri"
@@ -987,12 +1029,13 @@
         "menu_color_scheme": {
           "label": "Värimallivalikko"
         },
-        "enable_customer_avatar": {
-          "label": "Asiakastilin avatar",
-          "info": "Näkyvissä vain, kun asiakkaat ovat kirjautuneet Shopiin. [Hallinnoi asiakastilejä](/admin/settings/customer_accounts)"
+        "header__7": {
+          "content": "Asiakastilille kirjautuminen",
+          "info": "Voit hallinnoida asiakastilejä [asiakastilien asetuksista](/admin/settings/customer_accounts)."
         },
-        "header__utilities": {
-          "content": "Apuohjelmat"
+        "enable_customer_avatar": {
+          "label": "Näytä avatar",
+          "info": "Asiakkaat näkevät oman avatarinsa vain ollessaan kirjautuneena Shopiin"
         }
       }
     },
@@ -1000,25 +1043,25 @@
       "name": "Kuvabanneri",
       "settings": {
         "image": {
-          "label": "Kuva 1"
+          "label": "Ensimmäinen kuva"
         },
         "image_2": {
-          "label": "Kuva 2"
+          "label": "Toinen kuva"
         },
         "stack_images_on_mobile": {
-          "label": "Pinoa kuvat"
+          "label": "Pinoa kuvat mobiilissa"
         },
         "show_text_box": {
-          "label": "Säiliö"
+          "label": "Näytä säilö pöytäkoneella"
         },
         "image_overlay_opacity": {
           "label": "Peittokuvan läpikuultavuus"
         },
         "show_text_below": {
-          "label": "Säiliö"
+          "label": "Näytä säilö mobiililaitteessa"
         },
         "image_height": {
-          "label": "Korkeus",
+          "label": "Bannerin korkeus",
           "options__1": {
             "label": "Mukauta ensimmäisen kuvan mukaan"
           },
@@ -1028,6 +1071,7 @@
           "options__3": {
             "label": "Keskisuuri"
           },
+          "info": "Saat parhaat tulokset käyttämällä kuvaa, jonka kuvasuhde on 3:2. [Lisätietoja](https://help.shopify.com/manual/shopify-admin/productivity-tools/image-editor#understanding-image-aspect-ratio)",
           "options__4": {
             "label": "Suuri"
           }
@@ -1060,7 +1104,7 @@
           "options__9": {
             "label": "Alhaalla oikealla"
           },
-          "label": "Sijainti"
+          "label": "Työpöytäsisällön sijainti"
         },
         "desktop_content_alignment": {
           "options__1": {
@@ -1072,7 +1116,7 @@
           "options__3": {
             "label": "Oikealla"
           },
-          "label": "Tasaus"
+          "label": "Työpöydän sisällön kohdistus"
         },
         "mobile_content_alignment": {
           "options__1": {
@@ -1084,13 +1128,10 @@
           "options__3": {
             "label": "Oikealla"
           },
-          "label": "Tasaus"
+          "label": "Mobiilisisällön tasaus"
         },
         "mobile": {
-          "content": "Mobiiliasettelu"
-        },
-        "content": {
-          "content": "Sisältö"
+          "content": "Mobiilipohja"
         }
       },
       "blocks": {
@@ -1107,7 +1148,7 @@
           "name": "Teksti",
           "settings": {
             "text": {
-              "label": "Teksti",
+              "label": "Kuvaus",
               "default": "Anna asiakkaille tietoa bannerin kuvista tai sisällöstä mallissa."
             },
             "text_style": {
@@ -1120,7 +1161,7 @@
               "options__3": {
                 "label": "Isot kirjaimet"
               },
-              "label": "Tyyli"
+              "label": "Tekstityyli"
             }
           }
         },
@@ -1128,32 +1169,26 @@
           "name": "Painikkeet",
           "settings": {
             "button_label_1": {
-              "label": "Merkintä",
-              "info": "Jos haluat piilottaa, jätä tyhjäksi",
+              "label": "Ensimmäinen tekstipainike",
+              "info": "Jos haluat piilottaa painikkeen, jätä painikkeen teksti tyhjäksi.",
               "default": "Tekstipainike"
             },
             "button_link_1": {
-              "label": "Linkki"
+              "label": "Ensimmäinen painikelinkki"
             },
             "button_style_secondary_1": {
-              "label": "Ääriviivatyyli"
+              "label": "Käytä ääriviivallista painiketyyliä"
             },
             "button_label_2": {
-              "label": "Merkintä",
-              "info": "Jos haluat piilottaa, jätä tyhjäksi",
+              "label": "Toinen tekstipainike",
+              "info": "Jos haluat piilottaa painikkeen, jätä painikkeen teksti tyhjäksi.",
               "default": "Tekstipainike"
             },
             "button_link_2": {
-              "label": "Linkki"
+              "label": "Toinen painikelinkki"
             },
             "button_style_secondary_2": {
-              "label": "Ääriviivatyyli"
-            },
-            "header_1": {
-              "content": "Painike 1"
-            },
-            "header_2": {
-              "content": "Painike 2"
+              "label": "Käytä ääriviivallista painiketyyliä"
             }
           }
         }
@@ -1178,7 +1213,7 @@
           "options__3": {
             "label": "Keskisuuri"
           },
-          "label": "Korkeus",
+          "label": "Kuvan korkeus",
           "options__4": {
             "label": "Suuri"
           }
@@ -1190,7 +1225,8 @@
           "options__2": {
             "label": "Toinen kuva"
           },
-          "label": "Sijoitus"
+          "label": "Työpöytäkuvan sijoitus",
+          "info": "Kuva ensin on oletusarvoinen asettelu mobiilissa."
         },
         "desktop_image_width": {
           "options__1": {
@@ -1202,7 +1238,8 @@
           "options__3": {
             "label": "Suuri"
           },
-          "label": "Leveys"
+          "label": "Työpöytäkuvan leveys",
+          "info": "Kuva optimoidaan automaattisesti mobiililaitteille."
         },
         "desktop_content_alignment": {
           "options__1": {
@@ -1214,7 +1251,7 @@
           "options__3": {
             "label": "Oikealla"
           },
-          "label": "Tasaus"
+          "label": "Työpöydän sisällön kohdistus"
         },
         "desktop_content_position": {
           "options__1": {
@@ -1226,7 +1263,7 @@
           "options__3": {
             "label": "Alas"
           },
-          "label": "Sijainti"
+          "label": "Työpöytäsisällön sijainti"
         },
         "content_layout": {
           "options__1": {
@@ -1235,7 +1272,7 @@
           "options__2": {
             "label": "Päällekkäisyys"
           },
-          "label": "Asettelu"
+          "label": "Sisällön pohja"
         },
         "mobile_content_alignment": {
           "options__1": {
@@ -1247,13 +1284,7 @@
           "options__3": {
             "label": "Oikealla"
           },
-          "label": "Mobiilitasaus"
-        },
-        "header": {
-          "content": "Sisältö"
-        },
-        "header_colors": {
-          "content": "Värit"
+          "label": "Mobiilisisällön tasaus"
         }
       },
       "blocks": {
@@ -1270,11 +1301,11 @@
           "name": "Teksti",
           "settings": {
             "text": {
-              "label": "Teksti",
+              "label": "Sisältö",
               "default": "<p>Korosta valitsemaasi tuotetta, kokoelmaa tai blogipostausta lisäämällä kuvaan teksti. Lisää tietoa saatavuudesta tai tyylistä tai näytä vaikkapa arvostelu.</p>"
             },
             "text_style": {
-              "label": "Tyyli",
+              "label": "Tekstityyli",
               "options__1": {
                 "label": "Leipäteksti"
               },
@@ -1288,15 +1319,15 @@
           "name": "Painike",
           "settings": {
             "button_label": {
-              "label": "Merkintä",
-              "info": "Jos haluat piilottaa, jätä tyhjäksi",
+              "label": "Tekstipainike",
+              "info": "Jos haluat piilottaa painikkeen, jätä painikkeen teksti tyhjäksi.",
               "default": "Tekstipainike"
             },
             "button_link": {
-              "label": "Linkki"
+              "label": "Painikelinkki"
             },
             "outline_button": {
-              "label": "Ääriviivatyyli"
+              "label": "Käytä ääriviivallista painiketyyliä"
             }
           }
         },
@@ -1308,7 +1339,7 @@
               "default": "Lisää iskulause"
             },
             "text_style": {
-              "label": "Tyyli",
+              "label": "Tekstityyli",
               "options__1": {
                 "label": "Alaotsikko"
               },
@@ -1317,7 +1348,7 @@
               }
             },
             "caption_size": {
-              "label": "Koko",
+              "label": "Tekstin koko",
               "options__1": {
                 "label": "Pieni"
               },
@@ -1342,7 +1373,7 @@
           "name": "Esittelykuva",
           "settings": {
             "image_height": {
-              "label": "Kuvan korkeus",
+              "label": "esittelykuvan korkeus",
               "options__1": {
                 "label": "Sovita kuvaan"
               },
@@ -1352,6 +1383,7 @@
               "options__3": {
                 "label": "Keskisuuri"
               },
+              "info": "Saat parhaat tulokset käyttämällä kuvaa, jonka kuvasuhde on 16:9. [Lisätietoja](https://help.shopify.com/manual/shopify-admin/productivity-tools/image-editor#understanding-image-aspect-ratio)",
               "options__4": {
                 "label": "Suuri"
               }
@@ -1362,10 +1394,10 @@
           "name": "Otsikko",
           "settings": {
             "blog_show_date": {
-              "label": "Päivämäärä"
+              "label": "Näytä päivämäärä"
             },
             "blog_show_author": {
-              "label": "Tekijä"
+              "label": "Näytä tekijä"
             }
           }
         },
@@ -1375,6 +1407,12 @@
         "share": {
           "name": "Jaa",
           "settings": {
+            "featured_image_info": {
+              "content": "Jos lisäät sosiaalisen median julkaisuihin linkkejä, esikatselukuvana näkyy sivun esittelykuva. [Lisätietoja](https://help.shopify.com/manual/online-store/images/showing-social-media-thumbnail-images)."
+            },
+            "title_info": {
+              "content": "Esikatselukuvassa näkyy kaupan nimi ja kuvaus. [Lisätietoja](https://help.shopify.com/manual/promoting-marketing/seo/adding-keywords#set-a-title-and-description-for-your-online-store)."
+            },
             "text": {
               "label": "Teksti",
               "default": "Jaa"
@@ -1386,26 +1424,33 @@
     "main-blog": {
       "name": "Blogipostaukset",
       "settings": {
+        "header": {
+          "content": "blogipostauskortti"
+        },
         "show_image": {
-          "label": "Esittelykuva"
+          "label": "Näytä esittelykuva"
+        },
+        "paragraph": {
+          "content": "Muuta otteita blogipostauksiasi muokkaamalla. [Lisätietoja](https://help.shopify.com/manual/online-store/blogs/writing-blogs#display-an-excerpt-from-a-blog-post)"
         },
         "show_date": {
-          "label": "Päivämäärä"
+          "label": "Näytä päivämäärä"
         },
         "show_author": {
-          "label": "Tekijä"
+          "label": "Näytä tekijä"
         },
         "layout": {
-          "label": "Asettelu",
+          "label": "Työpöytäasettelu",
           "options__1": {
             "label": "Ruudukko"
           },
           "options__2": {
             "label": "Kollaasi"
-          }
+          },
+          "info": "Julkaisut asetetaan päällekkäin mobiilissa."
         },
         "image_height": {
-          "label": "Kuvan korkeus",
+          "label": "Esittelykuvan korkeus",
           "options__1": {
             "label": "Sovita kuvaan"
           },
@@ -1417,7 +1462,8 @@
           },
           "options__4": {
             "label": "Suuri"
-          }
+          },
+          "info": "Saat parhaat tulokset käyttämällä kuvaa, jonka kuvasuhde on 3:2. [Lisätietoja](https://help.shopify.com/manual/shopify-admin/productivity-tools/image-editor#understanding-image-aspect-ratio)"
         }
       }
     },
@@ -1439,13 +1485,14 @@
       "name": "Kokoelmabanneri",
       "settings": {
         "paragraph": {
-          "content": "Kokoelman tietoja [hallinnoidaan Adminissa](https://help.shopify.com/manual/products/collections/collection-layout)"
+          "content": "Lisää kuvaus tai kuva kokoelmiasi muokkaamalla. [Lisätietoja](https://help.shopify.com/manual/products/collections/collection-layout)"
         },
         "show_collection_description": {
-          "label": "Kuvaus"
+          "label": "Näytä kokoelman kuvaus"
         },
         "show_collection_image": {
-          "label": "Kuva"
+          "label": "Näytä kokoelman kuva",
+          "info": "Saat parhaat tulokset käyttämällä kuvaa, jonka kuvasuhde on 16:9. [Lisätietoja](https://help.shopify.com/manual/shopify-admin/productivity-tools/image-editor#understanding-image-aspect-ratio)"
         }
       }
     },
@@ -1471,18 +1518,18 @@
           "label": "Näytä toinen kuva osoittaessa"
         },
         "show_vendor": {
-          "label": "Myyjä"
+          "label": "Näytä myyjä"
         },
         "enable_tags": {
-          "label": "Suodattimet",
-          "info": "Mukauta suodattimia [Search & Discovery ‑sovelluksella](https://help.shopify.com/manual/online-store/search-and-discovery/filters)"
+          "label": "Ota suodatus käyttöön",
+          "info": "Mukauta suodattimia Search & Discovery -sovelluksen avulla. [Lisätietoja](https://help.shopify.com/manual/online-store/search-and-discovery/filters)"
         },
         "enable_filtering": {
-          "label": "Suodattimet",
-          "info": "Mukauta suodattimia [Search & Discovery ‑sovelluksella](https://help.shopify.com/manual/online-store/search-and-discovery/filters)"
+          "label": "Ota suodatus käyttöön",
+          "info": "Mukauta suodattimia Search & Discovery -sovelluksen avulla. [Lisätietoja](https://help.shopify.com/manual/online-store/search-and-discovery/filters)"
         },
         "enable_sorting": {
-          "label": "Lajittelu"
+          "label": "Ota lajittelu käyttöön"
         },
         "header__1": {
           "content": "Suodatus ja lajittelu"
@@ -1491,23 +1538,26 @@
           "content": "Tuotekortti"
         },
         "show_rating": {
-          "label": "Tuotearvio",
-          "info": "Tuotearviot edellyttävät sovellusta. [Lue lisää:](https://help.shopify.com/manual/online-store/themes/theme-structure/page-types/collection-pages#product-grid-show-product-rating)"
+          "label": "Näytä tuotteen luokitus",
+          "info": "Näytä luokitus lisäämällä tuotearviointisovellus. [Lisätietoja](https://help.shopify.com/manual/online-store/themes/theme-structure/page-types#product-grid-section-settings)"
         },
         "columns_desktop": {
-          "label": "Sarakkeet"
+          "label": "Sarakkeiden määrä työpöydällä"
+        },
+        "header_mobile": {
+          "content": "Mobiilipohja"
         },
         "columns_mobile": {
-          "label": "Mobiilisarakkeet",
+          "label": "Sarakkeiden määrä mobiilissa",
           "options__1": {
-            "label": "1"
+            "label": "1 sarake"
           },
           "options__2": {
-            "label": "2"
+            "label": "2 saraketta"
           }
         },
         "filter_type": {
-          "label": "Suodatinasettelu",
+          "label": "Suodatinasettelu tietokoneella",
           "options__1": {
             "label": "Vaaka"
           },
@@ -1516,10 +1566,12 @@
           },
           "options__3": {
             "label": "Laatikko"
-          }
+          },
+          "info": "Laatikko on oletusarvoinen asettelu mobiilissa."
         },
         "quick_add": {
           "label": "Pikalisäys",
+          "info": "Erä on optimoitu tuotteille, joita ostetaan suuria määriä.",
           "options": {
             "option_1": "Ei ole",
             "option_2": "Vakio",
@@ -1536,7 +1588,7 @@
           "default": "Kokoelmat"
         },
         "sort": {
-          "label": "Lajittele kokoelmat",
+          "label": "Lajittele kokoelmat seuraavasti:",
           "options__1": {
             "label": "Aakkosjärjestyksessä A–Ö"
           },
@@ -1566,21 +1618,22 @@
           },
           "options__3": {
             "label": "Neliö"
-          }
+          },
+          "info": "Lisää kuvia kokoelmiasi muokkaamalla. [Lisätietoja](https://help.shopify.com/manual/products/collections)"
         },
         "columns_desktop": {
-          "label": "Sarakkeet"
+          "label": "Sarakkeiden määrä työpöydällä"
         },
         "header_mobile": {
-          "content": "Mobiiliasettelu"
+          "content": "Mobiilipohja"
         },
         "columns_mobile": {
-          "label": "Mobiilisarakkeet",
+          "label": "Sarakkeiden määrä mobiililaitteessa",
           "options__1": {
-            "label": "1"
+            "label": "1 sarake"
           },
           "options__2": {
-            "label": "2"
+            "label": "2 saraketta"
           }
         }
       }
@@ -1594,8 +1647,11 @@
     "main-password-header": {
       "name": "Salasanaylätunniste",
       "settings": {
+        "logo_header": {
+          "content": "Logo"
+        },
         "logo_help": {
-          "content": "Muokkaa logoa [teeman asetuksissa](/editor?context=theme&category=logo)"
+          "content": "Muokkaa logoa teeman asetuksissa."
         }
       }
     },
@@ -1609,7 +1665,7 @@
               "default": "Tekstilohko"
             },
             "text_style": {
-              "label": "Tyyli",
+              "label": "Tekstityyli",
               "options__1": {
                 "label": "Leipäteksti"
               },
@@ -1645,7 +1701,7 @@
             },
             "swatch_shape": {
               "label": "Väriruutu",
-              "info": "Lue lisää tuotevaihtoehtojen [väriruuduista](https://help.shopify.com/en/manual/online-store/themes/theme-structure/theme-settings#options-with-swatches)",
+              "info": "Ota [väriruudut](https://help.shopify.com/en/manual/online-store/themes/theme-structure/theme-settings#options-with-swatches) käyttöön tuotevaihtoehtoihin.",
               "options__1": {
                 "label": "Ympyrä"
               },
@@ -1662,12 +1718,12 @@
           "name": "Osta-painikkeet",
           "settings": {
             "show_dynamic_checkout": {
-              "label": "Dynaamiset kassapainikkeet",
-              "info": "Asiakkaat näkevät ensisijaisen maksutapansa. [Lue lisää:](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)"
+              "label": "Näytä dynaamiset kassapainikkeet",
+              "info": "Kun käytät kaupallesi saatavilla olevia maksutapoja, asiakkaat näkevät ensisijaisen vaihtoehtonsa, kuten PayPalin tai Apple Payn. [Lisätietoja](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)"
             },
             "show_gift_card_recipient": {
-              "label": " Lahjakortin lähetysasetukset",
-              "info": "Asiakkaat voivat lisätä henkilökohtaisen viestin ja sopia lähetyspäivän. [Lue lisää:](https://help.shopify.com/manual/online-store/themes/customizing-themes/add-gift-card-recipient-fields)"
+              "label": "Näytä lomake lahjakorttien vastaanottajien tietoja varten",
+              "info": "Mahdollistaa sen, että ostajat voivat lähettää lahjakortin ja sen mukaan liitettävän henkilökohtaisen viestin suunniteltuna ajankohtana. [Lisätietoja](https://help.shopify.com/manual/online-store/themes/customizing-themes/add-gift-card-recipient-fields)"
             }
           }
         },
@@ -1680,6 +1736,12 @@
         "share": {
           "name": "Jaa",
           "settings": {
+            "featured_image_info": {
+              "content": "Jos lisäät sosiaalisen median julkaisuihin linkkejä, esikatselukuvana näkyy sivun esittelykuva. [Lisätietoja](https://help.shopify.com/manual/online-store/images/showing-social-media-thumbnail-images)."
+            },
+            "title_info": {
+              "content": "Esikatselukuvassa näkyy kaupan nimi ja kuvaus. [Lisätietoja](https://help.shopify.com/manual/promoting-marketing/seo/adding-keywords#set-a-title-and-description-for-your-online-store)."
+            },
             "text": {
               "label": "Teksti",
               "default": "Jaa"
@@ -1690,6 +1752,7 @@
           "name": "Pienenettävä rivi",
           "settings": {
             "heading": {
+              "info": "Lisää sisältöä kuvaava otsikko.",
               "label": "Otsikko",
               "default": "Pienenettävä rivi"
             },
@@ -1852,7 +1915,7 @@
           "name": "Tuotearvio",
           "settings": {
             "paragraph": {
-              "content": "Tuotearviot edellyttävät sovellusta. [Lue lisää:](https://help.shopify.com/manual/online-store/themes/theme-structure/page-types/product-pages#product-rating-block)"
+              "content": "Näytä luokitus lisäämällä tuotearviointisovellus. [Lisätietoja](https://help.shopify.com/manual/online-store/themes/theme-structure/page-types#product-rating-block)"
             }
           }
         },
@@ -1860,26 +1923,26 @@
           "name": "Täydentävät tuotteet",
           "settings": {
             "paragraph": {
-              "content": "Hallinnoi täydentäviä tuotteita [Search & Discovery ‑sovelluksessa](https://help.shopify.com/manual/online-store/search-and-discovery/product-recommendations)"
+              "content": "Lisää Search & Discovery -sovellus, jotta voit valita täydentäviä tuotteita. [Lisätietoja](https://help.shopify.com/manual/online-store/search-and-discovery/product-recommendations)"
             },
             "heading": {
               "label": "Otsikko",
               "default": "Sopii yhteen seuraavien kanssa"
             },
             "make_collapsible_row": {
-              "label": "Pienennettävä rivi"
+              "label": "Näytä pienennettävänä rivinä"
             },
             "icon": {
-              "info": "Näytetään, kun pienennettävä rivi valitaan"
+              "info": "Näkyvissä, kun pienennettävä rivi on esillä."
             },
             "product_list_limit": {
-              "label": "Tuotemäärä"
+              "label": "Näytettävien tuotteiden enimmäismäärä"
             },
             "products_per_page": {
-              "label": "Tuotteita sivulla"
+              "label": "Tuotteiden määrä sivua kohden"
             },
             "pagination_style": {
-              "label": "Sivunumerointi",
+              "label": "Sivunumerointityyli",
               "options": {
                 "option_1": "Pisteet",
                 "option_2": "Laskuri",
@@ -1897,7 +1960,7 @@
               }
             },
             "enable_quick_add": {
-              "label": "Pikalisäys"
+              "label": "Ota pikalisäyspainike käyttöön"
             }
           }
         },
@@ -1913,48 +1976,42 @@
                 "label": "Pysty"
               }
             },
+            "content": {
+              "label": "Sisältö",
+              "info": "Valitse kuvake tai lisää kuva jokaiselle sarakkeelle tai riville."
+            },
             "heading": {
-              "info": "Jos haluat piilottaa tämän parin, jätä tyhjäksi"
+              "info": "Piilota kuvakkeen sarake jättämällä sarakkeen teksti tyhjäksi."
             },
             "icon_1": {
-              "label": "Kuvake"
+              "label": "Ensimmäinen kuvake"
             },
             "image_1": {
-              "label": "Kuva"
+              "label": "Ensimmäinen kuva"
             },
             "heading_1": {
-              "label": "Otsikko",
+              "label": "Ensimmäinen otsikko",
               "default": "Otsikko"
             },
             "icon_2": {
-              "label": "Kuvake"
+              "label": "Toinen kuvake"
             },
             "image_2": {
-              "label": "Kuva"
+              "label": "Toinen kuva"
             },
             "heading_2": {
-              "label": "Otsikko",
+              "label": "Toinen otsikko",
               "default": "Otsikko"
             },
             "icon_3": {
-              "label": "Kuvake"
+              "label": "Kolmas kuvake"
             },
             "image_3": {
-              "label": "Kuva"
+              "label": "Kolmas kuva"
             },
             "heading_3": {
-              "label": "Otsikko",
+              "label": "Kolmas otsikko",
               "default": "Otsikko"
-            },
-            "pairing_1": {
-              "label": "Pari 1",
-              "info": "Valitse kuvake tai lisää kuva jokaiselle parille"
-            },
-            "pairing_2": {
-              "label": "Pari 2"
-            },
-            "pairing_3": {
-              "label": "Pari 3"
             }
           }
         },
@@ -1991,29 +2048,31 @@
               }
             },
             "inventory_threshold": {
-              "label": "Vähäisen varaston kynnysarvo"
+              "label": "Vähäisen varaston kynnysarvo",
+              "info": "Valitse 0, jos haluat näyttää aina varastossa, jos saatavilla."
             },
             "show_inventory_quantity": {
-              "label": "Varastomäärä"
+              "label": "Näytä varastomäärä"
             }
           }
         }
       },
       "settings": {
         "header": {
-          "content": "Media"
+          "content": "Media",
+          "info": "Lisätietoja [mediatyypeistä.](https://help.shopify.com/manual/products/product-media)"
         },
         "enable_video_looping": {
-          "label": "Jatkuvasti toistuva video"
+          "label": "Ota videosilmukka käyttöön"
         },
         "enable_sticky_info": {
-          "label": "Kiinnitetty sisältö"
+          "label": "Ota käyttöön kiinnitettävä sisältö tietokoneella"
         },
         "hide_variants": {
-          "label": "Piilota toinen mediaversio, kun yksi valitaan"
+          "label": "Piilota muiden versioiden aineisto, kun versio on valittu"
         },
         "gallery_layout": {
-          "label": "Asettelu",
+          "label": "Työpöytäasettelu",
           "options__1": {
             "label": "Päällekkäin"
           },
@@ -2028,7 +2087,7 @@
           }
         },
         "media_size": {
-          "label": "Leveys",
+          "label": "Median leveys tietokoneella",
           "options__1": {
             "label": "Pieni"
           },
@@ -2037,7 +2096,8 @@
           },
           "options__3": {
             "label": "Suuri"
-          }
+          },
+          "info": "Media optimoidaan automaattisesti mobiililaitteille."
         },
         "mobile_thumbnails": {
           "label": "Mobiiliasettelu",
@@ -2052,7 +2112,8 @@
           }
         },
         "media_position": {
-          "label": "Sijainti",
+          "label": "Työpöytämedian sijainti",
+          "info": "Sijainti optimoidaan automaattisesti mobiililaitteille.",
           "options__1": {
             "label": "Vasen"
           },
@@ -2061,7 +2122,8 @@
           }
         },
         "image_zoom": {
-          "label": "Lähennä",
+          "label": "Kuvan zoomaus",
+          "info": "Avaa lightbox-ikkuna mobiililaitteessa klikkaamalla oletusarvoja ja viemällä osoitin niiden päälle.",
           "options__1": {
             "label": "Avaa lightbox-ikkuna"
           },
@@ -2073,10 +2135,10 @@
           }
         },
         "constrain_to_viewport": {
-          "label": "Sovita näytön korkeuteen"
+          "label": "Sovita media näytön korkeuteen"
         },
         "media_fit": {
-          "label": "Sovita",
+          "label": "Median sovitus",
           "options__1": {
             "label": "Alkuperäinen"
           },
@@ -2106,34 +2168,38 @@
           "label": "Näytä toinen kuva osoittaessa"
         },
         "show_vendor": {
-          "label": "Myyjä"
+          "label": "Näytä myyjä"
         },
         "header__1": {
           "content": "Tuotekortti"
         },
         "header__2": {
-          "content": "Blogikortti"
+          "content": "Blogikortti",
+          "info": "Blogikortin tyylejä sovelletaan myös sivukortteihin hakutuloksissa. Voit muuttaa korttien tyylejä päivittämällä teema-asetuksesi."
         },
         "article_show_date": {
-          "label": "Päivämäärä"
+          "label": "Näytä päivämäärä"
         },
         "article_show_author": {
-          "label": "Tekijä"
+          "label": "Näytä tekijä"
         },
         "show_rating": {
-          "label": "Tuotearvio",
-          "info": "Tuotearviot edellyttävät sovellusta. [Lue lisää:](https://help.shopify.com/en/manual/online-store/themes/theme-structure/page-types/search-page)"
+          "label": "Näytä tuotteen luokitus",
+          "info": "Näytä luokitus lisäämällä tuotearviointisovellus. [Lisätietoja](https://help.shopify.com/manual/online-store/themes/theme-structure/page-types#search-results-section-settings)"
         },
         "columns_desktop": {
-          "label": "Sarakkeet"
+          "label": "Sarakkeiden määrä työpöydällä"
+        },
+        "header_mobile": {
+          "content": "Mobiilipohja"
         },
         "columns_mobile": {
-          "label": "Mobiilisarakkeet",
+          "label": "Sarakkeiden määrä mobiilissa",
           "options__1": {
-            "label": "1"
+            "label": "1 sarake"
           },
           "options__2": {
-            "label": "2"
+            "label": "2 saraketta"
           }
         }
       }
@@ -2146,7 +2212,7 @@
           "default": "Monisarakkeinen"
         },
         "image_width": {
-          "label": "Leveys",
+          "label": "Kuvan leveys",
           "options__1": {
             "label": "Kolmasosa sarakkeen leveydestä"
           },
@@ -2158,7 +2224,7 @@
           }
         },
         "image_ratio": {
-          "label": "Suhde",
+          "label": "Kuvasuhde",
           "options__1": {
             "label": "Sovita kuvaan"
           },
@@ -2191,42 +2257,29 @@
           }
         },
         "button_label": {
-          "label": "Merkintä",
-          "default": "Tekstipainike",
-          "info": "Jos haluat piilottaa, jätä tyhjäksi"
+          "label": "Tekstipainike",
+          "default": "Tekstipainike"
         },
         "button_link": {
-          "label": "Linkki"
+          "label": "Painikelinkki"
         },
         "swipe_on_mobile": {
-          "label": "Karuselli"
+          "label": "Ota pyyhkäisy käyttöön mobiililaitteessa"
         },
         "columns_desktop": {
-          "label": "Sarakkeet"
+          "label": "Sarakkeiden määrä työpöydällä"
         },
         "header_mobile": {
-          "content": "Mobiiliasettelu"
+          "content": "Mobiilipohja"
         },
         "columns_mobile": {
-          "label": "Sarakkeet",
+          "label": "Sarakkeiden määrä mobiilissa",
           "options__1": {
-            "label": "1"
+            "label": "1 sarake"
           },
           "options__2": {
-            "label": "2"
+            "label": "2 saraketta"
           }
-        },
-        "header_text": {
-          "content": "Otsikko"
-        },
-        "header_image": {
-          "content": "Kuva"
-        },
-        "header_layout": {
-          "content": "Asettelu"
-        },
-        "header_button": {
-          "content": "Painike"
         }
       },
       "blocks": {
@@ -2245,8 +2298,7 @@
               "default": "<p>Korosta valitsemaasi tuotetta, kokoelmaa tai blogipostausta lisäämällä kuvaan teksti. Lisää tietoa saatavuudesta tai tyylistä tai näytä vaikkapa arvostelu.</p>"
             },
             "link_label": {
-              "label": "Linkin teksti",
-              "info": "Jos haluat piilottaa, jätä tyhjäksi"
+              "label": "Linkin teksti"
             },
             "link": {
               "label": "Linkki"
@@ -2262,10 +2314,10 @@
       "name": "Sähköpostirekisteröityminen",
       "settings": {
         "full_width": {
-          "label": "Täysi leveys"
+          "label": "Tee osiosta täysleveä"
         },
         "paragraph": {
-          "content": "Rekisteröitymiset lisäävät [asiakasprofiilit](https://help.shopify.com/manual/customers/manage-customers)"
+          "content": "Sähköpostitilaus luo asiakastilin. [Lisätietoja](https://help.shopify.com/manual/customers)"
         }
       },
       "blocks": {
@@ -2279,10 +2331,10 @@
           }
         },
         "paragraph": {
-          "name": "Teksti",
+          "name": "Alaotsikko",
           "settings": {
             "paragraph": {
-              "label": "Teksti",
+              "label": "Kuvaus",
               "default": "<p>Saa ensimmäisten joukossa tietoa uusista kokoelmista ja ainutlaatuisista tarjouksista.</p>"
             }
           }
@@ -2310,7 +2362,7 @@
       "name": "Rich text",
       "settings": {
         "full_width": {
-          "label": "Täysi leveys"
+          "label": "Tee osiosta täysleveä"
         },
         "desktop_content_position": {
           "options__1": {
@@ -2322,7 +2374,8 @@
           "options__3": {
             "label": "Oikea"
           },
-          "label": "Sisällön sijainti"
+          "label": "Työpöytäsisällön sijainti",
+          "info": "Sijainti optimoidaan automaattisesti mobiililaitteille."
         },
         "content_alignment": {
           "options__1": {
@@ -2351,7 +2404,7 @@
           "name": "Teksti",
           "settings": {
             "text": {
-              "label": "Teksti",
+              "label": "Kuvaus",
               "default": "<p>Kerro brändiäsi koskevia tietoja asiakkaillesi. Kuvaile tuotetta, jaa ilmoituksia tai toivota asiakkaat tervetulleiksi kauppaasi.</p>"
             }
           }
@@ -2360,31 +2413,25 @@
           "name": "Painikkeet",
           "settings": {
             "button_label_1": {
-              "label": "Merkintä",
-              "info": "Jos haluat piilottaa, jätä tyhjäksi",
+              "label": "Ensimmäinen tekstipainike",
+              "info": "Jos haluat piilottaa painikkeen, jätä painikkeen teksti tyhjäksi.",
               "default": "Tekstipainike"
             },
             "button_link_1": {
-              "label": "Linkki"
+              "label": "Ensimmäinen painikelinkki"
             },
             "button_style_secondary_1": {
-              "label": "Ääriviivatyyli"
+              "label": "Käytä ääriviivallista painiketyyliä"
             },
             "button_label_2": {
-              "label": "Merkintä",
-              "info": "Jos haluat piilottaa, jätä merkintä tyhjäksi"
+              "label": "Toinen tekstipainike",
+              "info": "Jos haluat piilottaa painikkeen, jätä painikkeen teksti tyhjäksi."
             },
             "button_link_2": {
-              "label": "Linkki"
+              "label": "Toinen painikelinkki"
             },
             "button_style_secondary_2": {
-              "label": "Ääriviivatyyli"
-            },
-            "header_button1": {
-              "content": "Painike 1"
-            },
-            "header_button2": {
-              "content": "Painike 2"
+              "label": "Käytä ääriviivallista painiketyyliä"
             }
           }
         },
@@ -2396,7 +2443,7 @@
               "default": "Lisää iskulause"
             },
             "text_style": {
-              "label": "Tyyli",
+              "label": "Tekstityyli",
               "options__1": {
                 "label": "Alaotsikko"
               },
@@ -2405,7 +2452,7 @@
               }
             },
             "caption_size": {
-              "label": "Koko",
+              "label": "Tekstin koko",
               "options__1": {
                 "label": "Pieni"
               },
@@ -2450,20 +2497,20 @@
         },
         "description": {
           "label": "Videon vaihtoehtoinen teksti",
-          "info": "Kuvaile videota näytönlukijoita käyttäville"
+          "info": "Kuvaile videota näytönlukijoita käyttäviä asiakkaita varten. [Lisätietoja](https://help.shopify.com/manual/online-store/themes/theme-structure/theme-features#video)"
         },
         "image_padding": {
           "label": "Lisää kuvan täyttö",
           "info": "Valitse kuvan täyttäminen, jos et halua, että kansikuvaasi rajataan."
         },
         "full_width": {
-          "label": "Täysi leveys"
+          "label": "Tee osiosta täysleveä"
         },
         "video": {
           "label": "Video"
         },
         "enable_video_looping": {
-          "label": "Jatkuvasti toistuva video"
+          "label": "Toista video silmukkatoistona"
         },
         "header__1": {
           "content": "Shopifyn isännöimä video"
@@ -2472,10 +2519,10 @@
           "content": "Tai sulauta video URL-osoitteesta"
         },
         "header__3": {
-          "content": "Asettelu"
+          "content": "Tyyli"
         },
         "paragraph": {
-          "content": "Näytetään, kun mitään Shopifyssä isännöityä videota ei ole valittu"
+          "content": "Näytetään, kun mitään Shopifyn isännöimää videota ei ole valittu."
         }
       },
       "presets": {
@@ -2493,7 +2540,7 @@
               "default": "Tekstilohko"
             },
             "text_style": {
-              "label": "Tyyli",
+              "label": "Tekstityyli",
               "options__1": {
                 "label": "Leipäteksti"
               },
@@ -2529,7 +2576,7 @@
             },
             "swatch_shape": {
               "label": "Väriruutu",
-              "info": "Lue lisää tuotevaihtoehtojen [väriruuduista](https://help.shopify.com/en/manual/online-store/themes/theme-structure/theme-settings#options-with-swatches)",
+              "info": "Ota [väriruudut](https://help.shopify.com/en/manual/online-store/themes/theme-structure/theme-settings#options-with-swatches) käyttöön tuotevaihtoehtoihin.",
               "options__1": {
                 "label": "Ympyrä"
               },
@@ -2546,8 +2593,8 @@
           "name": "Osta-painikkeet",
           "settings": {
             "show_dynamic_checkout": {
-              "label": "Dynaamiset kassapainikkeet",
-              "info": "Asiakkaat näkevät ensisijaisen maksutapansa. [Lue lisää:](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)"
+              "label": "Näytä dynaamiset kassapainikkeet",
+              "info": "Kun käytät kaupallesi saatavilla olevia maksutapoja, asiakkaat näkevät ensisijaisen vaihtoehtonsa, kuten PayPalin tai Apple Payn. [Lisätietoja](https://help.shopify.com/manual/using-themes/change-the-layout/dynamic-checkout)"
             }
           }
         },
@@ -2573,7 +2620,7 @@
           "name": "Tuotearvio",
           "settings": {
             "paragraph": {
-              "content": "Tuotearviot edellyttävät sovellusta. [Lue lisää:](https://help.shopify.com/manual/online-store/themes/theme-structure/theme-features#featured-product-rating)"
+              "content": "Näytä luokitus lisäämällä tuotearviointisovellus. [Lisätietoja](https://help.shopify.com/manual/online-store/themes/theme-structure/theme-features#featured-product-rating)"
             }
           }
         },
@@ -2600,19 +2647,20 @@
           "label": "Tuote"
         },
         "secondary_background": {
-          "label": "Toissijainen tausta"
+          "label": "Näytä toissijainen tausta"
         },
         "header": {
-          "content": "Media"
+          "content": "Media",
+          "info": "Lisätietoja [mediatyypeistä](https://help.shopify.com/manual/products/product-media)"
         },
         "enable_video_looping": {
-          "label": "Jatkuvasti toistuva video"
+          "label": "Ota videosilmukka käyttöön"
         },
         "hide_variants": {
           "label": "Piilota valitsemattomien versioiden media tietokoneversiossa"
         },
         "media_position": {
-          "label": "Sijainti",
+          "label": "Työpöytämedian sijainti",
           "info": "Sijainti optimoidaan automaattisesti mobiililaitteille.",
           "options__1": {
             "label": "Vasen"
@@ -2630,7 +2678,7 @@
       "name": "Sähköpostirekisteröitymisen banneri",
       "settings": {
         "paragraph": {
-          "content": "Rekisteröitymiset lisäävät [asiakasprofiilit](https://help.shopify.com/manual/customers/manage-customers)"
+          "content": "Sähköpostitilaus luo asiakastilin. [Lisätietoja](https://help.shopify.com/manual/customers)"
         },
         "image": {
           "label": "Taustakuva"
@@ -2639,16 +2687,17 @@
           "label": "Näytä taustakuva"
         },
         "show_text_box": {
-          "label": "Säiliö"
+          "label": "Näytä säilö pöytäkoneella"
         },
         "image_overlay_opacity": {
           "label": "Peittokuvan läpikuultavuus"
         },
         "show_text_below": {
-          "label": "Pinoa teksti kuvan alle"
+          "label": "Näytä kuvien alla oleva sisältö mobiililaitteessa",
+          "info": "Saat parhaat tulokset käyttämällä kuvaa, jonka kuvasuhde on 16:9. [Lisätietoja](https://help.shopify.com/manual/shopify-admin/productivity-tools/image-editor#understanding-image-aspect-ratio)"
         },
         "image_height": {
-          "label": "Korkeus",
+          "label": "Bannerin korkeus",
           "options__1": {
             "label": "Sovita kuvaan"
           },
@@ -2660,7 +2709,8 @@
           },
           "options__4": {
             "label": "Suuri"
-          }
+          },
+          "info": "Saat parhaat tulokset käyttämällä kuvaa, jonka kuvasuhde on 16:9. [Lisätietoja](https://help.shopify.com/manual/shopify-admin/productivity-tools/image-editor#understanding-image-aspect-ratio)"
         },
         "desktop_content_position": {
           "options__4": {
@@ -2690,7 +2740,7 @@
           "options__3": {
             "label": "Ylhäällä oikealla"
           },
-          "label": "Sijainti"
+          "label": "Työpöytäsisällön sijainti"
         },
         "desktop_content_alignment": {
           "options__1": {
@@ -2702,7 +2752,7 @@
           "options__3": {
             "label": "Oikealla"
           },
-          "label": "Tasaus"
+          "label": "Työpöydän sisällön kohdistus"
         },
         "header": {
           "content": "Mobiiliasettelu"
@@ -2717,13 +2767,10 @@
           "options__3": {
             "label": "Oikealla"
           },
-          "label": "Tasaus"
+          "label": "Mobiilisisällön tasaus"
         },
         "color_scheme": {
           "info": "Näkyvissä, kun säilö on esillä."
-        },
-        "content_header": {
-          "content": "Sisältö"
         }
       },
       "blocks": {
@@ -2737,10 +2784,10 @@
           }
         },
         "paragraph": {
-          "name": "Teksti",
+          "name": "Kohta",
           "settings": {
             "paragraph": {
-              "label": "Teksti",
+              "label": "Kuvaus",
               "default": "<p>Saa tietoa avaamisesta ensimmäisten joukossa.</p>"
             },
             "text_style": {
@@ -2750,7 +2797,7 @@
               "options__2": {
                 "label": "Alaotsikko"
               },
-              "label": "Tyyli"
+              "label": "Tekstityyli"
             }
           }
         },
@@ -2771,11 +2818,11 @@
             "label": "Täysi leveys"
           },
           "options__2": {
-            "label": "Sivu"
+            "label": "Ruudukko"
           }
         },
         "slide_height": {
-          "label": "Korkeus",
+          "label": "Dian korkeus",
           "options__1": {
             "label": "Mukauta ensimmäisen kuvan mukaan"
           },
@@ -2790,7 +2837,7 @@
           }
         },
         "slider_visual": {
-          "label": "Sivunumerointi",
+          "label": "Sivunumerointityyli",
           "options__1": {
             "label": "Laskuri"
           },
@@ -2808,7 +2855,7 @@
           "label": "Vaihda diat joka"
         },
         "show_text_below": {
-          "label": "Pinoa teksti kuvan alle"
+          "label": "Näytä kuvan alla oleva sisältö mobiililaitteessa"
         },
         "mobile": {
           "content": "Mobiiliasettelu"
@@ -2816,7 +2863,7 @@
         "accessibility": {
           "content": "Käytettävyys",
           "label": "Diaesityksen kuvaus",
-          "info": "Kuvaile diaesitystä näytönlukijoita käyttäville",
+          "info": "Kuvaile diaesitystä näytönlukijoita käyttäviä asiakkaita varten.",
           "default": "Diaesitys brändistäsi"
         }
       },
@@ -2836,18 +2883,18 @@
               "default": "Kerro brändisi tarina kuvilla"
             },
             "button_label": {
-              "label": "Merkintä",
-              "info": "Jos haluat piilottaa, jätä tyhjäksi",
+              "label": "Tekstipainike",
+              "info": "Jos haluat piilottaa painikkeen, jätä painikkeen teksti tyhjäksi.",
               "default": "Tekstipainike"
             },
             "link": {
-              "label": "Linkki"
+              "label": "Painikelinkki"
             },
             "secondary_style": {
-              "label": "Ääriviivatyyli"
+              "label": "Käytä ääriviivallista painiketyyliä"
             },
             "box_align": {
-              "label": "Sisällön sijainti",
+              "label": "Työpöytäsisällön sijainti",
               "options__1": {
                 "label": "Ylhäällä vasemmalla"
               },
@@ -2874,13 +2921,14 @@
               },
               "options__9": {
                 "label": "Alhaalla oikealla"
-              }
+              },
+              "info": "Sijainti optimoidaan automaattisesti mobiililaitteille."
             },
             "show_text_box": {
-              "label": "Säiliö"
+              "label": "Näytä säilö pöytäkoneella"
             },
             "text_alignment": {
-              "label": "Sisällön kohdistus",
+              "label": "Työpöydän sisällön kohdistus",
               "option_1": {
                 "label": "Vasemmalla"
               },
@@ -2905,18 +2953,6 @@
               "options__3": {
                 "label": "Oikealla"
               }
-            },
-            "header_button": {
-              "content": "Painike"
-            },
-            "header_layout": {
-              "content": "Asettelu"
-            },
-            "header_text": {
-              "content": "Teksti"
-            },
-            "header_colors": {
-              "content": "Värit"
             }
           }
         }
@@ -2948,7 +2984,7 @@
           }
         },
         "layout": {
-          "label": "Säiliö",
+          "label": "Asettelu",
           "options__1": {
             "label": "Ei säiliötä"
           },
@@ -2960,10 +2996,10 @@
           }
         },
         "open_first_collapsible_row": {
-          "label": "Avaa ensimmäinen rivi"
+          "label": "Avaa ensimmäinen pienenettävä rivi"
         },
         "header": {
-          "content": "Kuva"
+          "content": "Kuvan asettelu"
         },
         "image": {
           "label": "Kuva"
@@ -2981,22 +3017,18 @@
           }
         },
         "desktop_layout": {
-          "label": "Sijoitus",
+          "label": "Pöytäkoneen asettelu",
           "options__1": {
             "label": "Ensimmäinen kuva"
           },
           "options__2": {
             "label": "Toinen kuva"
-          }
+          },
+          "info": "Kuva on aina ensisijainen mobiilissa."
         },
         "container_color_scheme": {
-          "label": "Säiliön värimalli"
-        },
-        "layout_header": {
-          "content": "Asettelu"
-        },
-        "section_color_scheme": {
-          "label": "Osion värimalli"
+          "label": "Säiliön värimalli",
+          "info": "Näkyy, kun asetteluna on rivi- tai osiosäiliö."
         }
       },
       "blocks": {
@@ -3004,6 +3036,7 @@
           "name": "Pienenettävä rivi",
           "settings": {
             "heading": {
+              "info": "Lisää sisältöä kuvaava otsikko.",
               "label": "Otsikko",
               "default": "Pienenettävä rivi"
             },
@@ -3186,13 +3219,13 @@
           "label": "Otsikko"
         },
         "products_to_show": {
-          "label": "Tuotemäärä"
+          "label": "Näytettävien tuotteiden enimmäismäärä"
         },
         "columns_desktop": {
-          "label": "Sarakkeet"
+          "label": "Sarakkeiden määrä työpöydällä"
         },
         "paragraph__1": {
-          "content": "Liittyviä tuotteita voi hallinnoida [Search & Discovery ‑sovelluksessa](https://help.shopify.com/manual/online-store/search-and-discovery/product-recommendations)",
+          "content": "Dynaamisissa suosituksissa käytetään tilaus- ja tuotetietoja, jotta suositukset muuttuvat ja paranevat ajan myötä. [Lisätietoja](https://help.shopify.com/themes/development/recommended-products)",
           "default": "Saatat pitää myös näistä"
         },
         "header__2": {
@@ -3214,19 +3247,22 @@
           "label": "Näytä toinen kuva osoittaessa"
         },
         "show_vendor": {
-          "label": "Myyjä"
+          "label": "Näytä myyjä"
         },
         "show_rating": {
-          "label": "Tuotearvio",
-          "info": "Tuotearviot edellyttävät sovellusta. [Lue lisää:](https://help.shopify.com/manual/online-store/themes/customizing-themes/add-product-recommendations)"
+          "label": "Näytä tuotteen luokitus",
+          "info": "Näytä luokitus lisäämällä tuotearviointisovellus. [Lisätietoja](https://help.shopify.com/manual/online-store/themes/theme-structure/page-types#product-recommendations-section-settings)"
+        },
+        "header_mobile": {
+          "content": "Mobiilipohja"
         },
         "columns_mobile": {
-          "label": "Mobiilisarakkeet",
+          "label": "Sarakkeiden määrä mobiililaitteessa",
           "options__1": {
-            "label": "1"
+            "label": "1 sarake"
           },
           "options__2": {
-            "label": "2"
+            "label": "2 saraketta"
           }
         }
       }
@@ -3250,7 +3286,7 @@
           "options__4": {
             "label": "Suuri"
           },
-          "label": "Korkeus"
+          "label": "Kuvan korkeus"
         },
         "desktop_image_width": {
           "options__1": {
@@ -3262,7 +3298,8 @@
           "options__3": {
             "label": "Suuri"
           },
-          "label": "Leveys"
+          "label": "Työpöytäkuvan leveys",
+          "info": "Kuva optimoidaan automaattisesti mobiililaitteille."
         },
         "text_style": {
           "options__1": {
@@ -3292,7 +3329,7 @@
           "options__3": {
             "label": "Oikea"
           },
-          "label": "Tasaus"
+          "label": "Työpöytäsisällön tasaus"
         },
         "desktop_content_position": {
           "options__1": {
@@ -3304,7 +3341,8 @@
           "options__3": {
             "label": "Alas"
           },
-          "label": "Sijainti"
+          "label": "Työpöytäsisällön sijainti",
+          "info": "Sijainti optimoidaan automaattisesti mobiililaitteille."
         },
         "image_layout": {
           "options__1": {
@@ -3319,7 +3357,8 @@
           "options__4": {
             "label": "Tasattu oikealle"
           },
-          "label": "Sijoitus"
+          "label": "Työpöytäkuvan sijoitus",
+          "info": "Sijoitus optimoidaan automaattisesti mobiililaitteille."
         },
         "container_color_scheme": {
           "label": "Säiliön värimalli"
@@ -3334,16 +3373,10 @@
           "options__3": {
             "label": "Oikea"
           },
-          "label": "Mobiilitasaus"
+          "label": "Mobiilisisällön tasaus"
         },
-        "header": {
-          "content": "Kuva"
-        },
-        "header_2": {
-          "content": "Sisältö"
-        },
-        "header_3": {
-          "content": "Värit"
+        "header_mobile": {
+          "content": "Mobiilipohja"
         }
       },
       "blocks": {
@@ -3367,8 +3400,7 @@
             },
             "button_label": {
               "label": "Tekstipainike",
-              "default": "Tekstipainike",
-              "info": "Jos haluat piilottaa, jätä tyhjäksi"
+              "default": "Tekstipainike"
             },
             "button_link": {
               "label": "Painikelinkki"
@@ -3384,13 +3416,10 @@
       "name": "Pikatilausluettelo",
       "settings": {
         "show_image": {
-          "label": "Kuvat"
+          "label": "Näytä kuvat"
         },
         "show_sku": {
-          "label": "SKU-koodit"
-        },
-        "variants_per_page": {
-          "label": "Versioita sivulla"
+          "label": "Näytä SKU-koodit"
         }
       },
       "presets": {
