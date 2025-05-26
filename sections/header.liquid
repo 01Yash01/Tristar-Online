@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="{{ 'component-mega-menu.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- endif -%}
 
+
 <style>
   header-drawer {
     justify-self: start;
@@ -69,34 +70,6 @@
       padding-top: 0.5rem;
     }
   }
-
-  /* New styles for search box positioning */
-  .header {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    align-items: center;
-    gap: 2rem;
-  }
-
-  .header__heading {
-    margin: 0;
-  }
-
-  .header-search {
-    max-width: 600px;
-    width: 100%;
-    margin: 0 auto;
-  }
-
-  @media screen and (max-width: 989px) {
-    .header {
-      grid-template-columns: auto 1fr;
-    }
-    
-    .header-search {
-      display: none;
-    }
-  }
 </style>
 
 {%- style -%}
@@ -133,11 +106,7 @@
   endfor
 -%}
 
-{%- if section.settings.sticky_header_type != 'none' -%}
-  <sticky-header data-sticky-type="{{ section.settings.sticky_header_type }}" class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}">
-{%- else -%}
-  <div class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}">
-{%- endif -%}
+<{% if section.settings.sticky_header_type != 'none' %}sticky-header data-sticky-type="{{ section.settings.sticky_header_type }}"{% else %}div{% endif %} class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}">
   {%- liquid
     assign social_links = false
     assign localization_forms = false
@@ -190,8 +159,6 @@
         </h1>
       {%- endif -%}
     {%- endif -%}
-
-    {% render 'header-search', input_id: 'Search-In-Modal' %}
 
     {%- liquid
       if section.settings.menu != blank
@@ -315,11 +282,7 @@
   </header>
   <!-- custom code for add line between header and main page -->
       <!-- <div class="custom-header-divider"></div> -->
-{%- if section.settings.sticky_header_type != 'none' -%}
-</sticky-header>
-{%- else -%}
-</div>
-{%- endif -%}
+</{% if section.settings.sticky_header_type != 'none' %}sticky-header{% else %}div{% endif %}>
 
 {%- if settings.cart_type == "notification" -%}
   {%- render 'cart-notification', color_scheme: section.settings.color_scheme, desktop_menu_type: section.settings.menu_type_desktop -%}

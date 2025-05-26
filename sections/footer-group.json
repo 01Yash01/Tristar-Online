@@ -13,8 +13,20 @@
   "sections": {
     "footer": {
       "type": "footer",
+      "blocks": {
+        "link_list_thWHrP": {
+          "type": "link_list",
+          "settings": {
+            "heading": "Quick links",
+            "menu": "categories"
+          }
+        }
+      },
+      "block_order": [
+        "link_list_thWHrP"
+      ],
       "settings": {
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-5",
         "newsletter_enable": true,
         "newsletter_heading": "Subscribe to our emails",
         "enable_follow_on_shop": true,

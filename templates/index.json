@@ -324,55 +324,6 @@
         "padding_bottom": 16
       }
     },
-    "collection_list_8GxMyL": {
-      "type": "collection-list",
-      "blocks": {
-        "featured_collection_pc3yUK": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "amazon"
-          }
-        },
-        "featured_collection_6JqXDi": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "apple-iphone"
-          }
-        },
-        "featured_collection_GNYE6V": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": ""
-          }
-        },
-        "featured_collection_gJbytr": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "asus"
-          }
-        }
-      },
-      "block_order": [
-        "featured_collection_pc3yUK",
-        "featured_collection_6JqXDi",
-        "featured_collection_GNYE6V",
-        "featured_collection_gJbytr"
-      ],
-      "disabled": true,
-      "name": "t:sections.collection-list.presets.name",
-      "settings": {
-        "title": "Best Sellers",
-        "heading_size": "h2",
-        "image_ratio": "square",
-        "columns_desktop": 4,
-        "color_scheme": "",
-        "show_view_all": false,
-        "columns_mobile": "2",
-        "swipe_on_mobile": true,
-        "padding_top": 48,
-        "padding_bottom": 48
-      }
-    },
     "sp_24_hour_count_down_qUWf9A": {
       "type": "sp-24-hour-count-down",
       "name": "🚀 24 Hour Countdown",
@@ -428,6 +379,84 @@
         "headline": "<strong>Flash Sale now on!</strong>",
         "text": "Save on modern office accessories, best selling products + many more products.",
         "headline_spacing": 9
+      }
+    },
+    "featured_collection_4hCjK4": {
+      "type": "featured-collection",
+      "name": "t:sections.featured-collection.presets.name",
+      "settings": {
+        "title": "New Arrivals",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "collection": "new-arrival",
+        "products_to_show": 8,
+        "columns_desktop": 4,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "outline",
+        "enable_desktop_slider": false,
+        "color_scheme": "",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "none",
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "collection_list_DCh3t4": {
+      "type": "collection-list",
+      "blocks": {
+        "featured_collection_mPTwFW": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": ""
+          }
+        },
+        "featured_collection_jHgM7z": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": ""
+          }
+        },
+        "featured_collection_n49Xzm": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": ""
+          }
+        },
+        "featured_collection_Jn7t8w": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": ""
+          }
+        }
+      },
+      "block_order": [
+        "featured_collection_mPTwFW",
+        "featured_collection_jHgM7z",
+        "featured_collection_n49Xzm",
+        "featured_collection_Jn7t8w"
+      ],
+      "disabled": true,
+      "name": "t:sections.collection-list.presets.name",
+      "settings": {
+        "title": "New Arrival",
+        "heading_size": "h2",
+        "image_ratio": "square",
+        "columns_desktop": 4,
+        "color_scheme": "",
+        "show_view_all": false,
+        "columns_mobile": "1",
+        "swipe_on_mobile": true,
+        "padding_top": 36,
+        "padding_bottom": 36
       }
     },
     "featured_product_JncQym": {
@@ -785,54 +814,6 @@
         "headline_spacing": 10
       }
     },
-    "collection_list_DCh3t4": {
-      "type": "collection-list",
-      "blocks": {
-        "featured_collection_mPTwFW": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": ""
-          }
-        },
-        "featured_collection_jHgM7z": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": ""
-          }
-        },
-        "featured_collection_n49Xzm": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": ""
-          }
-        },
-        "featured_collection_Jn7t8w": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": ""
-          }
-        }
-      },
-      "block_order": [
-        "featured_collection_mPTwFW",
-        "featured_collection_jHgM7z",
-        "featured_collection_n49Xzm",
-        "featured_collection_Jn7t8w"
-      ],
-      "name": "t:sections.collection-list.presets.name",
-      "settings": {
-        "title": "Weekend sale",
-        "heading_size": "h1",
-        "image_ratio": "square",
-        "columns_desktop": 4,
-        "color_scheme": "",
-        "show_view_all": false,
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
     "collapsible_content_WK8jeD": {
       "type": "collapsible-content",
       "blocks": {
@@ -914,6 +895,45 @@
         "padding_bottom": 36
       }
     },
+    "image_banner_ewAh3M": {
+      "type": "image-banner",
+      "blocks": {
+        "heading_Q9JHkQ": {
+          "type": "heading",
+          "disabled": true,
+          "settings": {
+            "heading": "Image banner",
+            "heading_size": "h1"
+          }
+        },
+        "text_PiJnh3": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "Give customers details about the banner image(s) or content on the template.",
+            "text_style": "body"
+          }
+        }
+      },
+      "block_order": [
+        "heading_Q9JHkQ",
+        "text_PiJnh3"
+      ],
+      "name": "t:sections.image-banner.presets.name",
+      "settings": {
+        "image": "shopify://shop_images/Tristar_Website_Gaming_Banner_64a18ca2-1e90-433a-a691-55104ca5a576.png",
+        "image_overlay_opacity": 0,
+        "image_height": "adapt",
+        "desktop_content_position": "middle-center",
+        "show_text_box": false,
+        "desktop_content_alignment": "center",
+        "color_scheme": "",
+        "image_behavior": "none",
+        "mobile_content_alignment": "center",
+        "stack_images_on_mobile": true,
+        "show_text_below": true
+      }
+    },
     "multicolumn_9qmEca": {
       "type": "multicolumn",
       "blocks": {
@@ -988,15 +1008,16 @@
     "slideshow_FXLnz4",
     "featured_collection_TqArby",
     "featured_collection_Gy369K",
-    "collection_list_8GxMyL",
     "sp_24_hour_count_down_qUWf9A",
+    "featured_collection_4hCjK4",
+    "collection_list_DCh3t4",
     "featured_product_JncQym",
     "sp_marquee_P6jtLy",
     "multicolumn_kmwixd",
     "sp_review_slider_WVPEiQ",
-    "collection_list_DCh3t4",
     "collapsible_content_WK8jeD",
     "featured_blog_CG9hYn",
+    "image_banner_ewAh3M",
     "multicolumn_9qmEca"
   ]
 }
