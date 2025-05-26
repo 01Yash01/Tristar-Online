@@ -2782,6 +2782,14 @@ details[open] > .header__submenu {
     justify-content: center;
   }
 
+  /* custom code */
+  /* Add horizontal spacing between header menu items */
+.header__inline-menu .list-menu--inline {
+  display: flex;
+  gap: .5rem; /* Change to 1.5rem or 3rem if you want more/less space */
+}
+
+
   .header--middle-left .header__inline-menu {
     margin-left: 0;
   }
@@ -2793,8 +2801,10 @@ details[open] > .header__submenu {
 
 .header__menu-item {
   padding: 1.2rem;
+  font-size: 1.25rem;
   text-decoration: none;
-  color: rgba(var(--color-foreground), 0.75);
+  font-weight: 650; 
+  color: rgba(var(--color-foreground));
 }
 
 .header__menu-item:hover {
@@ -3595,3 +3605,56 @@ details-disclosure > details {
     transform: translateX(100%) scaleX(0);
   }
 }
+
+/* Custom slideshow image styling */
+.slideshow__slide,
+.slideshow__slide img {
+  background-color: #ffffff !important;  /* Ensure white background, not grey */
+  border-radius: 14px;        /* Rounded corners on container and image */
+  overflow: hidden;           /* Prevents sharp image corners from leaking out */
+}
+
+/* Optional: smooth out image appearance on load */
+.slideshow__slide img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: border-radius 0.3s ease;
+}
+
+/* .custom-header-divider {
+  height: 2px;
+  background-color: red;
+  width: 100%;
+  z-index: 9999;
+  position: relative;
+}
+ */
+.custom-header-divider-home {
+  height: 2px;
+  background-color: black;
+  width: 100%;
+  display: block; /* ensure it behaves as a block */
+}
+
+.instafeed-image {
+  transition: transform 0.1s ease;
+  display: block;
+  width: 100%;
+}
+
+.instafeed-image:hover {
+  transform: scale(1.10);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+.instafeed-slide-{{ section.id }} {
+  overflow: hidden;
+}
+.swiper-wrapper {
+  padding-left: 10px;
+  padding-top: 2px;
+  /* padding-right: 10px; */
+}
+
+
+
