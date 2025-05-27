@@ -444,7 +444,6 @@
         "featured_collection_n49Xzm",
         "featured_collection_Jn7t8w"
       ],
-      "disabled": true,
       "name": "t:sections.collection-list.presets.name",
       "settings": {
         "title": "New Arrival",
@@ -883,12 +882,12 @@
       "settings": {
         "heading": "Blog posts",
         "heading_size": "h1",
-        "blog": "",
-        "post_limit": 3,
-        "columns_desktop": 3,
-        "color_scheme": "",
-        "show_image": true,
-        "show_date": true,
+        "blog": "news",
+        "post_limit": 4,
+        "columns_desktop": 4,
+        "color_scheme": "scheme-1",
+        "show_image": false,
+        "show_date": false,
         "show_author": false,
         "show_view_all": true,
         "padding_top": 36,
