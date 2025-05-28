@@ -2801,9 +2801,9 @@ details[open] > .header__submenu {
 
 .header__menu-item {
   padding: 1.2rem;
-  font-size: 1.25rem;
+  font-size: 1.5rem;
   text-decoration: none;
-  font-weight: 650; 
+  font-weight: 700; 
   color: rgba(var(--color-foreground));
 }
 
@@ -2815,13 +2815,14 @@ details[open] > .header__submenu {
   transition: text-decoration var(--duration-short) ease;
 }
 
-.header__menu-item:hover span {
+/* .header__menu-item:hover span {
   text-decoration: underline;
-  text-underline-offset: 0.3rem;
-}
+  text-underline-offset: auto;
+} */
 
 details[open] > .header__menu-item {
   text-decoration: underline;
+    text-underline-offset: auto;
 }
 
 details[open]:hover > .header__menu-item {
