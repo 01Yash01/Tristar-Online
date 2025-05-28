@@ -301,7 +301,7 @@
     .instafeed-subheading-{{ section.id }} strong {
       font-family: {{ subheading_font.family }}, {{ subheading_font.fallback_families }};
       font-weight: {{ subheading_font.weight }};
-      font-style: {{ subheadingg_font.style }};
+      font-style: {{ subheading_font.style }};
     }
   </style>
 {% endif %}
@@ -390,7 +390,7 @@
       {{ 'image' | placeholder_svg_tag: 'placeholder' }}
     {% endif %}
     {% if block.settings.name != blank %}
-      <div class="instafeed-image-name" style="font-size: 12px; font-weight: 500; color: black; margin-top: 2px; text-decoration: none; display: inline-block;">
+      <div class="instafeed-image-name" style="font-size: 1.5rem; font-weight: 500; color: black; margin-top: 1px; text-decoration: none; display: inline-block;">
         {{ block.settings.name }}
       </div>
     {% endif %}
@@ -540,7 +540,7 @@
         "type": "text",
         "id": "heading",
         "label": "Heading",
-        "default": "Let’s be friends."
+        "default": "Let's be friends."
       },
       {
         "type": "checkbox",
