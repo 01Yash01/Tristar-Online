@@ -1,5 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" fill="none" class="icon icon-account" viewBox="0 0 48 48">
-  <path fill="none" d="M0 0h48v48H0z"/>
-  <path fill="currentColor" d="M33.843 26.914 24 36l-9.843-9.086C8.674 30.421 5 36.749 5 44h38c0-7.251-3.674-13.579-9.157-17.086z"/>
-  <path fill="currentColor" d="M24 28c3.55 0 6.729-1.55 8.926-4C34.831 21.876 36 19.078 36 16c0-6.627-5.373-12-12-12S12 9.373 12 16c0 3.078 1.169 5.876 3.074 8C17.271 26.45 20.45 28 24 28z"/>
+<svg xmlns="http://www3.org/2000/svg" fill="none" class="icon icon-account" viewBox="4 2 16 16">
+<circle cx="10" cy="6.5" r="2.75" stroke="black" stroke-width="1.5"></circle>
+<path stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="m5.172 14.591-.437.786a.588.588 0 0 0 .514.873h9.502a.588.588 0 0 0 .514-.873l-.437-.786a5.523 5.523 0 0 0-9.656 0">
+</path>
 </svg>
