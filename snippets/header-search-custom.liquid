@@ -1,0 +1,110 @@
+<style>
+  :root {
+    --inputs-radius: 20px;
+  }
+
+  .search-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  .mobile-search,
+  .desktop-search {
+    display: none;
+  }
+
+  @media (max-width: 768px) {
+    .mobile-search {
+      display: block;
+    }
+  }
+
+  @media (min-width: 769px) {
+    .desktop-search {
+      display: block;
+    }
+    
+    predictive-search[open] .predictive-search {
+      position: absolute;
+      min-width: 600px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+    }
+  }
+</style>
+
+<!-- MOBILE SEARCH -->
+<div class="mobile-search search-container">
+  {% render 'header-search', input_id: 'Search-In-Modal' %}
+</div>
+
+<!-- DESKTOP SEARCH -->
+<div class="desktop-search search-container">
+  {%- if settings.predictive_search_enabled -%}
+    <predictive-search class="search-modal__form" data-loading-text="{{ 'accessibility.loading' | t }}">
+  {%- else -%}
+    <search-form class="search-modal__form">
+  {%- endif -%}
+  
+  <form action="{{ routes.search_url }}" method="get" role="search" class="search search-modal__form">
+    <div class="field">
+      <input
+        class="search__input field__input"
+        id="{{ input_id }}"
+        type="search"
+        name="q"
+        value="{{ search.terms | escape }}"
+        placeholder="{{ 'general.search.search' | t }}"
+        {%- if settings.predictive_search_enabled -%}
+          role="combobox"
+          aria-expanded="false"
+          aria-owns="predictive-search-results"
+          aria-controls="predictive-search-results"
+          aria-haspopup="listbox"
+          aria-autocomplete="list"
+          autocorrect="off"
+          autocomplete="off"
+          autocapitalize="off"
+          spellcheck="false"
+        {%- endif -%}
+      >
+      <label class="field__label" for="{{ input_id }}">{{ 'general.search.search' | t }}</label>
+      <input type="hidden" name="options[prefix]" value="last">
+
+      <!-- Reset Button -->
+      <button
+        type="reset"
+        class="reset__button field__button{% if search.terms == blank %} hidden{% endif %}"
+        aria-label="{{ 'general.search.reset' | t }}"
+      >
+        <svg class="icon icon-close" aria-hidden="true">
+          <use xlink:href="#icon-reset"></use>
+        </svg>
+      </button>
+
+      <!-- Search Submit Button -->
+      <button class="search__button field__button" aria-label="{{ 'general.search.search' | t }}">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="-2 -5 28 28" fill="none">
+          <circle cx="9" cy="9" r="4.75" stroke="currentColor" stroke-width="var(--icon-stroke-width)" />
+          <path d="m12.5 12.5 3.25 3.25" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="var(--icon-stroke-width)" />
+        </svg>
+      </button>
+    </div>
+
+    <!-- Predictive Search Results -->
+    {%- if settings.predictive_search_enabled -%}
+      <div class="predictive-search predictive-search--header" tabindex="-1" data-predictive-search>
+        {%- render 'loading-spinner', class: 'predictive-search__loading-state' -%}
+      </div>
+      <span class="predictive-search-status visually-hidden" role="status" aria-hidden="true"></span>
+    {%- endif -%}
+  </form>
+
+  {%- if settings.predictive_search_enabled -%}
+    </predictive-search>
+  {%- else -%}
+    </search-form>
+  {%- endif -%}
+</div>

@@ -110,8 +110,8 @@
   <sticky-header data-sticky-type="{{ section.settings.sticky_header_type }}" class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}">
 {%- else -%}
   <div class="header-wrapper color-{{ section.settings.color_scheme }} gradient{% if section.settings.show_line_separator %} header-wrapper--border-bottom{% endif %}">
-{%- endif -%}
-  {%- liquid
+{%- endif -%}  
+    {%- liquid
     assign social_links = false
     assign localization_forms = false
 
@@ -228,8 +228,9 @@
           </localization-form>
         {%- endif -%}
       </div>
-      {% render 'header-search', input_id: 'Search-In-Modal' %}
-
+      
+      {% render 'header-search-custom' %}
+      
       {%- if shop.customer_accounts_enabled -%}
         <a
           href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}"
@@ -286,15 +287,14 @@
   </header>
   <!-- custom code for add line between header and main page -->
       <!-- <div class="custom-header-divider"></div> -->
-{%- if section.settings.sticky_header_type != 'none' -%}
-</sticky-header>
-{%- else -%}
-</div>
-{%- endif -%}
-
-{%- if settings.cart_type == "notification" -%}
-  {%- render 'cart-notification', color_scheme: section.settings.color_scheme, desktop_menu_type: section.settings.menu_type_desktop -%}
-{%- endif -%}
+      {%- if section.settings.sticky_header_type != 'none' -%}
+          </sticky-header>
+      {%- else -%}
+          </div>
+      {%- endif -%}
+          {%- if settings.cart_type == "notification" -%}
+          {%- render 'cart-notification', color_scheme: section.settings.color_scheme, desktop_menu_type: section.settings.menu_type_desktop -%}
+      {%- endif -%}
 
 {% javascript %}
   class StickyHeader extends HTMLElement {
