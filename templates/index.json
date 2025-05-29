@@ -114,7 +114,6 @@
         "slide_W9TVWH",
         "slide_7mPCjn"
       ],
-      "name": "SS - Instafeed #2",
       "settings": {
         "top": "",
         "top_custom": false,
@@ -139,11 +138,11 @@
         "slider_mt": 12,
         "slider_row": "10",
         "slider_row_mobile": "4",
-        "slider_gap": 40,
+        "slider_gap": 48,
         "slider_gap_mobile": 30,
         "autoplay": true,
         "autoplay_speed": 3,
-        "nav_size": 25,
+        "nav_size": 30,
         "nav_size_mobile": 30,
         "hide_nav": false,
         "hide_nav_mobile": false,
@@ -155,19 +154,19 @@
         "nav_btn_hover_bg": "#121212",
         "nav_border": "#aba49d",
         "nav_border_hover": "#242833",
-        "nav_icon": "#aba49d",
+        "nav_icon": "#797775",
         "nav_hover_icon": "#ffffff",
         "background_color": "#ffffff",
         "background_gradient": "",
         "border_color": "#000000",
-        "margin_top": 20,
-        "margin_bottom": 0,
+        "margin_top": 0,
+        "margin_bottom": 16,
         "padding_top": 0,
         "padding_bottom": 0,
         "padding_horizontal": 10,
         "padding_horizontal_mobile": 1.5,
         "full_width": false,
-        "content_width": 160,
+        "content_width": 150,
         "border_thickness": 1,
         "lazy": true
       }
@@ -254,7 +253,6 @@
         "slide_PnhpMV",
         "slide_cxkVme"
       ],
-      "name": "t:sections.slideshow.presets.name",
       "settings": {
         "layout": "grid",
         "slide_height": "adapt_image",
@@ -268,7 +266,6 @@
     },
     "featured_collection_TqArby": {
       "type": "featured-collection",
-      "name": "t:sections.featured-collection.presets.name",
       "settings": {
         "title": "Weekend Sale",
         "heading_size": "h2",
@@ -276,8 +273,8 @@
         "show_description": true,
         "description_style": "body",
         "collection": "weekend-sale",
-        "products_to_show": 16,
-        "columns_desktop": 6,
+        "products_to_show": 12,
+        "columns_desktop": 5,
         "full_width": false,
         "show_view_all": true,
         "view_all_style": "link",
@@ -297,7 +294,6 @@
     },
     "featured_collection_Gy369K": {
       "type": "featured-collection",
-      "name": "t:sections.featured-collection.presets.name",
       "settings": {
         "title": "Best Seller",
         "heading_size": "h2",
@@ -321,12 +317,11 @@
         "columns_mobile": "2",
         "swipe_on_mobile": false,
         "padding_top": 16,
-        "padding_bottom": 16
+        "padding_bottom": 32
       }
     },
     "sp_24_hour_count_down_qUWf9A": {
       "type": "sp-24-hour-count-down",
-      "name": "🚀 24 Hour Countdown",
       "settings": {
         "override_fonts": false,
         "headline_font": "sans-serif",
@@ -383,7 +378,6 @@
     },
     "featured_collection_4hCjK4": {
       "type": "featured-collection",
-      "name": "t:sections.featured-collection.presets.name",
       "settings": {
         "title": "New Arrivals",
         "heading_size": "h2",
@@ -391,7 +385,7 @@
         "show_description": false,
         "description_style": "body",
         "collection": "new-arrival",
-        "products_to_show": 8,
+        "products_to_show": 12,
         "columns_desktop": 4,
         "full_width": false,
         "show_view_all": true,
@@ -444,7 +438,6 @@
         "featured_collection_n49Xzm",
         "featured_collection_Jn7t8w"
       ],
-      "name": "t:sections.collection-list.presets.name",
       "settings": {
         "title": "New Arrival",
         "heading_size": "h2",
@@ -521,7 +514,6 @@
         "buy_buttons_DFfNQp",
         "share_6Hgc9L"
       ],
-      "name": "t:sections.featured-product.presets.name",
       "settings": {
         "product": "samsung-galaxy-s24-512gb-titanium-black-au-version-excellent-refurbished",
         "color_scheme": "",
@@ -610,7 +602,6 @@
         "image_Jqmwzb",
         "video_9n8jHA"
       ],
-      "name": "🚀 Marquee",
       "settings": {
         "override_fonts": true,
         "headline_font": "instrument_sans_n4",
@@ -710,7 +701,6 @@
         "column_XChB4J",
         "column_QNm8yK"
       ],
-      "name": "t:sections.multicolumn.presets.name",
       "settings": {
         "title": "<strong>This approach resulted in the beautiful structure</strong>",
         "heading_size": "h2",
@@ -766,7 +756,6 @@
         "quote_PEEmaV",
         "quote_7fEhKx"
       ],
-      "name": "🚀 Review Slider",
       "settings": {
         "override_fonts": true,
         "headline_font": "instrument_sans_n6",
@@ -860,7 +849,6 @@
         "collapsible_row_NqkxHU"
       ],
       "disabled": true,
-      "name": "t:sections.collapsible_content.presets.name",
       "settings": {
         "caption": "",
         "heading": "Collapsible content",
@@ -878,7 +866,6 @@
     },
     "featured_blog_CG9hYn": {
       "type": "featured-blog",
-      "name": "t:sections.featured-blog.presets.name",
       "settings": {
         "heading": "Blog posts",
         "heading_size": "h1",
@@ -918,7 +905,6 @@
         "heading_Q9JHkQ",
         "text_PiJnh3"
       ],
-      "name": "t:sections.image-banner.presets.name",
       "settings": {
         "image": "shopify://shop_images/Tristar_Website_Gaming_Banner_64a18ca2-1e90-433a-a691-55104ca5a576.png",
         "image_overlay_opacity": 0,
@@ -983,7 +969,6 @@
         "column_PixpeK",
         "column_LEUwwz"
       ],
-      "name": "t:sections.multicolumn.presets.name",
       "settings": {
         "title": "",
         "heading_size": "h1",
@@ -999,6 +984,21 @@
         "swipe_on_mobile": true,
         "padding_top": 36,
         "padding_bottom": 36
+      }
+    },
+    "ss_back_to_top_button_kLNng3": {
+      "type": "ss-back-to-top-button",
+      "settings": {
+        "hide_on_mobile": true,
+        "show_when_precent_of_page": 30,
+        "pos": "right",
+        "bg_color": "#007bff",
+        "border_color": "#5e5c5c",
+        "arrow_color": "#ffffff",
+        "button_size": 56,
+        "arrow_size": 40,
+        "horizontal_dst_to_edge": 20,
+        "vertical_dst_to_edge": 20
       }
     }
   },
@@ -1017,6 +1017,7 @@
     "collapsible_content_WK8jeD",
     "featured_blog_CG9hYn",
     "image_banner_ewAh3M",
-    "multicolumn_9qmEca"
+    "multicolumn_9qmEca",
+    "ss_back_to_top_button_kLNng3"
   ]
 }
