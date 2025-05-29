@@ -138,6 +138,7 @@
 
   .instafeed-slider-{{ section.id }} {
     margin-top: {{ slider_mt | times: 0.75 | round: 0  }}px;
+    position: relative;
   }
 
   .instafeed-slide-{{ section.id }} {
@@ -165,19 +166,24 @@
     height: {{ nav_size_mobile }}px !important;
     background: {{ nav_btn_bg }} !important;
     transition: all 0.3s ease 0s;
+    transform: translateY(-50%);
+    z-index: 10;
+    position: absolute;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   }
 
   .instafeed-btn-prev-{{ section.id }} {
-    left: 5px !important;
+    left: 10px !important;
   }
   .instafeed-btn-next-{{ section.id }} {
-    right: 5px !important;
+    right: 10px !important;
   }
 
   .instafeed-btn-next-{{ section.id }}::after,
   .instafeed-btn-prev-{{ section.id }}::after {
     font-size: {{ nav_size_mobile | times: 0.5 | round: 0 }}px !important;
     color: {{ nav_icon }};
+    z-index: 11;
   }
 
   .instafeed-btn-next-{{ section.id }}::after {
@@ -248,6 +254,23 @@
     .instafeed-btn-prev-{{ section.id }} {
       width: {{ nav_size }}px !important;
       height: {{ nav_size }}px !important;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .instafeed-slider-container-{{ section.id }}:hover .instafeed-btn-next-{{ section.id }},
+    .instafeed-slider-container-{{ section.id }}:hover .instafeed-btn-prev-{{ section.id }} {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .instafeed-btn-prev-{{ section.id }} {
+      left: 15px !important;
+    }
+    .instafeed-btn-next-{{ section.id }} {
+      right: 15px !important;
     }
 
     .instafeed-btn-next-{{ section.id }}::after,
@@ -301,7 +324,7 @@
     .instafeed-subheading-{{ section.id }} strong {
       font-family: {{ subheading_font.family }}, {{ subheading_font.fallback_families }};
       font-weight: {{ subheading_font.weight }};
-      font-style: {{ subheading_font.style }};
+      font-style: {{ subheadingg_font.style }};
     }
   </style>
 {% endif %}
@@ -371,37 +394,94 @@
       {% if subheading != blank %}
         <div class="instafeed-subheading-{{ section.id }}">{{ subheading }}</div>
       {% endif %}
-      <div class="instafeed-slider-{{ section.id }} swiper presets-{{ section.id }}">
-        <div class="swiper-wrapper">
-          {% for block in section.blocks %}
-  <a href="{{ block.settings.url }}" class="instafeed-slide-{{ section.id }} swiper-slide" style="display: block; text-align: center; height: auto;">
-    {% if block.settings.image != blank %}
-      <!-- 
-    <img src="{{ block.settings.image | image_url }}" alt="{{ block.settings.image.alt }}" style="margin-bottom: 0;" {% if lazy %}loading="lazy"{% endif %}>
-    -->
-    <img
-  class="instafeed-image"
-  src="{{ block.settings.image | image_url }}"
-  alt="{{ block.settings.image.alt }}"
-  style="margin-bottom: 0;"
-  {% if lazy %}loading="lazy"{% endif %}>
-
-    {% else %}
-      {{ 'image' | placeholder_svg_tag: 'placeholder' }}
-    {% endif %}
-    {% if block.settings.name != blank %}
-      <div class="instafeed-image-name" style="font-size: 1.5rem; font-weight: 500; color: black; margin-top: 1px; text-decoration: none; display: inline-block;">
-        {{ block.settings.name }}
-      </div>
-    {% endif %}
-  </a>
-{% endfor %}
+      <div class="instafeed-slider-container-{{ section.id }}" style="position: relative;">
+        <div class="instafeed-slider-{{ section.id }} swiper presets-{{ section.id }}">
+          <div class="swiper-wrapper">
+            {% for block in section.blocks %}
+              <a href="{{ block.settings.url }}" class="instafeed-slide-{{ section.id }} swiper-slide" style="display: block; text-align: center; height: auto;">
+                {% if block.settings.image != blank %}
+                  <img
+                    class="instafeed-image"
+                    src="{{ block.settings.image | image_url }}"
+                    alt="{{ block.settings.image.alt }}"
+                    style="margin-bottom: 0;"
+                    {% if lazy %}loading="lazy"{% endif %}>
+                {% else %}
+                  {{ 'image' | placeholder_svg_tag: 'placeholder' }}
+                {% endif %}
+                {% if block.settings.name != blank %}
+                  <div class="instafeed-image-name" style="font-size: 1.5rem; font-weight: 500; color: black; margin-top: 1px; text-decoration: none; display: inline-block;">
+                    {{ block.settings.name }}
+                  </div>
+                {% endif %}
+              </a>
+            {% endfor %}
+          </div>
         </div>
         <div class="swiper-button-prev instafeed-btn-prev-{{ section.id }}"></div>
         <div class="swiper-button-next instafeed-btn-next-{{ section.id }}"></div>
       </div>
     </div>
 </div>
+
+<style>
+  .instafeed-slider-container-{{ section.id }} {
+    position: relative;
+    padding: 0 {{ nav_size_mobile | plus: 20 }}px;
+  }
+
+  .instafeed-btn-next-{{ section.id }},
+  .instafeed-btn-prev-{{ section.id }} {
+    top: 50% !important;
+    display: flex !important;
+    border-radius: 50%;
+    border: 1px solid {{ nav_border }} !important;
+    width: {{ nav_size_mobile }}px !important;
+    height: {{ nav_size_mobile }}px !important;
+    background: {{ nav_btn_bg }} !important;
+    transition: all 0.3s ease 0s;
+    transform: translateY(-50%);
+    z-index: 10;
+    position: absolute;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .instafeed-btn-prev-{{ section.id }} {
+    left: 10px !important;
+  }
+  .instafeed-btn-next-{{ section.id }} {
+    right: 10px !important;
+  }
+
+  @media(min-width: 768px) {
+    .instafeed-slider-container-{{ section.id }} {
+      padding: 0 {{ nav_size | plus: 30 }}px;
+    }
+
+    .instafeed-btn-next-{{ section.id }},
+    .instafeed-btn-prev-{{ section.id }} {
+      width: {{ nav_size }}px !important;
+      height: {{ nav_size }}px !important;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .instafeed-slider-container-{{ section.id }}:hover .instafeed-btn-next-{{ section.id }},
+    .instafeed-slider-container-{{ section.id }}:hover .instafeed-btn-prev-{{ section.id }} {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .instafeed-btn-prev-{{ section.id }} {
+      left: 15px !important;
+    }
+    .instafeed-btn-next-{{ section.id }} {
+      right: 15px !important;
+    }
+  }
+</style>
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@6.8.4/swiper-bundle.min.js"></script>
 
@@ -540,7 +620,7 @@
         "type": "text",
         "id": "heading",
         "label": "Heading",
-        "default": "Let’s be friends."
+        "default": "Let's be friends."
       },
       {
         "type": "checkbox",
