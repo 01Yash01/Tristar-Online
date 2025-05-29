@@ -15,7 +15,7 @@
         "featured_image": {
           "type": "featured_image",
           "settings": {
-            "image_height": "adapt"
+            "image_height": "medium"
           }
         },
         "title": {
@@ -25,22 +25,22 @@
             "blog_show_author": false
           }
         },
+        "content": {
+          "type": "content",
+          "settings": {}
+        },
         "share": {
           "type": "share",
           "settings": {
             "share_label": "Share"
           }
-        },
-        "content": {
-          "type": "content",
-          "settings": {}
         }
       },
       "block_order": [
         "featured_image",
         "title",
-        "share",
-        "content"
+        "content",
+        "share"
       ],
       "settings": {}
     }
