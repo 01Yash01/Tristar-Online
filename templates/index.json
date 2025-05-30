@@ -12,14 +12,6 @@
     "ss_instafeed_2_8BewHL": {
       "type": "ss-instafeed-2",
       "blocks": {
-        "slide_Gczhzt": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/3_b891c4fd-3b2d-4bab-97bf-39f08dd3ff87.jpg",
-            "name": "<p>Abc</p>",
-            "url": "shopify://collections"
-          }
-        },
         "slide_F6YEcf": {
           "type": "slide",
           "settings": {
@@ -28,12 +20,20 @@
             "url": ""
           }
         },
-        "slide_Rp8Mqk": {
+        "slide_Gczhzt": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/2_ba576c7a-d992-4afe-aee7-9ee2f024d337.jpg",
-            "name": "<p>BNsdlk</p>",
-            "url": ""
+            "image": "shopify://shop_images/3_b891c4fd-3b2d-4bab-97bf-39f08dd3ff87.jpg",
+            "name": "<p>Abc</p>",
+            "url": "shopify://collections"
+          }
+        },
+        "slide_KVBmk6": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/61T9NHGrXRL._AC_SL1500_19af495e-9fc2-4068-a43d-7ec77f3a67b5.jpg",
+            "name": "<p>watch</p>",
+            "url": "shopify://collections/devices-and-accessories-watches"
           }
         },
         "slide_CrPU9K": {
@@ -44,12 +44,12 @@
             "url": ""
           }
         },
-        "slide_KVBmk6": {
+        "slide_Rp8Mqk": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/61T9NHGrXRL._AC_SL1500_19af495e-9fc2-4068-a43d-7ec77f3a67b5.jpg",
-            "name": "<p>watch</p>",
-            "url": "shopify://collections/devices-and-accessories-watches"
+            "image": "shopify://shop_images/2_ba576c7a-d992-4afe-aee7-9ee2f024d337.jpg",
+            "name": "<p>BNsdlk</p>",
+            "url": ""
           }
         },
         "slide_F7cBHD": {
@@ -102,11 +102,11 @@
         }
       },
       "block_order": [
-        "slide_Gczhzt",
         "slide_F6YEcf",
-        "slide_Rp8Mqk",
-        "slide_CrPU9K",
+        "slide_Gczhzt",
         "slide_KVBmk6",
+        "slide_CrPU9K",
+        "slide_Rp8Mqk",
         "slide_F7cBHD",
         "slide_hxrazd",
         "slide_38kztD",
@@ -131,26 +131,26 @@
         "subheading": "",
         "subheading_custom": false,
         "subheading_font": "josefin_sans_n4",
-        "subheading_size": 16,
+        "subheading_size": 0,
         "subheading_height": 130,
         "subheading_align": "center",
         "subheading_mt": 12,
         "slider_mt": 12,
         "slider_row": "10",
-        "slider_row_mobile": "4",
+        "slider_row_mobile": "3",
         "slider_gap": 48,
-        "slider_gap_mobile": 30,
+        "slider_gap_mobile": 14,
         "autoplay": true,
         "autoplay_speed": 3,
-        "nav_size": 30,
-        "nav_size_mobile": 25,
+        "nav_size": 25,
+        "nav_size_mobile": 20,
         "hide_nav": false,
         "hide_nav_mobile": false,
         "image_radius": 100,
         "top_color": "#121212",
         "heading_color": "#746661",
         "subheading_color": "#aba49d",
-        "nav_btn_bg": "#ffffff",
+        "nav_btn_bg": "#fdfdfd",
         "nav_btn_hover_bg": "#121212",
         "nav_border": "#242833",
         "nav_border_hover": "#242833",
@@ -174,6 +174,42 @@
     "slideshow_FXLnz4": {
       "type": "slideshow",
       "blocks": {
+        "slide_AKDUAe": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/pixel_bundle_web_1.png",
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "shopify://collections/google-pixel-watches",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": false,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "scheme-1",
+            "text_alignment_mobile": "center"
+          }
+        },
+        "slide_cxkVme": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/pixel_watch_3_web_1.png",
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "shopify://collections/google-pixel-watches",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": false,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "",
+            "text_alignment_mobile": "center"
+          }
+        },
         "slide_jfBeVG": {
           "type": "slide",
           "settings": {
@@ -227,31 +263,14 @@
             "color_scheme": "",
             "text_alignment_mobile": "center"
           }
-        },
-        "slide_cxkVme": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/pixel_watch_3_web_1.png",
-            "heading": "",
-            "heading_size": "h1",
-            "subheading": "",
-            "button_label": "",
-            "link": "shopify://collections/google-pixel-watches",
-            "button_style_secondary": false,
-            "box_align": "middle-center",
-            "show_text_box": false,
-            "text_alignment": "center",
-            "image_overlay_opacity": 0,
-            "color_scheme": "",
-            "text_alignment_mobile": "center"
-          }
         }
       },
       "block_order": [
+        "slide_AKDUAe",
+        "slide_cxkVme",
         "slide_jfBeVG",
         "slide_LDwaNN",
-        "slide_PnhpMV",
-        "slide_cxkVme"
+        "slide_PnhpMV"
       ],
       "settings": {
         "layout": "grid",
