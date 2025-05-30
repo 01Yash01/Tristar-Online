@@ -77,7 +77,7 @@
     
     /* custom code */
     border-top: {{ section.settings.border_thickness }}px solid rgba(0, 0, 0, 0.1);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 15px rgba(66, 153, 225, 0.15);
     margin-top: {{ section.settings.margin_top | times: 0.75 | round: 0 }}px;
 
     /* margin-top: {{ margin_top | times: 0.75 | round: 0 }}px; */
@@ -139,6 +139,8 @@
   .instafeed-slider-{{ section.id }} {
     margin-top: {{ slider_mt | times: 0.75 | round: 0  }}px;
     position: relative;
+    width: 100%;
+    padding-right: 20px;
   }
 
   .instafeed-slide-{{ section.id }} {
@@ -169,7 +171,7 @@
     transform: translateY(-50%);
     z-index: 10;
     position: absolute;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(66, 153, 225, 0.2);
   }
 
   .instafeed-btn-prev-{{ section.id }} {
@@ -248,13 +250,23 @@
 
     .instafeed-slider-{{ section.id }} {
       margin-top: {{ slider_mt }}px;
+      padding-right: 40px;
+    }
+
+    .instafeed-slider-container-{{ section.id }} {
+      padding: 0 {{ nav_size | plus: 30 }}px;
+      max-width: 100%;
+    }
+
+    .instafeed-slider-{{ section.id }} .swiper-wrapper {
+      margin-right: -20px;
     }
 
     .instafeed-btn-next-{{ section.id }},
     .instafeed-btn-prev-{{ section.id }} {
       width: {{ nav_size }}px !important;
       height: {{ nav_size }}px !important;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+      box-shadow: 0 3px 12px rgba(66, 153, 225, 0.25);
       opacity: 0;
       visibility: hidden;
       transition: all 0.3s ease;
@@ -410,7 +422,7 @@
                   {{ 'image' | placeholder_svg_tag: 'placeholder' }}
                 {% endif %}
                 {% if block.settings.name != blank %}
-                  <div class="instafeed-image-name" style="font-size: 1.5rem; font-weight: 500; color: black; margin-top: 1px; text-decoration: none; display: inline-block;">
+                  <div class="instafeed-image-name" style="font-size: 1.3rem; font-weight: 600; color: black; opacity: 0.8; margin-top: 1px; text-decoration: none; display: inline-block;">
                     {{ block.settings.name }}
                   </div>
                 {% endif %}
@@ -428,6 +440,9 @@
   .instafeed-slider-container-{{ section.id }} {
     position: relative;
     padding: 0 {{ nav_size_mobile | plus: 20 }}px;
+    width: 100%;
+    max-width: 100%;
+    overflow: visible;
   }
 
   .instafeed-btn-next-{{ section.id }},
@@ -443,7 +458,7 @@
     transform: translateY(-50%);
     z-index: 10;
     position: absolute;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(66, 153, 225, 0.2);
   }
 
   .instafeed-btn-prev-{{ section.id }} {
@@ -453,16 +468,52 @@
     right: 10px !important;
   }
 
-  @media(min-width: 768px) {
+  /* Tablet specific styles */
+  @media(min-width: 768px) and (max-width: 989px) {
+    .instafeed-slider-container-{{ section.id }} {
+      padding: 0 {{ nav_size | plus: 20 }}px;
+    }
+
+    .instafeed-slider-{{ section.id }} {
+      padding-right: 30px;
+    }
+
+    .instafeed-btn-next-{{ section.id }},
+    .instafeed-btn-prev-{{ section.id }} {
+      width: {{ nav_size | times: 0.8 }}px !important;
+      height: {{ nav_size | times: 0.8 }}px !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      transition: all 0.3s ease;
+    }
+
+    .instafeed-btn-prev-{{ section.id }} {
+      left: 10px !important;
+    }
+    .instafeed-btn-next-{{ section.id }} {
+      right: 10px !important;
+    }
+
+    .instafeed-slider-{{ section.id }} .swiper-wrapper {
+      margin-right: -15px;
+    }
+  }
+
+  /* Desktop styles */
+  @media(min-width: 990px) {
     .instafeed-slider-container-{{ section.id }} {
       padding: 0 {{ nav_size | plus: 30 }}px;
+      max-width: 100%;
+    }
+
+    .instafeed-slider-{{ section.id }} {
+      padding-right: 40px;
     }
 
     .instafeed-btn-next-{{ section.id }},
     .instafeed-btn-prev-{{ section.id }} {
       width: {{ nav_size }}px !important;
       height: {{ nav_size }}px !important;
-      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
       opacity: 0;
       visibility: hidden;
       transition: all 0.3s ease;
@@ -479,6 +530,10 @@
     }
     .instafeed-btn-next-{{ section.id }} {
       right: 15px !important;
+    }
+
+    .instafeed-slider-{{ section.id }} .swiper-wrapper {
+      margin-right: -20px;
     }
   }
 </style>
@@ -519,10 +574,11 @@
           {% else %}
             loop: false,
           {% endif %}
-          slidesPerView: {{ slider_row | times: 0.5 | round: 0 }}.3,
-          spaceBetween: {{ slider_gap_mobile }}
+          slidesPerView: {{ slider_row | times: 0.6 | round: 0 }},
+          spaceBetween: {{ slider_gap_mobile }},
+          simulateTouch: true
         },
-        992: {
+        990: {
           {% if section.blocks.size > slider_row and autoplay %}
             loop: true,
           {% else %}
