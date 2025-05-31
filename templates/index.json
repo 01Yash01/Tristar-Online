@@ -174,6 +174,24 @@
     "slideshow_FXLnz4": {
       "type": "slideshow",
       "blocks": {
+        "slide_PnhpMV": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/sony_wh-1000_xm4_web_banner.jpg",
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "shopify://collections/sony-headphones-1",
+            "button_style_secondary": true,
+            "box_align": "middle-center",
+            "show_text_box": false,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "",
+            "text_alignment_mobile": "center"
+          }
+        },
         "slide_AKDUAe": {
           "type": "slide",
           "settings": {
@@ -245,32 +263,14 @@
             "color_scheme": "scheme-1",
             "text_alignment_mobile": "center"
           }
-        },
-        "slide_PnhpMV": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/sony_wh-1000_xm4_web_banner.jpg",
-            "heading": "",
-            "heading_size": "h1",
-            "subheading": "",
-            "button_label": "",
-            "link": "shopify://collections/sony-headphones-1",
-            "button_style_secondary": true,
-            "box_align": "middle-center",
-            "show_text_box": false,
-            "text_alignment": "center",
-            "image_overlay_opacity": 0,
-            "color_scheme": "",
-            "text_alignment_mobile": "center"
-          }
         }
       },
       "block_order": [
+        "slide_PnhpMV",
         "slide_AKDUAe",
         "slide_cxkVme",
         "slide_jfBeVG",
-        "slide_LDwaNN",
-        "slide_PnhpMV"
+        "slide_LDwaNN"
       ],
       "settings": {
         "layout": "grid",
@@ -292,8 +292,8 @@
         "show_description": true,
         "description_style": "body",
         "collection": "weekend-sale",
-        "products_to_show": 12,
-        "columns_desktop": 5,
+        "products_to_show": 8,
+        "columns_desktop": 4,
         "full_width": false,
         "show_view_all": true,
         "view_all_style": "link",
@@ -304,39 +304,11 @@
         "show_secondary_image": true,
         "show_vendor": false,
         "show_rating": true,
-        "quick_add": "none",
-        "columns_mobile": "2",
-        "swipe_on_mobile": true,
-        "padding_top": 36,
-        "padding_bottom": 24
-      }
-    },
-    "featured_collection_Gy369K": {
-      "type": "featured-collection",
-      "settings": {
-        "title": "Best Seller",
-        "heading_size": "h2",
-        "description": "<p>our top-selling product</p>",
-        "show_description": false,
-        "description_style": "body",
-        "collection": "best-sellers-1",
-        "products_to_show": 12,
-        "columns_desktop": 4,
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "outline",
-        "enable_desktop_slider": false,
-        "color_scheme": "scheme-2",
-        "image_ratio": "square",
-        "image_shape": "default",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": false,
-        "quick_add": "none",
+        "quick_add": "standard",
         "columns_mobile": "2",
         "swipe_on_mobile": false,
-        "padding_top": 16,
-        "padding_bottom": 32
+        "padding_top": 36,
+        "padding_bottom": 24
       }
     },
     "sp_24_hour_count_down_qUWf9A": {
@@ -356,16 +328,16 @@
         "text_color": "#111111",
         "link_color": "#005bd3",
         "show_on_device": "all",
-        "section_background_color": "radial-gradient(rgba(244, 246, 145, 1), rgba(255, 204, 75, 1) 100%)",
+        "section_background_color": "radial-gradient(rgba(244, 246, 145, 1), rgba(253, 237, 92, 1) 98%)",
         "section_background_image_color": "",
         "section_background_size": "auto",
-        "section_padding_top_bottom": 15,
-        "mobile_section_padding_top_bottom": 11,
-        "section_padding_left_right": 25,
+        "section_padding_top_bottom": 36,
+        "mobile_section_padding_top_bottom": 12,
+        "section_padding_left_right": 24,
         "mobile_section_padding_left_right": 10,
         "container_background_color": "",
-        "container_max_width": 1000,
-        "container_padding_top_bottom": 16,
+        "container_max_width": 1300,
+        "container_padding_top_bottom": 18,
         "mobile_container_padding_top_bottom": 11,
         "container_padding_left_right": 10,
         "mobile_container_padding_left_right": 10,
@@ -374,11 +346,11 @@
         "container_shadow": true,
         "container_border_size": 0,
         "container_border_color": "#888888",
-        "item_width": 115,
-        "grid_gap": 15,
+        "item_width": 120,
+        "grid_gap": 16,
         "timer_alignment": "center",
         "timer_size": 20,
-        "countdown_padding": 15,
+        "countdown_padding": 18,
         "countdown_background_color": "linear-gradient(164deg, rgba(17, 17, 17, 1), rgba(85, 85, 85, 1) 100%)",
         "timer_color": "#ffffff",
         "start_hours": 23,
@@ -392,160 +364,35 @@
         "mobile_text_alignment": "center",
         "headline": "<strong>Flash Sale now on!</strong>",
         "text": "Save on modern office accessories, best selling products + many more products.",
-        "headline_spacing": 9
+        "headline_spacing": 12
       }
     },
-    "featured_collection_4hCjK4": {
+    "featured_collection_Gy369K": {
       "type": "featured-collection",
       "settings": {
-        "title": "New Arrivals",
+        "title": "Best Seller",
         "heading_size": "h2",
-        "description": "",
+        "description": "<p>our top-selling product</p>",
         "show_description": false,
         "description_style": "body",
-        "collection": "new-arrival",
-        "products_to_show": 12,
+        "collection": "best-sellers-1",
+        "products_to_show": 8,
         "columns_desktop": 4,
         "full_width": false,
         "show_view_all": true,
         "view_all_style": "outline",
         "enable_desktop_slider": false,
-        "color_scheme": "",
+        "color_scheme": "scheme-2",
         "image_ratio": "square",
         "image_shape": "default",
         "show_secondary_image": true,
         "show_vendor": false,
         "show_rating": false,
-        "quick_add": "none",
+        "quick_add": "standard",
         "columns_mobile": "2",
-        "swipe_on_mobile": true,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "collection_list_DCh3t4": {
-      "type": "collection-list",
-      "blocks": {
-        "featured_collection_mPTwFW": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": ""
-          }
-        },
-        "featured_collection_jHgM7z": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": ""
-          }
-        },
-        "featured_collection_n49Xzm": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": ""
-          }
-        },
-        "featured_collection_Jn7t8w": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": ""
-          }
-        }
-      },
-      "block_order": [
-        "featured_collection_mPTwFW",
-        "featured_collection_jHgM7z",
-        "featured_collection_n49Xzm",
-        "featured_collection_Jn7t8w"
-      ],
-      "settings": {
-        "title": "New Arrival",
-        "heading_size": "h2",
-        "image_ratio": "square",
-        "columns_desktop": 4,
-        "color_scheme": "",
-        "show_view_all": false,
-        "columns_mobile": "1",
-        "swipe_on_mobile": true,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
-    "featured_product_JncQym": {
-      "type": "featured-product",
-      "blocks": {
-        "text_CNPTaf": {
-          "type": "text",
-          "disabled": true,
-          "settings": {
-            "text": "{{ section.settings.product.vendor }}",
-            "text_style": "uppercase"
-          }
-        },
-        "title_XYfi3w": {
-          "type": "title",
-          "settings": {
-            "heading_size": "h2"
-          }
-        },
-        "price_U4jYqG": {
-          "type": "price",
-          "settings": {}
-        },
-        "variant_picker_WQNrwK": {
-          "type": "variant_picker",
-          "settings": {
-            "picker_type": "button",
-            "swatch_shape": "circle"
-          }
-        },
-        "quantity_selector_xwyagC": {
-          "type": "quantity_selector",
-          "settings": {}
-        },
-        "sku_kcHYYG": {
-          "type": "sku",
-          "disabled": true,
-          "settings": {
-            "text_style": "uppercase"
-          }
-        },
-        "buy_buttons_DFfNQp": {
-          "type": "buy_buttons",
-          "settings": {
-            "show_dynamic_checkout": true,
-            "show_gift_card_recipient": true
-          }
-        },
-        "share_6Hgc9L": {
-          "type": "share",
-          "settings": {
-            "share_label": "Share"
-          }
-        }
-      },
-      "block_order": [
-        "text_CNPTaf",
-        "title_XYfi3w",
-        "price_U4jYqG",
-        "variant_picker_WQNrwK",
-        "quantity_selector_xwyagC",
-        "sku_kcHYYG",
-        "buy_buttons_DFfNQp",
-        "share_6Hgc9L"
-      ],
-      "settings": {
-        "product": "samsung-galaxy-s24-512gb-titanium-black-au-version-excellent-refurbished",
-        "color_scheme": "",
-        "secondary_background": false,
-        "media_size": "small",
-        "constrain_to_viewport": true,
-        "media_fit": "contain",
-        "media_position": "left",
-        "image_zoom": "hover",
-        "hide_variants": false,
-        "enable_video_looping": false,
-        "padding_top": 36,
-        "padding_bottom": 36
+        "swipe_on_mobile": false,
+        "padding_top": 16,
+        "padding_bottom": 40
       }
     },
     "sp_marquee_P6jtLy": {
@@ -627,9 +474,9 @@
         "text_font": "instrument_sans_n4",
         "override_text_sizes": true,
         "text_size": 14,
-        "mobile_text_size": 10,
+        "mobile_text_size": 12,
         "text_line_height": "inherit",
-        "headline_size": 34,
+        "headline_size": 30,
         "mobile_headline_size": 30,
         "headline_line_height": "inherit",
         "override_text_colors": true,
@@ -644,97 +491,58 @@
         "section_padding_left_right": 25,
         "mobile_section_padding_left_right": 25,
         "container_background_color": "",
-        "container_max_width": 1000,
-        "container_padding_top_bottom": 10,
-        "mobile_container_padding_top_bottom": 10,
+        "container_max_width": 1200,
+        "container_padding_top_bottom": 18,
+        "mobile_container_padding_top_bottom": 16,
         "container_padding_left_right": 10,
         "mobile_container_padding_left_right": 10,
-        "element_spacing": 12,
+        "element_spacing": 15,
         "container_radius": 0,
         "container_shadow": false,
         "container_border_size": 0,
         "container_border_color": "#888888",
         "pause_on_hover": true,
-        "reverse_direction": false,
+        "reverse_direction": true,
         "slideshow_speed": "30s",
-        "media_radius": 10,
+        "media_radius": 12,
         "media_shadow": true,
-        "slideshow_spacing": 35,
+        "slideshow_spacing": 40,
         "media_aspect_ratio": "1 / 1",
-        "height": 200,
-        "mobile_height": 200,
+        "height": 220,
+        "mobile_height": 220,
         "headline": "<strong>Innovative Tech Devices</strong>",
         "text_alignment": "center",
         "mobile_text_alignment": "center",
-        "headline_spacing": 20,
+        "headline_spacing": 24,
         "content": ""
       }
     },
-    "multicolumn_kmwixd": {
-      "type": "multicolumn",
-      "blocks": {
-        "column_hYaXnX": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/8de93c75-73b4-4f64-b055-818829cbc565_medium_a8225e07-83ae-48b3-8c69-524dd777b93d.webp",
-            "title": "Shop Smart. Live Better.",
-            "text": "<p>From the latest electronics to everyday must-haves, we bring you high-quality products that fit your lifestyle—and your values.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column_Gn8Hj3": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/4_163880a2-db67-4bd9-bb4e-411b770f9762.jpg",
-            "title": "Quality You Can Trust",
-            "text": "<p>From top electronics to everyday essentials, every product on Tristar Online is carefully selected for quality, performance, and reliability.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column_XChB4J": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/4_eb866739-b5bc-4e07-b48c-b620df474cbf.jpg",
-            "title": "Transparent Pricing",
-            "text": "<p>We keep it simple—no hidden fees or surprise markups. What you see is what you pay.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column_QNm8yK": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/depositphotos_256371340-stock-illustration-quality-check-ribbon-icon-vector.webp",
-            "title": "Certified Choices",
-            "text": "<p>We’re committed to offering products that meet eco-certification standards where possible, helping you shop more responsibly.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "column_hYaXnX",
-        "column_Gn8Hj3",
-        "column_XChB4J",
-        "column_QNm8yK"
-      ],
+    "featured_collection_4hCjK4": {
+      "type": "featured-collection",
       "settings": {
-        "title": "<strong>This approach resulted in the beautiful structure</strong>",
+        "title": "New Arrivals",
         "heading_size": "h2",
-        "image_width": "half",
-        "image_ratio": "adapt",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "collection": "new-arrival",
+        "products_to_show": 8,
         "columns_desktop": 4,
-        "column_alignment": "center",
-        "background_style": "none",
-        "button_label": "",
-        "button_link": "",
-        "color_scheme": "scheme-1",
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "outline",
+        "enable_desktop_slider": false,
+        "color_scheme": "",
+        "image_ratio": "square",
+        "image_shape": "default",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": false,
+        "quick_add": "standard",
         "columns_mobile": "2",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
+        "swipe_on_mobile": true,
+        "padding_top": 40,
+        "padding_bottom": 24
       }
     },
     "sp_review_slider_WVPEiQ": {
@@ -790,11 +598,11 @@
         "text_color": "#000000",
         "link_color": "#005bd3",
         "show_on_device": "all",
-        "section_background_color": "linear-gradient(127deg, rgba(242, 244, 144, 1) 11%, rgba(242, 244, 144, 1) 81%)",
+        "section_background_color": "linear-gradient(2deg, rgba(255, 229, 63, 1), rgba(255, 238, 130, 1) 100%)",
         "section_background_image_color": "",
         "section_background_size": "cover",
-        "section_padding_top_bottom": 35,
-        "mobile_section_padding_top_bottom": 25,
+        "section_padding_top_bottom": 40,
+        "mobile_section_padding_top_bottom": 30,
         "section_padding_left_right": 25,
         "mobile_section_padding_left_right": 20,
         "container_background_color": "",
@@ -810,7 +618,7 @@
         "container_border_color": "#888888",
         "highlight_color": "#111111",
         "progress_background_color": "linear-gradient(177deg, rgba(17, 17, 17, .25) 3%, rgba(17, 17, 17, 0.25) 100%)",
-        "progress_foreground_color": "linear-gradient(177deg, rgba(17, 17, 17, 1) 3%, rgba(17, 17, 17, 1) 100%)",
+        "progress_foreground_color": "",
         "indicator_color": "#111111",
         "enable_autoplay": true,
         "autoplay_time": "3000",
@@ -819,6 +627,199 @@
         "headline": "<strong>Genuine Testimonials from Happy Customers.</strong>",
         "text": "",
         "headline_spacing": 10
+      }
+    },
+    "collection_list_DCh3t4": {
+      "type": "collection-list",
+      "blocks": {
+        "featured_collection_mPTwFW": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "appliances"
+          }
+        },
+        "featured_collection_jHgM7z": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "games-and-accessories"
+          }
+        },
+        "featured_collection_n49Xzm": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "computers-and-accessories"
+          }
+        },
+        "featured_collection_Jn7t8w": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "cameras-amp-drones"
+          }
+        }
+      },
+      "block_order": [
+        "featured_collection_mPTwFW",
+        "featured_collection_jHgM7z",
+        "featured_collection_n49Xzm",
+        "featured_collection_Jn7t8w"
+      ],
+      "settings": {
+        "title": "Recommnded",
+        "heading_size": "h2",
+        "image_ratio": "square",
+        "columns_desktop": 4,
+        "color_scheme": "",
+        "show_view_all": false,
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 24,
+        "padding_bottom": 36
+      }
+    },
+    "featured_product_JncQym": {
+      "type": "featured-product",
+      "blocks": {
+        "text_CNPTaf": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "text": "{{ section.settings.product.vendor }}",
+            "text_style": "uppercase"
+          }
+        },
+        "title_XYfi3w": {
+          "type": "title",
+          "settings": {
+            "heading_size": "h2"
+          }
+        },
+        "price_U4jYqG": {
+          "type": "price",
+          "settings": {}
+        },
+        "variant_picker_WQNrwK": {
+          "type": "variant_picker",
+          "settings": {
+            "picker_type": "button",
+            "swatch_shape": "circle"
+          }
+        },
+        "quantity_selector_xwyagC": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
+        "sku_kcHYYG": {
+          "type": "sku",
+          "disabled": true,
+          "settings": {
+            "text_style": "uppercase"
+          }
+        },
+        "buy_buttons_DFfNQp": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
+        },
+        "share_6Hgc9L": {
+          "type": "share",
+          "settings": {
+            "share_label": "Share"
+          }
+        }
+      },
+      "block_order": [
+        "text_CNPTaf",
+        "title_XYfi3w",
+        "price_U4jYqG",
+        "variant_picker_WQNrwK",
+        "quantity_selector_xwyagC",
+        "sku_kcHYYG",
+        "buy_buttons_DFfNQp",
+        "share_6Hgc9L"
+      ],
+      "settings": {
+        "product": "samsung-galaxy-s24-512gb-titanium-black-au-version-excellent-refurbished",
+        "color_scheme": "",
+        "secondary_background": false,
+        "media_size": "small",
+        "constrain_to_viewport": true,
+        "media_fit": "contain",
+        "media_position": "left",
+        "image_zoom": "hover",
+        "hide_variants": false,
+        "enable_video_looping": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "multicolumn_kmwixd": {
+      "type": "multicolumn",
+      "blocks": {
+        "column_hYaXnX": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/8de93c75-73b4-4f64-b055-818829cbc565_medium_a8225e07-83ae-48b3-8c69-524dd777b93d.webp",
+            "title": "Shop Smart. Live Better.",
+            "text": "<p>From the latest electronics to everyday must-haves, we bring you high-quality products that fit your lifestyle—and your values.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_Gn8Hj3": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/4_163880a2-db67-4bd9-bb4e-411b770f9762.jpg",
+            "title": "Quality You Can Trust",
+            "text": "<p>From top electronics to everyday essentials, every product on Tristar Online is carefully selected for quality, performance, and reliability.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_XChB4J": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/4_eb866739-b5bc-4e07-b48c-b620df474cbf.jpg",
+            "title": "Transparent Pricing",
+            "text": "<p>We keep it simple—no hidden fees or surprise markups. What you see is what you pay.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        },
+        "column_QNm8yK": {
+          "type": "column",
+          "settings": {
+            "image": "shopify://shop_images/depositphotos_256371340-stock-illustration-quality-check-ribbon-icon-vector.webp",
+            "title": "Certified Choices",
+            "text": "<p>We’re committed to offering products that meet eco-certification standards where possible, helping you shop more responsibly.</p>",
+            "link_label": "",
+            "link": ""
+          }
+        }
+      },
+      "block_order": [
+        "column_hYaXnX",
+        "column_Gn8Hj3",
+        "column_XChB4J",
+        "column_QNm8yK"
+      ],
+      "disabled": true,
+      "settings": {
+        "title": "<strong>This approach resulted in the beautiful structure</strong>",
+        "heading_size": "h2",
+        "image_width": "half",
+        "image_ratio": "adapt",
+        "columns_desktop": 4,
+        "column_alignment": "center",
+        "background_style": "none",
+        "button_label": "",
+        "button_link": "",
+        "color_scheme": "scheme-1",
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
       }
     },
     "collapsible_content_WK8jeD": {
@@ -885,6 +886,7 @@
     },
     "featured_blog_CG9hYn": {
       "type": "featured-blog",
+      "disabled": true,
       "settings": {
         "heading": "Blog posts",
         "heading_size": "h1",
@@ -1025,14 +1027,14 @@
     "ss_instafeed_2_8BewHL",
     "slideshow_FXLnz4",
     "featured_collection_TqArby",
-    "featured_collection_Gy369K",
     "sp_24_hour_count_down_qUWf9A",
+    "featured_collection_Gy369K",
+    "sp_marquee_P6jtLy",
     "featured_collection_4hCjK4",
+    "sp_review_slider_WVPEiQ",
     "collection_list_DCh3t4",
     "featured_product_JncQym",
-    "sp_marquee_P6jtLy",
     "multicolumn_kmwixd",
-    "sp_review_slider_WVPEiQ",
     "collapsible_content_WK8jeD",
     "featured_blog_CG9hYn",
     "image_banner_ewAh3M",
