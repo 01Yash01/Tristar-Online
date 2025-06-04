@@ -5,6 +5,12 @@
 {{ 'component-list-payment.css' | asset_url | stylesheet_tag }}
 {{ 'component-list-social.css' | asset_url | stylesheet_tag }}
 
+<style>
+  .footer .list-social__item[href*="amazon"] {
+    display: none;
+  }
+</style>
+
 {%- style -%}
   .footer {
     margin-top: {{ section.settings.margin_top | times: 0.75 | round: 0 }}px;
@@ -129,7 +135,7 @@
                         <div class="rte">{{ settings.brand_description }}</div>
                       {%- endif -%}
                       {%- if block.settings.show_social and has_social_icons -%}
-                        {%- render 'social-icons', class: 'footer__list-social' -%}
+                        {%- render 'footer-social-icons', class: 'footer__list-social' -%}
                       {%- endif -%}
                     </div>
                   {%- when 'image' -%}
@@ -243,7 +249,7 @@
           {%- endif -%}
 
           {%- if section.settings.show_social and has_social_icons -%}
-            {%- render 'social-icons', class: 'footer__list-social' -%}
+            {%- render 'footer-social-icons', class: 'footer__list-social' -%}
           {%- endif -%}
         </div>
       </div>
