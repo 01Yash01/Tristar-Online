@@ -1,6 +1,46 @@
 {{ 'component-slideshow.css' | asset_url | stylesheet_tag }}
 {{ 'component-slider.css' | asset_url | stylesheet_tag }}
 
+<style>  
+  .utility-bar .list-social__item svg {
+    fill: currentColor;
+  }
+
+  .announcement-social-wrapper {
+    display: flex;
+    align-items: center;
+    {% comment %} justify-content: center; {% endcomment %}
+    gap: 0;
+    height: 100%;
+  }
+
+  .announcement-stores-text {
+    color: #FFFFFF;
+    height: auto;
+    font-size: 1.4rem;
+    font-weight: 600;
+    display: flex;
+    align-items: flex-start;
+    margin-right: 0.5rem;
+    
+  }
+
+  @media screen and (max-width: 989px) {
+    .utility-bar__grid {
+      justify-content: center;
+    }
+    
+    .announcement-social-wrapper {
+      width: auto;
+    }
+    
+    .announcement-stores-text {
+      margin-right: 0.2rem;
+      width: 120px;
+    }
+  }
+</style>
+
 {%- liquid
   assign social_icons = true
   if settings.social_facebook_link == blank and settings.social_instagram_link == blank and settings.social_youtube_link == blank and settings.social_tiktok_link == blank and settings.social_twitter_link == blank and settings.social_pinterest_link == blank and settings.social_snapchat_link == blank and settings.social_tumblr_link == blank and settings.social_vimeo_link == blank
@@ -24,7 +64,10 @@
 >
   <div class="page-width utility-bar__grid{% if announcement_bar and language_country_selector or section.settings.show_social and social_icons %} utility-bar__grid--3-col{% elsif language_country_selector or section.settings.show_social and social_icons %} utility-bar__grid--2-col{% endif %}">
     {%- if section.settings.show_social and social_icons -%}
-      {%- render 'social-icons' -%}
+      <div class="announcement-social-wrapper">
+        <span class="announcement-stores-text">Our Stores - </span>
+        {%- render 'announcement-social-icons' -%}
+      </div>
     {%- endif -%}
     {%- if section.blocks.size == 1 -%}
       <div
@@ -193,7 +236,7 @@
     {
       "type": "checkbox",
       "id": "show_social",
-      "default": false,
+      "default": true,
       "label": "t:sections.announcement-bar.settings.show_social.label"
     },
     {
