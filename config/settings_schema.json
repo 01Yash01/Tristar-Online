@@ -1362,6 +1362,34 @@
         "id": "social_vimeo_link",
         "label": "t:settings_schema.social-media.settings.social_vimeo_link.label",
         "placeholder": "t:settings_schema.social-media.settings.social_vimeo_link.info"
+      },
+      {
+        "type": "text",
+        "id": "social_amazon_link",
+        "label": "t:settings_schema.social-media.settings.social_amazon_link.label",
+        "placeholder": "t:settings_schema.social-media.settings.social_amazon_link.info",
+        "default": "https://www.amazon.com.au/s?me=A1W6ZW8E9DQ1TN&marketplaceID=A39IBJ37TRP1C6"
+      },
+      {
+        "type": "text",
+        "id": "social_kogan_link",
+        "label": "Kogan",
+        "placeholder": "https://www.kogan.com",
+        "default": "https://www.kogan.com/au/c/tristar-online/?order_by=-price&page=10"
+      },
+      {
+        "type": "text",
+        "id": "social_lasoo_link",
+        "label": "Lasoo",
+        "placeholder": "https://www.lasoo.com",
+        "default": "https://www.lasoo.com.au/retailers/tristar-online"
+      },
+      {
+        "type": "text",
+        "id": "social_mysale_link",
+        "label": "MySale",
+        "placeholder": "https://www.mysale.com",
+        "default": "https://www.ozsale.com.au/store/tristar/Ef59idKTpEeN_JDud3YUAg/shop/search/"
       }
     ]
   },
