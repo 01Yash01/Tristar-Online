@@ -20,10 +20,19 @@
             "text": "✌🏼 Free Express Shipping on orders $500!",
             "link": ""
           }
+        },
+        "announcement_886LVi": {
+          "type": "announcement",
+          "disabled": true,
+          "settings": {
+            "text": "Free shipping $500+ | Find us on Amazon, Kogan, ABC",
+            "link": "shopify://pages/about-us"
+          }
         }
       },
       "block_order": [
-        "announcement-bar-0"
+        "announcement-bar-0",
+        "announcement_886LVi"
       ],
       "settings": {
         "color_scheme": "scheme-5",
