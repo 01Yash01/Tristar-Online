@@ -321,7 +321,7 @@
         "video": "shopify://files/videos/WhatsApp Video 2025-06-05 at 12.13.00.mp4",
         "video_url": "",
         "description": "",
-        "full_width": true,
+        "full_width": false,
         "color_scheme": "scheme-1",
         "padding_top": 8,
         "padding_bottom": 12
