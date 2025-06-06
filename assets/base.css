@@ -2126,15 +2126,25 @@ input.quantity__input[type='number'] {
     margin: 0;
     width: 100%;
   }
-
+}
   .utility-bar__grid {
     grid-template-areas: 'social-icons';
     justify-content: flex-start;
   }
+  /* Hide on small screens */
+@media screen and (max-width: 989px) {
   .utility-bar__grid .announcement-bar {
-    display: none;
+    display: none !important;
   }
 }
+
+/* Show on desktop */
+@media screen and (min-width: 990px) {
+  .utility-bar__grid .announcement-bar {
+    display: block !important;
+  }
+}
+
 
 @media screen and (min-width: 990px) {
   .utility-bar__grid--3-col {
@@ -3667,8 +3677,26 @@ details-disclosure > details {
   /* padding-right: 10px; */
 }
 
-#shopify-section-sections--19018046636259__announcement-bar {
+/* stickey announcment bar */
+ #shopify-section-sections--18504486944995__announcement-bar {
   position: sticky !important;
   top: 0;
-  z-index: 5; /* Higher than header */
+  z-index: 5; 
 }
+ 
+/* .announcement-bar {
+  position: sticky !important;
+  top: 0;
+  z-index: 9999;
+}
+ */
+/* Sticky utility bar with high z-index */
+/* .utility-bar.header-localization {
+  position: sticky;
+  top: 0;
+  z-index: 9999;
+  
+} */
+
+
+
