@@ -3698,5 +3698,83 @@ details-disclosure > details {
   
 } */
 
+/* custom code for description */
+.product__description-full-width {
+  width: 100%;
+  margin-top: 40px; /* Adjust spacing as needed */
+  padding: 20px 0;  /* Add padding to make it more blog-like */
+}
 
+.full-width-description {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 15px; /* Ensure there is padding for the text */
+}
 
+@media screen and (max-width: 750px) {
+  .product__description-full-width {
+    padding: 15px;  /* Reduce padding on smaller screens */
+  }
+  .full-width-description {
+    padding: 0 10px;
+  }
+}
+
+/* custom button for description */
+/* .btn-style702 {
+  position: relative;
+  border-color: transparent;
+  color: #fff;
+  background-color: transparent;
+  font-size: 16px;
+  padding: 10px 20px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: bold;
+  border-radius: 5px;
+  transition: all 0.3s;
+}
+
+.btn-style702::before,
+.btn-style702::after {
+  height: 100%;
+  position: absolute;
+  top: 0;
+  transition: all 0.3s;
+  content: "";
+}
+
+.btn-style702::before {
+  width: 100%;
+  left: 0;
+  border-radius: 5px;
+  background-color: #716eef;
+  z-index: -1;
+}
+
+.btn-style702::after {
+  width: 0;
+  left: 50%;
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid transparent;
+  transform: translate(-50%, 0);
+  z-index: 1;
+}
+
+.btn-style702:hover {
+  color: #716eef;
+}
+
+.btn-style702:hover::before {
+  transform: scale(0, 1);
+}
+
+.btn-style702:hover::after {
+  width: 100%;
+  border-color: #716eef;
+  transition-delay: 0.2s;
+}
+
+.product__description.hidden {
+  display: none;
+} */
