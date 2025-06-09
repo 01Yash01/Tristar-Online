@@ -11,6 +11,40 @@
   "name": "t:sections.footer.name",
   "type": "footer",
   "sections": {
+    "newsletter_QWJaRm": {
+      "type": "newsletter",
+      "blocks": {
+        "heading_Y7kVVD": {
+          "type": "heading",
+          "settings": {
+            "heading": "Subscribe to our emails",
+            "heading_size": "h1"
+          }
+        },
+        "paragraph_FpedQG": {
+          "type": "paragraph",
+          "settings": {
+            "text": "<p>Be the first to know about new collections and exclusive offers.</p>"
+          }
+        },
+        "email_form_Vj7kwB": {
+          "type": "email_form",
+          "settings": {}
+        }
+      },
+      "block_order": [
+        "heading_Y7kVVD",
+        "paragraph_FpedQG",
+        "email_form_Vj7kwB"
+      ],
+      "name": "t:sections.newsletter.presets.name",
+      "settings": {
+        "color_scheme": "",
+        "full_width": true,
+        "padding_top": 40,
+        "padding_bottom": 52
+      }
+    },
     "footer": {
       "type": "footer",
       "blocks": {
@@ -20,10 +54,27 @@
             "heading": "Quick links",
             "menu": "categories"
           }
+        },
+        "text_G6JtEM": {
+          "type": "text",
+          "disabled": true,
+          "settings": {
+            "heading": "Tristar Online",
+            "subtext": "<p>Founded in 2019 by a Trio of friends, Tristar Online Pty Ltd has come a long way from its beginnings in Sydney.</p>"
+          }
+        },
+        "brand_information_FGjgBw": {
+          "type": "brand_information",
+          "disabled": true,
+          "settings": {
+            "show_social": true
+          }
         }
       },
       "block_order": [
-        "link_list_thWHrP"
+        "link_list_thWHrP",
+        "text_G6JtEM",
+        "brand_information_FGjgBw"
       ],
       "settings": {
         "color_scheme": "scheme-5",
@@ -42,6 +93,7 @@
     }
   },
   "order": [
+    "newsletter_QWJaRm",
     "footer"
   ]
 }
