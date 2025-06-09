@@ -3536,8 +3536,17 @@ details-disclosure > details {
   width: 1.8rem;
 }
 
-.loading__spinner {
-  width: 1.8rem;
+/* Hide loading spinners in specific contexts */
+.predictive-search__loading-state,
+.quantity__rules-cart .loading__spinner,
+.cart-item__totals .loading__spinner {
+  display: none;
+}
+
+/* Show loading spinners when needed */
+.predictive-search__loading-state:not(.hidden),
+.quantity__rules-cart .loading__spinner:not(.hidden),
+.cart-item__totals .loading__spinner:not(.hidden) {
   display: inline-block;
 }
 

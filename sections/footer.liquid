@@ -242,15 +242,16 @@
             </div>
           {%- endif -%}
 
-          {%- if shop.features.follow_on_shop? and section.settings.enable_follow_on_shop -%}
-            <div class="footer__follow-on-shop">
-              {{ shop | login_button: action: 'follow' }}
+          <div class="footer__company-details page-width">
+            <div class="footer__company-content">
+              {%- if section.settings.company_heading != blank -%}
+                <h2 class="footer-block__heading">{{ section.settings.company_heading }}</h2>
+              {%- endif -%}
+              {%- if section.settings.company_description != blank -%}
+                <div class="rte">{{ section.settings.company_description }}</div>
+              {%- endif -%}
             </div>
-          {%- endif -%}
-
-          {%- if section.settings.show_social and has_social_icons -%}
-            {%- render 'footer-social-icons', class: 'footer__list-social' -%}
-          {%- endif -%}
+          </div>
         </div>
       </div>
     {%- endunless -%}
@@ -288,6 +289,18 @@
           </localization-form>
         {%- endif -%}
       </div>
+      <div class="footer__column footer__column--social-icons">
+        {%- render 'footer-social-icons', class: 'footer__list-social' -%}
+      </div>
+      <div class="footer__column footer__column--social">
+        <div class="footer__follow-on-shop">
+          {%- if shop.features.follow_on_shop? and section.settings.enable_follow_on_shop -%}
+            <div class="footer__follow-on-shop">
+              {{ shop | login_button: action: 'follow' }}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
       <div class="footer__column footer__column--info">
         {%- if section.settings.payment_enable -%}
           <div class="footer__payment">
@@ -303,20 +316,28 @@
         {%- endif -%}
       </div>
     </div>
+
+    {% comment %} <div class="footer__company-details page-width">
+      <div class="footer__company-content">
+        {%- if section.settings.company_heading != blank -%}
+          <h2 class="footer-block__heading">{{ section.settings.company_heading }}</h2>
+        {%- endif -%}
+        {%- if section.settings.company_description != blank -%}
+          <div class="rte">{{ section.settings.company_description }}</div>
+        {%- endif -%}
+      </div>
+    </div> {% endcomment %}
+
     <div class="footer__content-bottom-wrapper page-width{% if section.settings.enable_country_selector == false and section.settings.enable_language_selector == false %} footer__content-bottom-wrapper--center{% endif %}">
       <div class="footer__copyright caption">
-        <small class="copyright__content"
-          >&copy; {{ 'now' | date: '%Y' }}, {{ shop.name | link_to: routes.root_url -}}
-        </small>
+        <small class="copyright__content">&copy; {{ 'now' | date: '%Y' }}, {{ shop.name | link_to: routes.root_url -}}</small>
         <small class="copyright__content">{{ powered_by_link }}</small>
         {%- if section.settings.show_policy -%}
           <ul class="policies list-unstyled">
             {%- for policy in shop.policies -%}
               {%- if policy != blank -%}
                 <li>
-                  <small class="copyright__content"
-                    ><a href="{{ policy.url }}">{{ policy.title | escape }}</a></small
-                  >
+                  <small class="copyright__content"><a href="{{ policy.url }}">{{ policy.title | escape }}</a></small>
                 </li>
               {%- endif -%}
             {%- endfor -%}
@@ -560,6 +581,18 @@
       "unit": "px",
       "label": "t:sections.all.padding.padding_bottom",
       "default": 36
+    },
+    {
+      "type": "text",
+      "id": "company_heading",
+      "label": "Company Heading",
+      "default": "About Us"
+    },
+    {
+      "type": "richtext",
+      "id": "company_description",
+      "label": "Company Description",
+      "default": "<p>Founded in 2019 by a Trio of friends, Tristar Online Pvt Ltd has come a long way from its beginnings in Sydney.</p>"
     }
   ],
   "default": {
