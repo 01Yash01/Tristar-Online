@@ -11,10 +11,11 @@
   "sections": {
     "banner": {
       "type": "main-collection-banner",
+      "disabled": true,
       "settings": {
         "show_collection_description": true,
         "show_collection_image": false,
-        "color_scheme": "scheme-2"
+        "color_scheme": "scheme-5"
       }
     },
     "product-grid": {
