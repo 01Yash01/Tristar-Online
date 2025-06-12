@@ -71,6 +71,7 @@
             allow="autoplay; encrypted-media"
             allowfullscreen
             title="{{ section.settings.description | escape }}"
+            {% unless section.settings.autoplay %}loading="lazy"{% endunless %}
           ></iframe>
         {%- else -%}
           <iframe
@@ -79,6 +80,7 @@
             allow="autoplay; encrypted-media"
             allowfullscreen
             title="{{ section.settings.description | escape }}"
+            {% unless section.settings.autoplay %}loading="lazy"{% endunless %}
           ></iframe>
         {%- endif -%}
       {%- else -%}
@@ -88,7 +90,8 @@
               image_size: '1100x',
               autoplay: true,
               loop: section.settings.enable_video_looping,
-              muted: true
+              muted: true,
+              loading: 'lazy'
         }}
       {%- endif -%}
     </div>
