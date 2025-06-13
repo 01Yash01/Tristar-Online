@@ -159,9 +159,9 @@
       {{- 'products.product.on_sale' | t -}}
     </span>
     {% endcomment %}
-    <span
-      id="DiscountBadge-{{ section_id }}-{{ card_product.id }}"
-      class="badge badge--bottom-left badge--percentage-off color-{{ settings.sale_badge_color_scheme }}"
+    <span 
+      id="DiscountBadge-{{ section_id }}-{{ card_product.id }}" 
+      class="badge badge--bottom-left badge--percentage-off badge--sales color-{{ settings.sale_badge_color_scheme }}"
     >
       {{ card_product.compare_at_price | minus: card_product.price | times: 100 | divided_by: card_product.compare_at_price | round }}% Off
     </span>
@@ -649,3 +649,49 @@
     </div>
   </div>
 {%- endif -%}
+
+<style>
+.badge {
+  border-radius: 5px;
+  font-size: 1.3rem;
+  padding: .5rem .4rem;
+}
+
+.badge--sales {
+  position: relative;
+  display: inline-block;
+  background-color:rgb(0, 34, 255);
+  width: auto;
+  margin-left: 20px;
+  height: 36px;
+  line-height: 2.2rem;
+  color: white;
+  font-weight: bold;
+  text-align: center;
+}
+
+.badge--sales::before {
+  position: absolute;
+  left: -19px;
+  top: 0;
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  border-top: 18px solid transparent;
+  border-right: 20px solid rgb(0, 34, 255);
+  border-bottom: 18px solid transparent;
+}
+
+.badge--sales::after {
+  display: block;
+  content: '';
+  position: absolute;
+  background: white;
+  width: 8px;
+  height: 8px;
+  border-radius: 100%;
+  left: -8px;
+  top: calc(50% - 4px);
+}
+</style>
