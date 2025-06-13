@@ -101,16 +101,17 @@
   Usage:
   {% render 'header-mega-menu' %}
 {% endcomment %}
+
 <nav class="header__inline-menu">
   <ul class="list-menu list-menu--inline" role="list">
     {%- for link in section.settings.menu.links -%}
       <li>
         {%- if link.links != blank -%}
-          <header-menu>
+          <header-menu class="mega-menu-container">
             <details id="Details-HeaderMenu-{{ forloop.index }}" class="mega-menu">
               <summary
                 id="HeaderMenu-{{ link.handle }}"
-                class="header__menu-item list-menu__item link focus-inset"
+                class="header__menu-item list-menu__item link focus-inset mega-menu-trigger"
               >
                 <span
                   {%- if link.child_active %}
@@ -123,7 +124,7 @@
               </summary>
               <div
                 id="MegaMenu-Content-{{ forloop.index }}"
-                class="mega-menu__content color-{{ section.settings.menu_color_scheme }} gradient motion-reduce global-settings-popup"
+                class="mega-menu__content color-{{ section.settings.menu_color_scheme }} gradient motion-reduce global-settings-popup mega-menu-dropdown"
                 tabindex="-1"
               >
                 <ul
@@ -223,3 +224,106 @@
     {%- endfor -%}
   </ul>
 </nav>
+
+<style>
+/* Hover functionality styles */
+.mega-menu-container {
+  position: static; /* Changed from relative to static */
+}
+
+/* Ensure mega menu content spans full device screen width */
+.mega-menu__content {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  z-index: 1000;
+  width: 100vw;
+  max-width: none !important;
+  margin-left: calc(-50vw + 50%);
+}
+
+/* Show mega menu on hover */
+.mega-menu-container:hover .mega-menu[open] .mega-menu-dropdown,
+.mega-menu-container:hover .mega-menu .mega-menu-dropdown {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Hide mega menu by default */
+.mega-menu .mega-menu-dropdown {
+  display: none;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease, visibility 0.2s ease;
+}
+
+/* When details is open, show the dropdown */
+.mega-menu[open] .mega-menu-dropdown {
+  display: block;
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Ensure the parent nav has relative positioning for absolute positioning of mega menu */
+.header__inline-menu {
+  position: relative;
+}
+
+/* Make sure mega menu list spans full width */
+.mega-menu__list {
+  width: 100%;
+  max-width: 100%;
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const megaMenuContainers = document.querySelectorAll('.mega-menu-container');
+  
+  megaMenuContainers.forEach(container => {
+    const details = container.querySelector('.mega-menu');
+    const summary = container.querySelector('.mega-menu-trigger');
+    let hoverTimeout;
+    
+    // Mouse enter - open mega menu
+    container.addEventListener('mouseenter', function() {
+      clearTimeout(hoverTimeout);
+      details.setAttribute('open', '');
+    });
+    
+    // Mouse leave - close mega menu with slight delay
+    container.addEventListener('mouseleave', function() {
+      hoverTimeout = setTimeout(() => {
+        details.removeAttribute('open');
+      }, 100); // Small delay to prevent flickering
+    });
+    
+    // Prevent default click behavior when hovering is primary interaction
+    summary.addEventListener('click', function(e) {
+      // Allow click functionality for accessibility/keyboard users
+      // But prevent it from interfering with hover behavior
+      if (details.hasAttribute('open')) {
+        e.preventDefault();
+      }
+    });
+    
+    // Handle keyboard navigation
+    summary.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        if (details.hasAttribute('open')) {
+          details.removeAttribute('open');
+        } else {
+          details.setAttribute('open', '');
+        }
+      }
+      
+      if (e.key === 'Escape') {
+        details.removeAttribute('open');
+        summary.focus();
+      }
+    });
+  });
+});
+</script>
