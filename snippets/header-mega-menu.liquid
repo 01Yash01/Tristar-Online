@@ -165,7 +165,7 @@
                   {%- endfor -%}
                   
                   {%- comment -%} Add image section as last column {%- endcomment -%}
-                  {% comment %} {%- if section.settings.mega_menu_image != blank -%}
+                  {%- if section.settings.mega_menu_image != blank -%}
                     <li class="mega-menu__image-column">
                       {%- if section.settings.mega_menu_image_link != blank -%}
                         <a href="{{ section.settings.mega_menu_image_link }}" class="mega-menu__image-link">
@@ -197,7 +197,7 @@
                         </div>
                       {%- endif -%}
                     </li>
-                  {%- endif -%} {% endcomment %}
+                  {%- endif -%}
                 </ul>
               </div>
             </details>
