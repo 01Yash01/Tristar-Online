@@ -45,17 +45,17 @@
 .mega-menu__list {
   display: grid;
   gap: 1.8rem 5rem;
-  grid-template-columns: repeat(6, minmax(0, 2fr));
+  grid-template-columns: repeat(8, minmax(0, 2fr));
   list-style: none;
   align-items: stretch; /* Make all li items equal height */
 }
 /* Mega Menu Links */
 .mega-menu__link {
-  color: rgba(var(--color-foreground), .8);
+  color: rgba(var(--color-foreground), .9);
   display: inline-block; /* Changed from block — needed for ::after effect */
   line-height: calc(1 + 0.3 / var(--font-body-scale));
-  padding: 0.6rem 0;
-  font-size: 1.3rem;
+  padding: 0.6rem 0.4rem;
+  font-size: 1.4rem;
   word-wrap: break-word;
   position: relative;
   text-decoration: none !important;
@@ -93,13 +93,15 @@
 .header--top-center .mega-menu__list {
   display: flex;
   justify-content: center;
+  /* align-items: flex-start;  */
   flex-wrap: wrap;
   column-gap: 0;
 }
 
 .header--top-center .mega-menu__list > li {
   width: 16%;
-  padding-right: 2.4rem;
+  /* padding-right: 1rem; */
+  /* padding-left: 1rem; */
 }
 
 /* Active or Hovered Link Styling */
@@ -121,21 +123,22 @@
 /* ========================= */
 /* Full-Height Vertical Divider Lines */
 /* ========================= */
-.mega-menu__list > li {
+/* .mega-menu__list > li {
   position: relative;
   padding-left: 4rem;
-}
+} */
 
 /* Divider between columns (except last item) */
-.mega-menu__list > li:not(:last-child)::after {
+/* .mega-menu__list > li:not(:last-child)::after {
   content: '';
   position: absolute;
   top: 0;
-  bottom: 0; /* Full height stretch */
+  bottom: 0; 
   right: 0;
+  left:1rem;
   width: .08rem;
-  background-color: rgba(var(--color-foreground), 0.3);
-}
+  background-color: rgba(var(--color-foreground), 0.5);
+} */
 
 /* Default state: Lighter font weight for li elements */
 .mega-menu__list > li {
