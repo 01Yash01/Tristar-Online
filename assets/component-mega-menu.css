@@ -142,18 +142,10 @@
 
 /* Default state: Lighter font weight for li elements */
 .mega-menu__list > li {
-  font-weight: 500; /* Lighter font weight for list items */
-  /* transition: font-weight 0.2s ease; /* Smooth transition */ */
+  font-weight: 500; 
+  transition: font-weight 0.2s ease;
 }
 
-/* .mega-menu__list > li:hover {
-  font-weight: 600;
-}
- */
-
-/* ========================= */
-/* Mobile Responsiveness */
-/* ========================= */
 @media (max-width: 1024px) {
   .mega-menu__list {
     grid-template-columns: repeat(3, minmax(0, 1fr)); /* 3 columns on medium screens */
@@ -200,5 +192,4 @@
     font-size: 1rem; /* Even smaller font size for very small screens */
   }
 }
-
 
