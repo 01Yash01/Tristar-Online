@@ -856,90 +856,6 @@
         "headline_spacing": 12
       }
     },
-    "sp_review_slider_WVPEiQ": {
-      "type": "sp-review-slider",
-      "blocks": {
-        "quote_F8JrA8": {
-          "type": "quote",
-          "settings": {
-            "quote": "This is a placeholder for your reviews and testimonials. Use this space to highlight your favorite reviews or testimonials.",
-            "cite": "Sample Reviewer"
-          }
-        },
-        "quote_aVNJ8w": {
-          "type": "quote",
-          "settings": {
-            "quote": "This is a placeholder for your reviews and testimonials. Use this space to highlight your favorite reviews or testimonials.",
-            "cite": "Sample Reviewer"
-          }
-        },
-        "quote_PEEmaV": {
-          "type": "quote",
-          "settings": {
-            "quote": "This is a placeholder for your reviews and testimonials. Use this space to highlight your favorite reviews or testimonials.",
-            "cite": "Sample Reviewer"
-          }
-        },
-        "quote_7fEhKx": {
-          "type": "quote",
-          "settings": {
-            "quote": "This is a placeholder for your reviews and testimonials. Use this space to highlight your favorite reviews or testimonials.",
-            "cite": "Sample Reviewer"
-          }
-        }
-      },
-      "block_order": [
-        "quote_F8JrA8",
-        "quote_aVNJ8w",
-        "quote_PEEmaV",
-        "quote_7fEhKx"
-      ],
-      "settings": {
-        "override_fonts": true,
-        "headline_font": "instrument_sans_n6",
-        "text_font": "instrument_sans_n6",
-        "override_text_sizes": true,
-        "text_size": 20,
-        "mobile_text_size": 14,
-        "text_line_height": "inherit",
-        "headline_size": 14,
-        "mobile_headline_size": 10,
-        "headline_line_height": "inherit",
-        "override_text_colors": true,
-        "text_color": "#000000",
-        "link_color": "#005bd3",
-        "show_on_device": "all",
-        "section_background_color": "linear-gradient(2deg, rgba(255, 229, 63, 1), rgba(255, 238, 130, 1) 100%)",
-        "section_background_image_color": "",
-        "section_background_size": "cover",
-        "section_padding_top_bottom": 40,
-        "mobile_section_padding_top_bottom": 30,
-        "section_padding_left_right": 25,
-        "mobile_section_padding_left_right": 20,
-        "container_background_color": "",
-        "container_max_width": 1000,
-        "container_padding_top_bottom": 13,
-        "mobile_container_padding_top_bottom": 10,
-        "container_padding_left_right": 10,
-        "mobile_container_padding_left_right": 10,
-        "element_spacing": 15,
-        "container_radius": 0,
-        "container_shadow": false,
-        "container_border_size": 0,
-        "container_border_color": "#888888",
-        "highlight_color": "#111111",
-        "progress_background_color": "linear-gradient(177deg, rgba(17, 17, 17, .25) 3%, rgba(17, 17, 17, 0.25) 100%)",
-        "progress_foreground_color": "",
-        "indicator_color": "#111111",
-        "enable_autoplay": true,
-        "autoplay_time": "3000",
-        "text_alignment": "center",
-        "mobile_text_alignment": "center",
-        "headline": "<strong>Genuine Testimonials from Happy Customers.</strong>",
-        "text": "",
-        "headline_spacing": 10
-      }
-    },
     "multicolumn_kmwixd": {
       "type": "multicolumn",
       "blocks": {
@@ -1155,6 +1071,107 @@
         "padding_bottom": 36
       }
     },
+    "sp_review_slider_WVPEiQ": {
+      "type": "sp-review-slider",
+      "blocks": {
+        "quote_F8JrA8": {
+          "type": "quote",
+          "settings": {
+            "quote": "This is a placeholder for your reviews and testimonials. Use this space to highlight your favorite reviews or testimonials.",
+            "cite": "Sample Reviewer"
+          }
+        },
+        "quote_aVNJ8w": {
+          "type": "quote",
+          "settings": {
+            "quote": "This is a placeholder for your reviews and testimonials. Use this space to highlight your favorite reviews or testimonials.",
+            "cite": "Sample Reviewer"
+          }
+        },
+        "quote_PEEmaV": {
+          "type": "quote",
+          "settings": {
+            "quote": "This is a placeholder for your reviews and testimonials. Use this space to highlight your favorite reviews or testimonials.",
+            "cite": "Sample Reviewer"
+          }
+        },
+        "quote_7fEhKx": {
+          "type": "quote",
+          "settings": {
+            "quote": "This is a placeholder for your reviews and testimonials. Use this space to highlight your favorite reviews or testimonials.",
+            "cite": "Sample Reviewer"
+          }
+        }
+      },
+      "block_order": [
+        "quote_F8JrA8",
+        "quote_aVNJ8w",
+        "quote_PEEmaV",
+        "quote_7fEhKx"
+      ],
+      "settings": {
+        "override_fonts": true,
+        "headline_font": "instrument_sans_n6",
+        "text_font": "instrument_sans_n6",
+        "override_text_sizes": true,
+        "text_size": 20,
+        "mobile_text_size": 14,
+        "text_line_height": "inherit",
+        "headline_size": 14,
+        "mobile_headline_size": 10,
+        "headline_line_height": "inherit",
+        "override_text_colors": true,
+        "text_color": "#000000",
+        "link_color": "#005bd3",
+        "show_on_device": "all",
+        "section_background_color": "linear-gradient(2deg, rgba(255, 229, 63, 1), rgba(255, 238, 130, 1) 100%)",
+        "section_background_image_color": "",
+        "section_background_size": "cover",
+        "section_padding_top_bottom": 40,
+        "mobile_section_padding_top_bottom": 30,
+        "section_padding_left_right": 25,
+        "mobile_section_padding_left_right": 20,
+        "container_background_color": "",
+        "container_max_width": 1000,
+        "container_padding_top_bottom": 13,
+        "mobile_container_padding_top_bottom": 10,
+        "container_padding_left_right": 10,
+        "mobile_container_padding_left_right": 10,
+        "element_spacing": 15,
+        "container_radius": 0,
+        "container_shadow": false,
+        "container_border_size": 0,
+        "container_border_color": "#888888",
+        "highlight_color": "#111111",
+        "progress_background_color": "linear-gradient(177deg, rgba(17, 17, 17, .25) 3%, rgba(17, 17, 17, 0.25) 100%)",
+        "progress_foreground_color": "",
+        "indicator_color": "#111111",
+        "enable_autoplay": true,
+        "autoplay_time": "3000",
+        "text_alignment": "center",
+        "mobile_text_alignment": "center",
+        "headline": "<strong>Genuine Testimonials from Happy Customers.</strong>",
+        "text": "",
+        "headline_spacing": 10
+      }
+    },
+    "1750130105f0de4b2b": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_featured_carousel_fbMjyc": {
+          "type": "shopify://apps/judge-me-reviews/blocks/featured_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "maxwidth": 1080
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_featured_carousel_fbMjyc"
+      ],
+      "settings": {
+        "include_margins": true
+      }
+    },
     "multicolumn_9qmEca": {
       "type": "multicolumn",
       "blocks": {
@@ -1250,12 +1267,13 @@
     "sp_accordion_feature_xHwxwq",
     "collection_list_DCh3t4",
     "sp_24_hour_count_down_qUWf9A",
-    "sp_review_slider_WVPEiQ",
     "multicolumn_kmwixd",
     "collapsible_content_WK8jeD",
     "featured_blog_CG9hYn",
     "image_banner_ewAh3M",
     "featured_collection_zAVGzh",
+    "sp_review_slider_WVPEiQ",
+    "1750130105f0de4b2b",
     "multicolumn_9qmEca",
     "ss_back_to_top_button_kLNng3"
   ]
