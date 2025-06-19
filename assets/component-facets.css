@@ -441,6 +441,14 @@
   cursor: pointer;
 }
 
+.facets__label,
+.facet-checkbox,
+.mobile-facets__label,
+.facets__summary-label,
+.facets__summary {
+  font-weight: 600 !important;
+}
+
 .facet-checkbox {
   padding: 1rem 2rem 1rem 0;
   flex-grow: 1;
@@ -1150,7 +1158,8 @@ input.mobile-facets__checkbox {
 
   .facets__heading--vertical {
     margin: 0 0 1.5rem 0;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
+    font-weight: 600;
   }
 
   .facets__header-vertical {
