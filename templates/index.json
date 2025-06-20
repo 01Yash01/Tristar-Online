@@ -121,50 +121,6 @@
         "accessibility_info": ""
       }
     },
-    "featured_collection_TqArby": {
-      "type": "featured-collection",
-      "settings": {
-        "title": "Weekend Sale",
-        "heading_size": "h2",
-        "description": "",
-        "show_description": true,
-        "description_style": "body",
-        "collection": "weekend-sale",
-        "products_to_show": 8,
-        "columns_desktop": 4,
-        "full_width": false,
-        "show_view_all": true,
-        "view_all_style": "outline",
-        "enable_desktop_slider": true,
-        "color_scheme": "",
-        "image_ratio": "square",
-        "image_shape": "round",
-        "show_secondary_image": true,
-        "show_vendor": false,
-        "show_rating": true,
-        "quick_add": "standard",
-        "columns_mobile": "2",
-        "swipe_on_mobile": true,
-        "padding_top": 36,
-        "padding_bottom": 24
-      }
-    },
-    "video_x877iM": {
-      "type": "video",
-      "name": "t:sections.video.presets.name",
-      "settings": {
-        "heading": "",
-        "heading_size": "h2",
-        "enable_video_looping": true,
-        "video": "shopify://files/videos/WhatsApp Video 2025-06-05 at 12.13.00.mp4",
-        "video_url": "",
-        "description": "",
-        "full_width": false,
-        "color_scheme": "scheme-1",
-        "padding_top": 8,
-        "padding_bottom": 12
-      }
-    },
     "ss_instafeed_2_8BewHL": {
       "type": "ss-instafeed-2",
       "blocks": {
@@ -336,6 +292,50 @@
         "lazy": true
       }
     },
+    "featured_collection_TqArby": {
+      "type": "featured-collection",
+      "settings": {
+        "title": "Weekend Sale",
+        "heading_size": "h2",
+        "description": "",
+        "show_description": true,
+        "description_style": "body",
+        "collection": "weekend-sale",
+        "products_to_show": 8,
+        "columns_desktop": 4,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "outline",
+        "enable_desktop_slider": true,
+        "color_scheme": "",
+        "image_ratio": "square",
+        "image_shape": "round",
+        "show_secondary_image": true,
+        "show_vendor": false,
+        "show_rating": true,
+        "quick_add": "standard",
+        "columns_mobile": "2",
+        "swipe_on_mobile": true,
+        "padding_top": 36,
+        "padding_bottom": 24
+      }
+    },
+    "video_x877iM": {
+      "type": "video",
+      "name": "t:sections.video.presets.name",
+      "settings": {
+        "heading": "",
+        "heading_size": "h2",
+        "enable_video_looping": true,
+        "video": "shopify://files/videos/WhatsApp Video 2025-06-05 at 12.13.00.mp4",
+        "video_url": "",
+        "description": "",
+        "full_width": false,
+        "color_scheme": "scheme-1",
+        "padding_top": 8,
+        "padding_bottom": 12
+      }
+    },
     "featured_collection_Gy369K": {
       "type": "featured-collection",
       "settings": {
@@ -494,7 +494,7 @@
         "description": "",
         "show_description": false,
         "description_style": "body",
-        "collection": "new-arrival",
+        "collection": "new-collection",
         "products_to_show": 8,
         "columns_desktop": 4,
         "full_width": false,
@@ -995,24 +995,6 @@
         "padding_bottom": 36
       }
     },
-    "featured_blog_CG9hYn": {
-      "type": "featured-blog",
-      "disabled": true,
-      "settings": {
-        "heading": "Blog posts",
-        "heading_size": "h1",
-        "blog": "news",
-        "post_limit": 4,
-        "columns_desktop": 4,
-        "color_scheme": "scheme-1",
-        "show_image": false,
-        "show_date": false,
-        "show_author": false,
-        "show_view_all": true,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
     "image_banner_ewAh3M": {
       "type": "image-banner",
       "blocks": {
@@ -1056,7 +1038,7 @@
       "name": "t:sections.featured-collection.presets.name",
       "settings": {
         "title": "Featured collection",
-        "heading_size": "h1",
+        "heading_size": "h2",
         "description": "",
         "show_description": false,
         "description_style": "body",
@@ -1279,7 +1261,6 @@
     "sp_24_hour_count_down_qUWf9A",
     "multicolumn_kmwixd",
     "collapsible_content_WK8jeD",
-    "featured_blog_CG9hYn",
     "image_banner_ewAh3M",
     "featured_collection_zAVGzh",
     "sp_review_slider_WVPEiQ",
