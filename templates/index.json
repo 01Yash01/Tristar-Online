@@ -9,168 +9,6 @@
  */
 {
   "sections": {
-    "ss_instafeed_2_8BewHL": {
-      "type": "ss-instafeed-2",
-      "blocks": {
-        "slide_F6YEcf": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/1_e3346a85-d74f-4e56-a358-f12066b4b1c4.jpg",
-            "name": "<p>dsfgsd</p>",
-            "url": ""
-          }
-        },
-        "slide_Gczhzt": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/3_b891c4fd-3b2d-4bab-97bf-39f08dd3ff87.jpg",
-            "name": "<p>Abc</p>",
-            "url": "shopify://collections"
-          }
-        },
-        "slide_KVBmk6": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/61T9NHGrXRL._AC_SL1500_19af495e-9fc2-4068-a43d-7ec77f3a67b5.jpg",
-            "name": "<p>watch</p>",
-            "url": "shopify://collections/devices-and-accessories-watches"
-          }
-        },
-        "slide_CrPU9K": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/Loc8F-C4_1_331b9983-1fe2-4459-a8ce-7025e9d30cde.jpg",
-            "name": "<p>uhsdsd</p>",
-            "url": ""
-          }
-        },
-        "slide_Rp8Mqk": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/2_ba576c7a-d992-4afe-aee7-9ee2f024d337.jpg",
-            "name": "<p>BNsdlk</p>",
-            "url": ""
-          }
-        },
-        "slide_F7cBHD": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/V888-ELOSUNG25794-202505131859-00.jpg",
-            "name": "<p>rgfy</p>",
-            "url": ""
-          }
-        },
-        "slide_hxrazd": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/Canon-EOS-4000D-DSLR-Kit-EF-S-18-55mm-DC-III_e3029050-3070-4ff6-b852-7270d99ec3cd.png",
-            "name": "<p>camera</p>",
-            "url": ""
-          }
-        },
-        "slide_38kztD": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/samsung-galaxy-tab-s10-ultra-14-6-5g-256gb-grey-5_4_1.jpg",
-            "name": "<p>Tablet</p>",
-            "url": ""
-          }
-        },
-        "slide_UUnJ8d": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/2_07b70ac4-f979-469a-94ec-d42d2314c9c8.jpg",
-            "name": "<p>dfhdfs</p>",
-            "url": ""
-          }
-        },
-        "slide_W9TVWH": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/V888-ELOSUNG28439-202505131931-02.png",
-            "name": "<p>gldsf</p>",
-            "url": ""
-          }
-        },
-        "slide_7mPCjn": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/Loc8-F1.jpg",
-            "name": "<p>edfe</p>",
-            "url": ""
-          }
-        }
-      },
-      "block_order": [
-        "slide_F6YEcf",
-        "slide_Gczhzt",
-        "slide_KVBmk6",
-        "slide_CrPU9K",
-        "slide_Rp8Mqk",
-        "slide_F7cBHD",
-        "slide_hxrazd",
-        "slide_38kztD",
-        "slide_UUnJ8d",
-        "slide_W9TVWH",
-        "slide_7mPCjn"
-      ],
-      "settings": {
-        "top": "",
-        "top_custom": false,
-        "top_font": "instrument_sans_n7",
-        "top_size": 2,
-        "top_height": 80,
-        "top_align": "left",
-        "heading": "",
-        "heading_custom": false,
-        "heading_font": "josefin_sans_n4",
-        "heading_size": 20,
-        "heading_height": 130,
-        "heading_align": "center",
-        "heading_mt": 12,
-        "subheading": "",
-        "subheading_custom": false,
-        "subheading_font": "josefin_sans_n4",
-        "subheading_size": 0,
-        "subheading_height": 130,
-        "subheading_align": "center",
-        "subheading_mt": 12,
-        "slider_mt": 12,
-        "slider_row": "10",
-        "slider_row_mobile": "3",
-        "slider_gap": 48,
-        "slider_gap_mobile": 14,
-        "autoplay": true,
-        "autoplay_speed": 3,
-        "nav_size": 25,
-        "nav_size_mobile": 20,
-        "hide_nav": false,
-        "hide_nav_mobile": false,
-        "image_radius": 100,
-        "top_color": "#121212",
-        "heading_color": "#746661",
-        "subheading_color": "#aba49d",
-        "nav_btn_bg": "#fdfdfd",
-        "nav_btn_hover_bg": "#121212",
-        "nav_border": "#242833",
-        "nav_border_hover": "#242833",
-        "nav_icon": "#242833",
-        "nav_hover_icon": "#ffffff",
-        "background_color": "#ffffff",
-        "background_gradient": "",
-        "border_color": "#000000",
-        "margin_top": 0,
-        "margin_bottom": 16,
-        "padding_top": 0,
-        "padding_bottom": 0,
-        "padding_horizontal": 10,
-        "padding_horizontal_mobile": 1.5,
-        "full_width": false,
-        "content_width": 150,
-        "border_thickness": 1,
-        "lazy": true
-      }
-    },
     "slideshow_FXLnz4": {
       "type": "slideshow",
       "blocks": {
@@ -325,6 +163,177 @@
         "color_scheme": "scheme-1",
         "padding_top": 8,
         "padding_bottom": 12
+      }
+    },
+    "ss_instafeed_2_8BewHL": {
+      "type": "ss-instafeed-2",
+      "blocks": {
+        "slide_EgYn7z": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/10_f9acf0fc-fb41-4509-9f94-98523cbb2dca.png",
+            "name": "<p>Nikon</p>",
+            "url": "shopify://collections/nikon"
+          }
+        },
+        "slide_F6YEcf": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/3_8588f240-3d8d-4633-9e33-cff4c907710f.png",
+            "name": "<p>Samsung</p>",
+            "url": "shopify://collections/samsung"
+          }
+        },
+        "slide_KVBmk6": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/4_db6bd1d8-b9b6-4d71-b457-b3c5c5762514.png",
+            "name": "<p>Google</p>",
+            "url": "shopify://collections/google-pixel-watches"
+          }
+        },
+        "slide_W9TVWH": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/2_5dbb9f9e-e134-4d21-a4b2-bd147e7e6b62.png",
+            "name": "<p>Meta</p>",
+            "url": "shopify://collections/meta-quest"
+          }
+        },
+        "slide_Rp8Mqk": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/9_048683b3-debd-4daa-9259-7f8d8f81c51f.png",
+            "name": "<p>Canon</p>",
+            "url": "shopify://collections/canon"
+          }
+        },
+        "slide_F7cBHD": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/5_515b5f4d-cd1a-4320-ba3a-5a271fb682d5.png",
+            "name": "<p>Sony</p>",
+            "url": "shopify://collections/sony"
+          }
+        },
+        "slide_UUnJ8d": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/1_04c9986b-61e2-4edf-b108-341d5abec0b9.png",
+            "name": "<p>Valve</p>",
+            "url": "shopify://collections/steam-deck"
+          }
+        },
+        "slide_CrPU9K": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/12_d058609e-ba76-45bc-827b-33c0cb38c2cc.png",
+            "name": "<p>Oppo</p>",
+            "url": ""
+          }
+        },
+        "slide_Gczhzt": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/7_94a8b9b0-7840-43cc-a09d-c3f78f944640.png",
+            "name": "<p>Trion</p>",
+            "url": "shopify://collections/trion"
+          }
+        },
+        "slide_hxrazd": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/8_d220624e-e7fe-4e72-a777-e767e4498976.png",
+            "name": "<p>Logitech</p>",
+            "url": "#"
+          }
+        },
+        "slide_38kztD": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/11_4bdcdf65-9a8d-4890-a81c-5fe088725397.png",
+            "name": "<p>Motorola</p>",
+            "url": ""
+          }
+        },
+        "slide_7mPCjn": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/6_a9210089-3ebf-46d3-b26d-421f5d98c198.png",
+            "name": "<p>Roborock</p>",
+            "url": "shopify://collections/roborock-1"
+          }
+        }
+      },
+      "block_order": [
+        "slide_EgYn7z",
+        "slide_F6YEcf",
+        "slide_KVBmk6",
+        "slide_W9TVWH",
+        "slide_Rp8Mqk",
+        "slide_F7cBHD",
+        "slide_UUnJ8d",
+        "slide_CrPU9K",
+        "slide_Gczhzt",
+        "slide_hxrazd",
+        "slide_38kztD",
+        "slide_7mPCjn"
+      ],
+      "settings": {
+        "top": "",
+        "top_custom": false,
+        "top_font": "instrument_sans_n7",
+        "top_size": 2,
+        "top_height": 80,
+        "top_align": "left",
+        "heading": "",
+        "heading_custom": false,
+        "heading_font": "josefin_sans_n4",
+        "heading_size": 20,
+        "heading_height": 130,
+        "heading_align": "center",
+        "heading_mt": 12,
+        "subheading": "",
+        "subheading_custom": false,
+        "subheading_font": "josefin_sans_n4",
+        "subheading_size": 0,
+        "subheading_height": 130,
+        "subheading_align": "center",
+        "subheading_mt": 12,
+        "slider_mt": 12,
+        "slider_row": "10",
+        "slider_row_mobile": "3",
+        "slider_gap": 48,
+        "slider_gap_mobile": 14,
+        "autoplay": true,
+        "autoplay_speed": 3,
+        "nav_size": 25,
+        "nav_size_mobile": 20,
+        "hide_nav": false,
+        "hide_nav_mobile": false,
+        "image_radius": 100,
+        "top_color": "#121212",
+        "heading_color": "#746661",
+        "subheading_color": "#aba49d",
+        "nav_btn_bg": "#fdfdfd",
+        "nav_btn_hover_bg": "#121212",
+        "nav_border": "#242833",
+        "nav_border_hover": "#242833",
+        "nav_icon": "#242833",
+        "nav_hover_icon": "#ffffff",
+        "background_color": "#ffffff",
+        "background_gradient": "",
+        "border_color": "#000000",
+        "margin_top": 0,
+        "margin_bottom": 16,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "padding_horizontal": 10,
+        "padding_horizontal_mobile": 1.5,
+        "full_width": false,
+        "content_width": 150,
+        "border_thickness": 1,
+        "lazy": true
       }
     },
     "featured_collection_Gy369K": {
@@ -787,7 +796,7 @@
         "featured_collection_Jn7t8w"
       ],
       "settings": {
-        "title": "Recommnded",
+        "title": "Recommended",
         "heading_size": "h2",
         "image_ratio": "square",
         "columns_desktop": 4,
@@ -1168,6 +1177,7 @@
       "block_order": [
         "judge_me_reviews_featured_carousel_fbMjyc"
       ],
+      "disabled": true,
       "settings": {
         "include_margins": true
       }
@@ -1256,8 +1266,8 @@
     }
   },
   "order": [
-    "ss_instafeed_2_8BewHL",
     "slideshow_FXLnz4",
+    "ss_instafeed_2_8BewHL",
     "featured_collection_TqArby",
     "video_x877iM",
     "featured_collection_Gy369K",
