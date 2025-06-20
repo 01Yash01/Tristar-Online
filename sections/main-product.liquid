@@ -184,12 +184,14 @@
                     {%- endif -%}
                   {%- endif -%}
                 </p>
-              {% comment %} {%- when 'description' -%}
-                {%- if product.description != blank -%}
-                  <div class="product__description rte quick-add-hidden" {{ block.shopify_attributes }}>
-                    {{ product.description }}
-                  </div>
-                {%- endif -%} {% endcomment %}
+                {% comment %}
+                  {%- when 'description' -%}
+                  {%- if product.description != blank -%}
+                    <div class="product__description rte quick-add-hidden" {{ block.shopify_attributes }}>
+                      {{ product.description }}
+                    </div>
+                  {%- endif -%}
+                {% endcomment %}
               {%- when 'sku' -%}
                 <p
                   class="product__sku{% if block.settings.text_style == 'uppercase' %} caption-with-letter-spacing{% elsif block.settings.text_style == 'subtitle' %} subtitle{% endif %}{% if product.selected_or_first_available_variant.sku.size == 0 %} visibility-hidden{% endif %}"
@@ -661,45 +663,46 @@
           </a>
         </section>
       </div>
-      {% comment %} <!-- Description Button with Custom Style -->
-<button class="btn-style702" id="toggle-description">
-  Hide Description
-</button> {% endcomment %}
-
-<!-- Move the product description section to the bottom -->
-<div class="product__description-full-width" id="description-section">
-  {% if product.description != blank %}
-    <div class="rte full-width-description">
-      {{ product.description }}
-    </div>
-  {% endif %}
-</div>
-{% comment %} 
-<script>
-  document.addEventListener('DOMContentLoaded', function () {
-    // Get the toggle button and the description section
-    const toggleButton = document.getElementById('toggle-description');
-    const descriptionSection = document.getElementById('description-section');
-
-    // Add event listener for button click
-    toggleButton.addEventListener('click', function () {
-      // Toggle the visibility of the description section
-      descriptionSection.classList.toggle('hidden');
-
-      // Change button text based on visibility
-      if (descriptionSection.classList.contains('hidden')) {
-        toggleButton.textContent = 'Show Description'; // Text when description is hidden
-      } else {
-        toggleButton.textContent = 'Hide Description'; // Text when description is visible
-      }
-
-      // Toggle active class for the button
-      toggleButton.classList.toggle('active');
-    });
-  });
-</script>
+      <span>
+        <!-- Description Button with Custom Style -->
+        <button class="btn-style702" id="toggle-description">
+          Hide Description
+        </button>
+        <button class="dfsd" id="lkfjnd">Online Saftey</button>
+      </span>
+      <!-- Move the product description section to the bottom -->
+      <div class="product__description-full-width" id="description-section">
+        {% if product.description != blank %}
+          <div class="rte full-width-description">
+            {{ product.description }}
+          </div>
+        {% endif %}
+      </div>
       
-    {% endcomment %}
+        <script>
+          document.addEventListener('DOMContentLoaded', function () {
+            // Get the toggle button and the description section
+            const toggleButton = document.getElementById('toggle-description');
+            const descriptionSection = document.getElementById('description-section');
+
+            // Add event listener for button click
+            toggleButton.addEventListener('click', function () {
+              // Toggle the visibility of the description section
+              descriptionSection.classList.toggle('hidden');
+
+              // Change button text based on visibility
+              if (descriptionSection.classList.contains('hidden')) {
+                toggleButton.textContent = 'Description'; // Text when description is hidden
+              } else {
+                toggleButton.textContent = 'Hide Description'; // Text when description is visible
+              }
+
+              // Toggle active class for the button
+              toggleButton.classList.toggle('active');
+            });
+          });
+        </script>
+      
     </div>
     {% render 'product-media-modal', variant_images: variant_images %}
 
