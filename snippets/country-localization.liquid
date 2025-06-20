@@ -33,11 +33,23 @@
     aria-controls="{{ localPosition }}-country-results"
     aria-describedby="{{ localPosition }}Label"
   >
-    <span>
-      {{- localization.country.name }} |
+    <span class="localization__button-text" style="display: flex; align-items: flex-end; gap: 6px;">
+      <span class="country-flag-icon">
+        {% case localization.country.iso_code %}
+          {% when 'AU' %}
+            {{ 'icon-flag-au.svg' | inline_asset_content }}
+          {% when 'NZ' %}
+            {{ 'icon-flag-nz.svg' | inline_asset_content }}
+        {% endcase %}
+      </span>
+    
+      {{ localization.country.name }} |
       {{ localization.country.currency.iso_code }}
-      {{ localization.country.currency.symbol -}}
+      {{ localization.country.currency.symbol }}
     </span>
+    
+
+    
     {{ 'icon-caret.svg' | inline_asset_content }}
   </button>
   <div class="disclosure__list-wrapper country-selector" hidden>
