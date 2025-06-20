@@ -3729,17 +3729,18 @@ details-disclosure > details {
   }
 }
 
+
 /* custom button for description */
 /* .btn-style702 {
   position: relative;
   border-color: transparent;
-  color: #fff;
-  background-color: transparent;
+  color: #006fca;
+  font-weight: bold;
   font-size: 16px;
+  background-color: transparent;
   padding: 10px 20px;
   cursor: pointer;
   text-transform: uppercase;
-  font-weight: bold;
   border-radius: 5px;
   transition: all 0.3s;
 }
@@ -3757,7 +3758,7 @@ details-disclosure > details {
   width: 100%;
   left: 0;
   border-radius: 5px;
-  background-color: #716eef;
+  background-color: #006fca;
   z-index: -1;
 }
 
