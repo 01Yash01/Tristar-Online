@@ -663,46 +663,83 @@
           </a>
         </section>
       </div>
-      <span>
-        <!-- Description Button with Custom Style -->
-        <button class="btn-style702" id="toggle-description">
-          Hide Description
-        </button>
-        <button class="dfsd" id="lkfjnd">Online Saftey</button>
-      </span>
-      <!-- Move the product description section to the bottom -->
-      <div class="product__description-full-width" id="description-section">
+      <!-- Description & Online Safety Switch Buttons -->
+      <div style="margin-top: 30px; text-align: center;">
+        <button class="tab-switch-btn active" id="toggle-description">Description</button>
+        <button class="tab-switch-btn" id="toggle-safety">Online Safety</button>
+      </div>
+
+      <!-- Description Section (Visible by Default) -->
+      <div class="product__description-full-width" id="description-section" style="margin-top: 20px;">
         {% if product.description != blank %}
           <div class="rte full-width-description">
             {{ product.description }}
           </div>
         {% endif %}
       </div>
-      
-        <script>
-          document.addEventListener('DOMContentLoaded', function () {
-            // Get the toggle button and the description section
-            const toggleButton = document.getElementById('toggle-description');
-            const descriptionSection = document.getElementById('description-section');
 
-            // Add event listener for button click
-            toggleButton.addEventListener('click', function () {
-              // Toggle the visibility of the description section
-              descriptionSection.classList.toggle('hidden');
+      <!-- Online Safety Section (Hidden by Default) -->
+      <div class="product__description-full-width hidden" id="safety-section" style="margin-top: 20px;">
+        <div class="rte full-width-description">
+          {{ pages['online-safety'].content }}
+        </div>
+      </div>
 
-              // Change button text based on visibility
-              if (descriptionSection.classList.contains('hidden')) {
-                toggleButton.textContent = 'Description'; // Text when description is hidden
-              } else {
-                toggleButton.textContent = 'Hide Description'; // Text when description is visible
-              }
+      <style>
+        .tab-switch-btn {
+          padding: 14px 28px;
+          margin: 0 10px;
+          font-size: 16px;
+          border: none;
+          border-radius: 6px;
+          background-color: #f0f0f0;
+          color: #333;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+        }
 
-              // Toggle active class for the button
-              toggleButton.classList.toggle('active');
-            });
+        .tab-switch-btn:hover {
+          background-color: #ddd;
+        }
+
+        .tab-switch-btn.active {
+          background-color: #333;
+          color: #fff;
+        }
+
+        .hidden {
+          display: none;
+        }
+      </style>
+
+      <!-- JavaScript -->
+      <script>
+        document.addEventListener('DOMContentLoaded', function () {
+          const descriptionBtn = document.getElementById('toggle-description');
+          const safetyBtn = document.getElementById('toggle-safety');
+
+          const descriptionSection = document.getElementById('description-section');
+          const safetySection = document.getElementById('safety-section');
+
+          // Handle Description button click
+          descriptionBtn.addEventListener('click', function () {
+            descriptionSection.classList.remove('hidden');
+            safetySection.classList.add('hidden');
+
+            descriptionBtn.classList.add('active');
+            safetyBtn.classList.remove('active');
           });
-        </script>
-      
+
+          // Handle Online Safety button click
+          safetyBtn.addEventListener('click', function () {
+            safetySection.classList.remove('hidden');
+            descriptionSection.classList.add('hidden');
+
+            safetyBtn.classList.add('active');
+            descriptionBtn.classList.remove('active');
+          });
+        });
+      </script>
     </div>
     {% render 'product-media-modal', variant_images: variant_images %}
 
