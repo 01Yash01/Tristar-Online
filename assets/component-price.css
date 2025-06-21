@@ -3,7 +3,7 @@
   letter-spacing: 0.1rem;
   line-height: calc(1 + 0.5 / var(--font-body-scale));
   color: rgb(var(--color-foreground));
-  background: rgba(255, 76, 41, 0.1);
+  background: rgba(29, 52, 154, .25); /* background-color changes for price block */
   padding: 0.5rem;
   border-radius: 8px;
 }
@@ -104,7 +104,7 @@
 }
  /* custom add for price */
 .price__sale {
-  color: #F02700;
+  color: #1D349A;
   font-weight: 600;
 }
 
