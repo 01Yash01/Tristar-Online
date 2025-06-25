@@ -199,3 +199,15 @@ slideshow-component:not(.page-width) .slider-buttons {
   opacity: 0;
   transform: scale(0.8);
 }
+
+/* Hide empty slideshow text containers on mobile - Dawn theme */
+@media screen and (max-width: 749px) {
+  .slideshow__text:empty,
+  .banner__box:empty,
+  .slideshow__text-wrapper:has(.slideshow__text:empty) {
+    display: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    height: 0 !important;
+  }
+}
