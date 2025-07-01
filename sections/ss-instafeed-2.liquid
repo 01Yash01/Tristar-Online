@@ -416,8 +416,11 @@
                     class="instafeed-image"
                     src="{{ block.settings.image | image_url }}"
                     alt="{{ block.settings.image.alt }}"
-                    style="margin-bottom: 0;"
-                    {% if lazy %}loading="lazy"{% endif %}>
+                    fetchpriority="high"
+                    style="margin-bottom: 0; object-fit: cover; margin-bottom: 0;"
+                    {% comment %}}{% if lazy %}loading="lazy"{% endif %}{% endcomment %}}
+                    >
+                    
                 {% else %}
                   {{ 'image' | placeholder_svg_tag: 'placeholder' }}
                 {% endif %}
