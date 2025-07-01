@@ -182,6 +182,60 @@
         "settings": {
           "position": "right"
         }
+      },
+      "8813414294664651821": {
+        "type": "shopify://apps/xb-wishlist/blocks/wishlist_float/cc07f1e9-907b-431d-99f8-4fce3efa75f1",
+        "disabled": false,
+        "settings": {
+          "style": "style-1",
+          "button_color": "#fff",
+          "button_bg-color": "#ff0000",
+          "float_position": "bottom-right",
+          "custom_position": false,
+          "x_position": 0,
+          "y_position": 0
+        }
+      },
+      "9994742477291898530": {
+        "type": "shopify://apps/xb-wishlist/blocks/wishlist_notification/cc07f1e9-907b-431d-99f8-4fce3efa75f1",
+        "disabled": false,
+        "settings": {
+          "notification_placement": "top-end",
+          "top": 20,
+          "left": 20,
+          "right": 20,
+          "bottom": 20,
+          "color_success": "#ffffff",
+          "background_color_success": "#19af66",
+          "color_error": "#ffffff",
+          "background_color_error": "#f35746",
+          "notification_duration": 3000,
+          "notification_animation": "fade"
+        }
+      },
+      "11413113034274116516": {
+        "type": "shopify://apps/xb-wishlist/blocks/wishlist_collection/cc07f1e9-907b-431d-99f8-4fce3efa75f1",
+        "disabled": false,
+        "settings": {
+          "selector_collection": ".product-card > a[href^='/products'],.card__heading.h5 > a[href^='/products'],.card__heading > a[href^='/products'],.product-card  a[href^='/products'],.card__heading  a[href^='/products'],.product-grid-item a[href^='/products'], .grid__item.grid-product a[href^='/products']",
+          "icon_position": "top-right",
+          "custom_position": false,
+          "x_position": 0,
+          "y_position": 0,
+          "x_position-mobile": 0,
+          "y_position-mobile": 0,
+          "icon_size": 2,
+          "icon_color": "#ff0000"
+        }
+      },
+      "12342438634123318931": {
+        "type": "shopify://apps/xb-wishlist/blocks/xo-wishlist/cc07f1e9-907b-431d-99f8-4fce3efa75f1",
+        "disabled": false,
+        "settings": {
+          "price_color": "#ff0000",
+          "icon_add": "",
+          "icon_remove": ""
+        }
       }
     },
     "color_schemes": {
