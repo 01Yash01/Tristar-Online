@@ -106,7 +106,7 @@
  /* custom add for price */
 .price__sale {
   color: #002fff;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .price {
@@ -136,7 +136,7 @@
 
 /* SALE BADGE Styling Override */
 .price__badge-sale {
-  background-color: red !important;
+  background-color: green !important;
   color: white !important;
   padding: 0.4rem 0.6rem;
   border-radius: 4px;
