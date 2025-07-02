@@ -30,15 +30,51 @@
             "text_alignment_mobile": "center"
           }
         },
-        "slide_AKDUAe": {
+        "slide_qRtceL": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/pixel_bundle_web_1.png",
+            "image": "shopify://shop_images/store-opening-web-1.png",
             "heading": "",
             "heading_size": "h1",
             "subheading": "",
             "button_label": "",
-            "link": "shopify://collections/google-pixel-watches",
+            "link": "",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": false,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "scheme-1",
+            "text_alignment_mobile": "center"
+          }
+        },
+        "slide_RJwCgx": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/pixel_bundle_web_2.jpg",
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "shopify://collections/google-pixel-bundle-offer",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": false,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "scheme-1",
+            "text_alignment_mobile": "center"
+          }
+        },
+        "slide_KU7GiP": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/max_360_web_1_be7c82c6-2058-4830-a78a-8792837868e7.jpg",
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "shopify://products/gopro-max-360-action-camera",
             "button_style_secondary": false,
             "box_align": "middle-center",
             "show_text_box": false,
@@ -101,14 +137,54 @@
             "color_scheme": "scheme-1",
             "text_alignment_mobile": "center"
           }
+        },
+        "slide_TPPe7A": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/GoPro_Hero_13_Website_Banner.jpg",
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "shopify://products/gopro-hero13-black-5-3k-hypersmooth-6-0-action-cam",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": false,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "scheme-1",
+            "text_alignment_mobile": "center"
+          }
+        },
+        "slide_7NkLUL": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Website_baner_31.png",
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "https://share.shopney.co/fp5FHPFKXa",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": false,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "scheme-1",
+            "text_alignment_mobile": "center"
+          }
         }
       },
       "block_order": [
         "slide_PnhpMV",
-        "slide_AKDUAe",
+        "slide_qRtceL",
+        "slide_RJwCgx",
+        "slide_KU7GiP",
         "slide_cxkVme",
         "slide_jfBeVG",
-        "slide_LDwaNN"
+        "slide_LDwaNN",
+        "slide_TPPe7A",
+        "slide_7NkLUL"
       ],
       "settings": {
         "layout": "grid",
@@ -201,7 +277,7 @@
           "settings": {
             "image": "shopify://shop_images/8_d220624e-e7fe-4e72-a777-e767e4498976.png",
             "name": "<p>Logitech</p>",
-            "url": "#"
+            "url": "shopify://collections/logitech"
           }
         },
         "slide_38kztD": {
@@ -209,7 +285,7 @@
           "settings": {
             "image": "shopify://shop_images/11_4bdcdf65-9a8d-4890-a81c-5fe088725397.png",
             "name": "<p>Motorola</p>",
-            "url": ""
+            "url": "shopify://collections/motorola"
           }
         },
         "slide_7mPCjn": {
@@ -329,7 +405,7 @@
         "enable_video_looping": true,
         "video": "shopify://files/videos/WhatsApp Video 2025-06-05 at 12.13.00.mp4",
         "video_url": "",
-        "description": "",
+        "description": "video",
         "full_width": false,
         "color_scheme": "scheme-1",
         "padding_top": 8,
@@ -375,14 +451,14 @@
             "size": 200,
             "gap": 20,
             "text": "",
-            "link": ""
+            "link": "shopify://collections/devices-and-accessories-watches"
           }
         },
         "video_Xq46Db": {
           "type": "video",
           "settings": {
             "video": "shopify://files/videos/ROG Ally_db819c43-0d25-4a47-a561-96247388f534.mp4",
-            "link": "",
+            "link": "shopify://products/asus-rog-ally-512gb-handheld-gaming-console",
             "video_inline": true,
             "video_autoplay": true,
             "video_loop": true,
@@ -394,14 +470,14 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/1_2a84120a-c56e-4c93-9e1b-31d109283838.jpg",
-            "link": ""
+            "link": "shopify://products/sony-wf-1000xm5-true-wireless-noise-cancelling-earbuds-silver"
           }
         },
         "video_n46QeW": {
           "type": "video",
           "settings": {
             "video": "shopify://files/videos/PlayStation Portal Remote Player - Pre-Order Trailer _ PS5 (1).mp4",
-            "link": "",
+            "link": "shopify://products/sony-playstation-5-ps5-disc-edition-console-3",
             "video_inline": false,
             "video_autoplay": true,
             "video_loop": true,
@@ -413,14 +489,14 @@
           "type": "image",
           "settings": {
             "image": "shopify://shop_images/3_0b04d888-3b37-45cd-95d8-b1584db6ab76.jpg",
-            "link": ""
+            "link": "shopify://collections/devices-and-accessories-watches"
           }
         },
         "video_9n8jHA": {
           "type": "video",
           "settings": {
             "video": "shopify://files/videos/Magic Caster Wand 2 (1).mp4",
-            "link": "",
+            "link": "shopify://products/the-harry-potter-magic-caster-wand",
             "video_inline": true,
             "video_autoplay": true,
             "video_loop": true,
@@ -521,34 +597,35 @@
           "type": "feature",
           "settings": {
             "background_image": "shopify://shop_images/1_564a2dc9-add3-494e-b5f4-ab42bf6835f6.jpg",
-            "headline": "<strong>Feature Headline</strong>",
+            "headline": "<strong>watch 1</strong>",
             "cta": "Shop Now",
-            "cta_link": ""
+            "cta_link": "shopify://collections/devices-and-accessories-watches"
           }
         },
         "feature_iak64J": {
           "type": "feature",
           "settings": {
             "background_image": "shopify://shop_images/1_76701977-4eea-487c-864c-6c6e6bfa8955.jpg",
-            "headline": "<strong>Feature Headline</strong>",
+            "headline": "<strong>watch 2</strong>",
             "cta": "Shop Now",
-            "cta_link": ""
+            "cta_link": "shopify://collections/devices-and-accessories-watches"
           }
         },
         "feature_n8gUYj": {
           "type": "feature",
           "settings": {
             "background_image": "shopify://shop_images/1_e3dc48ef-6390-444a-bd3f-de659a66d926.jpg",
-            "headline": "<strong>Feature Headline</strong>",
+            "headline": "<strong>watch 3</strong>",
             "cta": "Shop Now",
-            "cta_link": ""
+            "cta_link": "shopify://collections/devices-and-accessories-watches"
           }
         },
         "feature_kfPAAy": {
           "type": "feature",
+          "disabled": true,
           "settings": {
             "background_image": "shopify://shop_images/754670-Product-0-I-638562487803104310_1.jpg",
-            "headline": "<strong>Feature Headline</strong>",
+            "headline": "<strong>watch 4</strong>",
             "cta": "Shop Now",
             "cta_link": ""
           }
@@ -644,8 +721,8 @@
         "media_shadow": true,
         "text_alignment": "center",
         "mobile_text_alignment": "center",
-        "headline": "<strong>Check out our Products</strong>",
-        "text": "Shop our extensive range of amazing products.",
+        "headline": "<strong>Timeless Elegance</strong>",
+        "text": "Discover the Perfect Blend of Style and Sophistication in Our Watch Selection.",
         "headline_spacing": 15
       }
     },
@@ -933,92 +1010,8 @@
         "padding_bottom": 36
       }
     },
-    "collapsible_content_WK8jeD": {
-      "type": "collapsible-content",
-      "blocks": {
-        "collapsible_row_BBbPkU": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "Collapsible row",
-            "icon": "check_mark",
-            "row_content": "",
-            "page": ""
-          }
-        },
-        "collapsible_row_NefiYH": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "Collapsible row",
-            "icon": "check_mark",
-            "row_content": "",
-            "page": ""
-          }
-        },
-        "collapsible_row_TExeCc": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "Collapsible row",
-            "icon": "check_mark",
-            "row_content": "",
-            "page": ""
-          }
-        },
-        "collapsible_row_NqkxHU": {
-          "type": "collapsible_row",
-          "settings": {
-            "heading": "Collapsible row",
-            "icon": "check_mark",
-            "row_content": "",
-            "page": ""
-          }
-        }
-      },
-      "block_order": [
-        "collapsible_row_BBbPkU",
-        "collapsible_row_NefiYH",
-        "collapsible_row_TExeCc",
-        "collapsible_row_NqkxHU"
-      ],
-      "disabled": true,
-      "settings": {
-        "caption": "",
-        "heading": "Collapsible content",
-        "heading_size": "h1",
-        "heading_alignment": "center",
-        "layout": "none",
-        "color_scheme": "",
-        "container_color_scheme": "",
-        "open_first_collapsible_row": false,
-        "image_ratio": "adapt",
-        "desktop_layout": "image_second",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
     "image_banner_ewAh3M": {
       "type": "image-banner",
-      "blocks": {
-        "heading_Q9JHkQ": {
-          "type": "heading",
-          "disabled": true,
-          "settings": {
-            "heading": "Image banner",
-            "heading_size": "h1"
-          }
-        },
-        "text_PiJnh3": {
-          "type": "text",
-          "disabled": true,
-          "settings": {
-            "text": "Give customers details about the banner image(s) or content on the template.",
-            "text_style": "body"
-          }
-        }
-      },
-      "block_order": [
-        "heading_Q9JHkQ",
-        "text_PiJnh3"
-      ],
       "settings": {
         "image": "shopify://shop_images/Tristar_Website_Gaming_Banner_64a18ca2-1e90-433a-a691-55104ca5a576.png",
         "image_overlay_opacity": 0,
@@ -1260,7 +1253,6 @@
     "collection_list_DCh3t4",
     "sp_24_hour_count_down_qUWf9A",
     "multicolumn_kmwixd",
-    "collapsible_content_WK8jeD",
     "image_banner_ewAh3M",
     "featured_collection_zAVGzh",
     "sp_review_slider_WVPEiQ",
