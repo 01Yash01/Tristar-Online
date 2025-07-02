@@ -270,10 +270,10 @@
       {%- endfor -%}
 
       {% comment %} custom code for wishlist {% endcomment %}
-      <a href="#" class="header__icon header__icon--wishlist link focus-inset">
+      {% comment %} <a href="#" class="header__icon header__icon--wishlist link focus-inset">
         <span class="svg-wrapper" style="width: 44px; height: 44px;">{{ 'icon-wishlist.svg' | inline_asset_content }}</span>
         <span class="visually-hidden">Wishlist</span>
-      </a>
+      </a> {% endcomment %}
 
       <a href="{{ routes.cart_url }}" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble">
           {% if cart == empty %}
