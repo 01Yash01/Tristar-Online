@@ -46,6 +46,19 @@
           "type": "quantity_selector",
           "settings": {}
         },
+        "xb_wishlist_button_wishlist_TeeWRA": {
+          "type": "shopify://apps/xb-wishlist/blocks/button_wishlist/cc07f1e9-907b-431d-99f8-4fce3efa75f1",
+          "settings": {
+            "btn_style": "style3",
+            "btn_width": 440,
+            "btn_bg-color": "transparent",
+            "btn_border-color": "#000",
+            "text_size": 16,
+            "text_color": "#000",
+            "icon_color": "#ff0000",
+            "icon_size": 2
+          }
+        },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
@@ -85,6 +98,7 @@
         "price",
         "variant_picker",
         "quantity_selector",
+        "xb_wishlist_button_wishlist_TeeWRA",
         "buy_buttons",
         "complementary_ACMwHY",
         "description",
