@@ -33,7 +33,7 @@
         "slide_qRtceL": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/store-opening-web-1.png",
+            "image": "shopify://shop_images/store-opening-web-1_0cc1aa01-51e4-4e5d-b80f-c5028d795984.png",
             "heading": "",
             "heading_size": "h1",
             "subheading": "",
@@ -87,25 +87,7 @@
         "slide_cxkVme": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/pixel_watch_3_web_1.png",
-            "heading": "",
-            "heading_size": "h1",
-            "subheading": "",
-            "button_label": "",
-            "link": "shopify://collections/google-pixel-watches",
-            "button_style_secondary": false,
-            "box_align": "middle-center",
-            "show_text_box": false,
-            "text_alignment": "center",
-            "image_overlay_opacity": 0,
-            "color_scheme": "",
-            "text_alignment_mobile": "center"
-          }
-        },
-        "slide_jfBeVG": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/samsung_galaxy_web_banner_1.jpg",
+            "image": "shopify://shop_images/samsung_mobile_web_2.jpg",
             "heading": "",
             "heading_size": "h1",
             "subheading": "",
@@ -116,19 +98,56 @@
             "show_text_box": false,
             "text_alignment": "center",
             "image_overlay_opacity": 0,
-            "color_scheme": "scheme-1",
+            "color_scheme": "",
             "text_alignment_mobile": "center"
           }
         },
         "slide_LDwaNN": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/iphone_web_banner_1_fb375832-b5a5-4145-ada9-8bc32f73fce9.jpg",
+            "image": "shopify://shop_images/iphone_web_banner_1_5fe33a93-7d00-4937-9148-e6518aac5681.jpg",
             "heading": "",
             "heading_size": "h1",
             "subheading": "",
             "button_label": "",
             "link": "shopify://collections/apple-iphone",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": false,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "scheme-1",
+            "text_alignment_mobile": "center"
+          }
+        },
+        "slide_jfBeVG": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/M10-Plus-web_6604cdbe-6824-4d3a-ab19-ac4150b6290b.png",
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "shopify://products/lenovo-tab-m10-plus-3rd-gen-wifi-4gb-128gb-storm-grey",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": false,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "scheme-1",
+            "text_alignment_mobile": "center"
+          }
+        },
+        "slide_PtG3Ye": {
+          "type": "slide",
+          "disabled": true,
+          "settings": {
+            "image": "shopify://shop_images/Website_baner_3_7f95dd81-5860-4941-859f-b3550dc45bef.jpg",
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "shopify://collections/steam-deck",
             "button_style_secondary": false,
             "box_align": "middle-center",
             "show_text_box": false,
@@ -181,8 +200,9 @@
         "slide_RJwCgx",
         "slide_KU7GiP",
         "slide_cxkVme",
-        "slide_jfBeVG",
         "slide_LDwaNN",
+        "slide_jfBeVG",
+        "slide_PtG3Ye",
         "slide_TPPe7A",
         "slide_7NkLUL"
       ],
@@ -336,7 +356,7 @@
         "slider_row": "10",
         "slider_row_mobile": "4",
         "slider_gap": 48,
-        "slider_gap_mobile": 12,
+        "slider_gap_mobile": 24,
         "autoplay": true,
         "autoplay_speed": 3,
         "nav_size": 25,
@@ -596,28 +616,28 @@
         "feature_83ARNi": {
           "type": "feature",
           "settings": {
-            "background_image": "shopify://shop_images/1_564a2dc9-add3-494e-b5f4-ab42bf6835f6.jpg",
-            "headline": "<strong>watch 1</strong>",
+            "background_image": "shopify://shop_images/HY320_N.jpg",
+            "headline": "Projectors",
             "cta": "Shop Now",
-            "cta_link": "shopify://collections/devices-and-accessories-watches"
+            "cta_link": "shopify://collections/magcubic-projectors"
           }
         },
         "feature_iak64J": {
           "type": "feature",
           "settings": {
-            "background_image": "shopify://shop_images/1_76701977-4eea-487c-864c-6c6e6bfa8955.jpg",
-            "headline": "<strong>watch 2</strong>",
+            "background_image": "shopify://shop_images/S880-_12.webp",
+            "headline": "<strong>Screen Extender</strong>",
             "cta": "Shop Now",
-            "cta_link": "shopify://collections/devices-and-accessories-watches"
+            "cta_link": "shopify://collections/computers-and-accessories-computer-monitors"
           }
         },
         "feature_n8gUYj": {
           "type": "feature",
           "settings": {
-            "background_image": "shopify://shop_images/1_e3dc48ef-6390-444a-bd3f-de659a66d926.jpg",
-            "headline": "<strong>watch 3</strong>",
+            "background_image": "shopify://shop_images/sony-bluetooth-headphones-wh1000xm4-82a1d625-1122-493f-89e0-24892d8a90bd.webp",
+            "headline": "<strong>Headsets</strong>",
             "cta": "Shop Now",
-            "cta_link": "shopify://collections/devices-and-accessories-watches"
+            "cta_link": "shopify://collections/electronics-headphones-and-earphones"
           }
         },
         "feature_kfPAAy": {
@@ -721,8 +741,8 @@
         "media_shadow": true,
         "text_alignment": "center",
         "mobile_text_alignment": "center",
-        "headline": "<strong>Timeless Elegance</strong>",
-        "text": "Discover the Perfect Blend of Style and Sophistication in Our Watch Selection.",
+        "headline": "<strong>Most Popular</strong>",
+        "text": "Discover our most popular products—loved by thousands, trusted by you.",
         "headline_spacing": 15
       }
     },
@@ -942,74 +962,6 @@
         "headline_spacing": 12
       }
     },
-    "multicolumn_kmwixd": {
-      "type": "multicolumn",
-      "blocks": {
-        "column_hYaXnX": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/8de93c75-73b4-4f64-b055-818829cbc565_medium_a8225e07-83ae-48b3-8c69-524dd777b93d.webp",
-            "title": "Shop Smart. Live Better.",
-            "text": "<p>From the latest electronics to everyday must-haves, we bring you high-quality products that fit your lifestyle—and your values.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column_Gn8Hj3": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/4_163880a2-db67-4bd9-bb4e-411b770f9762.jpg",
-            "title": "Quality You Can Trust",
-            "text": "<p>From top electronics to everyday essentials, every product on Tristar Online is carefully selected for quality, performance, and reliability.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column_XChB4J": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/4_eb866739-b5bc-4e07-b48c-b620df474cbf.jpg",
-            "title": "Transparent Pricing",
-            "text": "<p>We keep it simple—no hidden fees or surprise markups. What you see is what you pay.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        },
-        "column_QNm8yK": {
-          "type": "column",
-          "settings": {
-            "image": "shopify://shop_images/depositphotos_256371340-stock-illustration-quality-check-ribbon-icon-vector.webp",
-            "title": "Certified Choices",
-            "text": "<p>We’re committed to offering products that meet eco-certification standards where possible, helping you shop more responsibly.</p>",
-            "link_label": "",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "column_hYaXnX",
-        "column_Gn8Hj3",
-        "column_XChB4J",
-        "column_QNm8yK"
-      ],
-      "disabled": true,
-      "settings": {
-        "title": "<strong>This approach resulted in the beautiful structure</strong>",
-        "heading_size": "h2",
-        "image_width": "half",
-        "image_ratio": "adapt",
-        "columns_desktop": 4,
-        "column_alignment": "center",
-        "background_style": "none",
-        "button_label": "",
-        "button_link": "",
-        "color_scheme": "scheme-1",
-        "columns_mobile": "2",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
     "image_banner_ewAh3M": {
       "type": "image-banner",
       "settings": {
@@ -1093,6 +1045,7 @@
         "quote_PEEmaV",
         "quote_7fEhKx"
       ],
+      "disabled": true,
       "settings": {
         "override_fonts": true,
         "headline_font": "instrument_sans_n6",
@@ -1152,7 +1105,6 @@
       "block_order": [
         "judge_me_reviews_featured_carousel_fbMjyc"
       ],
-      "disabled": true,
       "settings": {
         "include_margins": true
       }
@@ -1252,7 +1204,6 @@
     "sp_accordion_feature_xHwxwq",
     "collection_list_DCh3t4",
     "sp_24_hour_count_down_qUWf9A",
-    "multicolumn_kmwixd",
     "image_banner_ewAh3M",
     "featured_collection_zAVGzh",
     "sp_review_slider_WVPEiQ",
