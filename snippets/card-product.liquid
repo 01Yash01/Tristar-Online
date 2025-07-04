@@ -694,4 +694,48 @@
   left: -8px;
   top: calc(50% - 4px);
 }
+
+{% comment %} @media screen and (max-width: 749px) {
+  .badge--sales {
+    font-size: 0.9rem !important;
+    height: 24px !important;
+    line-height: 1.2rem !important;
+    padding: 0.1rem 0.5rem 0.2rem 0.5rem !important;
+    margin-left: 10px !important;
+  }
+  .badge--sales::before {
+    border-top: 12px solid transparent !important;
+    border-right: 13px solid rgb(0, 34, 255) !important;
+    border-bottom: 12px solid transparent !important;
+    left: -13px !important;
+  }
+  .badge--sales::after {
+    width: 6px !important;
+    height: 6px !important;
+    left: -6px !important;
+    top: calc(50% - 3px) !important;
+  }
+} {% endcomment %}
+
+@media screen and (max-width: 749px) {
+  .card__badge .badge--sales {
+    font-size: 0.7rem !important;
+    height: 20px !important;
+    line-height: 1rem !important;
+    {% comment %} padding: 0.05rem 0.1rem 0.1rem 0.4rem !important; {% endcomment %}
+    margin-left: 6px !important;
+  }
+  .card__badge .badge--sales::before {
+    border-top: 8px solid transparent !important;
+    border-right: 10px solid rgb(0, 34, 255) !important;
+    border-bottom: 10px solid transparent !important;
+    left: -9px !important;
+  }
+  .card__badge .badge--sales::after {
+    width: 4px !important;
+    height: 4px !important;
+    left: -3px !important;
+    top: calc(50% - 2px) !important;
+  }
+}
 </style>
