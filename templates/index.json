@@ -12,24 +12,6 @@
     "slideshow_FXLnz4": {
       "type": "slideshow",
       "blocks": {
-        "slide_PnhpMV": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/sony_wh-1000_xm4_web_banner.jpg",
-            "heading": "",
-            "heading_size": "h1",
-            "subheading": "",
-            "button_label": "",
-            "link": "shopify://collections/sony-headphones-1",
-            "button_style_secondary": true,
-            "box_align": "middle-center",
-            "show_text_box": false,
-            "text_alignment": "center",
-            "image_overlay_opacity": 0,
-            "color_scheme": "",
-            "text_alignment_mobile": "center"
-          }
-        },
         "slide_qRtceL": {
           "type": "slide",
           "settings": {
@@ -39,42 +21,6 @@
             "subheading": "",
             "button_label": "",
             "link": "",
-            "button_style_secondary": false,
-            "box_align": "middle-center",
-            "show_text_box": false,
-            "text_alignment": "center",
-            "image_overlay_opacity": 0,
-            "color_scheme": "scheme-1",
-            "text_alignment_mobile": "center"
-          }
-        },
-        "slide_RJwCgx": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/pixel_bundle_web_2.jpg",
-            "heading": "",
-            "heading_size": "h1",
-            "subheading": "",
-            "button_label": "",
-            "link": "shopify://collections/google-pixel-bundle-offer",
-            "button_style_secondary": false,
-            "box_align": "middle-center",
-            "show_text_box": false,
-            "text_alignment": "center",
-            "image_overlay_opacity": 0,
-            "color_scheme": "scheme-1",
-            "text_alignment_mobile": "center"
-          }
-        },
-        "slide_KU7GiP": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/max_360_web_1_be7c82c6-2058-4830-a78a-8792837868e7.jpg",
-            "heading": "",
-            "heading_size": "h1",
-            "subheading": "",
-            "button_label": "",
-            "link": "shopify://products/gopro-max-360-action-camera",
             "button_style_secondary": false,
             "box_align": "middle-center",
             "show_text_box": false,
@@ -99,6 +45,60 @@
             "text_alignment": "center",
             "image_overlay_opacity": 0,
             "color_scheme": "",
+            "text_alignment_mobile": "center"
+          }
+        },
+        "slide_KU7GiP": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/max_360_web_1_be7c82c6-2058-4830-a78a-8792837868e7.jpg",
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "shopify://products/gopro-max-360-action-camera",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": false,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "scheme-1",
+            "text_alignment_mobile": "center"
+          }
+        },
+        "slide_7NkLUL": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Website_baner_31.png",
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "https://share.shopney.co/fp5FHPFKXa",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": false,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "scheme-1",
+            "text_alignment_mobile": "center"
+          }
+        },
+        "slide_RJwCgx": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/pixel_bundle_web_2.jpg",
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "shopify://collections/google-pixel-bundle-offer",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": false,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "scheme-1",
             "text_alignment_mobile": "center"
           }
         },
@@ -175,36 +175,36 @@
             "text_alignment_mobile": "center"
           }
         },
-        "slide_7NkLUL": {
+        "slide_PnhpMV": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Website_baner_31.png",
+            "image": "shopify://shop_images/sony_ts_banner_1.png",
             "heading": "",
             "heading_size": "h1",
             "subheading": "",
             "button_label": "",
-            "link": "https://share.shopney.co/fp5FHPFKXa",
-            "button_style_secondary": false,
+            "link": "shopify://collections/sony-headphones-1",
+            "button_style_secondary": true,
             "box_align": "middle-center",
             "show_text_box": false,
             "text_alignment": "center",
             "image_overlay_opacity": 0,
-            "color_scheme": "scheme-1",
+            "color_scheme": "",
             "text_alignment_mobile": "center"
           }
         }
       },
       "block_order": [
-        "slide_PnhpMV",
         "slide_qRtceL",
-        "slide_RJwCgx",
-        "slide_KU7GiP",
         "slide_cxkVme",
+        "slide_KU7GiP",
+        "slide_7NkLUL",
+        "slide_RJwCgx",
         "slide_LDwaNN",
         "slide_jfBeVG",
         "slide_PtG3Ye",
         "slide_TPPe7A",
-        "slide_7NkLUL"
+        "slide_PnhpMV"
       ],
       "settings": {
         "layout": "grid",
@@ -639,43 +639,12 @@
             "cta": "Shop Now",
             "cta_link": "shopify://collections/electronics-headphones-and-earphones"
           }
-        },
-        "feature_kfPAAy": {
-          "type": "feature",
-          "disabled": true,
-          "settings": {
-            "background_image": "shopify://shop_images/754670-Product-0-I-638562487803104310_1.jpg",
-            "headline": "<strong>watch 4</strong>",
-            "cta": "Shop Now",
-            "cta_link": ""
-          }
-        },
-        "feature_rJfafJ": {
-          "type": "feature",
-          "disabled": true,
-          "settings": {
-            "headline": "<b>Feature Headline</b>",
-            "cta": "Shop Now",
-            "cta_link": ""
-          }
-        },
-        "feature_agXQ8i": {
-          "type": "feature",
-          "disabled": true,
-          "settings": {
-            "headline": "<b>Feature Headline</b>",
-            "cta": "Shop Now",
-            "cta_link": ""
-          }
         }
       },
       "block_order": [
         "feature_83ARNi",
         "feature_iak64J",
-        "feature_n8gUYj",
-        "feature_kfPAAy",
-        "feature_rJfafJ",
-        "feature_agXQ8i"
+        "feature_n8gUYj"
       ],
       "name": "🚀 Squircle Scroll",
       "settings": {
@@ -746,118 +715,6 @@
         "headline_spacing": 15
       }
     },
-    "sp_accordion_feature_xHwxwq": {
-      "type": "sp-accordion-feature",
-      "blocks": {
-        "feature_x4dw4z": {
-          "type": "feature",
-          "settings": {
-            "image": "shopify://shop_images/1_082ecbb2-3bfc-4d52-b907-35187266223a.jpg",
-            "headline": "<strong>Feature Headline</strong>",
-            "cta": "Shop Now",
-            "cta_link": "",
-            "link_block": false
-          }
-        },
-        "feature_giydft": {
-          "type": "feature",
-          "settings": {
-            "image": "shopify://shop_images/1_564a2dc9-add3-494e-b5f4-ab42bf6835f6.jpg",
-            "headline": "<strong>Feature Headline</strong>",
-            "cta": "Shop Now",
-            "cta_link": "",
-            "link_block": false
-          }
-        },
-        "feature_pwkteq": {
-          "type": "feature",
-          "settings": {
-            "image": "shopify://shop_images/1_76701977-4eea-487c-864c-6c6e6bfa8955.jpg",
-            "headline": "<strong>Feature Headline</strong>",
-            "cta": "Shop Now",
-            "cta_link": "",
-            "link_block": false
-          }
-        }
-      },
-      "block_order": [
-        "feature_x4dw4z",
-        "feature_giydft",
-        "feature_pwkteq"
-      ],
-      "disabled": true,
-      "name": "🚀 Accordion Feature",
-      "settings": {
-        "override_fonts": false,
-        "headline_font": "sans-serif",
-        "text_font": "sans-serif",
-        "override_text_sizes": false,
-        "text_size": 15,
-        "mobile_text_size": 15,
-        "text_line_height": "inherit",
-        "headline_size": 40,
-        "mobile_headline_size": 40,
-        "headline_line_height": "inherit",
-        "override_text_colors": false,
-        "text_color": "#111111",
-        "link_color": "#005bd3",
-        "show_on_device": "all",
-        "section_background_color": "linear-gradient(127deg, rgba(241, 246, 251, 1) 11%, rgba(241, 246, 251, 1) 81%)",
-        "section_background_image_color": "",
-        "section_background_size": "cover",
-        "mobile_section_background_image_color": "",
-        "mobile_section_background_size": "cover",
-        "section_padding_top_bottom": 25,
-        "mobile_section_padding_top_bottom": 25,
-        "section_padding_left_right": 25,
-        "mobile_section_padding_left_right": 25,
-        "container_background_color": "",
-        "container_max_width": 1000,
-        "container_padding_top_bottom": 10,
-        "mobile_container_padding_top_bottom": 10,
-        "container_padding_left_right": 10,
-        "mobile_container_padding_left_right": 10,
-        "element_spacing": 15,
-        "container_radius": 0,
-        "container_shadow": false,
-        "container_border_size": 0,
-        "container_border_color": "#888888",
-        "feature_text_color": "#ffffff",
-        "feature_headline_color": "#ffffff",
-        "feature_headline_size": 20,
-        "feature_mobile_headline_size": 20,
-        "feature_vertical_alignment": "center",
-        "feature_element_spacing": 10,
-        "feature_horizontal_alignment": "center",
-        "feature_text_alignment": "center",
-        "cover_background": "linear-gradient(164deg, rgba(17, 17, 17, 1), rgba(85, 85, 85, 1) 100%)",
-        "cover_opacity": 25,
-        "cover_opacity_increase": 25,
-        "border_radius": 5,
-        "gap": 10,
-        "mobile_gap": 10,
-        "height": 300,
-        "mobile_height": 300,
-        "mobile_display": "accordion",
-        "media_radius": 5,
-        "text_shadow": true,
-        "media_shadow": true,
-        "enable_zoom": true,
-        "image_width": 1000,
-        "mobile_image_width": 600,
-        "lazy_load_images": true,
-        "button_background_color": "linear-gradient(164deg, rgba(17, 17, 17, 1), rgba(51, 51, 51, 1) 100%)",
-        "button_text_color": "#ffffff",
-        "button_padding_tb": 8,
-        "button_padding_lr": 25,
-        "button_border_radius": 5,
-        "text_alignment": "center",
-        "mobile_text_alignment": "center",
-        "headline": "<strong>Check out our Products</strong>",
-        "text": "Shop our extensive range of amazing products.",
-        "headline_spacing": 15
-      }
-    },
     "collection_list_DCh3t4": {
       "type": "collection-list",
       "blocks": {
@@ -905,63 +762,6 @@
         "padding_bottom": 36
       }
     },
-    "sp_24_hour_count_down_qUWf9A": {
-      "type": "sp-24-hour-count-down",
-      "disabled": true,
-      "settings": {
-        "override_fonts": false,
-        "headline_font": "sans-serif",
-        "text_font": "sans-serif",
-        "override_text_sizes": false,
-        "text_size": 15,
-        "mobile_text_size": 15,
-        "text_line_height": "inherit",
-        "headline_size": 40,
-        "mobile_headline_size": 40,
-        "headline_line_height": "inherit",
-        "override_text_colors": false,
-        "text_color": "#111111",
-        "link_color": "#005bd3",
-        "show_on_device": "all",
-        "section_background_color": "radial-gradient(rgba(244, 246, 145, 1), rgba(253, 237, 92, 1) 98%)",
-        "section_background_image_color": "",
-        "section_background_size": "auto",
-        "section_padding_top_bottom": 36,
-        "mobile_section_padding_top_bottom": 12,
-        "section_padding_left_right": 24,
-        "mobile_section_padding_left_right": 10,
-        "container_background_color": "",
-        "container_max_width": 1300,
-        "container_padding_top_bottom": 18,
-        "mobile_container_padding_top_bottom": 11,
-        "container_padding_left_right": 10,
-        "mobile_container_padding_left_right": 10,
-        "element_spacing": 4,
-        "container_radius": 0,
-        "container_shadow": true,
-        "container_border_size": 0,
-        "container_border_color": "#888888",
-        "item_width": 120,
-        "grid_gap": 16,
-        "timer_alignment": "center",
-        "timer_size": 20,
-        "countdown_padding": 18,
-        "countdown_background_color": "linear-gradient(164deg, rgba(17, 17, 17, 1), rgba(85, 85, 85, 1) 100%)",
-        "timer_color": "#ffffff",
-        "start_hours": 23,
-        "hours_text": "hours",
-        "minutes_text": "minutes",
-        "seconds_text": "seconds",
-        "show_seconds": true,
-        "media_radius": 12,
-        "media_shadow": true,
-        "text_alignment": "center",
-        "mobile_text_alignment": "center",
-        "headline": "<strong>Flash Sale now on!</strong>",
-        "text": "Save on modern office accessories, best selling products + many more products.",
-        "headline_spacing": 12
-      }
-    },
     "image_banner_ewAh3M": {
       "type": "image-banner",
       "settings": {
@@ -1006,91 +806,6 @@
         "swipe_on_mobile": false,
         "padding_top": 36,
         "padding_bottom": 36
-      }
-    },
-    "sp_review_slider_WVPEiQ": {
-      "type": "sp-review-slider",
-      "blocks": {
-        "quote_F8JrA8": {
-          "type": "quote",
-          "settings": {
-            "quote": "This is a placeholder for your reviews and testimonials. Use this space to highlight your favorite reviews or testimonials.",
-            "cite": "Sample Reviewer"
-          }
-        },
-        "quote_aVNJ8w": {
-          "type": "quote",
-          "settings": {
-            "quote": "This is a placeholder for your reviews and testimonials. Use this space to highlight your favorite reviews or testimonials.",
-            "cite": "Sample Reviewer"
-          }
-        },
-        "quote_PEEmaV": {
-          "type": "quote",
-          "settings": {
-            "quote": "This is a placeholder for your reviews and testimonials. Use this space to highlight your favorite reviews or testimonials.",
-            "cite": "Sample Reviewer"
-          }
-        },
-        "quote_7fEhKx": {
-          "type": "quote",
-          "settings": {
-            "quote": "This is a placeholder for your reviews and testimonials. Use this space to highlight your favorite reviews or testimonials.",
-            "cite": "Sample Reviewer"
-          }
-        }
-      },
-      "block_order": [
-        "quote_F8JrA8",
-        "quote_aVNJ8w",
-        "quote_PEEmaV",
-        "quote_7fEhKx"
-      ],
-      "disabled": true,
-      "settings": {
-        "override_fonts": true,
-        "headline_font": "instrument_sans_n6",
-        "text_font": "instrument_sans_n6",
-        "override_text_sizes": true,
-        "text_size": 20,
-        "mobile_text_size": 14,
-        "text_line_height": "inherit",
-        "headline_size": 14,
-        "mobile_headline_size": 10,
-        "headline_line_height": "inherit",
-        "override_text_colors": true,
-        "text_color": "#000000",
-        "link_color": "#005bd3",
-        "show_on_device": "all",
-        "section_background_color": "linear-gradient(2deg, rgba(255, 229, 63, 1), rgba(255, 238, 130, 1) 100%)",
-        "section_background_image_color": "",
-        "section_background_size": "cover",
-        "section_padding_top_bottom": 40,
-        "mobile_section_padding_top_bottom": 30,
-        "section_padding_left_right": 25,
-        "mobile_section_padding_left_right": 20,
-        "container_background_color": "",
-        "container_max_width": 1000,
-        "container_padding_top_bottom": 13,
-        "mobile_container_padding_top_bottom": 10,
-        "container_padding_left_right": 10,
-        "mobile_container_padding_left_right": 10,
-        "element_spacing": 15,
-        "container_radius": 0,
-        "container_shadow": false,
-        "container_border_size": 0,
-        "container_border_color": "#888888",
-        "highlight_color": "#111111",
-        "progress_background_color": "linear-gradient(177deg, rgba(17, 17, 17, .25) 3%, rgba(17, 17, 17, 0.25) 100%)",
-        "progress_foreground_color": "",
-        "indicator_color": "#111111",
-        "enable_autoplay": true,
-        "autoplay_time": "3000",
-        "text_alignment": "center",
-        "mobile_text_alignment": "center",
-        "headline": "<strong>Genuine Testimonials from Happy Customers.</strong>",
-        "text": "",
-        "headline_spacing": 10
       }
     },
     "1751815102ca3b1ed0": {
@@ -1208,7 +923,7 @@
         "show_when_precent_of_page": 30,
         "pos": "right",
         "bg_color": "#007bff",
-        "border_color": "#5e5c5c",
+        "border_color": "rgba(0,0,0,0)",
         "arrow_color": "#ffffff",
         "button_size": 56,
         "arrow_size": 40,
@@ -1226,12 +941,9 @@
     "sp_marquee_P6jtLy",
     "featured_collection_4hCjK4",
     "sp_squircle_scroll_GgePfk",
-    "sp_accordion_feature_xHwxwq",
     "collection_list_DCh3t4",
-    "sp_24_hour_count_down_qUWf9A",
     "image_banner_ewAh3M",
     "featured_collection_zAVGzh",
-    "sp_review_slider_WVPEiQ",
     "1751815102ca3b1ed0",
     "multicolumn_9qmEca",
     "ss_back_to_top_button_kLNng3"
