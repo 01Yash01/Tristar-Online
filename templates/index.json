@@ -1120,7 +1120,7 @@
             "arrows_color": "#000000",
             "show_border": true,
             "border_color": "#f4f4f4",
-            "show_drop_shadow": true,
+            "show_drop_shadow": false,
             "transition_speed": 3,
             "header_text": "Customers are saying",
             "show_average_rating": true
