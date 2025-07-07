@@ -975,7 +975,8 @@
         "image_behavior": "none",
         "mobile_content_alignment": "center",
         "stack_images_on_mobile": true,
-        "show_text_below": true
+        "show_text_below": true,
+        "image_link": "shopify://products/valve-steam-deck-oled-512gb-handheld-gaming-console-au-version-pristine"
       }
     },
     "featured_collection_zAVGzh": {
@@ -1092,18 +1093,42 @@
         "headline_spacing": 10
       }
     },
-    "1750130105f0de4b2b": {
+    "1751815102ca3b1ed0": {
       "type": "apps",
       "blocks": {
-        "judge_me_reviews_featured_carousel_fbMjyc": {
-          "type": "shopify://apps/judge-me-reviews/blocks/featured_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "judge_me_reviews_testimonials_carousel_CMxEni": {
+          "type": "shopify://apps/judge-me-reviews/blocks/testimonials_carousel/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
           "settings": {
-            "maxwidth": 1080
+            "show_sample_reviews": true,
+            "reviews_selection": "all",
+            "products": [],
+            "star_rating": "all",
+            "max_reviews": 20,
+            "quote_marks_size": "small",
+            "product_name_text_size": "small",
+            "verified_badge_style": "text",
+            "card_height": "compact",
+            "text_size": "small",
+            "stars_size": "small",
+            "arrows_position": "sides",
+            "max_width": 1600,
+            "corner_styling": "soft",
+            "quote_marks_style": "typewrited",
+            "card_color": "#e2fe16",
+            "stars_and_quote_marks_color": "#005bd3",
+            "text_color": "#000000",
+            "arrows_color": "#000000",
+            "show_border": true,
+            "border_color": "#f4f4f4",
+            "show_drop_shadow": true,
+            "transition_speed": 3,
+            "header_text": "Customers are saying",
+            "show_average_rating": true
           }
         }
       },
       "block_order": [
-        "judge_me_reviews_featured_carousel_fbMjyc"
+        "judge_me_reviews_testimonials_carousel_CMxEni"
       ],
       "settings": {
         "include_margins": true
@@ -1207,7 +1232,7 @@
     "image_banner_ewAh3M",
     "featured_collection_zAVGzh",
     "sp_review_slider_WVPEiQ",
-    "1750130105f0de4b2b",
+    "1751815102ca3b1ed0",
     "multicolumn_9qmEca",
     "ss_back_to_top_button_kLNng3"
   ]
