@@ -183,19 +183,6 @@
           "position": "right"
         }
       },
-      "8813414294664651821": {
-        "type": "shopify://apps/xb-wishlist/blocks/wishlist_float/cc07f1e9-907b-431d-99f8-4fce3efa75f1",
-        "disabled": false,
-        "settings": {
-          "style": "style-1",
-          "button_color": "#fff",
-          "button_bg-color": "#ff0000",
-          "float_position": "bottom-right",
-          "custom_position": false,
-          "x_position": 0,
-          "y_position": 0
-        }
-      },
       "9994742477291898530": {
         "type": "shopify://apps/xb-wishlist/blocks/wishlist_notification/cc07f1e9-907b-431d-99f8-4fce3efa75f1",
         "disabled": false,
@@ -213,6 +200,28 @@
           "notification_animation": "fade"
         }
       },
+      "12342438634123318931": {
+        "type": "shopify://apps/xb-wishlist/blocks/xo-wishlist/cc07f1e9-907b-431d-99f8-4fce3efa75f1",
+        "disabled": false,
+        "settings": {
+          "price_color": "#ff0000",
+          "icon_add": "",
+          "icon_remove": ""
+        }
+      },
+      "8813414294664651821": {
+        "type": "shopify://apps/xb-wishlist/blocks/wishlist_float/cc07f1e9-907b-431d-99f8-4fce3efa75f1",
+        "disabled": false,
+        "settings": {
+          "style": "style-1",
+          "button_color": "#ffffff",
+          "button_bg-color": "#e2212a",
+          "float_position": "bottom-right",
+          "custom_position": true,
+          "x_position": 11,
+          "y_position": 10
+        }
+      },
       "11413113034274116516": {
         "type": "shopify://apps/xb-wishlist/blocks/wishlist_collection/cc07f1e9-907b-431d-99f8-4fce3efa75f1",
         "disabled": false,
@@ -225,16 +234,8 @@
           "x_position-mobile": 0,
           "y_position-mobile": 0,
           "icon_size": 2,
-          "icon_color": "#ff0000"
-        }
-      },
-      "12342438634123318931": {
-        "type": "shopify://apps/xb-wishlist/blocks/xo-wishlist/cc07f1e9-907b-431d-99f8-4fce3efa75f1",
-        "disabled": false,
-        "settings": {
-          "price_color": "#ff0000",
-          "icon_add": "",
-          "icon_remove": ""
+          "icon_color": "#e2212a",
+          "custom_placement": ""
         }
       }
     },
