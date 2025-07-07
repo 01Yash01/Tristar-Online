@@ -417,7 +417,7 @@
                       class="instafeed-image instafeed-image--loading"
                       src="{{ block.settings.image | image_url }}"
                       alt="{{ block.settings.image.alt }}"
-                      fetchpriority="high"
+                      {% comment %} fetchpriority="high" {% endcomment %}
                       width="{{ block.settings.image.width | default: 1 }}"
                       height="{{ block.settings.image.height | default: 1 }}"
                       onload="this.classList.remove('instafeed-image--loading')"
