@@ -161,11 +161,6 @@
         "disabled": false,
         "settings": {}
       },
-      "11724500921838622758": {
-        "type": "shopify://apps/frequently-bought/blocks/app-embed-block/b1a8cbea-c844-4842-9529-7c62dbab1b1f",
-        "disabled": true,
-        "settings": {}
-      },
       "9994742477291898530": {
         "type": "shopify://apps/xb-wishlist/blocks/wishlist_notification/cc07f1e9-907b-431d-99f8-4fce3efa75f1",
         "disabled": false,
@@ -181,15 +176,6 @@
           "background_color_error": "#f35746",
           "notification_duration": 3000,
           "notification_animation": "fade"
-        }
-      },
-      "12342438634123318931": {
-        "type": "shopify://apps/xb-wishlist/blocks/xo-wishlist/cc07f1e9-907b-431d-99f8-4fce3efa75f1",
-        "disabled": false,
-        "settings": {
-          "price_color": "#ff0000",
-          "icon_add": "",
-          "icon_remove": ""
         }
       },
       "11413113034274116516": {
@@ -208,19 +194,6 @@
           "custom_placement": ""
         }
       },
-      "8813414294664651821": {
-        "type": "shopify://apps/xb-wishlist/blocks/wishlist_float/cc07f1e9-907b-431d-99f8-4fce3efa75f1",
-        "disabled": false,
-        "settings": {
-          "style": "style-1",
-          "button_color": "#ffffff",
-          "button_bg-color": "#007bff",
-          "float_position": "bottom-right",
-          "custom_position": true,
-          "x_position": 11,
-          "y_position": 10
-        }
-      },
       "16278478101612877664": {
         "type": "shopify://apps/pagefly-page-builder/blocks/app-embed/83e179f7-59a0-4589-8c66-c0dddf959200",
         "disabled": true,
@@ -236,6 +209,77 @@
       "15181020662106344915": {
         "type": "shopify://apps/judge-me-reviews/blocks/popup_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
         "disabled": true,
+        "settings": {}
+      },
+      "15683396631634586217": {
+        "type": "shopify://apps/inbox/blocks/chat/841fc607-4181-4ad1-842d-e24d7f8bad6b",
+        "disabled": false,
+        "settings": {
+          "button_color": "#000000",
+          "secondary_color": "#FFFFFF",
+          "ternary_color": "#6A6A6A",
+          "button_icon": "chat_bubble",
+          "button_text": "chat_with_us",
+          "button_horizontal_position": "bottom_right",
+          "button_vertical_position": "lowest",
+          "greeting_message": ""
+        }
+      },
+      "8813414294664651821": {
+        "type": "shopify://apps/xb-wishlist/blocks/wishlist_float/cc07f1e9-907b-431d-99f8-4fce3efa75f1",
+        "disabled": false,
+        "settings": {
+          "style": "style-1",
+          "button_color": "#ffffff",
+          "button_bg-color": "#007bff",
+          "float_position": "bottom-right",
+          "custom_position": true,
+          "x_position": 9,
+          "y_position": 20
+        }
+      },
+      "10534424223343191814": {
+        "type": "shopify://apps/custlo-customer-account-pro/blocks/app-embed/f81081fd-cd04-43ee-897a-18ef0e5d9b04",
+        "disabled": false,
+        "settings": {}
+      },
+      "4061177414627956758": {
+        "type": "shopify://apps/wishlist-wishify/blocks/app-embed/e14a43b5-34c6-492d-b46f-3ad2eda08696",
+        "disabled": true,
+        "settings": {}
+      },
+      "6174324309569838175": {
+        "type": "shopify://apps/smile-io/blocks/smile-shopify-app/2fae4e25-1841-4ea2-bc02-bd548478c4f6",
+        "disabled": true,
+        "settings": {}
+      },
+      "11724500921838622758": {
+        "type": "shopify://apps/frequently-bought/blocks/app-embed-block/b1a8cbea-c844-4842-9529-7c62dbab1b1f",
+        "disabled": false,
+        "settings": {}
+      },
+      "6610233760104865948": {
+        "type": "shopify://apps/pushowl-brevo-email-push-sms/blocks/pushowl-app-embed-3d2ff2b5/fa20c3ba-38bf-43e0-ba5c-431f6ae07d95",
+        "disabled": true,
+        "settings": {}
+      },
+      "12342438634123318931": {
+        "type": "shopify://apps/xb-wishlist/blocks/xo-wishlist/cc07f1e9-907b-431d-99f8-4fce3efa75f1",
+        "disabled": false,
+        "settings": {
+          "price_color": "#ff0000",
+          "icon_add": "",
+          "icon_remove": ""
+        }
+      },
+      "7924418359578431505": {
+        "type": "shopify://apps/seoant-ai-seo/blocks/seoant-core/8e57283b-dcb0-4f7b-a947-fb5c57a0d59d",
+        "disabled": false,
+        "settings": {}
+      },
+      "4264577558867692749": {
+        "type": "shopify://apps/put-it-on-lay-buy/blocks/popup_laybuy/9b7a7d93-d79e-4418-abb3-96e54e9f7aa7",
+        "disabled": false,
         "settings": {}
       }
     },
