@@ -14,6 +14,7 @@
       "blocks": {
         "slide_qRtceL": {
           "type": "slide",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/store-opening-web-1_0cc1aa01-51e4-4e5d-b80f-c5028d795984.png",
             "heading": "",
@@ -33,7 +34,7 @@
         "slide_cxkVme": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/samsung_mobile_web_2.jpg",
+            "image": "shopify://shop_images/samsung_mobile_web_2_9fbefd48-1180-4439-97af-c670e60409ff.jpg",
             "heading": "",
             "heading_size": "h1",
             "subheading": "",
@@ -57,24 +58,6 @@
             "subheading": "",
             "button_label": "",
             "link": "shopify://products/gopro-max-360-action-camera",
-            "button_style_secondary": false,
-            "box_align": "middle-center",
-            "show_text_box": false,
-            "text_alignment": "center",
-            "image_overlay_opacity": 0,
-            "color_scheme": "scheme-1",
-            "text_alignment_mobile": "center"
-          }
-        },
-        "slide_7NkLUL": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/Website_baner_31.png",
-            "heading": "",
-            "heading_size": "h1",
-            "subheading": "",
-            "button_label": "",
-            "link": "https://share.shopney.co/fp5FHPFKXa",
             "button_style_secondary": false,
             "box_align": "middle-center",
             "show_text_box": false,
@@ -123,7 +106,7 @@
         "slide_jfBeVG": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/M10-Plus-web_6604cdbe-6824-4d3a-ab19-ac4150b6290b.png",
+            "image": "shopify://shop_images/M10-Plus-web_16ea30a0-08c7-47d5-935b-705640ee3dd0.png",
             "heading": "",
             "heading_size": "h1",
             "subheading": "",
@@ -178,7 +161,7 @@
         "slide_PnhpMV": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/sony_ts_banner_1.png",
+            "image": "shopify://shop_images/sony_ts_banner_1_31ac979c-815f-4583-a37d-fb61cc3fddbf.png",
             "heading": "",
             "heading_size": "h1",
             "subheading": "",
@@ -192,19 +175,37 @@
             "color_scheme": "",
             "text_alignment_mobile": "center"
           }
+        },
+        "slide_7NkLUL": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Website_baner_31.png",
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "https://share.shopney.co/fp5FHPFKXa",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": false,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "scheme-1",
+            "text_alignment_mobile": "center"
+          }
         }
       },
       "block_order": [
         "slide_qRtceL",
         "slide_cxkVme",
         "slide_KU7GiP",
-        "slide_7NkLUL",
         "slide_RJwCgx",
         "slide_LDwaNN",
         "slide_jfBeVG",
         "slide_PtG3Ye",
         "slide_TPPe7A",
-        "slide_PnhpMV"
+        "slide_PnhpMV",
+        "slide_7NkLUL"
       ],
       "settings": {
         "layout": "grid",
@@ -222,6 +223,7 @@
       "blocks": {
         "slide_EgYn7z": {
           "type": "slide",
+          "disabled": true,
           "settings": {
             "image": "shopify://shop_images/10_f9acf0fc-fb41-4509-9f94-98523cbb2dca.png",
             "name": "<p>Nikon</p>",
@@ -405,7 +407,7 @@
         "enable_desktop_slider": true,
         "color_scheme": "",
         "image_ratio": "square",
-        "image_shape": "round",
+        "image_shape": "default",
         "show_secondary_image": true,
         "show_vendor": false,
         "show_rating": true,
@@ -662,7 +664,7 @@
         "text_color": "#111111",
         "link_color": "#005bd3",
         "show_on_device": "all",
-        "section_background_color": "linear-gradient(127deg, rgba(169, 212, 255, 1) 11%, rgba(241, 246, 251, 1) 81%)",
+        "section_background_color": "linear-gradient(106deg, rgba(143, 180, 255, 1) 11%, rgba(143, 180, 255, 1) 81%)",
         "section_background_image_color": "",
         "section_background_size": "cover",
         "mobile_section_background_image_color": "",
@@ -684,18 +686,18 @@
         "container_border_color": "#b4b4b4",
         "show_scrollbars": false,
         "grid_gap": 20,
-        "grid_height": 280,
-        "grid_mobile_height": 20,
+        "grid_height": 310,
+        "grid_mobile_height": 25,
         "arrow_background_color": "linear-gradient(164deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 1) 100%)",
         "arrow_icon_color": "#2d2d2d",
         "feature_text_color": "#ffffff",
-        "feature_text_size": 20,
+        "feature_text_size": 22,
         "feature_mobile_text_size": 20,
         "feature_show_text_shadow": true,
-        "feature_background_color": "radial-gradient(rgba(255, 255, 255, 0.25) 3%, rgba(255, 255, 255, 0.25) 100%)",
-        "feature_element_spacing": 10,
+        "feature_background_color": "",
+        "feature_element_spacing": 15,
         "feature_text_alignment": "center",
-        "cover_background": "linear-gradient(164deg, rgba(17, 17, 17, 1), rgba(85, 85, 85, 1) 100%)",
+        "cover_background": "linear-gradient(180deg, rgba(255, 255, 255, 1) 51%, rgba(255, 253, 253, 1) 62%, rgba(255, 255, 255, 1) 64%, rgba(255, 255, 255, 1) 64.388%, rgba(120, 120, 120, 1) 77%, rgba(54, 54, 54, 1) 89%, rgba(211, 211, 212, 1) 95%)",
         "cover_opacity": 25,
         "button_padding_tb": 10,
         "button_padding_lr": 25,
@@ -718,6 +720,18 @@
     "collection_list_DCh3t4": {
       "type": "collection-list",
       "blocks": {
+        "featured_collection_n49Xzm": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "computers-and-accessories"
+          }
+        },
+        "featured_collection_AjNriA": {
+          "type": "featured_collection",
+          "settings": {
+            "collection": "camera-and-lens"
+          }
+        },
         "featured_collection_mPTwFW": {
           "type": "featured_collection",
           "settings": {
@@ -729,25 +743,13 @@
           "settings": {
             "collection": "games-and-accessories"
           }
-        },
-        "featured_collection_n49Xzm": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "computers-and-accessories"
-          }
-        },
-        "featured_collection_Jn7t8w": {
-          "type": "featured_collection",
-          "settings": {
-            "collection": "cameras-amp-drones"
-          }
         }
       },
       "block_order": [
-        "featured_collection_mPTwFW",
-        "featured_collection_jHgM7z",
         "featured_collection_n49Xzm",
-        "featured_collection_Jn7t8w"
+        "featured_collection_AjNriA",
+        "featured_collection_mPTwFW",
+        "featured_collection_jHgM7z"
       ],
       "settings": {
         "title": "Recommended",
@@ -817,24 +819,24 @@
             "show_sample_reviews": true,
             "reviews_selection": "all",
             "products": [],
-            "star_rating": "all",
+            "star_rating": "3_to_5_star",
             "max_reviews": 20,
             "quote_marks_size": "small",
             "product_name_text_size": "small",
-            "verified_badge_style": "text",
+            "verified_badge_style": "icon",
             "card_height": "compact",
             "text_size": "small",
             "stars_size": "small",
-            "arrows_position": "sides",
+            "arrows_position": "hidden",
             "max_width": 1600,
             "corner_styling": "soft",
             "quote_marks_style": "typewrited",
-            "card_color": "#e2fe16",
+            "card_color": "#f6f6f6",
             "stars_and_quote_marks_color": "#005bd3",
             "text_color": "#000000",
             "arrows_color": "#000000",
             "show_border": true,
-            "border_color": "#f4f4f4",
+            "border_color": "#ffffff",
             "show_drop_shadow": false,
             "transition_speed": 3,
             "header_text": "Customers are saying",
@@ -916,19 +918,19 @@
         "padding_bottom": 36
       }
     },
-    "ss_back_to_top_button_kLNng3": {
+    "ss_back_to_top_button_RpHzG3": {
       "type": "ss-back-to-top-button",
       "settings": {
         "hide_on_mobile": true,
-        "show_when_precent_of_page": 30,
+        "show_when_precent_of_page": 25,
         "pos": "right",
         "bg_color": "#007bff",
         "border_color": "rgba(0,0,0,0)",
         "arrow_color": "#ffffff",
-        "button_size": 56,
-        "arrow_size": 40,
+        "button_size": 50,
+        "arrow_size": 36,
         "horizontal_dst_to_edge": 20,
-        "vertical_dst_to_edge": 20
+        "vertical_dst_to_edge": 90
       }
     }
   },
@@ -946,6 +948,6 @@
     "featured_collection_zAVGzh",
     "1751815102ca3b1ed0",
     "multicolumn_9qmEca",
-    "ss_back_to_top_button_kLNng3"
+    "ss_back_to_top_button_RpHzG3"
   ]
 }
