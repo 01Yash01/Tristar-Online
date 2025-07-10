@@ -34,7 +34,7 @@
         "slide_cxkVme": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/samsung_mobile_web_2_9fbefd48-1180-4439-97af-c670e60409ff.jpg",
+            "image": "shopify://shop_images/samsung_mobile_web_2_f107d313-0ffd-4ea5-963a-e51ef5b118fa.jpg",
             "heading": "",
             "heading_size": "h1",
             "subheading": "",
@@ -106,7 +106,7 @@
         "slide_jfBeVG": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/M10-Plus-web_16ea30a0-08c7-47d5-935b-705640ee3dd0.png",
+            "image": "shopify://shop_images/M10-Plus-web_0043822f-ef3b-4a2c-aafe-a7f8b8ad637f.png",
             "heading": "",
             "heading_size": "h1",
             "subheading": "",
@@ -161,7 +161,7 @@
         "slide_PnhpMV": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/sony_ts_banner_1_31ac979c-815f-4583-a37d-fb61cc3fddbf.png",
+            "image": "shopify://shop_images/sony_ts_banner_1_25dc43df-1391-45b9-92a3-0e2bb7f595e7.png",
             "heading": "",
             "heading_size": "h1",
             "subheading": "",
@@ -425,7 +425,7 @@
         "heading": "",
         "heading_size": "h2",
         "enable_video_looping": true,
-        "video": "shopify://files/videos/WhatsApp Video 2025-06-05 at 12.13.00.mp4",
+        "video": "shopify://files/videos/HY450 (1).mp4",
         "video_url": "",
         "description": "video",
         "full_width": false,
@@ -612,6 +612,111 @@
         "padding_bottom": 24
       }
     },
+    "sp_squircle_scroll_XhcQBV": {
+      "type": "sp-squircle-scroll",
+      "blocks": {
+        "feature_cX9Lnx": {
+          "type": "feature",
+          "settings": {
+            "background_image": "shopify://shop_images/HY320_N.jpg",
+            "headline": "<strong>Projectors</strong>",
+            "cta": "Shop Now",
+            "cta_link": ""
+          }
+        },
+        "feature_tjVLgY": {
+          "type": "feature",
+          "settings": {
+            "background_image": "shopify://shop_images/S880-_12.webp",
+            "headline": "<strong>Screen Extender</strong>",
+            "cta": "Shop Now",
+            "cta_link": ""
+          }
+        },
+        "feature_iTmiFg": {
+          "type": "feature",
+          "settings": {
+            "background_image": "shopify://shop_images/sony-bluetooth-headphones-wh1000xm4-82a1d625-1122-493f-89e0-24892d8a90bd.webp",
+            "headline": "<strong>Headsets</strong>",
+            "cta": "Shop Now",
+            "cta_link": "shopify://collections/electronics-headphones-and-earphones"
+          }
+        }
+      },
+      "block_order": [
+        "feature_cX9Lnx",
+        "feature_tjVLgY",
+        "feature_iTmiFg"
+      ],
+      "name": "🚀 Squircle Scroll",
+      "settings": {
+        "override_fonts": false,
+        "headline_font": "sans-serif",
+        "text_font": "sans-serif",
+        "override_text_sizes": false,
+        "text_size": 15,
+        "mobile_text_size": 15,
+        "text_line_height": "inherit",
+        "headline_size": 40,
+        "mobile_headline_size": 40,
+        "headline_line_height": "inherit",
+        "override_text_colors": false,
+        "text_color": "#111111",
+        "link_color": "#005bd3",
+        "show_on_device": "all",
+        "section_background_color": "linear-gradient(127deg, rgba(143, 180, 255, 1) 11%, rgba(173, 209, 245, 1) 81%)",
+        "section_background_image_color": "",
+        "section_background_size": "cover",
+        "mobile_section_background_image_color": "",
+        "mobile_section_background_size": "cover",
+        "section_padding_top_bottom": 25,
+        "mobile_section_padding_top_bottom": 25,
+        "section_padding_left_right": 25,
+        "mobile_section_padding_left_right": 25,
+        "container_background_color": "",
+        "container_max_width": 1000,
+        "container_padding_top_bottom": 10,
+        "mobile_container_padding_top_bottom": 10,
+        "container_padding_left_right": 10,
+        "mobile_container_padding_left_right": 10,
+        "element_spacing": 15,
+        "container_radius": 0,
+        "container_shadow": false,
+        "container_border_size": 0,
+        "container_border_color": "#888888",
+        "show_scrollbars": false,
+        "grid_gap": 20,
+        "grid_height": 300,
+        "grid_mobile_height": 300,
+        "arrow_background_color": "linear-gradient(164deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, 1) 100%)",
+        "arrow_icon_color": "#111111",
+        "feature_text_color": "#ffffff",
+        "feature_text_size": 20,
+        "feature_mobile_text_size": 20,
+        "feature_show_text_shadow": true,
+        "feature_background_color": "radial-gradient(rgba(255, 255, 255, 0.25) 3%, rgba(255, 255, 255, 0.25) 100%)",
+        "feature_element_spacing": 10,
+        "feature_text_alignment": "center",
+        "cover_background": "linear-gradient(164deg, rgba(17, 17, 17, 1), rgba(85, 85, 85, 1) 100%)",
+        "cover_opacity": 20,
+        "button_padding_tb": 10,
+        "button_padding_lr": 25,
+        "button_border_radius": 5,
+        "button_border_size": 0,
+        "button_border_color": "#888888",
+        "button_background_color": "linear-gradient(164deg, rgba(17, 17, 17, 1), rgba(51, 51, 51, 1) 100%)",
+        "button_text_color": "#ffffff",
+        "media_aspect_ratio": "4 / 3",
+        "media_aspect_ratio_mobile": "4 / 3",
+        "media_radius": 5,
+        "media_shadow": true,
+        "text_alignment": "center",
+        "mobile_text_alignment": "center",
+        "headline": "<strong>Most Popular</strong>",
+        "text": "Discover our most popular products—loved by thousands, trusted by you.",
+        "headline_spacing": 15
+      }
+    },
     "sp_squircle_scroll_GgePfk": {
       "type": "sp-squircle-scroll",
       "blocks": {
@@ -648,6 +753,7 @@
         "feature_iak64J",
         "feature_n8gUYj"
       ],
+      "disabled": true,
       "name": "🚀 Squircle Scroll",
       "settings": {
         "override_fonts": false,
@@ -927,10 +1033,10 @@
         "bg_color": "#007bff",
         "border_color": "rgba(0,0,0,0)",
         "arrow_color": "#ffffff",
-        "button_size": 50,
-        "arrow_size": 36,
+        "button_size": 56,
+        "arrow_size": 40,
         "horizontal_dst_to_edge": 20,
-        "vertical_dst_to_edge": 90
+        "vertical_dst_to_edge": 95
       }
     }
   },
@@ -942,6 +1048,7 @@
     "featured_collection_Gy369K",
     "sp_marquee_P6jtLy",
     "featured_collection_4hCjK4",
+    "sp_squircle_scroll_XhcQBV",
     "sp_squircle_scroll_GgePfk",
     "collection_list_DCh3t4",
     "image_banner_ewAh3M",
