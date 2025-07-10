@@ -126,7 +126,7 @@
     "cart_type": "drawer",
     "show_vendor": false,
     "show_cart_note": true,
-    "cart_drawer_collection": "devices-and-accessories-watches",
+    "cart_drawer_collection": "devices-and-accessories-watches-smart-watches",
     "cart_color_scheme": "scheme-5",
     "sections": {
       "main-password-header": {
@@ -161,23 +161,6 @@
         "disabled": false,
         "settings": {}
       },
-      "9994742477291898530": {
-        "type": "shopify://apps/xb-wishlist/blocks/wishlist_notification/cc07f1e9-907b-431d-99f8-4fce3efa75f1",
-        "disabled": false,
-        "settings": {
-          "notification_placement": "top-end",
-          "top": 20,
-          "left": 20,
-          "right": 20,
-          "bottom": 20,
-          "color_success": "#ffffff",
-          "background_color_success": "#19af66",
-          "color_error": "#ffffff",
-          "background_color_error": "#f35746",
-          "notification_duration": 3000,
-          "notification_animation": "fade"
-        }
-      },
       "11413113034274116516": {
         "type": "shopify://apps/xb-wishlist/blocks/wishlist_collection/cc07f1e9-907b-431d-99f8-4fce3efa75f1",
         "disabled": false,
@@ -193,11 +176,6 @@
           "icon_color": "#c4301c",
           "custom_placement": ""
         }
-      },
-      "16278478101612877664": {
-        "type": "shopify://apps/pagefly-page-builder/blocks/app-embed/83e179f7-59a0-4589-8c66-c0dddf959200",
-        "disabled": true,
-        "settings": {}
       },
       "12120936241911852800": {
         "type": "shopify://apps/judge-me-reviews/blocks/reviews_tab/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
@@ -258,11 +236,6 @@
         "disabled": false,
         "settings": {}
       },
-      "6610233760104865948": {
-        "type": "shopify://apps/pushowl-brevo-email-push-sms/blocks/pushowl-app-embed-3d2ff2b5/fa20c3ba-38bf-43e0-ba5c-431f6ae07d95",
-        "disabled": true,
-        "settings": {}
-      },
       "12342438634123318931": {
         "type": "shopify://apps/xb-wishlist/blocks/xo-wishlist/cc07f1e9-907b-431d-99f8-4fce3efa75f1",
         "disabled": false,
@@ -279,8 +252,25 @@
       },
       "4264577558867692749": {
         "type": "shopify://apps/put-it-on-lay-buy/blocks/popup_laybuy/9b7a7d93-d79e-4418-abb3-96e54e9f7aa7",
-        "disabled": false,
+        "disabled": true,
         "settings": {}
+      },
+      "9994742477291898530": {
+        "type": "shopify://apps/xb-wishlist/blocks/wishlist_notification/cc07f1e9-907b-431d-99f8-4fce3efa75f1",
+        "disabled": false,
+        "settings": {
+          "notification_placement": "top-end",
+          "top": 20,
+          "left": 20,
+          "right": 20,
+          "bottom": 20,
+          "color_success": "#ffffff",
+          "background_color_success": "#19af66",
+          "color_error": "#ffffff",
+          "background_color_error": "#f35746",
+          "notification_duration": 3000,
+          "notification_animation": "fade"
+        }
       }
     },
     "color_schemes": {
