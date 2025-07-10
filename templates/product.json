@@ -60,7 +60,7 @@
             "text_size": 16,
             "text_color": "#000000",
             "icon_color": "#df0101",
-            "icon_size": 2
+            "icon_size": 3
           }
         },
         "buy_buttons": {
@@ -114,22 +114,15 @@
         "color_scheme": "scheme-2",
         "media_size": "small",
         "constrain_to_viewport": true,
-        "media_fit": "cover",
+        "media_fit": "contain",
         "gallery_layout": "thumbnail_slider",
         "media_position": "left",
         "image_zoom": "hover",
-        "mobile_thumbnails": "hide",
+        "mobile_thumbnails": "show",
         "hide_variants": true,
         "enable_video_looping": false,
         "padding_top": 36,
         "padding_bottom": 12
-      }
-    },
-    "1751604570fa70553d": {
-      "type": "apps",
-      "disabled": true,
-      "settings": {
-        "include_margins": true
       }
     },
     "apps_hhFF4A": {
@@ -173,7 +166,6 @@
   },
   "order": [
     "main",
-    "1751604570fa70553d",
     "apps_hhFF4A",
     "related-products"
   ]
