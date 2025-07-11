@@ -76,20 +76,6 @@
             "share_label": "Share"
           }
         },
-        "complementary_ACMwHY": {
-          "type": "complementary",
-          "disabled": true,
-          "settings": {
-            "block_heading": "Pairs well with",
-            "make_collapsible_row": true,
-            "icon": "price_tag",
-            "product_list_limit": 10,
-            "products_per_page": 3,
-            "pagination_style": "counter",
-            "image_ratio": "square",
-            "enable_quick_add": false
-          }
-        },
         "description": {
           "type": "description",
           "settings": {}
@@ -106,7 +92,6 @@
         "xb_wishlist_button_wishlist_TeeWRA",
         "buy_buttons",
         "share_tmQBnp",
-        "complementary_ACMwHY",
         "description"
       ],
       "settings": {
