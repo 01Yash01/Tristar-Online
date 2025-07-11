@@ -12,25 +12,6 @@
     "slideshow_FXLnz4": {
       "type": "slideshow",
       "blocks": {
-        "slide_qRtceL": {
-          "type": "slide",
-          "disabled": true,
-          "settings": {
-            "image": "shopify://shop_images/store-opening-web-1_0cc1aa01-51e4-4e5d-b80f-c5028d795984.png",
-            "heading": "",
-            "heading_size": "h1",
-            "subheading": "",
-            "button_label": "",
-            "link": "",
-            "button_style_secondary": false,
-            "box_align": "middle-center",
-            "show_text_box": false,
-            "text_alignment": "center",
-            "image_overlay_opacity": 0,
-            "color_scheme": "scheme-1",
-            "text_alignment_mobile": "center"
-          }
-        },
         "slide_cxkVme": {
           "type": "slide",
           "settings": {
@@ -58,6 +39,24 @@
             "subheading": "",
             "button_label": "",
             "link": "shopify://products/gopro-max-360-action-camera",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": false,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "scheme-1",
+            "text_alignment_mobile": "center"
+          }
+        },
+        "slide_qRtceL": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Store_Open_Web_1-01_b4394082-552c-4ae8-90da-7e97c499b71e.jpg",
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "",
             "button_style_secondary": false,
             "box_align": "middle-center",
             "show_text_box": false,
@@ -196,9 +195,9 @@
         }
       },
       "block_order": [
-        "slide_qRtceL",
         "slide_cxkVme",
         "slide_KU7GiP",
+        "slide_qRtceL",
         "slide_RJwCgx",
         "slide_LDwaNN",
         "slide_jfBeVG",
