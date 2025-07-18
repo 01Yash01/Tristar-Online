@@ -12,6 +12,24 @@
     "slideshow_FXLnz4": {
       "type": "slideshow",
       "blocks": {
+        "slide_qRtceL": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Store_Open_Web_1-01_731a7680-edc6-4c37-a670-ec2687fedf5e.jpg",
+            "heading": "",
+            "heading_size": "h1",
+            "subheading": "",
+            "button_label": "",
+            "link": "",
+            "button_style_secondary": false,
+            "box_align": "middle-center",
+            "show_text_box": false,
+            "text_alignment": "center",
+            "image_overlay_opacity": 0,
+            "color_scheme": "scheme-1",
+            "text_alignment_mobile": "center"
+          }
+        },
         "slide_cxkVme": {
           "type": "slide",
           "settings": {
@@ -48,24 +66,6 @@
             "text_alignment_mobile": "center"
           }
         },
-        "slide_qRtceL": {
-          "type": "slide",
-          "settings": {
-            "image": "shopify://shop_images/Store_Open_Web_1-01_731a7680-edc6-4c37-a670-ec2687fedf5e.jpg",
-            "heading": "",
-            "heading_size": "h1",
-            "subheading": "",
-            "button_label": "",
-            "link": "",
-            "button_style_secondary": false,
-            "box_align": "middle-center",
-            "show_text_box": false,
-            "text_alignment": "center",
-            "image_overlay_opacity": 0,
-            "color_scheme": "scheme-1",
-            "text_alignment_mobile": "center"
-          }
-        },
         "slide_RJwCgx": {
           "type": "slide",
           "settings": {
@@ -87,7 +87,7 @@
         "slide_LDwaNN": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/iphone_web_banner_1_5fe33a93-7d00-4937-9148-e6518aac5681.jpg",
+            "image": "shopify://shop_images/iphone_web_banner_1_00cf345b-a91e-4f1c-a801-a9f56fbd0c21.jpg",
             "heading": "",
             "heading_size": "h1",
             "subheading": "",
@@ -195,9 +195,9 @@
         }
       },
       "block_order": [
+        "slide_qRtceL",
         "slide_cxkVme",
         "slide_KU7GiP",
-        "slide_qRtceL",
         "slide_RJwCgx",
         "slide_LDwaNN",
         "slide_jfBeVG",
