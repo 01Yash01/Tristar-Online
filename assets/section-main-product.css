@@ -1492,3 +1492,9 @@ a.product__text {
     border: none;
   }
 }
+@media (max-width: 600px) {
+  .product__title h1,
+  .product__title h2 {
+    font-size: 1.8rem; /* Adjust as needed */
+  }
+}
