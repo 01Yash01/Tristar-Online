@@ -1368,7 +1368,7 @@
         "id": "social_amazon_link",
         "label": "t:settings_schema.social-media.settings.social_amazon_link.label",
         "placeholder": "t:settings_schema.social-media.settings.social_amazon_link.info",
-        "default": "https://www.amazon.com.au/s?me=A1W6ZW8E9DQ1TN&marketplaceID=A39IBJ37TRP1C6"
+        "default": "https://www.amazon.com.au/s?me=ALNY2U2RWT81C&marketplaceID=A39IBJ37TRP1C6"
       },
       {
         "type": "text",
