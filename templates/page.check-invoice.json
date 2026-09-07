@@ -1,0 +1,33 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 0
+      }
+    },
+    "invoice_checker": {
+      "type": "invoice-checker",
+      "settings": {
+        "heading": "Check Your Invoice",
+        "heading_size": "h1",
+        "subheading": "Enter your invoice number below to check its availability.",
+        "content_alignment": "center",
+        "placeholder": "e.g. INV-10001",
+        "button_text": "Check Invoice",
+        "success_title": "Invoice Available",
+        "success_message": "Great news! This invoice is verified and available in our records.",
+        "not_found_title": "Invoice Not Available",
+        "not_found_message": "We couldn't find an invoice with this number. Please verify the number or contact customer support.",
+        "color_scheme": "scheme-1",
+        "padding_top": 16,
+        "padding_bottom": 48
+      }
+    }
+  },
+  "order": [
+    "main",
+    "invoice_checker"
+  ]
+}

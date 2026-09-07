@@ -1,0 +1,645 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .invoice-checker-card {
+    max-width: 620px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem;
+    background: rgba(var(--color-background), 1);
+    border: 1px solid rgba(var(--color-foreground), 0.08);
+    border-radius: 12px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+    text-align: {{ section.settings.content_alignment }};
+    position: relative;
+    overflow: hidden;
+  }
+
+  @media screen and (max-width: 749px) {
+    .invoice-checker-card {
+      padding: 1.75rem 1.25rem;
+      border-radius: 8px;
+    }
+  }
+
+  .invoice-checker__header {
+    margin-bottom: 2rem;
+  }
+
+  .invoice-checker__title {
+    margin-top: 0;
+    margin-bottom: 0.75rem;
+    font-weight: 700;
+  }
+
+  .invoice-checker__subtitle {
+    margin: 0;
+    color: rgba(var(--color-foreground), 0.75);
+    font-size: 1.1rem;
+    line-height: 1.5;
+  }
+
+  .invoice-checker__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .invoice-checker__input-wrapper {
+    position: relative;
+    width: 100%;
+  }
+
+  .invoice-checker__input {
+    width: 100%;
+    padding: 1.2rem 1.4rem;
+    font-size: 1.2rem;
+    letter-spacing: 0.05em;
+    font-weight: 600;
+    text-transform: uppercase;
+    border: 2px solid rgba(var(--color-foreground), 0.15);
+    border-radius: 8px;
+    background: rgba(var(--color-background), 1);
+    color: rgb(var(--color-foreground));
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+    outline: none;
+  }
+
+  .invoice-checker__input:focus {
+    border-color: rgba(var(--color-foreground), 0.85);
+    box-shadow: 0 0 0 3px rgba(var(--color-foreground), 0.1);
+  }
+
+  .invoice-checker__input::placeholder {
+    text-transform: none;
+    font-weight: 400;
+    letter-spacing: normal;
+    color: rgba(var(--color-foreground), 0.4);
+  }
+
+  .invoice-checker__actions {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .invoice-checker__button {
+    position: relative;
+    width: 100%;
+    min-height: 50px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .invoice-checker__button[disabled] {
+    opacity: 0.75;
+    cursor: not-allowed;
+  }
+
+  .invoice-checker__spinner {
+    display: none;
+    width: 22px;
+    height: 22px;
+    margin-right: 0.6rem;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: invoice-spin 0.8s linear infinite;
+  }
+
+  .invoice-checker__button--loading .invoice-checker__spinner {
+    display: inline-block;
+  }
+
+  @keyframes invoice-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* Results styling */
+  .invoice-checker__result {
+    margin-top: 1.8rem;
+    padding: 1.4rem;
+    border-radius: 10px;
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    text-align: left;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    animation: invoice-fade-in 0.35s ease-out;
+  }
+
+  @keyframes invoice-fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .invoice-checker__result-icon {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
+  }
+
+  .invoice-checker__result-content {
+    flex-grow: 1;
+  }
+
+  .invoice-checker__result-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin: 0 0 0.3rem 0;
+    line-height: 1.3;
+  }
+
+  .invoice-checker__result-desc {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+
+  .invoice-checker__result-badge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    margin-top: 0.6rem;
+    font-family: monospace;
+    font-size: 0.95rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.06);
+  }
+
+  /* Success State */
+  .invoice-checker__result--success {
+    background-color: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    color: #064e3b;
+  }
+  .invoice-checker__result--success .invoice-checker__result-icon {
+    background: #10b981;
+    color: #ffffff;
+  }
+  .invoice-checker__result--success .invoice-checker__result-title {
+    color: #065f46;
+  }
+  .invoice-checker__result--success .invoice-checker__result-desc {
+    color: #047857;
+  }
+  .invoice-checker__result--success .invoice-checker__result-badge {
+    background: #d1fae5;
+    color: #065f46;
+  }
+
+  /* Error / Not Found State */
+  .invoice-checker__result--not-found {
+    background-color: #fff1f2;
+    border: 1px solid #fecdd3;
+    color: #881337;
+  }
+  .invoice-checker__result--not-found .invoice-checker__result-icon {
+    background: #f43f5e;
+    color: #ffffff;
+  }
+  .invoice-checker__result--not-found .invoice-checker__result-title {
+    color: #9f1239;
+  }
+  .invoice-checker__result--not-found .invoice-checker__result-desc {
+    color: #be123c;
+  }
+  .invoice-checker__result--not-found .invoice-checker__result-badge {
+    background: #ffe4e6;
+    color: #9f1239;
+  }
+
+  /* Warning / Notice State */
+  .invoice-checker__result--warning {
+    background-color: #fffbeb;
+    border: 1px solid #fde68a;
+    color: #78350f;
+  }
+  .invoice-checker__result--warning .invoice-checker__result-icon {
+    background: #f59e0b;
+    color: #ffffff;
+  }
+  .invoice-checker__result--warning .invoice-checker__result-title {
+    color: #92400e;
+  }
+  .invoice-checker__result--warning .invoice-checker__result-desc {
+    color: #b45309;
+  }
+
+  .invoice-checker__config-hint {
+    margin-top: 1.5rem;
+    padding: 0.85rem 1rem;
+    background: rgba(var(--color-foreground), 0.04);
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: rgba(var(--color-foreground), 0.7);
+    line-height: 1.4;
+    text-align: left;
+  }
+
+  .invoice-checker__config-hint code {
+    background: rgba(0, 0, 0, 0.06);
+    padding: 0.15rem 0.35rem;
+    border-radius: 3px;
+    font-size: 0.8rem;
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient section-{{ section.id }}-padding">
+  <div class="page-width page-width--narrow">
+    <div
+      id="InvoiceChecker-{{ section.id }}"
+      class="invoice-checker-card{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+      data-endpoint="{{ section.settings.endpoint_url | escape }}"
+      data-demo-mode="{{ section.settings.enable_demo_mode }}"
+      data-success-title="{{ section.settings.success_title | escape }}"
+      data-success-message="{{ section.settings.success_message | escape }}"
+      data-not-found-title="{{ section.settings.not_found_title | escape }}"
+      data-not-found-message="{{ section.settings.not_found_message | escape }}"
+    >
+      <div class="invoice-checker__header">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="invoice-checker__title {{ section.settings.heading_size }}">
+            {{ section.settings.heading | escape }}
+          </h2>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="invoice-checker__subtitle">
+            {{ section.settings.subheading | escape }}
+          </p>
+        {%- endif -%}
+      </div>
+
+      <form id="InvoiceCheckerForm-{{ section.id }}" class="invoice-checker__form" onsubmit="return false;" novalidate>
+        <div class="invoice-checker__input-wrapper">
+          <input
+            type="text"
+            id="InvoiceInput-{{ section.id }}"
+            class="invoice-checker__input"
+            name="invoice_number"
+            placeholder="{{ section.settings.placeholder | escape }}"
+            autocomplete="off"
+            spellcheck="false"
+            aria-label="{{ section.settings.heading | default: 'Invoice Number' | escape }}"
+            required
+          >
+        </div>
+
+        <div class="invoice-checker__actions">
+          <button
+            type="submit"
+            id="InvoiceSubmitBtn-{{ section.id }}"
+            class="button button--primary invoice-checker__button"
+          >
+            <span class="invoice-checker__spinner" aria-hidden="true"></span>
+            <span class="invoice-checker__btn-text">{{ section.settings.button_text | default: 'Check Invoice' | escape }}</span>
+          </button>
+        </div>
+      </form>
+
+      <div
+        id="InvoiceResult-{{ section.id }}"
+        class="invoice-checker__result"
+        role="status"
+        aria-live="polite"
+        style="display: none;"
+      >
+        <div class="invoice-checker__result-icon" id="InvoiceResultIcon-{{ section.id }}"></div>
+        <div class="invoice-checker__result-content">
+          <h3 class="invoice-checker__result-title" id="InvoiceResultTitle-{{ section.id }}"></h3>
+          <p class="invoice-checker__result-desc" id="InvoiceResultDesc-{{ section.id }}"></p>
+          <div class="invoice-checker__result-badge" id="InvoiceResultBadge-{{ section.id }}" style="display: none;"></div>
+        </div>
+      </div>
+
+      {%- if section.settings.endpoint_url == blank and section.settings.enable_demo_mode == false -%}
+        <div class="invoice-checker__config-hint">
+          <strong>Store Owner Note:</strong> Google Apps Script Web App URL is not set yet.
+          Go to Theme Customizer &rarr; <code>Invoice Checker Section</code> and paste your deployed Apps Script URL, or toggle <strong>"Enable Demo / Test Mode"</strong> to test sample invoices like <code>INV-10001</code>.
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const sectionId = {{ section.id | json }};
+    const container = document.getElementById('InvoiceChecker-' + sectionId);
+    if (!container) return;
+
+    const form = document.getElementById('InvoiceCheckerForm-' + sectionId);
+    const input = document.getElementById('InvoiceInput-' + sectionId);
+    const submitBtn = document.getElementById('InvoiceSubmitBtn-' + sectionId);
+    const btnText = submitBtn.querySelector('.invoice-checker__btn-text');
+    const resultBox = document.getElementById('InvoiceResult-' + sectionId);
+    const resultIcon = document.getElementById('InvoiceResultIcon-' + sectionId);
+    const resultTitle = document.getElementById('InvoiceResultTitle-' + sectionId);
+    const resultDesc = document.getElementById('InvoiceResultDesc-' + sectionId);
+    const resultBadge = document.getElementById('InvoiceResultBadge-' + sectionId);
+
+    const endpoint = container.dataset.endpoint ? container.dataset.endpoint.trim() : '';
+    const isDemoMode = container.dataset.demoMode === 'true';
+
+    // Sample fallback demo data for instant testing
+    const demoInvoices = ['INV-10001', 'INV-10002', 'INV-10003', 'INV-10004', 'INV-123456'];
+
+    function showResult(type, title, desc, invoiceNumber) {
+      resultBox.style.display = 'flex';
+      resultBox.className = 'invoice-checker__result invoice-checker__result--' + type;
+
+      if (type === 'success') {
+        resultIcon.innerHTML = '&#10003;';
+      } else if (type === 'not-found') {
+        resultIcon.innerHTML = '&#10005;';
+      } else {
+        resultIcon.innerHTML = '&#33;';
+      }
+
+      resultTitle.textContent = title;
+      resultDesc.textContent = desc;
+
+      if (invoiceNumber) {
+        resultBadge.textContent = 'Invoice: ' + invoiceNumber;
+        resultBadge.style.display = 'inline-block';
+      } else {
+        resultBadge.style.display = 'none';
+      }
+    }
+
+    function setLoading(isLoading) {
+      if (isLoading) {
+        submitBtn.classList.add('invoice-checker__button--loading');
+        submitBtn.setAttribute('disabled', 'disabled');
+        btnText.textContent = 'Verifying...';
+      } else {
+        submitBtn.classList.remove('invoice-checker__button--loading');
+        submitBtn.removeAttribute('disabled');
+        btnText.textContent = {{ section.settings.button_text | default: 'Check Invoice' | json }};
+      }
+    }
+
+    async function handleCheck(e) {
+      if (e) e.preventDefault();
+      const rawVal = input.value || '';
+      const invoice = rawVal.trim().toUpperCase();
+
+      if (!invoice) {
+        showResult('warning', 'Please Enter an Invoice Number', 'Enter your invoice number (e.g. INV-10001) in the field above to check.');
+        input.focus();
+        return;
+      }
+
+      setLoading(true);
+
+      // 1. Handle Demo / Test Mode if enabled or if no endpoint provided
+      if (isDemoMode || !endpoint) {
+        setTimeout(function() {
+          setLoading(false);
+          const exists = demoInvoices.indexOf(invoice) !== -1;
+          if (exists) {
+            showResult(
+              'success',
+              container.dataset.successTitle || 'Invoice Available',
+              container.dataset.successMessage || 'Great news! This invoice is verified and available in our records.',
+              invoice
+            );
+          } else {
+            showResult(
+              'not-found',
+              container.dataset.notFoundTitle || 'Invoice Not Available',
+              container.dataset.notFoundMessage || "We couldn't find this invoice in our system. Please check the number or contact support.",
+              invoice
+            );
+          }
+        }, 500);
+        return;
+      }
+
+      // 2. Query Google Apps Script Web App
+      try {
+        const queryUrl = new URL(endpoint);
+        queryUrl.searchParams.set('invoice', invoice);
+        queryUrl.searchParams.set('action', 'check');
+
+        const response = await fetch(queryUrl.toString(), {
+          method: 'GET',
+          redirect: 'follow',
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('Server responded with status ' + response.status);
+        }
+
+        const data = await response.json();
+
+        setLoading(false);
+
+        if (data.found === true) {
+          showResult(
+            'success',
+            container.dataset.successTitle || 'Invoice Available',
+            data.message || container.dataset.successMessage || 'Great news! This invoice is verified and available in our records.',
+            invoice
+          );
+        } else {
+          showResult(
+            'not-found',
+            container.dataset.notFoundTitle || 'Invoice Not Available',
+            data.message || container.dataset.notFoundMessage || "We couldn't find an invoice with this number. Please verify the number or contact customer support.",
+            invoice
+          );
+        }
+      } catch (err) {
+        console.error('Invoice check error:', err);
+        setLoading(false);
+
+        // Friendly error notice
+        showResult(
+          'warning',
+          'Verification Service Temporarily Unavailable',
+          'We were unable to verify this invoice right now. Please verify your internet connection or contact customer support.'
+        );
+      }
+    }
+
+    form.addEventListener('submit', handleCheck);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Invoice Checker",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "endpoint_url",
+      "label": "Google Apps Script Web App URL",
+      "info": "Paste the deployed Google Apps Script Web App URL here."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_demo_mode",
+      "label": "Enable Demo / Test Mode",
+      "default": false,
+      "info": "If checked or if URL is empty, tests locally with sample invoices (INV-10001, INV-10002, INV-10003, INV-10004, INV-123456)."
+    },
+    {
+      "type": "inline_richtext",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Check Your Invoice"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        {
+          "value": "h2",
+          "label": "Small"
+        },
+        {
+          "value": "h1",
+          "label": "Medium"
+        },
+        {
+          "value": "h0",
+          "label": "Large"
+        }
+      ],
+      "default": "h1",
+      "label": "Heading size"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Enter your invoice number below to check its availability."
+    },
+    {
+      "type": "select",
+      "id": "content_alignment",
+      "options": [
+        {
+          "value": "left",
+          "label": "Left"
+        },
+        {
+          "value": "center",
+          "label": "Center"
+        }
+      ],
+      "default": "center",
+      "label": "Content alignment"
+    },
+    {
+      "type": "text",
+      "id": "placeholder",
+      "label": "Input Placeholder",
+      "default": "e.g. INV-10001"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Label",
+      "default": "Check Invoice"
+    },
+    {
+      "type": "header",
+      "content": "Result Messages"
+    },
+    {
+      "type": "text",
+      "id": "success_title",
+      "label": "Invoice Available Title",
+      "default": "Invoice Available"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Invoice Available Message",
+      "default": "Great news! This invoice is verified and available in our records."
+    },
+    {
+      "type": "text",
+      "id": "not_found_title",
+      "label": "Invoice Not Available Title",
+      "default": "Invoice Not Available"
+    },
+    {
+      "type": "text",
+      "id": "not_found_message",
+      "label": "Invoice Not Available Message",
+      "default": "We couldn't find an invoice with this number. Please verify the number or contact customer support."
+    },
+    {
+      "type": "header",
+      "content": "Style & Layout"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Invoice Checker"
+    }
+  ]
+}
+{% endschema %}
