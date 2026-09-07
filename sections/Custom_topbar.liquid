@@ -1,0 +1,166 @@
+<!-- sections/topbar.liquid -->
+<style>
+  .topbar {
+    background-color: #1D349A;
+    padding: 10px 16px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 12px;
+  }
+  .topbar__inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .topbar__menu ul {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+  }
+  .topbar__menu a {
+    color: white;
+    text-decoration: none;
+  }
+  .topbar__menu a:hover {
+    text-decoration: underline;
+  }
+  .topbar__announcement {
+    flex: 1 1 100%;
+    text-align: center;
+    color: white;
+  }
+  .topbar__socials {
+    display: flex;
+    gap: 15px;
+  }
+  .topbar__socials a {
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+  }
+  .topbar__socials svg {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+  }
+  .topbar__socials a:hover {
+    color: grey;
+  }
+
+  @media (max-width: 767px) {
+  .topbar__menu,
+  .topbar__socials,
+  .topbar__country{
+    display: none !important;
+  }
+
+  .topbar__announcement {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+}
+
+
+  @media (min-width: 768px) {
+    .topbar__announcement {
+      flex: 1;
+      order: 2;
+    }
+    .topbar__menu {
+      order: 3;
+    }
+    .topbar__socials {
+      order: 1;
+    }
+  }
+
+  /* country selctor */
+
+  .topbar__country select {
+  padding: 3px 6px;
+  font-size: 12px;
+  border-radius: 4px;
+  border: none;
+}
+</style>
+
+<div class="topbar">
+  <div class="topbar__inner">
+
+    <!-- Country Selector -->
+  <div class="topbar__country">
+    <select>
+      <option value="au">AU - Australia</option>
+      <option value="nz">NZ - New Zealand</option>
+      <!-- <option value="ca">🇨🇦 Canada</option> -->
+      <!-- <option value="uk">🇬🇧 United Kingdom</option> -->
+      <!-- Add more countries as needed -->
+    </select>
+  </div>
+
+    <!-- Social Icons (hardcoded) -->
+    <div class="topbar__socials">
+      <a href="https://facebook.com" target="_blank" aria-label="Facebook">
+        <svg viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 5 3.66 9.13 8.44 9.88v-6.99h-2.54v-2.89h2.54V9.85c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.23.2 2.23.2v2.46h-1.25c-1.23 0-1.62.77-1.62 1.56v1.87h2.77l-.44 2.89h-2.33v6.99C18.34 21.13 22 17 22 12z"/></svg>
+      </a>
+      <a href="https://instagram.com" target="_blank" aria-label="Instagram">
+        <svg viewBox="0 0 24 24"><path d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5H7zm10 2a1 1 0 110 2 1 1 0 010-2zM12 7a5 5 0 110 10 5 5 0 010-10zm0 2a3 3 0 100 6 3 3 0 000-6z"/></svg>
+      </a>
+      <a href="https://twitter.com" target="_blank" aria-label="Twitter">
+        <svg viewBox="0 0 24 24"><path d="M22.46 6c-.77.35-1.6.59-2.46.7a4.27 4.27 0 001.88-2.35 8.56 8.56 0 01-2.71 1.04 4.25 4.25 0 00-7.26 3.88A12.04 12.04 0 013 5.16a4.25 4.25 0 001.32 5.67 4.21 4.21 0 01-1.92-.53v.05a4.25 4.25 0 003.41 4.17 4.28 4.28 0 01-1.91.07 4.26 4.26 0 003.98 2.96A8.53 8.53 0 012 19.54a12.06 12.06 0 006.56 1.92c7.88 0 12.2-6.53 12.2-12.2 0-.19 0-.39-.01-.58A8.72 8.72 0 0024 5.1a8.36 8.36 0 01-2.54.7z"/></svg>
+      </a>
+      <!-- <a href="https://tiktok.com" target="_blank" aria-label="TikTok">
+        <svg viewBox="0 0 24 24"><path d="M12.004 2v7.725a3.993 3.993 0 01-4.01-3.994H6a6 6 0 006 6V2h-1.996zM18 8.009v3.982a4 4 0 01-3.995-4h-1.998a5.998 5.998 0 005.993 6v4a6 6 0 01-6-6v5.99a8 8 0 008-7.996v-4.98h-2z"/></svg>
+      </a> -->
+    </div>
+
+    <!-- Announcement -->
+    <div class="topbar__announcement">
+      {{ section.settings.announcement_text }}
+    </div>
+
+    <!-- Topbar Menu Links -->
+    {% if section.settings.menu_links %}
+      <nav class="topbar__menu" aria-label="Topbar menu">
+        <ul>
+          {% for link in linklists[section.settings.menu_links].links %}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {% endfor %}
+        </ul>
+      </nav>
+    {% endif %}
+    
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Topbar",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu_links",
+      "label": "Topbar menu"
+    },
+    {
+      "type": "text",
+      "id": "announcement_text",
+      "label": "Announcement text",
+      "default": "✌🏼 Free Express Shipping on orders $500!"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Topbar with Links and Socials"
+    }
+  ]
+}
+{% endschema %}
