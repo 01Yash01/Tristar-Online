@@ -92,7 +92,7 @@
   {%- endif -%} {% endcomment %}
 
   
-  {%- if settings.social_amazon_link != blank -%}
+  {% comment %} {%- if settings.social_amazon_link != blank -%}
     <li class="list-social__item">
       <a href="{{ settings.social_amazon_link }}" class="link list-social__link" target="_blank" rel="noopener noreferrer">
         <span class="svg-wrapper">
@@ -101,7 +101,7 @@
         <span class="visually-hidden">{{ 'general.social.links.amazon' | t }}Amazon</span>
       </a>
     </li>
-  {%- endif -%}
+  {%- endif -%} {% endcomment %}
   {%- if settings.social_amazon_link != blank -%}
     <li class="list-social__item">
       <a href="https://www.amazon.com.au/s?marketplaceID=A39IBJ37TRP1C6&me=A1W6ZW8E9DQ1TN&ref=glow_cls&refresh=1" class="link list-social__link" target="_blank" rel="noopener noreferrer">
