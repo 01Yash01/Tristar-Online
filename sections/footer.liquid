@@ -10,14 +10,14 @@
     display: none;
   }
 
-  .footer__invoice-checker {
+  .footer__order-status {
     width: 100%;
     text-align: center;
     margin: 2.5rem 0 1.5rem;
     padding: 4 1.5rem;
   }
 
-  .footer__invoice-checker-link {
+  .footer__order-status-link {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -34,7 +34,7 @@
     transition: all 0.25s ease;
   }
 
-  .footer__invoice-checker-link:hover {
+  .footer__order-status-link:hover {
     background: rgba(var(--color-foreground), 0.18);
     color: rgb(var(--color-foreground));
     text-decoration-thickness: 2px;
@@ -43,10 +43,10 @@
   }
 
   @media screen and (max-width: 749px) {
-    .footer__invoice-checker {
+    .footer__order-status {
       margin: 2rem 0 1rem;
     }
-    .footer__invoice-checker-link {
+    .footer__order-status-link {
       font-size: 1.4rem;
       padding: 0.6rem 1.4rem;
     }
@@ -207,18 +207,18 @@
           </div>
         {%- endif -%}
 
-        {%- if section.settings.show_invoice_checker == null or section.settings.show_invoice_checker -%}
-          {%- assign invoice_url = section.settings.invoice_checker_url | default: '/pages/check-invoice' -%}
-          {%- if invoice_url == blank -%}
-            {%- assign invoice_url = '/pages/check-invoice' -%}
+        {%- if section.settings.show_order_status == null or section.settings.show_order_status -%}
+          {%- assign order_url = section.settings.order_status_url | default: '/pages/order-status' -%}
+          {%- if order_url == blank -%}
+            {%- assign order_url = '/pages/order-status' -%}
           {%- endif -%}
-          {%- assign invoice_text = section.settings.invoice_checker_text -%}
-          {%- if invoice_text == blank -%}
-            {%- assign invoice_text = 'Please click here to verify your Invoice' -%}
+          {%- assign order_text = section.settings.order_status_text -%}
+          {%- if order_text == blank -%}
+            {%- assign order_text = 'Check Order Status' -%}
           {%- endif -%}
-          <div class="footer__invoice-checker{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-            <a href="{{ invoice_url }}" class="footer__invoice-checker-link">
-              {{ invoice_text | escape }}
+          <div class="footer__order-status{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
+            <a href="{{ order_url }}" class="footer__order-status-link">
+              {{ order_text | escape }}
             </a>
           </div>
         {%- endif -%}
@@ -648,24 +648,24 @@
     },
     {
       "type": "header",
-      "content": "Invoice Checker Link"
+      "content": "Order Status Link"
     },
     {
       "type": "checkbox",
-      "id": "show_invoice_checker",
-      "label": "Show invoice checker link",
+      "id": "show_order_status",
+      "label": "Show order status link",
       "default": true
     },
     {
       "type": "text",
-      "id": "invoice_checker_text",
-      "label": "Invoice checker text",
-      "default": "Please click here to verify your Invoice"
+      "id": "order_status_text",
+      "label": "Order status text",
+      "default": "Check Order Status"
     },
     {
       "type": "url",
-      "id": "invoice_checker_url",
-      "label": "Invoice checker link"
+      "id": "order_status_url",
+      "label": "Order status link"
     }
   ],
   "default": {
