@@ -1,0 +1,40 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "disabled": true,
+      "settings": {
+        "padding_top": 28,
+        "padding_bottom": 0
+      }
+    },
+    "order_status_checker": {
+      "type": "order-status-checker",
+      "settings": {
+        "endpoint_url": "https://script.google.com/macros/s/AKfycby6OA9CT3kjyytWMwe_1dt6oo0PpMXetxYpZw-4SAe7Q5cnE2st6Fm5KCCGr0Ha85KA/exec",
+        "enable_demo_mode": false,
+        "heading": "Check Order Status",
+        "subheading": "Want to check your order status? Just provide your Email and Order Number below. If you have an account with us, signing in will give you access to your past orders and history.",
+        "button_text": "CHECK STATUS",
+        "button_bg_color": "#c25e1a",
+        "button_text_color": "#ffffff",
+        "color_scheme": "scheme-1",
+        "padding_top": 44,
+        "padding_bottom": 48
+      }
+    }
+  },
+  "order": [
+    "main",
+    "order_status_checker"
+  ]
+}

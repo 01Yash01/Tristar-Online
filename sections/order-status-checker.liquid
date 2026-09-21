@@ -1,0 +1,533 @@
+{%- style -%}
+  .section-{{ section.id }}-padding {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+
+  .order-status-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+    color: rgb(var(--color-foreground));
+    background: transparent;
+  }
+
+  .order-status__header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  .order-status__title {
+    margin: 0 0 1.5rem 0;
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: rgb(var(--color-foreground));
+  }
+
+  .order-status__subtitle {
+    margin: 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: rgba(var(--color-foreground), 0.85);
+  }
+
+  .order-status__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.8rem;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  .order-status__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .order-status__labels {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  .order-status__label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: rgb(var(--color-foreground));
+  }
+
+  .order-status__required {
+    font-size: 0.9rem;
+    color: rgba(var(--color-foreground), 0.6);
+  }
+
+  .order-status__input {
+    width: 100%;
+    padding: 0.9rem 1rem;
+    font-size: 1.1rem;
+    border: 1px solid rgba(var(--color-foreground), 0.3);
+    border-radius: 4px; /* Slight rounding for modern feel, but looks boxy like the reference */
+    background: #ffffff;
+    color: #000000;
+    transition: border-color 0.2s ease;
+    box-sizing: border-box;
+    outline: none;
+    font-family: inherit;
+  }
+
+  .order-status__input:focus {
+    border-color: rgb(var(--color-foreground));
+    box-shadow: inset 0 0 0 1px rgb(var(--color-foreground));
+  }
+
+  .order-status__actions {
+    margin-top: 0.5rem;
+    text-align: left;
+  }
+
+  .order-status__button {
+    position: relative;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: {{ section.settings.button_text_color | default: '#ffffff' }};
+    background-color: {{ section.settings.button_bg_color | default: '#c25e1a' }};
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-transform: uppercase;
+    transition: opacity 0.2s ease;
+  }
+
+  .order-status__button:hover {
+    opacity: 0.9;
+  }
+
+  .order-status__button[disabled] {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+
+  .order-status__spinner {
+    display: none;
+    width: 20px;
+    height: 20px;
+    margin-right: 0.8rem;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: order-status-spin 0.8s linear infinite;
+  }
+
+  .order-status__button--loading .order-status__spinner {
+    display: inline-block;
+  }
+
+  @keyframes order-status-spin {
+    to { transform: rotate(360deg); }
+  }
+
+  /* Results Styling */
+  .order-status__result {
+    margin-top: 2.5rem;
+    padding: 1.5rem;
+    border-radius: 8px;
+    display: none;
+    align-items: flex-start;
+    gap: 1rem;
+    text-align: left;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+    animation: fade-in 0.3s ease-out;
+  }
+
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(5px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .order-status__result-icon {
+    flex-shrink: 0;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.1rem;
+  }
+
+  .order-status__result-content {
+    flex-grow: 1;
+  }
+
+  .order-status__result-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin: 0 0 0.4rem 0;
+  }
+
+  .order-status__result-desc {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+
+  /* Success */
+  .order-status__result--success {
+    background-color: #ecfdf5;
+    border: 1px solid #a7f3d0;
+    color: #064e3b;
+  }
+  .order-status__result--success .order-status__result-icon {
+    background: #10b981;
+    color: #ffffff;
+  }
+
+  /* Error / Not Found */
+  .order-status__result--not-found {
+    background-color: #fff1f2;
+    border: 1px solid #fecdd3;
+    color: #881337;
+  }
+  .order-status__result--not-found .order-status__result-icon {
+    background: #f43f5e;
+    color: #ffffff;
+  }
+
+  /* Warning */
+  .order-status__result--warning {
+    background-color: #fffbeb;
+    border: 1px solid #fde68a;
+    color: #78350f;
+  }
+  .order-status__result--warning .order-status__result-icon {
+    background: #f59e0b;
+    color: #ffffff;
+  }
+
+  .order-status__config-hint {
+    margin-top: 2rem;
+    padding: 1rem;
+    background: rgba(var(--color-foreground), 0.05);
+    border-radius: 6px;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+  .order-status__config-hint code {
+    background: rgba(0,0,0,0.06);
+    padding: 0.2rem 0.4rem;
+    border-radius: 4px;
+  }
+{%- endstyle -%}
+
+<div class="color-{{ section.settings.color_scheme }} gradient section-{{ section.id }}-padding">
+  <div class="page-width">
+    <div
+      id="OrderStatus-{{ section.id }}"
+      class="order-status-container{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+      data-endpoint="{{ section.settings.endpoint_url | escape }}"
+      data-demo-mode="{{ section.settings.enable_demo_mode }}"
+    >
+      <div class="order-status__header">
+        {%- if section.settings.heading != blank -%}
+          <h1 class="order-status__title">
+            {{ section.settings.heading | escape }}
+          </h1>
+        {%- endif -%}
+        {%- if section.settings.subheading != blank -%}
+          <p class="order-status__subtitle">
+            {{ section.settings.subheading | escape }}
+          </p>
+        {%- endif -%}
+      </div>
+
+      <form id="OrderStatusForm-{{ section.id }}" class="order-status__form" onsubmit="return false;" novalidate>
+        <div class="order-status__field">
+          <div class="order-status__labels">
+            <label class="order-status__label" for="OrderInput-{{ section.id }}">Order number *</label>
+            <span class="order-status__required">*Required</span>
+          </div>
+          <input
+            type="text"
+            id="OrderInput-{{ section.id }}"
+            class="order-status__input"
+            name="order_number"
+            autocomplete="off"
+            spellcheck="false"
+            required
+          >
+        </div>
+
+        <div class="order-status__field">
+          <div class="order-status__labels">
+            <label class="order-status__label" for="EmailInput-{{ section.id }}">Email address *</label>
+            <span class="order-status__required">*Required</span>
+          </div>
+          <input
+            type="email"
+            id="EmailInput-{{ section.id }}"
+            class="order-status__input"
+            name="email_address"
+            autocomplete="email"
+            spellcheck="false"
+            required
+          >
+        </div>
+
+        <div class="order-status__actions">
+          <button
+            type="submit"
+            id="OrderSubmitBtn-{{ section.id }}"
+            class="order-status__button"
+          >
+            <span class="order-status__spinner" aria-hidden="true"></span>
+            <span class="order-status__btn-text">{{ section.settings.button_text | default: 'Check Status' | escape }}</span>
+          </button>
+        </div>
+      </form>
+
+      <div
+        id="OrderResult-{{ section.id }}"
+        class="order-status__result"
+        role="status"
+        aria-live="polite"
+      >
+        <div class="order-status__result-icon" id="OrderResultIcon-{{ section.id }}"></div>
+        <div class="order-status__result-content">
+          <h3 class="order-status__result-title" id="OrderResultTitle-{{ section.id }}"></h3>
+          <p class="order-status__result-desc" id="OrderResultDesc-{{ section.id }}"></p>
+        </div>
+      </div>
+
+      {%- if section.settings.endpoint_url == blank and section.settings.enable_demo_mode == false -%}
+        <div class="order-status__config-hint">
+          <strong>Store Owner Note:</strong> Apps Script Web App URL is not set. 
+          Go to Theme Customizer and paste your deployed URL, or enable <strong>Demo Mode</strong> to test with order <code>12345</code> and email <code>test@example.com</code>.
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</div>
+
+<script>
+  (function() {
+    const sectionId = {{ section.id | json }};
+    const container = document.getElementById('OrderStatus-' + sectionId);
+    if (!container) return;
+
+    const form = document.getElementById('OrderStatusForm-' + sectionId);
+    const orderInput = document.getElementById('OrderInput-' + sectionId);
+    const emailInput = document.getElementById('EmailInput-' + sectionId);
+    const submitBtn = document.getElementById('OrderSubmitBtn-' + sectionId);
+    const btnText = submitBtn.querySelector('.order-status__btn-text');
+    
+    const resultBox = document.getElementById('OrderResult-' + sectionId);
+    const resultIcon = document.getElementById('OrderResultIcon-' + sectionId);
+    const resultTitle = document.getElementById('OrderResultTitle-' + sectionId);
+    const resultDesc = document.getElementById('OrderResultDesc-' + sectionId);
+
+    const endpoint = container.dataset.endpoint ? container.dataset.endpoint.trim() : '';
+    const isDemoMode = container.dataset.demoMode === 'true';
+
+    function showResult(type, title, desc) {
+      resultBox.style.display = 'flex';
+      resultBox.className = 'order-status__result order-status__result--' + type;
+
+      if (type === 'success') {
+        resultIcon.innerHTML = '&#10003;';
+      } else if (type === 'not-found') {
+        resultIcon.innerHTML = '&#10005;';
+      } else {
+        resultIcon.innerHTML = '&#33;';
+      }
+
+      resultTitle.textContent = title;
+      resultDesc.textContent = desc;
+    }
+
+    function setLoading(isLoading) {
+      if (isLoading) {
+        submitBtn.classList.add('order-status__button--loading');
+        submitBtn.setAttribute('disabled', 'disabled');
+        btnText.textContent = 'Checking...';
+        resultBox.style.display = 'none';
+      } else {
+        submitBtn.classList.remove('order-status__button--loading');
+        submitBtn.removeAttribute('disabled');
+        btnText.textContent = {{ section.settings.button_text | default: 'Check Status' | json }};
+      }
+    }
+
+    async function handleCheck(e) {
+      if (e) e.preventDefault();
+      
+      const order = (orderInput.value || '').trim().toUpperCase();
+      const email = (emailInput.value || '').trim().toLowerCase();
+
+      if (!order || !email) {
+        showResult('warning', 'Missing Information', 'Please provide both your Order Number and Email Address.');
+        if (!order) orderInput.focus();
+        else emailInput.focus();
+        return;
+      }
+
+      // Basic email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        showResult('warning', 'Invalid Email', 'Please enter a valid email address.');
+        emailInput.focus();
+        return;
+      }
+
+      setLoading(true);
+
+      // Demo Mode
+      if (isDemoMode || !endpoint) {
+        setTimeout(function() {
+          setLoading(false);
+          if (order === '12345' && email === 'test@example.com') {
+            showResult('success', 'Status: Shipped', 'Thank you for shopping with us.');
+          } else {
+            showResult('not-found', 'Order Not Found', "We couldn't find an order matching that number and email address.");
+          }
+        }, 600);
+        return;
+      }
+
+      // Query Google Apps Script
+      try {
+        const queryUrl = new URL(endpoint);
+        queryUrl.searchParams.set('order', order);
+        queryUrl.searchParams.set('email', email);
+        queryUrl.searchParams.set('action', 'check');
+
+        const response = await fetch(queryUrl.toString(), {
+          method: 'GET',
+          redirect: 'follow',
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('Server responded with status ' + response.status);
+        }
+
+        const data = await response.json();
+        setLoading(false);
+
+        if (data.found === true) {
+          const statusTitle = data.status ? 'Status: ' + data.status : 'Order Found';
+          showResult('success', statusTitle, data.message || 'Your order is being processed.');
+        } else {
+          showResult('not-found', 'Order Not Found', data.message || "We couldn't find an order matching that information.");
+        }
+      } catch (err) {
+        console.error('Order check error:', err);
+        setLoading(false);
+        showResult('warning', 'Service Unavailable', 'We were unable to verify your order right now. Please try again later.');
+      }
+    }
+
+    form.addEventListener('submit', handleCheck);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "Order Status Checker",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "text",
+      "id": "endpoint_url",
+      "label": "Apps Script Web App URL",
+      "info": "Paste the deployed Google Apps Script Web App URL here."
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_demo_mode",
+      "label": "Enable Demo Mode",
+      "default": false,
+      "info": "Test locally with Order: 12345, Email: test@example.com"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Check Order Status"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "To check the status of your order, even if you are not a registered user, please enter your Order Number and Email Address below. If you have an account, you can log in to access your order history and check order status. Please note: Ship to Store orders take up to 8 business days (21 days for AK, HI and PR) to reach their destination."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button Label",
+      "default": "CHECK STATUS"
+    },
+    {
+      "type": "color",
+      "id": "button_bg_color",
+      "label": "Button Background Color",
+      "default": "#c25e1a"
+    },
+    {
+      "type": "color",
+      "id": "button_text_color",
+      "label": "Button Text Color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "Color scheme",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Top padding",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "Bottom padding",
+      "default": 36
+    }
+  ],
+  "presets": [
+    {
+      "name": "Order Status Checker"
+    }
+  ]
+}
+{% endschema %}
