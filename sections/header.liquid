@@ -338,6 +338,12 @@
 
     setHeaderHeight() {
       document.documentElement.style.setProperty('--header-height', `${this.header.offsetHeight}px`);
+      const announcementBar = document.querySelector('.announcement-bar-section');
+      if (announcementBar) {
+        document.documentElement.style.setProperty('--announcement-bar-height', `${announcementBar.offsetHeight}px`);
+      } else {
+        document.documentElement.style.setProperty('--announcement-bar-height', `0px`);
+      }
     }
 
     disconnectedCallback() {
