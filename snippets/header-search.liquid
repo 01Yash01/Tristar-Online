@@ -1,108 +1,481 @@
-{% comment %}
-  Renders a header search modal. Should be used with 'header.liquid'
+{%- doc -%}
+  Renders the inline header search bar. It is a plain search form without JavaScript;
+  when enhanced, it hands the query to the shared predictive search modal
+  (`snippets/search-modal.liquid`), anchored under the bar on desktop.
 
-  Accepts:
-  - input_id: {String} Id for the search input element (required)
+  @param {string} section_id - The header section ID, used for unique input IDs.
+  @param {string} [variant] - 'both' (default), 'desktop' or 'mobile' visibility.
+  @param {string} [style] - 'filled' (default) or 'outline'.
+  @param {boolean} [show_button] - Whether to show the submit button.
+  @param {string} [hints] - Comma-separated search terms rotated inside the bar.
+  @param {number} [corner_radius] - Corner radius in pixels.
 
-  Usage:
-  {% render 'header-search', input_id: 'My-Id'%}
-{% endcomment %}
+  @example
+  {% render 'header-search', section_id: section.id, style: 'filled', show_button: true, hints: 'iPhone 16, AirPods', corner_radius: 24 %}
+{%- enddoc -%}
 
-<details-modal class="header__search">
-  <details>
-    <summary
-      class="header__icon header__icon--search header__icon--summary link focus-inset modal__toggle"
-      aria-haspopup="dialog"
-      aria-label="{{ 'general.search.search' | t }}"
-    >
-      <span>
-        <span class="svg-wrapper">
-          {{- 'icon-search.svg' | inline_asset_content -}}
-        </span>
-        <span class="svg-wrapper header__icon-close">
-          {{- 'icon-close.svg' | inline_asset_content -}}
-        </span>
-      </span>
-    </summary>
+{%- liquid
+  assign variant = variant | default: 'both'
+  assign style = style | default: 'filled'
+  assign input_id = 'HeaderSearch-' | append: section_id | append: '-' | append: variant
+
+  assign hint_list = ''
+  if hints != blank
+    assign hint_list = hints | split: ','
+  endif
+
+  assign hint_terms = ''
+  for hint in hint_list
+    assign term = hint | strip
+    if term != blank
+      assign hint_terms = hint_terms | append: term | append: '||'
+    endif
+  endfor
+  assign hint_terms = hint_terms | split: '||' | compact
+
+  assign class = 'header-search header-search--' | append: style
+  if variant != 'both'
+    assign class = class | append: ' header-search--' | append: variant
+  endif
+-%}
+
+<script
+  src="{{ 'header-search.js' | asset_url }}"
+  type="module"
+></script>
+
+<header-search-component
+  class="{{ class }}"
+  style="--header-search-radius: {{ corner_radius | default: 24 }}px;"
+  {% if hint_terms.size > 1 %}
+    data-hints="{{ hint_terms | json | escape }}"
+  {% endif %}
+>
+  <form
+    action="{{ routes.search_url }}"
+    method="get"
+    role="search"
+    class="header-search__form"
+  >
     <div
-      class="search-modal modal__content gradient"
-      role="dialog"
-      aria-modal="true"
-      aria-label="{{ 'general.search.search' | t }}"
+      class="header-search__field"
+      ref="field"
     >
-      <div class="modal-overlay"></div>
-      <div
-        class="search-modal__content{% if settings.inputs_shadow_vertical_offset != 0 and settings.inputs_shadow_vertical_offset < 0 %} search-modal__content-top{% else %} search-modal__content-bottom{% endif %}"
-        tabindex="-1"
+      <label
+        for="{{ input_id }}"
+        class="visually-hidden"
       >
-        {%- if settings.predictive_search_enabled -%}
-          <predictive-search class="search-modal__form" data-loading-text="{{ 'accessibility.loading' | t }}">
-        {%- else -%}
-          <search-form class="search-modal__form">
-        {%- endif -%}
-        <form action="{{ routes.search_url }}" method="get" role="search" class="search search-modal__form">
-          <div class="field">
-            <input
-              class="search__input field__input"
-              id="{{ input_id }}"
-              type="search"
-              name="q"
-              value="{{ search.terms | escape }}"
-              placeholder="{{ 'general.search.search' | t }}"
-              {%- if settings.predictive_search_enabled -%}
-                role="combobox"
-                aria-expanded="false"
-                aria-owns="predictive-search-results"
-                aria-controls="predictive-search-results"
-                aria-haspopup="listbox"
-                aria-autocomplete="list"
-                autocorrect="off"
-                autocomplete="off"
-                autocapitalize="off"
-                spellcheck="false"
-              {%- endif -%}
-            >
-            <label class="field__label" for="{{ input_id }}">{{ 'general.search.search' | t }}</label>
-            <input type="hidden" name="options[prefix]" value="last">
-            <button
-              type="reset"
-              class="reset__button field__button{% if search.terms == blank %} hidden{% endif %}"
-              aria-label="{{ 'general.search.reset' | t }}"
-            >
-              <span class="svg-wrapper">
-                {{- 'icon-reset.svg' | inline_asset_content -}}
-              </span>
-            </button>
-            <button class="search__button field__button" aria-label="{{ 'general.search.search' | t }}">
-              <span class="svg-wrapper">
-                {{- 'icon-search.svg' | inline_asset_content -}}
-              </span>
-            </button>
-          </div>
+        {{- 'content.search_input_label' | t -}}
+      </label>
 
-          {%- if settings.predictive_search_enabled -%}
-            <div class="predictive-search predictive-search--header" tabindex="-1" data-predictive-search>
-              {%- render 'loading-spinner', class: 'predictive-search__loading-state' -%}
-            </div>
+      <span class="svg-wrapper header-search__icon">
+        {{- 'icon-search.svg' | inline_asset_content -}}
+      </span>
 
-            <span class="predictive-search-status visually-hidden" role="status" aria-hidden="true"></span>
-          {%- endif -%}
-        </form>
-        {%- if settings.predictive_search_enabled -%}
-          </predictive-search>
-        {%- else -%}
-          </search-form>
-        {%- endif -%}
-        <button
-          type="button"
-          class="search-modal__close-button modal__close-button link link--text focus-inset"
-          aria-label="{{ 'accessibility.close' | t }}"
+      <input
+        id="{{ input_id }}"
+        class="header-search__input"
+        type="search"
+        name="q"
+        value="{{ search.terms | escape }}"
+        placeholder="{{ 'content.search_bar_placeholder' | t }}"
+        autocomplete="off"
+        enterkeyhint="search"
+        aria-haspopup="dialog"
+        aria-controls="search-modal"
+        aria-keyshortcuts="/"
+        ref="input"
+        on:click="/open"
+        on:input="/handleInput"
+        on:keydown="/handleKeydown"
+      >
+      <input
+        name="options[prefix]"
+        type="hidden"
+        value="last"
+      >
+
+      {%- if hint_terms.size > 0 -%}
+        <span
+          class="header-search__hint"
+          aria-hidden="true"
         >
-          <span class="svg-wrapper">
-            {{- 'icon-close.svg' | inline_asset_content -}}
+          <span class="header-search__hint-prefix">{{ 'content.search_bar_hint_prefix' | t }}</span>
+          <span class="header-search__hint-window">
+            <q
+              class="header-search__hint-term"
+              ref="hintTerm"
+            >
+              {{- hint_terms.first | escape -}}
+            </q>
           </span>
+        </span>
+      {%- endif -%}
+
+      {% comment %}
+        <kbd
+          class="header-search__kbd"
+          aria-hidden="true"
+        >
+          /
+        </kbd>
+      {% endcomment %}
+
+      {%- if show_button -%}
+        <button
+          type="submit"
+          class="header-search__submit"
+        >
+          <span class="svg-wrapper header-search__submit-icon">
+            {{- 'icon-search.svg' | inline_asset_content -}}
+          </span>
+          <span class="header-search__submit-text">{{ 'content.search' | t }}</span>
         </button>
-      </div>
+      {%- endif -%}
     </div>
-  </details>
-</details-modal>
+  </form>
+</header-search-component>
+
+{% stylesheet %}
+  .header-search {
+    --header-search-height: 48px;
+    --header-search-inset: 6px;
+    --header-search-icon-inset: var(--padding-lg);
+    --header-search-max-width: 46rem;
+    --header-search-ring: rgb(var(--color-foreground-rgb) / var(--opacity-10));
+
+    display: block;
+    flex: 1 1 22rem;
+    width: 100%;
+    min-width: 0;
+    max-width: var(--header-search-max-width);
+    container-type: inline-size;
+
+    @media screen and (max-width: 749px) {
+      --header-search-height: 44px;
+
+      max-width: none;
+    }
+  }
+
+  .header__column--center .header-search {
+    margin-inline: auto;
+  }
+
+  .header-search__form {
+    margin: 0;
+  }
+
+  .header-search__field {
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: var(--header-search-height);
+    padding: var(--header-search-inset);
+    border: var(--style-border-width-inputs, 1px) solid transparent;
+    border-radius: var(--header-search-radius);
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-5));
+    color: var(--color-foreground);
+    transition: background-color var(--animation-speed) var(--animation-easing),
+      border-color var(--animation-speed) var(--animation-easing),
+      box-shadow var(--animation-speed) var(--animation-easing);
+  }
+
+  .header-search--outline .header-search__field {
+    border-color: rgb(var(--color-foreground-rgb) / var(--opacity-20));
+    background-color: var(--color-background);
+  }
+
+  @media (hover: hover) {
+    .header-search__field:hover {
+      border-color: rgb(var(--color-foreground-rgb) / var(--opacity-25));
+    }
+  }
+
+  .header-search__field:focus-within {
+    border-color: var(--color-foreground);
+    background-color: var(--color-background);
+    box-shadow: 0 0 0 4px var(--header-search-ring), 0 6px 20px rgb(var(--color-foreground-rgb) / var(--opacity-8));
+  }
+
+  .header-search__icon {
+    position: absolute;
+    inset-inline-start: var(--header-search-icon-inset);
+    display: flex;
+    width: var(--icon-size-md);
+    height: var(--icon-size-md);
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-60));
+    pointer-events: none;
+    transition: color var(--animation-speed) var(--animation-easing);
+  }
+
+  .header-search__field:focus-within .header-search__icon {
+    color: var(--color-foreground);
+  }
+
+  .header-search__icon svg,
+  .header-search__submit-icon svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  .header-search__input {
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 100%;
+    padding-block: 0;
+    padding-inline: calc(
+        var(--header-search-icon-inset) + var(--icon-size-md) + var(--padding-sm) - var(--header-search-inset)
+      )
+      var(--padding-sm);
+    border: 0;
+    border-radius: inherit;
+    outline: none;
+    background: transparent;
+    color: inherit;
+    font-family: var(--font-body--family);
+    font-size: var(--font-size--md);
+    text-overflow: ellipsis;
+    box-shadow: none;
+    -webkit-appearance: none;
+    appearance: none;
+
+    /* 16px minimum prevents iOS zooming the page on focus */
+    @media screen and (max-width: 749px) {
+      font-size: max(16px, var(--font-size--md));
+    }
+  }
+
+  .header-search__input:is(:focus, :focus-visible, :hover) {
+    outline: none;
+    box-shadow: none;
+    background: transparent;
+  }
+
+  .header-search__input::placeholder {
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-muted-text));
+    opacity: 1;
+  }
+
+  .header-search__input::-webkit-search-decoration,
+  .header-search__input::-webkit-search-cancel-button {
+    -webkit-appearance: none;
+    appearance: none;
+  }
+
+  /* Rotating hint replaces the placeholder while the field is empty */
+  .header-search__field:has(.header-search__hint) .header-search__input::placeholder {
+    color: transparent;
+  }
+
+  .header-search__hint {
+    position: absolute;
+    inset-inline: calc(var(--header-search-icon-inset) + var(--icon-size-md) + var(--padding-sm)) var(--padding-lg);
+    display: flex;
+    align-items: center;
+    gap: 0.35em;
+    min-width: 0;
+    overflow: hidden;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-muted-text));
+    font-size: var(--font-size--md);
+    white-space: nowrap;
+    pointer-events: none;
+    transition: opacity var(--animation-speed-fast) var(--animation-easing);
+  }
+
+  .header-search__field:has(.header-search__submit) .header-search__hint {
+    inset-inline-end: 8rem;
+  }
+
+  .header-search__input:not(:placeholder-shown) ~ .header-search__hint {
+    opacity: 0;
+  }
+
+  .header-search__hint-prefix {
+    flex-shrink: 0;
+  }
+
+  .header-search__hint-window {
+    display: block;
+    min-width: 0;
+    overflow: hidden;
+    padding-block: 0.15em;
+  }
+
+  .header-search__hint-term {
+    display: block;
+    overflow: hidden;
+    color: var(--color-foreground);
+    font-weight: 500;
+    text-overflow: ellipsis;
+  }
+
+  .header-search__kbd {
+    display: none;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.6rem;
+    height: 1.6rem;
+    margin-inline-end: var(--padding-sm);
+    border: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-20));
+    border-radius: 6px;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-60));
+    font-family: var(--font-body--family);
+    font-size: var(--font-size--xs);
+    line-height: 1;
+    transition: opacity var(--animation-speed-fast) var(--animation-easing);
+  }
+
+  @media (hover: hover) and (min-width: 990px) {
+    .header-search__kbd {
+      display: inline-flex;
+    }
+  }
+
+  .header-search__field:focus-within .header-search__kbd,
+  .header-search__input:not(:placeholder-shown) ~ .header-search__kbd {
+    opacity: 0;
+  }
+
+  .header-search__submit {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gap-xs);
+    height: 100%;
+    min-width: calc(var(--header-search-height) - var(--header-search-inset) * 2);
+    margin-inline-start: var(--padding-sm);
+    padding-inline: var(--padding-xl);
+    border: 0;
+    border-radius: max(0px, calc(var(--header-search-radius) - var(--header-search-inset)));
+    background-color: var(--color-primary-button-background);
+    color: var(--color-primary-button-text);
+    font-family: var(--font-body--family);
+    font-size: var(--font-size--sm);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    cursor: pointer;
+    transition: background-color var(--animation-speed) var(--animation-easing),
+      color var(--animation-speed) var(--animation-easing),
+      transform var(--animation-speed-fast) var(--animation-easing);
+  }
+
+  @media (hover: hover) {
+    .header-search__submit:hover {
+      background-color: var(--color-primary-button-hover-background);
+      color: var(--color-primary-button-hover-text);
+    }
+  }
+
+  .header-search__submit:active {
+    transform: scale(0.97);
+  }
+
+  .header-search__submit:focus-visible {
+    outline: var(--focus-outline-width, 2px) solid var(--color-primary-button-focus-outline, currentColor);
+    outline-offset: 2px;
+  }
+
+  .header-search__submit-icon {
+    display: flex;
+    width: var(--icon-size-md);
+    height: var(--icon-size-md);
+  }
+
+  /* Narrow bars keep only the icon in the button */
+  @container (max-width: 480px) {
+    .header-search__submit {
+      padding-inline: 0;
+    }
+
+    .header-search__submit-text {
+      display: none;
+    }
+
+    .header-search__field:has(.header-search__submit) .header-search__hint {
+      inset-inline-end: calc(var(--header-search-height) + var(--padding-xs));
+    }
+  }
+
+  /* The bar opens the predictive search modal, so the submit button is redundant on phones */
+  @media screen and (max-width: 749px) {
+    .header-search__submit {
+      display: none;
+    }
+
+    .header-search__field:has(.header-search__submit) .header-search__hint {
+      inset-inline-end: var(--padding-lg);
+    }
+  }
+
+  /* Anchored predictive search: the modal opens as a dropdown over the header bar */
+  @media screen and (min-width: 750px) {
+    .search-modal[data-anchored] .dialog-modal.search-modal__content {
+      --modal-max-height: min(70dvh, 40rem);
+
+      position: fixed;
+      inset: var(--search-anchor-top, 0px) auto auto var(--search-anchor-left, 0px);
+      width: var(--search-anchor-width, 66dvw);
+      max-width: calc(100vw - 2rem);
+      max-height: calc(100dvh - var(--search-anchor-top, 0px) - 1rem);
+      margin: 0;
+      border-radius: max(var(--header-search-radius, 0px), var(--style-border-radius-popover, 0px));
+      transform-origin: top center;
+    }
+
+    .search-modal[data-anchored] .dialog-modal.search-modal__content[open] {
+      animation: header-search-dropdown-in var(--animation-speed) var(--ease-out-cubic) forwards;
+    }
+
+    .search-modal[data-anchored] .dialog-modal.search-modal__content.dialog-closing {
+      animation: header-search-dropdown-out var(--animation-speed-fast) var(--animation-easing) forwards;
+    }
+
+    .search-modal[data-anchored] .dialog-modal.search-modal__content::backdrop {
+      background: rgb(var(--backdrop-color-rgb, 0 0 0) / 0.3);
+    }
+
+    .search-modal[data-anchored] .predictive-search-form__header {
+      min-height: var(--search-anchor-height, auto);
+    }
+  }
+
+  @keyframes header-search-dropdown-in {
+    from {
+      opacity: 0;
+      transform: translateY(-6px) scale(0.985);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes header-search-dropdown-out {
+    from {
+      opacity: 1;
+      transform: none;
+    }
+
+    to {
+      opacity: 0;
+      transform: translateY(-6px) scale(0.985);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .header-search__field,
+    .header-search__submit,
+    .header-search__hint {
+      transition: none;
+    }
+
+    .search-modal[data-anchored] .dialog-modal.search-modal__content[open],
+    .search-modal[data-anchored] .dialog-modal.search-modal__content.dialog-closing {
+      animation-duration: 1ms;
+    }
+  }
+{% endstylesheet %}
