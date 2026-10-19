@@ -1,0 +1,338 @@
+{%- doc -%}
+  Renders a modern arrow button with a smooth left-to-right wipe hover transition.
+  Supports circle (icon-only), pill, or rounded shape with optional label text and icon-none mode.
+  Inherits parent card hover effects on collection and product cards.
+
+  @param {object} [block] - The block object
+  @param {string} [link] - URL to navigate to
+  @param {string} [label] - Optional button text
+  @param {string} [class] - Optional extra CSS classes
+  @param {object} [closest] - The closest parent context (collection, product, etc.)
+
+  @example
+  {% render 'button-arrow', block: block %}
+{%- enddoc -%}
+
+{%- liquid
+  assign block_settings = block.settings
+
+  assign button_link = link | default: block_settings.link
+  if button_link == blank and closest.collection != blank
+    assign button_link = closest.collection.url
+  elsif button_link == blank and closest.product != blank
+    assign button_link = closest.product.url
+  endif
+
+  assign button_label = label | default: block_settings.label
+  assign button_shape = block_settings.shape | default: 'circle'
+  if button_label != blank and button_shape == 'circle'
+    assign button_shape = 'pill'
+  endif
+
+  assign button_size = block_settings.size | default: 'medium'
+  assign icon_type = block_settings.icon_type | default: 'chevron'
+
+  assign font = block_settings.font
+  assign font_size = block_settings.font_size
+  assign font_weight = block_settings.font_weight
+  assign text_case = block_settings.case
+  assign letter_spacing = block_settings.letter_spacing
+
+  assign aria_label = button_label
+  if aria_label == blank and closest.collection != blank
+    assign aria_label = closest.collection.title
+  elsif aria_label == blank and closest.product != blank
+    assign aria_label = closest.product.title
+  elsif aria_label == blank
+    assign aria_label = 'general.accessibility.link' | t | default: 'View'
+  endif
+-%}
+
+<a
+  {% if button_link == blank %}
+    role="link"
+    aria-disabled="true"
+  {% else %}
+    href="{{ button_link }}"
+  {% endif %}
+  class="
+    button-arrow
+    button-arrow--size-{{ button_size }}
+    button-arrow--shape-{{ button_shape }}
+    {% if button_label != blank %}button-arrow--has-label{% endif %}
+    {% if icon_type == 'none' %}button-arrow--no-icon{% endif %}
+    {% if class != blank %}{{ class }}{% endif %}
+  "
+  aria-label="{{ aria_label | escape }}"
+  {% if block_settings.open_in_new_tab %}
+    target="_blank"
+    rel="noopener noreferrer"
+  {% endif %}
+  style="
+    {% if block_settings.enable_custom_colors %}
+      {% if block_settings.background_color != blank and block_settings.background_color != 'rgba(0,0,0,0)' %}
+        --button-arrow-bg: {{ block_settings.background_color }};
+      {% endif %}
+      {% if block_settings.border_color != blank and block_settings.border_color != 'rgba(0,0,0,0)' %}
+        --button-arrow-border: {{ block_settings.border_color }};
+      {% endif %}
+      {% if block_settings.icon_color != blank %}
+        --button-arrow-color: {{ block_settings.icon_color }};
+      {% endif %}
+      {% if block_settings.hover_background_color != blank %}
+        --button-arrow-hover-bg: {{ block_settings.hover_background_color }};
+      {% endif %}
+      {% if block_settings.hover_icon_color != blank %}
+        --button-arrow-hover-color: {{ block_settings.hover_icon_color }};
+      {% endif %}
+      {% if block_settings.hover_border_color != blank %}
+        --button-arrow-hover-border: {{ block_settings.hover_border_color }};
+      {% endif %}
+    {% endif %}
+    {% if block_settings.width == 'custom' %}
+      width: {{ block_settings.custom_width }}%;
+    {% endif %}
+    {% if font != blank %}
+      font-family: {{ font }};
+    {% endif %}
+    {% if font_size != blank %}
+      font-size: {{ font_size }};
+    {% endif %}
+    {% if font_weight != blank %}
+      font-weight: {{ font_weight }};
+    {% endif %}
+    {% if text_case != blank and text_case != 'none' %}
+      text-transform: {{ text_case }};
+    {% endif %}
+    {% if letter_spacing != blank and letter_spacing != 'normal' %}
+      {% if letter_spacing == 'tight' %}
+        letter-spacing: -0.02em;
+      {% elsif letter_spacing == 'loose' %}
+        letter-spacing: 0.05em;
+      {% endif %}
+    {% endif %}
+  "
+  {{ block.shopify_attributes }}
+>
+  {%- if button_label != blank -%}
+    <span class="button-arrow__text">{{ button_label }}</span>
+  {%- endif -%}
+
+  {%- if icon_type != 'none' -%}
+    <span class="button-arrow__icon">
+      {%- case icon_type -%}
+        {%- when 'arrow' -%}
+          <svg class="button-arrow__svg" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M4 10h12m-4.5-4.5L16 10l-4.5 4.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        {%- when 'arrow_up_right' -%}
+          <svg class="button-arrow__svg" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M6 14L14 6m0 0H7.5m6.5 0v6.5" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        {%- else -%}
+          {%- comment -%} chevron {%- endcomment -%}
+          <svg class="button-arrow__svg" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M7.5 3.75L13.75 10L7.5 16.25" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+      {%- endcase -%}
+    </span>
+  {%- endif -%}
+</a>
+
+{% stylesheet %}
+  .button-arrow {
+    --button-arrow-bg: #ffffff;
+    --button-arrow-border: #e5e5e5;
+    --button-arrow-color: #000000;
+    --button-arrow-hover-bg: #000000;
+    --button-arrow-hover-color: #ffffff;
+    --button-arrow-hover-border: #000000;
+    --button-arrow-size: 38px;
+    --button-arrow-radius: 50%;
+
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    overflow: hidden;
+    box-sizing: border-box;
+    text-decoration: none;
+    cursor: pointer;
+    background-color: var(--button-arrow-bg);
+    color: var(--button-arrow-color);
+    border: none;
+    box-shadow: inset 0 0 0 1px var(--button-arrow-border);
+    border-radius: var(--button-arrow-radius);
+    transition: color 0.3s ease, box-shadow 0.3s ease;
+    min-width: var(--button-arrow-size);
+    height: var(--button-arrow-size);
+    padding: 0;
+    line-height: 1;
+    z-index: 1;
+    flex-shrink: 0;
+    vertical-align: middle;
+    transform: translateZ(0);
+    isolation: isolate;
+    -webkit-mask-image: -webkit-radial-gradient(white, black);
+  }
+
+  .button-arrow--has-label {
+    padding-inline: 16px;
+    width: auto;
+    min-width: auto;
+  }
+
+  .button-arrow--no-icon.button-arrow--has-label {
+    padding-inline: 18px;
+    gap: 0;
+  }
+
+  .button-arrow--size-small {
+    --button-arrow-size: 32px;
+    font-size: 0.8125rem;
+  }
+
+  .button-arrow--size-medium {
+    --button-arrow-size: 38px;
+    font-size: 0.875rem;
+  }
+
+  .button-arrow--size-large {
+    --button-arrow-size: 46px;
+    font-size: 1rem;
+  }
+
+  .button-arrow--shape-circle {
+    --button-arrow-radius: 50%;
+    width: var(--button-arrow-size);
+    height: var(--button-arrow-size);
+    padding: 0 !important;
+  }
+
+  .button-arrow--shape-pill {
+    --button-arrow-radius: 9999px;
+  }
+
+  .button-arrow--shape-rounded {
+    --button-arrow-radius: 8px;
+  }
+
+  /* Left-to-right wipe fill */
+  .button-arrow::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    inset-inline-start: -1px;
+    width: 0;
+    height: 100%;
+    background-color: var(--button-arrow-hover-bg);
+    transition: width 0.38s cubic-bezier(0.25, 1, 0.5, 1);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .button-arrow__text,
+  .button-arrow__icon {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: inherit;
+    transition: color 0.3s ease, stroke 0.3s ease;
+  }
+
+  .button-arrow__svg {
+    width: 14px;
+    height: 14px;
+    display: block;
+    stroke: currentColor;
+    transition: stroke 0.3s ease, transform 0.3s ease;
+  }
+
+  .button-arrow--size-small .button-arrow__svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .button-arrow--size-large .button-arrow__svg {
+    width: 16px;
+    height: 16px;
+  }
+
+  [dir="rtl"] .button-arrow__svg {
+    transform: scaleX(-1);
+  }
+
+  /* Direct Hover on Button */
+  .button-arrow:hover {
+    box-shadow: inset 0 0 0 1px var(--button-arrow-hover-border);
+    color: var(--button-arrow-hover-color);
+  }
+
+  .button-arrow:hover::before {
+    width: calc(100% + 2px);
+  }
+
+  .button-arrow:hover .button-arrow__icon,
+  .button-arrow:hover .button-arrow__text {
+    color: var(--button-arrow-hover-color);
+    stroke: var(--button-arrow-hover-color);
+  }
+
+  /* Card hover propagation: Collection card, Product card, Group block */
+  .collection-card:hover .button-arrow,
+  .product-card:hover .button-arrow,
+  .card:hover .button-arrow,
+  .btn-hover-wrapper:hover .button-arrow {
+    box-shadow: inset 0 0 0 1px var(--button-arrow-hover-border);
+    color: var(--button-arrow-hover-color);
+  }
+
+  .collection-card:hover .button-arrow::before,
+  .product-card:hover .button-arrow::before,
+  .card:hover .button-arrow::before,
+  .btn-hover-wrapper:hover .button-arrow::before {
+    width: calc(100% + 2px);
+  }
+
+  .collection-card:hover .button-arrow .button-arrow__icon,
+  .collection-card:hover .button-arrow .button-arrow__text,
+  .product-card:hover .button-arrow .button-arrow__icon,
+  .product-card:hover .button-arrow .button-arrow__text,
+  .card:hover .button-arrow .button-arrow__icon,
+  .card:hover .button-arrow .button-arrow__text,
+  .btn-hover-wrapper:hover .button-arrow .button-arrow__icon,
+  .btn-hover-wrapper:hover .button-arrow .button-arrow__text {
+    color: var(--button-arrow-hover-color);
+    stroke: var(--button-arrow-hover-color);
+  }
+
+  /* When collection card contains button-arrow, arrange title & button in horizontal row */
+  .collection-card__content:has(.button-arrow),
+  .collection-card__content--with-arrow {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding-inline: 14px;
+    padding-block-end: 14px;
+    gap: 8px;
+    box-sizing: border-box;
+  }
+
+  .collection-card__content:has(.button-arrow) .text-block,
+  .collection-card__content--with-arrow .text-block {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .collection-card__content:has(.button-arrow) .text-block p,
+  .collection-card__content--with-arrow .text-block p {
+    margin: 0;
+    font-weight: 600;
+  }
+{% endstylesheet %}

@@ -250,6 +250,7 @@
     "video_external": "Use a YouTube or Vimeo URL",
     "pills_usage": "Used for applied filters, discount codes, and search suggestions",
     "search_bar_hints": "Comma-separated terms shown as rotating hints, for example: iPhone 16, Gaming laptops, AirPods",
+    "search_bar_categories": "Lists your product types. Picking one searches only that type.",
     "media_type_info": "Features are populated from your menu links"
   },
   "names": {
@@ -272,6 +273,7 @@
     "blog_posts_carousel": "Blog posts: Carousel",
     "blog_posts_editorial": "Blog posts: Editorial",
     "button": "Button",
+    "button_arrow": "Arrow button",
     "buttons": "Buttons",
     "caption": "Caption",
     "card": "Card",
@@ -846,6 +848,7 @@
     // Primary color scheme option, not specialized variants
     "default": "Default",
     "default_logo": "Default logo",
+    "desktop_card_size": "Desktop card size",
     "desktop_height": "Desktop height",
     "desktop_pagination": "Desktop pagination",
     "direction": "Direction",
@@ -969,6 +972,8 @@
     "menu": "Menu",
     "minimum_height": "Minimum height",
     "mobile_card_size": "Mobile card size",
+    "mobile_card_style": "Mobile card style",
+    "mobile_show_image": "Show image on mobile",
     "mobile_columns": "Mobile columns",
     "mobile_height": "Mobile height",
     "mobile_logo_image": "Mobile logo",
@@ -1074,7 +1079,9 @@
     // Setting for search bar placement in header
     "search_position": "Position",
     "search_row": "Row",
+    "search_bar_background_color": "Search bar background",
     "search_bar_button": "Show search button",
+    "search_bar_categories": "Show category dropdown",
     "search_bar_hints": "Rotating search hints",
     "search_bar_style": "Search bar style",
     "search_style": "Search style",

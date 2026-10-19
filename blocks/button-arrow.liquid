@@ -1,0 +1,323 @@
+{% render 'button-arrow', block: block, closest: closest %}
+
+{% schema %}
+{
+  "name": "t:names.button_arrow",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "t:settings.label"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "t:settings.link"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_in_new_tab",
+      "label": "t:settings.open_new_tab",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "select",
+      "id": "icon_type",
+      "label": "t:settings.icon",
+      "options": [
+        {
+          "value": "chevron",
+          "label": "t:options.chevron"
+        },
+        {
+          "value": "arrow",
+          "label": "t:options.arrow"
+        },
+        {
+          "value": "arrow_up_right",
+          "label": "t:options.direction_top_end"
+        },
+        {
+          "value": "none",
+          "label": "t:options.none"
+        }
+      ],
+      "default": "chevron"
+    },
+    {
+      "type": "select",
+      "id": "shape",
+      "label": "t:settings.style",
+      "options": [
+        {
+          "value": "circle",
+          "label": "t:options.circle"
+        },
+        {
+          "value": "pill",
+          "label": "t:options.pill"
+        },
+        {
+          "value": "rounded",
+          "label": "t:options.rounded"
+        }
+      ],
+      "default": "circle"
+    },
+    {
+      "type": "select",
+      "id": "size",
+      "label": "t:settings.size",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:options.small"
+        },
+        {
+          "value": "medium",
+          "label": "t:options.medium"
+        },
+        {
+          "value": "large",
+          "label": "t:options.large"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "header",
+      "content": "t:content.fonts"
+    },
+    {
+      "type": "select",
+      "id": "font",
+      "label": "t:settings.font",
+      "options": [
+        {
+          "value": "",
+          "label": "t:options.default"
+        },
+        {
+          "value": "var(--font-body--family)",
+          "label": "t:options.body"
+        },
+        {
+          "value": "var(--font-subheading--family)",
+          "label": "t:options.subheading"
+        },
+        {
+          "value": "var(--font-heading--family)",
+          "label": "t:options.heading"
+        },
+        {
+          "value": "var(--font-accent--family)",
+          "label": "t:options.accent"
+        }
+      ],
+      "default": ""
+    },
+    {
+      "type": "select",
+      "id": "font_size",
+      "label": "t:settings.size",
+      "options": [
+        {
+          "value": "",
+          "label": "t:options.default"
+        },
+        {
+          "value": "0.625rem",
+          "label": "10px"
+        },
+        {
+          "value": "0.75rem",
+          "label": "12px"
+        },
+        {
+          "value": "0.875rem",
+          "label": "14px"
+        },
+        {
+          "value": "1rem",
+          "label": "16px"
+        },
+        {
+          "value": "1.125rem",
+          "label": "18px"
+        },
+        {
+          "value": "1.25rem",
+          "label": "20px"
+        },
+        {
+          "value": "1.5rem",
+          "label": "24px"
+        }
+      ],
+      "default": ""
+    },
+    {
+      "type": "select",
+      "id": "font_weight",
+      "label": "t:settings.font_weight",
+      "options": [
+        {
+          "value": "",
+          "label": "t:options.default"
+        },
+        {
+          "value": "400",
+          "label": "t:options.normal"
+        },
+        {
+          "value": "500",
+          "label": "t:options.medium"
+        },
+        {
+          "value": "600",
+          "label": "600"
+        },
+        {
+          "value": "700",
+          "label": "t:options.bold"
+        }
+      ],
+      "default": ""
+    },
+    {
+      "type": "select",
+      "id": "case",
+      "label": "t:settings.case",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.default"
+        },
+        {
+          "value": "uppercase",
+          "label": "t:options.uppercase"
+        },
+        {
+          "value": "capitalize",
+          "label": "t:options.capitalize"
+        }
+      ],
+      "default": "none"
+    },
+    {
+      "type": "select",
+      "id": "letter_spacing",
+      "label": "t:settings.letter_spacing",
+      "options": [
+        {
+          "value": "tight",
+          "label": "t:options.tight"
+        },
+        {
+          "value": "normal",
+          "label": "t:options.normal"
+        },
+        {
+          "value": "loose",
+          "label": "t:options.loose"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "header",
+      "content": "t:content.colors"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_custom_colors",
+      "label": "t:settings.colors",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background",
+      "default": "#ffffff",
+      "visible_if": "{{ block.settings.enable_custom_colors }}"
+    },
+    {
+      "type": "color",
+      "id": "border_color",
+      "label": "t:settings.border",
+      "default": "#e5e5e5",
+      "visible_if": "{{ block.settings.enable_custom_colors }}"
+    },
+    {
+      "type": "color",
+      "id": "icon_color",
+      "label": "t:settings.color",
+      "default": "#000000",
+      "visible_if": "{{ block.settings.enable_custom_colors }}"
+    },
+    {
+      "type": "color",
+      "id": "hover_background_color",
+      "label": "t:settings.hover_background",
+      "default": "#000000",
+      "visible_if": "{{ block.settings.enable_custom_colors }}"
+    },
+    {
+      "type": "color",
+      "id": "hover_icon_color",
+      "label": "t:settings.hover_text",
+      "default": "#ffffff",
+      "visible_if": "{{ block.settings.enable_custom_colors }}"
+    },
+    {
+      "type": "color",
+      "id": "hover_border_color",
+      "label": "t:settings.hover_borders",
+      "default": "#000000",
+      "visible_if": "{{ block.settings.enable_custom_colors }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "select",
+      "id": "width",
+      "label": "t:settings.width",
+      "options": [
+        {
+          "value": "fit-content",
+          "label": "t:options.fit"
+        },
+        {
+          "value": "custom",
+          "label": "t:options.custom"
+        }
+      ],
+      "default": "fit-content"
+    },
+    {
+      "type": "range",
+      "id": "custom_width",
+      "label": "t:settings.custom_width",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ block.settings.width == \"custom\" }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.button_arrow",
+      "category": "t:categories.basic"
+    }
+  ]
+}
+{% endschema %}
