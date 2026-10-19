@@ -85,6 +85,10 @@
       when 'grid', 'carousel'
         assign calculated_width = 100 | divided_by: section_settings.columns | append: 'vw'
         assign sizes = '(min-width: 750px) [calc-width], 100vw' | replace: '[calc-width]', calculated_width
+        # Mobile horizontal collection cards render a small thumbnail
+        if section_settings.mobile_card_style == 'horizontal' or section_settings.mobile_show_image == false
+          assign sizes = sizes | replace: ', 100vw', ', 40px'
+        endif
       when 'editorial', 'bento'
         assign loading = 'lazy'
         assign sizes = lazy_sizes

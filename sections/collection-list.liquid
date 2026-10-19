@@ -31,12 +31,16 @@
     section--{{ section.settings.section_width }}
     {% if section.settings.background_color != blank %}color-custom-{{ section.id }}{% endif %}
     section-resource-list
+    collection-list
+    collection-list--mobile-{{ section.settings.mobile_card_style | default: 'vertical' }}
+    {% if section.settings.mobile_show_image == false %}collection-list--mobile-hide-image{% endif %}
     spacing-style
     gap-style
   "
   style="
     {% render 'spacing-style', settings: section.settings %}
     {% render 'gap-style', value: section.settings.gap %}
+    --collection-list-desktop-scale: {{ section.settings.desktop_card_size | default: 100 | divided_by: 100.0 }};
   "
   data-testid="collection-list"
 >
@@ -79,6 +83,77 @@
   %}
 </div>
 
+{% stylesheet %}
+  /* Desktop card size: narrows the grid so every card scales down together */
+  @media screen and (min-width: 750px) {
+    .collection-list .resource-list--grid {
+      inline-size: calc(var(--collection-list-desktop-scale, 1) * 100%);
+      margin-inline: auto;
+    }
+  }
+
+  /* Mobile horizontal style: compact pills with a thumbnail beside the title */
+  @media screen and (max-width: 749px) {
+    .collection-list--mobile-horizontal .resource-list__carousel .resource-list__slide {
+      width: auto;
+    }
+
+    .collection-list--mobile-horizontal .collection-card {
+      height: auto;
+      aspect-ratio: auto;
+    }
+
+    .collection-list--mobile-horizontal .collection-card .collection-card__inner {
+      flex-direction: row;
+      align-items: center;
+      gap: 10px;
+      height: auto;
+      padding-block: 8px;
+      padding-inline: 8px 16px;
+    }
+
+    .collection-list--mobile-horizontal .collection-card .collection-card__image {
+      position: static;
+      flex: 0 0 40px;
+      inline-size: 40px;
+      block-size: 40px;
+      aspect-ratio: 1;
+      border-radius: 6px;
+    }
+
+    .collection-list--mobile-horizontal .collection-card .collection-card__content {
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-items: center;
+      inline-size: auto;
+      height: auto;
+      padding: 0;
+    }
+
+    .collection-list--mobile-horizontal .collection-card__content .button-arrow {
+      display: none;
+    }
+
+    .collection-list--mobile-horizontal .collection-card__content .text-block {
+      white-space: nowrap;
+    }
+
+    /* Mobile image hidden: text-only cards */
+    .collection-list--mobile-hide-image .collection-card .collection-card__image {
+      display: none;
+    }
+
+    .collection-list--mobile-hide-image .collection-card {
+      aspect-ratio: auto;
+    }
+
+    .collection-list--mobile-hide-image.collection-list--mobile-horizontal .collection-card .collection-card__inner {
+      padding-block: 12px;
+      padding-inline: 16px;
+    }
+  }
+{% endstylesheet %}
+
 {% schema %}
 {
   "name": "t:names.collection_list",
@@ -101,6 +176,9 @@
     },
     {
       "type": "button"
+    },
+    {
+      "type": "button-arrow"
     },
     {
       "type": "video"
@@ -202,6 +280,40 @@
       ],
       "default": "60cqw",
       "visible_if": "{{ section.settings.layout_type == 'carousel' or section.settings.carousel_on_mobile == true }}"
+    },
+    {
+      "type": "select",
+      "id": "mobile_card_style",
+      "label": "t:settings.mobile_card_style",
+      "options": [
+        {
+          "value": "vertical",
+          "label": "t:options.vertical"
+        },
+        {
+          "value": "horizontal",
+          "label": "t:options.horizontal"
+        }
+      ],
+      "default": "vertical",
+      "visible_if": "{{ section.settings.layout_type == 'grid' or section.settings.layout_type == 'carousel' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "mobile_show_image",
+      "label": "t:settings.mobile_show_image",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "desktop_card_size",
+      "label": "t:settings.desktop_card_size",
+      "min": 70,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100,
+      "visible_if": "{{ section.settings.layout_type == 'grid' }}"
     },
     {
       "type": "range",

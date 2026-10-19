@@ -109,7 +109,8 @@
 
   assign fetch_priority = 'auto'
 
-  if section.index == 1
+  # Index 2 keeps priority when a slim strip (e.g. collection pills) sits above the hero
+  if section.index <= 2
     assign fetch_priority = 'high'
   endif
 %}
