@@ -94,11 +94,11 @@
           "type": "button",
           "name": "t:names.button",
           "settings": {
-            "label": "Shop Wireless Earbuds >",
+            "label": "Shop Wireless Earbuds",
             "link": "shopify://collections/all",
             "open_in_new_tab": false,
-            "style_class": "button-custom",
-            "custom_button_background": "#FFFFFF",
+            "style_class": "button",
+            "custom_button_background": "#ffffff",
             "custom_button_text": "{{ settings.color_palette.foreground }}",
             "custom_button_border": "{{ settings.color_palette.background }}",
             "link_text_color": "",
@@ -133,7 +133,7 @@
         "vertical_alignment": "flex-end",
         "align_baseline": true,
         "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "flex-end",
+        "vertical_alignment_flex_direction_column": "center",
         "gap": 24,
         "section_width": "page-width",
         "section_height": "large",
@@ -141,12 +141,210 @@
         "background_color": "rgba(0,0,0,0)",
         "toggle_overlay": true,
         "overlay_color": "#12121266",
-        "overlay_style": "solid",
-        "gradient_direction": "to bottom",
+        "overlay_style": "gradient",
+        "gradient_direction": "to top",
         "blurred_reflection": false,
         "reflection_opacity": 75,
         "padding-block-start": 100,
         "padding-block-end": 72
+      }
+    },
+    "collection_list_7LMdDz": {
+      "type": "collection-list",
+      "blocks": {
+        "group_kKDNat": {
+          "type": "group",
+          "name": "t:names.header",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "background_media": "none",
+            "background_color": "",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "text_wejiLd": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "rte",
+                "font": "var(--font-body--family)",
+                "font_size": "",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "text_color": "",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 16,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_wejiLd"
+          ]
+        },
+        "static-collection-card": {
+          "type": "_collection-card",
+          "name": "t:names.collection_card",
+          "static": true,
+          "settings": {
+            "placement": "below_image",
+            "horizontal_alignment": "center",
+            "vertical_alignment": "flex-start",
+            "collection_card_gap": 0,
+            "background_color": "#ffffff",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "#ffffff",
+            "border_radius": 15
+          },
+          "blocks": {
+            "collection_title_qBQPgy": {
+              "type": "collection-title",
+              "name": "t:names.collection_title",
+              "settings": {
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "custom",
+                "font": "var(--font-accent--family)",
+                "font_size": "0.875rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "background": false,
+                "background_color": "#ffffff",
+                "text_color": "{{ settings.color_palette.foreground }}",
+                "corner_radius": 0,
+                "padding-block-start": 4,
+                "padding-block-end": 4,
+                "padding-inline-start": 4,
+                "padding-inline-end": 4
+              },
+              "blocks": {}
+            },
+            "button_arrow_k98Rt": {
+              "type": "button-arrow",
+              "name": "t:names.button_arrow",
+              "settings": {
+                "label": "",
+                "link": "",
+                "open_in_new_tab": false,
+                "icon_type": "chevron",
+                "shape": "circle",
+                "size": "medium",
+                "enable_custom_colors": false,
+                "background_color": "#ffffff",
+                "border_color": "#e5e5e5",
+                "icon_color": "#000000",
+                "hover_background_color": "#000000",
+                "hover_icon_color": "#ffffff",
+                "hover_border_color": "#000000",
+                "width": "fit-content",
+                "custom_width": 100
+              },
+              "blocks": {}
+            },
+            "collection-card-image": {
+              "type": "_collection-card-image",
+              "name": "t:names.collection_card_image",
+              "static": true,
+              "settings": {
+                "image_ratio": "square",
+                "toggle_overlay": false,
+                "overlay_color": "#00000026",
+                "overlay_style": "solid",
+                "gradient_direction": "to top",
+                "border": "none",
+                "border_width": 1,
+                "border_opacity": 100,
+                "border_color": "",
+                "border_radius": 0
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "collection_title_qBQPgy",
+            "button_arrow_k98Rt"
+          ]
+        }
+      },
+      "block_order": [
+        "group_kKDNat"
+      ],
+      "name": "t:names.collections_grid",
+      "settings": {
+        "collection_list": [
+          "samsung",
+          "canon",
+          "logitech",
+          "motorola",
+          "roborock-1",
+          "amazon",
+          "asus"
+        ],
+        "layout_type": "grid",
+        "carousel_on_mobile": true,
+        "columns": 7,
+        "mobile_columns": "2",
+        "mobile_card_size": "44cqw",
+        "mobile_card_style": "horizontal",
+        "mobile_show_image": false,
+        "desktop_card_size": 85,
+        "columns_gap": 12,
+        "bento_gap": 8,
+        "rows_gap": 0,
+        "max_collections": 4,
+        "icons_style": "none",
+        "icons_shape": "none",
+        "section_width": "page-width",
+        "gap": 12,
+        "background_color": "",
+        "padding-block-start": 12,
+        "padding-block-end": 12
       }
     },
     "product_list_fa6P9H": {
@@ -350,6 +548,7 @@
     }
   },
   "order": [
+    "collection_list_7LMdDz",
     "hero_jVaWmY",
     "product_list_fa6P9H"
   ]

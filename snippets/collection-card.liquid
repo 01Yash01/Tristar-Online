@@ -70,7 +70,7 @@
   </a>
   <div class="collection-card__inner">
     {{ card_image }}
-    <div class="collection-card__content layout-panel-flex--column">
+    <div class="collection-card__content {% if children contains 'button-arrow' %}collection-card__content--with-arrow{% else %}layout-panel-flex--column{% endif %}">
       {{ children }}
     </div>
   </div>
