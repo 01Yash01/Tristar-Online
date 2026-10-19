@@ -256,6 +256,8 @@
     "search_input_placeholder": "Search",
     "search_bar_hint_prefix": "Search for",
     "search_bar_placeholder": "Search products, brands and more",
+    "search_bar_category_label": "Search category",
+    "search_bar_category_all": "All",
     "search": "Search",
     "search_results": "Search results",
     "search_results_label": "Search results",

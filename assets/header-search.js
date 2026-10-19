@@ -14,11 +14,14 @@ const VIEWPORT_GUTTER = 16;
  * Without JavaScript the bar is a plain search form. When enhanced, it hands the
  * query to the shared predictive search modal (`#search-modal`), which opens as a
  * dropdown anchored over the bar on desktop and full screen on mobile.
+ * When a category (product type) is chosen, predictive search is skipped and the
+ * form submits a search scoped to that product type.
  *
  * @typedef {object} Refs
  * @property {HTMLElement} field - The visual field wrapper the dropdown anchors to.
  * @property {HTMLInputElement} input - The search input.
  * @property {HTMLElement} [hintTerm] - The rotating hint term.
+ * @property {HTMLSelectElement} [category] - The optional product type dropdown.
  *
  * @extends {Component<Refs>}
  */
@@ -73,6 +76,11 @@ class HeaderSearchComponent extends Component {
     return input instanceof HTMLInputElement ? input : null;
   }
 
+  /** @returns {string} The chosen product type, or an empty string for all. */
+  get #category() {
+    return this.refs.category?.value ?? '';
+  }
+
   get #isVisible() {
     return this.checkVisibility?.() ?? this.offsetParent !== null;
   }
@@ -118,10 +126,37 @@ class HeaderSearchComponent extends Component {
     if (!this.#isVisible || document.querySelector('dialog[open]')) return;
 
     event.preventDefault();
+    if (this.#category) {
+      this.refs.input.focus();
+      return;
+    }
     this.#openModal();
   };
 
+  /**
+   * Scopes the search to the chosen product type; with no category the native form submits.
+   * @param {SubmitEvent} event
+   */
+  handleSubmit(event) {
+    const category = this.#category;
+    if (!category || !(event.target instanceof HTMLFormElement)) return;
+
+    event.preventDefault();
+
+    const query = this.refs.input.value.trim();
+    const scope = `product_type:"${category.replaceAll('"', '\\"')}"`;
+    const url = new URL(event.target.action, window.location.origin);
+    url.searchParams.set('q', query ? `${scope} AND ${query}` : scope);
+    url.searchParams.set('type', 'product');
+    url.searchParams.set('options[prefix]', 'last');
+
+    window.location.assign(url.toString());
+  }
+
   #openModal() {
+    // Predictive search ignores categories, so a scoped search stays in the bar.
+    if (this.#category) return;
+
     const modal = this.#modal;
     const dialog = modal?.querySelector('dialog');
 
