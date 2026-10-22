@@ -6,7 +6,8 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
     "main": {
       "type": "product-information",
@@ -16,13 +17,13 @@
           "name": "t:names.disclosures",
           "settings": {
             "heading": "Disclosures",
-            "heading_preset": "h5",
+            "heading_preset": "h1",
             "open_by_default": false,
-            "icon": "caret",
+            "icon": "plus",
             "disclosure_heading_preset": "h6",
-            "text_color": "",
+            "text_color": "{{ settings.color_palette.color2 }}",
             "dividers": true,
-            "divider_color": "{{ settings.color_palette.color2 }}",
+            "divider_color": "{{ settings.color_palette.foreground }}",
             "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
@@ -38,19 +39,20 @@
             "media_columns": "two",
             "image_gap": 4,
             "large_first_image": false,
+            "icons_style": "arrow",
             "slideshow_controls_style": "counter",
-            "slideshow_mobile_controls_style": "dots",
+            "slideshow_mobile_controls_style": "thumbnails",
             "thumbnail_position": "right",
             "thumbnail_width": 44,
             "thumbnail_radius": 0,
             "aspect_ratio": "adapt",
             "constrain_to_viewport": true,
-            "media_fit": "contain",
-            "media_radius": 0,
+            "media_fit": "cover",
+            "media_radius": 16,
             "extend_media": false,
             "zoom": true,
             "video_loop": false,
-            "hide_variants": true,
+            "hide_variants": false,
             "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
@@ -116,6 +118,7 @@
                 "border_opacity": 100,
                 "border_color": "",
                 "border_radius": 0,
+                "link": "",
                 "open_in_new_tab": false,
                 "placeholder": "",
                 "padding-block-start": 0,
