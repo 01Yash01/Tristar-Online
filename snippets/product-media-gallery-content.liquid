@@ -24,6 +24,12 @@
     type="module"
   ></script>
 {%- endif -%}
+{%- if block_settings.hover_zoom -%}
+  <script
+    src="{{ 'media-hover-zoom.js' | asset_url }}"
+    type="module"
+  ></script>
+{%- endif -%}
 {%- liquid
   assign selected_product = closest.product
   assign selected_variant_media = selected_product.selected_or_first_available_variant.featured_media
@@ -370,6 +376,9 @@
     "
     style="{% render 'spacing-style', settings: block_settings %} --thumbnail-width: {{ block_settings.thumbnail_width }}px; --media-radius: {{ block_settings.media_radius }}px;{% if block_settings.icons_style contains 'large' %} --slideshow-icon-padding: 0px;{% endif %}--image-gap: {{ block_settings.image_gap }}px;{% unless block_settings.aspect_ratio == 'adapt' %} --gallery-aspect-ratio: {{ block_settings.aspect_ratio }};{% endunless %}"
     data-presentation="{{ media_presentation }}"
+    {% if block_settings.hover_zoom %}
+      data-hover-zoom
+    {% endif %}
     {{ block_shopify_attributes }}
   >
     {% capture slides %}
@@ -448,7 +457,7 @@
 
     {% if render_slideshow_arrows %}
       {% capture slideshow_arrows %}
-        {% render 'slideshow-arrows', class: 'mobile:hidden', icon_style: block_settings.icons_style %}
+        {% render 'slideshow-arrows', class: 'mobile:hidden', icon_style: block_settings.icons_style, icon_shape: 'circle' %}
       {% endcapture %}
     {% endif %}
 
@@ -593,7 +602,7 @@
                   <drag-zoom-wrapper class="product-media__drag-zoom-wrapper">
                     {%- render 'product-media',
                       media: media,
-                      sizes: '100vw',
+                      sizes: '(min-width: 750px) 70vw, 100vw',
                       loading: 'lazy',
                       is_main_product_media: forloop.first,
                       image_ref: 'image'
@@ -602,7 +611,7 @@
                 {% else %}
                   {%- render 'product-media',
                     media: media,
-                    sizes: '100vw',
+                    sizes: '(min-width: 750px) 70vw, 100vw',
                     loading: 'lazy',
                     is_main_product_media: forloop.first
                   -%}
@@ -1066,6 +1075,246 @@
   .media-gallery--carousel slideshow-arrows .slideshow-control {
     padding-inline: 0 var(--padding-md);
     opacity: 1;
+  }
+
+  /* Circular arrows sit inside the image edge and appear on hover where hovering exists.
+     The [dir] prefix outranks the RTL padding swap above, which does not apply to circles. */
+  [dir] .media-gallery--carousel slideshow-arrows .slideshow-control.slideshow-control--shape-circle {
+    width: 44px;
+    min-width: 44px;
+    height: 44px;
+    min-height: 44px;
+    margin-inline: var(--padding-md);
+    padding: 0;
+    box-shadow: 0 4px 16px rgb(0 0 0 / 0.12);
+  }
+
+  @media (hover: hover) {
+    .media-gallery--carousel slideshow-arrows .slideshow-control {
+      opacity: 0;
+      transition: opacity var(--animation-speed) var(--animation-easing);
+    }
+
+    .media-gallery--carousel slideshow-component:hover slideshow-arrows .slideshow-control,
+    .media-gallery--carousel slideshow-arrows .slideshow-control:focus-visible {
+      opacity: 1;
+    }
+  }
+
+  /* Thumbnails: the current image is full strength, the rest are softened until hovered */
+  .media-gallery--carousel .slideshow-controls__thumbnail {
+    opacity: 0.55;
+    transition: opacity var(--animation-speed) var(--animation-easing);
+  }
+
+  .media-gallery--carousel .slideshow-controls__thumbnail:is(:hover, :focus-visible, [aria-selected='true']) {
+    opacity: 1;
+  }
+
+  /* Magnify on hover: the image zooms inside its frame and follows the pointer (assets/media-hover-zoom.js) */
+  @media (hover: hover) and (pointer: fine) {
+    [data-hover-zoom] .product-media-container--image {
+      cursor: zoom-in;
+    }
+
+    [data-hover-zoom] .product-media-container--image .product-media {
+      overflow: hidden;
+      border-radius: inherit;
+    }
+
+    [data-hover-zoom] .product-media-container--image .product-media__image {
+      transform-origin: var(--zoom-x, 50%) var(--zoom-y, 50%);
+      transition: transform 0.4s var(--ease-out-cubic);
+    }
+
+    [data-hover-zoom] .product-media-container--image[data-zooming] .product-media__image {
+      transform: scale(2);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    [data-hover-zoom] .product-media-container--image .product-media__image {
+      transition: none;
+    }
+  }
+
+  /*
+   * Desktop zoom viewer: a centered window (about 70% of the screen) over the dimmed page,
+   * instead of a full-screen takeover. Images scroll inside the window, thumbnails sit on its
+   * left, and clicking the dimmed page closes it. Phones keep the full-screen viewer.
+   */
+  @media screen and (min-width: 750px) {
+    zoom-dialog .dialog-zoomed-gallery__dialog {
+      --zoom-window-padding: var(--padding-xl, 24px);
+
+      width: min(70vw, 1200px);
+      height: min(85dvh, 1000px);
+      max-width: calc(100vw - 32px);
+      max-height: calc(100dvh - 32px);
+      margin: auto;
+      overflow: hidden;
+      border-radius: 20px;
+      box-shadow: 0 30px 90px rgb(0 0 0 / 0.3);
+    }
+
+    zoom-dialog .dialog-zoomed-gallery__dialog[open] {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr);
+    }
+
+    zoom-dialog .dialog-zoomed-gallery__dialog::backdrop {
+      background: rgb(0 0 0 / 0.5);
+      -webkit-backdrop-filter: blur(4px);
+      backdrop-filter: blur(4px);
+    }
+
+    .dialog-zoomed-gallery__dialog .dialog-thumbnails-list-container {
+      position: static;
+      grid-column: 1;
+      grid-row: 1;
+      width: auto;
+      min-height: 0;
+      padding: 0;
+      border-inline-end: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-10));
+    }
+
+    .dialog-zoomed-gallery__dialog .dialog-thumbnails-list-container:not(:has(.dialog-thumbnails-list__thumbnail)) {
+      display: none;
+    }
+
+    .dialog-zoomed-gallery__dialog .dialog-thumbnails-list {
+      position: static;
+      max-height: 100%;
+      margin: 0;
+      padding: var(--zoom-window-padding) var(--padding-md);
+      animation: zoom-window-fade-in var(--animation-speed) var(--animation-easing) both;
+    }
+
+    /* The window has room for clear thumbnails, independent of the page gallery's thumbnail size */
+    .dialog-zoomed-gallery__dialog .dialog-thumbnails-list__thumbnail {
+      width: 64px;
+    }
+
+    .dialog-zoomed-gallery__dialog.dialog--closed .dialog-thumbnails-list {
+      animation: zoom-window-fade-out var(--animation-speed) var(--animation-easing) both;
+    }
+
+    .dialog-zoomed-gallery__dialog .dialog-zoomed-gallery {
+      grid-column: 2;
+      grid-row: 1;
+      height: 100%;
+      min-height: 0;
+      margin: 0;
+      padding: 0;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      scroll-snap-type: y mandatory;
+      scrollbar-width: thin;
+    }
+
+    /* One image per view: each fills the window, fits without cropping, and snaps into place */
+    .dialog-zoomed-gallery__dialog .dialog-zoomed-gallery > .product-media-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-sizing: border-box;
+      height: 100%;
+      padding: var(--zoom-window-padding);
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
+    .dialog-zoomed-gallery__dialog
+      .dialog-zoomed-gallery
+      :is(.product-media, .product-media__drag-zoom-wrapper) {
+      width: 100%;
+      height: 100%;
+      aspect-ratio: auto;
+    }
+
+    .dialog-zoomed-gallery__dialog .dialog-zoomed-gallery .product-media__image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .dialog-zoomed-gallery__dialog .dialog-zoomed-gallery__close-button {
+      position: absolute;
+      top: var(--padding-md);
+      inset-inline-end: var(--padding-md);
+      border-radius: 50%;
+      background-color: var(--color-background);
+      color: var(--color-foreground);
+      mix-blend-mode: normal;
+      box-shadow: 0 4px 16px rgb(0 0 0 / 0.12);
+    }
+  }
+
+  @media screen and (min-width: 750px) and (prefers-reduced-motion: no-preference) {
+    .dialog-zoomed-gallery__dialog .dialog-zoomed-gallery {
+      scroll-behavior: smooth;
+    }
+
+    /* The window and the dimmed page open and close together (assets/zoom-dialog.js) */
+    zoom-dialog .dialog-zoomed-gallery__dialog[open] {
+      animation: zoom-window-in 0.28s var(--ease-out-cubic) both;
+    }
+
+    zoom-dialog .dialog-zoomed-gallery__dialog[open]::backdrop {
+      animation: zoom-window-fade-in 0.2s var(--animation-easing) both;
+    }
+
+    zoom-dialog .dialog-zoomed-gallery__dialog.dialog--closed {
+      animation: zoom-window-out 0.18s var(--animation-easing) both;
+    }
+
+    zoom-dialog .dialog-zoomed-gallery__dialog.dialog--closed::backdrop {
+      animation: zoom-window-fade-out 0.18s var(--animation-easing) both;
+    }
+  }
+
+  @keyframes zoom-window-in {
+    from {
+      opacity: 0;
+      transform: scale(0.97);
+    }
+
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+
+  @keyframes zoom-window-out {
+    from {
+      opacity: 1;
+      transform: none;
+    }
+
+    to {
+      opacity: 0;
+      transform: scale(0.97);
+    }
+  }
+
+  @keyframes zoom-window-fade-in {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes zoom-window-fade-out {
+    from {
+      opacity: 1;
+    }
+
+    to {
+      opacity: 0;
+    }
   }
 
   /* The end-side padding reads as edge spacing only through the previous control's

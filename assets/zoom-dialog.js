@@ -7,6 +7,7 @@ import {
   debounce,
   preloadImage,
   isLowPowerDevice,
+  mediaQueryLarge,
 } from '@theme/utilities';
 import { scrollIntoView } from '@theme/scrolling';
 import { ZoomMediaSelectedEvent } from '@theme/events';
@@ -28,13 +29,34 @@ export class ZoomDialog extends Component {
 
   connectedCallback() {
     super.connectedCallback();
-    this.refs.dialog.addEventListener('scroll', this.handleScroll);
+    // Capture so scrolling inside the dialog's image list counts too (desktop windowed layout).
+    this.refs.dialog.addEventListener('scroll', this.handleScroll, { capture: true });
+    this.refs.dialog.addEventListener('click', this.#handleBackdropClick);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    this.refs.dialog.removeEventListener('scroll', this.handleScroll);
+    this.refs.dialog.removeEventListener('scroll', this.handleScroll, { capture: true });
+    this.refs.dialog.removeEventListener('click', this.#handleBackdropClick);
   }
+
+  /**
+   * Closes the windowed (desktop) dialog when the dimmed page around it is clicked.
+   * @param {MouseEvent} event
+   */
+  #handleBackdropClick = (event) => {
+    const { dialog } = this.refs;
+    if (event.target !== dialog) return;
+
+    const rect = dialog.getBoundingClientRect();
+    const isInside =
+      event.clientX >= rect.left &&
+      event.clientX <= rect.right &&
+      event.clientY >= rect.top &&
+      event.clientY <= rect.bottom;
+
+    if (!isInside) this.close();
+  };
 
   /**
    * Opens the zoom dialog.
@@ -56,6 +78,14 @@ export class ZoomDialog extends Component {
         target?.scrollIntoView({ behavior: 'instant' });
       }
     };
+
+    // Desktop shows a centered window that animates in as a whole (CSS), so the clicked image
+    // is not morphed into place ahead of the window background.
+    if (mediaQueryLarge.matches) {
+      open();
+      this.selectThumbnail(index, { behavior: 'instant' });
+      return;
+    }
 
     /** @type {HTMLElement | null} */
     const sourceImage = event.target instanceof Element ? event.target.closest('li,slideshow-slide') : null;
@@ -138,6 +168,17 @@ export class ZoomDialog extends Component {
    */
   async close() {
     const { dialog, media } = this.refs;
+
+    // Desktop window: play its exit animation, then close. Only the window's own animation is
+    // awaited; looping animations inside it (such as loading spinners) would never settle.
+    if (mediaQueryLarge.matches) {
+      if (dialog.classList.contains('dialog--closed')) return;
+      dialog.classList.add('dialog--closed');
+      await onAnimationEnd(dialog, undefined, { subtree: false });
+      this.closeDialog();
+      dialog.classList.remove('dialog--closed');
+      return;
+    }
 
     if (!supportsViewTransitions() || isLowPowerDevice()) return this.closeDialog();
 
