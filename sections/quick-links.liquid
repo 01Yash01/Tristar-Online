@@ -1,0 +1,545 @@
+{% comment %}
+  Section contract.
+  A row of pill links (round image or icon, label) for jumping to key collections or pages.
+  Pills are centered when they fit and scroll sideways when they do not; desktop adds arrows.
+  Without JavaScript the row is still a plain, scrollable list of links.
+  @example
+  <!-- Add section > Quick links, then pick a collection for each pill -->
+{% endcomment %}
+
+{% liquid
+  if section.settings.background_color != blank
+    render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
+  endif
+%}
+
+<script
+  src="{{ 'quick-links.js' | asset_url }}"
+  type="module"
+></script>
+
+<div
+  class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
+></div>
+<div
+  class="
+    section
+    section--{{ section.settings.section_width }}
+    {% if section.settings.background_color != blank %}color-custom-{{ section.id }}{% endif %}
+    spacing-style
+  "
+  style="{% render 'spacing-style', settings: section.settings %}"
+>
+  <quick-links
+    class="quick-links quick-links--{{ section.settings.style }} quick-links--align-{{ section.settings.alignment }} quick-links--hover-{{ section.settings.hover_effect | default: 'fill' }}"
+    style="
+      --quick-links-gap: {{ section.settings.gap }}px;
+      --quick-link-media-size: {{ section.settings.image_size }}px;
+      --quick-link-hover-background: {{ section.settings.hover_background_color | default: 'var(--color-foreground)' }};
+      --quick-link-hover-text: {{ section.settings.hover_text_color | default: 'var(--color-background)' }};
+    "
+    {% if settings.reveal_on_scroll %}
+      data-reveal
+    {% endif %}
+  >
+    <nav aria-label="{{ 'content.quick_links' | t }}">
+      <scroll-hint
+        class="quick-links__scroller"
+        ref="scroller"
+      >
+        <ul
+          class="quick-links__list"
+          role="list"
+        >
+          {% content_for 'blocks' %}
+        </ul>
+      </scroll-hint>
+    </nav>
+
+    {%- if section.settings.show_arrows -%}
+      <button
+        type="button"
+        class="quick-links__arrow quick-links__arrow--previous"
+        ref="previous"
+        on:click="/previous"
+        aria-label="{{ 'accessibility.slideshow_previous' | t }}"
+        disabled
+      >
+        <span
+          class="svg-wrapper"
+          aria-hidden="true"
+        >
+          {{- 'icon-arrow.svg' | inline_asset_content -}}
+        </span>
+      </button>
+      <button
+        type="button"
+        class="quick-links__arrow quick-links__arrow--next"
+        ref="next"
+        on:click="/next"
+        aria-label="{{ 'accessibility.slideshow_next' | t }}"
+        disabled
+      >
+        <span
+          class="svg-wrapper"
+          aria-hidden="true"
+        >
+          {{- 'icon-arrow.svg' | inline_asset_content -}}
+        </span>
+      </button>
+    {%- endif -%}
+  </quick-links>
+</div>
+
+{% stylesheet %}
+  .quick-links {
+    --quick-link-height: calc(var(--quick-link-media-size) + 16px);
+    --quick-link-border: rgb(var(--color-foreground-rgb) / var(--opacity-15));
+
+    display: block;
+    position: relative;
+    min-width: 0;
+  }
+
+  /* Block element until scroll-hint is defined, so the row lays out without JavaScript too */
+  .quick-links__scroller {
+    display: block;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scrollbar-width: none;
+
+    /* Room for focus rings, which the scroller would otherwise clip */
+    padding-block: 4px;
+  }
+
+  .quick-links__scroller::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* max-content + auto margins: centered while the pills fit, scrolling from the start once they don't */
+  .quick-links__list {
+    display: flex;
+    gap: var(--quick-links-gap);
+    width: max-content;
+    margin: 0;
+    padding: 0 4px;
+    list-style: none;
+  }
+
+  .quick-links--align-center .quick-links__list {
+    margin-inline: auto;
+  }
+
+  .quick-links__item {
+    flex: 0 0 auto;
+  }
+
+  .quick-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-height: var(--quick-link-height);
+    padding-block: 8px;
+
+    padding-inline: 8px 20px;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    border-radius: 999px;
+
+    /* An inset shadow draws the outline, so the hover fill reaches the pill's edge with no border
+       in between (a real border leaves light slivers where the rounded ends are anti-aliased). */
+    box-shadow: inset 0 0 0 1px var(--quick-link-border);
+    color: var(--color-foreground);
+    font-weight: 500;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: box-shadow var(--animation-speed) var(--animation-easing),
+      background-color var(--animation-speed) var(--animation-easing),
+      color 0.45s ease;
+  }
+
+  /* Hover fill: sweeps left to right behind the content, like the theme's arrow buttons.
+     A plain rectangle clipped by the pill keeps its edges exactly on the pill's curve. */
+  .quick-link::before {
+    content: '';
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    z-index: -1;
+    width: 0;
+    background-color: var(--quick-link-hover-background);
+    pointer-events: none;
+    transition: width 0.55s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+
+  /* With the hover arrow, its space is always reserved, so the end padding is smaller */
+  .quick-link:has(.quick-link__arrow) {
+    padding-inline-end: 8px;
+  }
+
+  .quick-link:not(:has(.quick-link__media)) {
+    padding-inline-start: 20px;
+  }
+
+  .quick-links--fill .quick-link {
+    box-shadow: none;
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-5));
+  }
+
+  .quick-link__media {
+    display: flex;
+    flex: 0 0 var(--quick-link-media-size);
+    align-items: center;
+    justify-content: center;
+    width: var(--quick-link-media-size);
+    height: var(--quick-link-media-size);
+    overflow: hidden;
+    border-radius: 50%;
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-5));
+  }
+
+  .quick-link__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s var(--ease-out-cubic);
+  }
+
+  .quick-link__icon {
+    width: 50%;
+    height: 50%;
+  }
+
+  /* Hover: border firms up, the image eases in, and an arrow slides in after the label.
+     The arrow's space is always reserved, so pills never change size and neighbours never shift. */
+  .quick-link__arrow {
+    display: flex;
+    flex: 0 0 14px;
+    width: 14px;
+    height: 14px;
+    margin-inline-start: -4px;
+    opacity: 0;
+    transform: translateX(-4px);
+    transition: opacity 0.3s ease, transform 0.4s var(--ease-out-cubic);
+  }
+
+  .quick-link__arrow svg {
+    width: 14px;
+    height: 14px;
+  }
+
+  [dir='rtl'] .quick-link__arrow {
+    transform: translateX(4px) scaleX(-1);
+  }
+
+  @media (hover: hover) {
+    .quick-link:hover {
+      box-shadow: inset 0 0 0 1px var(--color-foreground);
+    }
+
+    .quick-links--hover-fill .quick-link:hover {
+      box-shadow: inset 0 0 0 1px var(--quick-link-hover-background);
+      color: var(--quick-link-hover-text);
+    }
+
+    .quick-links--hover-fill .quick-link:hover::before {
+      width: 100%;
+    }
+
+    .quick-link:hover .quick-link__image {
+      transform: scale(1.1);
+    }
+
+    .quick-link:hover .quick-link__arrow {
+      opacity: 1;
+      transform: none;
+    }
+
+    [dir='rtl'] .quick-link:hover .quick-link__arrow {
+      transform: scaleX(-1);
+    }
+  }
+
+  .quick-link:focus-visible {
+    outline: var(--focus-outline-width, 2px) solid currentColor;
+    outline-offset: 2px;
+  }
+
+  /* The pill for the page being viewed */
+  .quick-link--active,
+  .quick-links--fill .quick-link--active {
+    box-shadow: none;
+    background-color: var(--quick-link-hover-background);
+    color: var(--quick-link-hover-text);
+  }
+
+  /* Desktop arrows appear only while the row overflows (set by assets/quick-links.js) */
+  .quick-links__arrow {
+    display: none;
+  }
+
+  @media screen and (min-width: 750px) {
+    .quick-links[data-overflowing] .quick-links__arrow {
+      position: absolute;
+      inset-block-start: 50%;
+      z-index: var(--layer-raised);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      padding: 0;
+      border: 1px solid var(--quick-link-border);
+      border-radius: 50%;
+      background-color: var(--color-background);
+      color: var(--color-foreground);
+      box-shadow: 0 4px 16px rgb(0 0 0 / 0.1);
+      cursor: pointer;
+      transform: translateY(-50%);
+      transition: opacity var(--animation-speed) var(--animation-easing);
+    }
+
+    /* Inside the row's faded edges, so they stay on screen for full-width sections too */
+    .quick-links__arrow--previous {
+      inset-inline-start: 4px;
+    }
+
+    .quick-links__arrow--next {
+      inset-inline-end: 4px;
+    }
+
+    .quick-links[data-overflowing] .quick-links__arrow:disabled {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .quick-links__arrow .svg-wrapper {
+      display: flex;
+      width: 16px;
+      height: 16px;
+    }
+
+    .quick-links__arrow--previous .svg-wrapper,
+    [dir='rtl'] .quick-links__arrow--next .svg-wrapper {
+      transform: scaleX(-1);
+    }
+
+    [dir='rtl'] .quick-links__arrow--previous .svg-wrapper {
+      transform: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .quick-link,
+    .quick-link::before,
+    .quick-link__image,
+    .quick-link__arrow {
+      transition: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.quick_links",
+  "class": "section-wrapper",
+  "blocks": [
+    {
+      "type": "_quick-link"
+    }
+  ],
+  "max_blocks": 24,
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "t:settings.alignment",
+      "info": "t:info.quick_links_alignment",
+      "options": [
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "start",
+          "label": "t:options.left"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "range",
+      "id": "gap",
+      "label": "t:settings.gap",
+      "min": 4,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrows",
+      "label": "t:settings.quick_links_show_arrows",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:settings.width",
+      "options": [
+        {
+          "value": "page-width",
+          "label": "t:options.page"
+        },
+        {
+          "value": "full-width",
+          "label": "t:options.full"
+        }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "header",
+      "content": "t:content.appearance"
+    },
+    {
+      "type": "select",
+      "id": "style",
+      "label": "t:settings.style",
+      "options": [
+        {
+          "value": "outline",
+          "label": "t:options.outline"
+        },
+        {
+          "value": "fill",
+          "label": "t:options.fill"
+        }
+      ],
+      "default": "outline"
+    },
+    {
+      "type": "select",
+      "id": "hover_effect",
+      "label": "t:settings.quick_links_hover_effect",
+      "options": [
+        {
+          "value": "fill",
+          "label": "t:options.quick_links_hover_fill"
+        },
+        {
+          "value": "border",
+          "label": "t:options.quick_links_hover_border"
+        }
+      ],
+      "default": "fill"
+    },
+    {
+      "type": "color",
+      "id": "hover_background_color",
+      "label": "t:settings.quick_links_hover_background",
+      "info": "t:info.quick_links_hover_colors",
+      "placeholder": "t:settings.default"
+    },
+    {
+      "type": "color",
+      "id": "hover_text_color",
+      "label": "t:settings.quick_links_hover_text",
+      "placeholder": "t:settings.default"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_arrow_icon",
+      "label": "t:settings.quick_links_show_arrow_icon",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "image_size",
+      "label": "t:settings.quick_links_image_size",
+      "options": [
+        {
+          "value": "32",
+          "label": "t:options.small"
+        },
+        {
+          "value": "40",
+          "label": "t:options.medium"
+        },
+        {
+          "value": "48",
+          "label": "t:options.large"
+        }
+      ],
+      "default": "48"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "placeholder": "t:settings.default"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.quick_links",
+      "category": "t:categories.collections",
+      "blocks": {
+        "link_1": {
+          "type": "_quick-link"
+        },
+        "link_2": {
+          "type": "_quick-link"
+        },
+        "link_3": {
+          "type": "_quick-link"
+        },
+        "link_4": {
+          "type": "_quick-link"
+        },
+        "link_5": {
+          "type": "_quick-link"
+        },
+        "link_6": {
+          "type": "_quick-link"
+        }
+      },
+      "block_order": ["link_1", "link_2", "link_3", "link_4", "link_5", "link_6"]
+    }
+  ]
+}
+{% endschema %}
