@@ -1,0 +1,165 @@
+{%- doc -%}
+  Enables scroll reveal animations for elements marked with `data-reveal`.
+  Rendered once from the layout <head>. Owns the reveal styles, so they load on every page.
+
+  Content is hidden only while `.reveal-ready` is on <html>. That class is added before
+  first paint and skipped in the theme editor, for reduced motion, and without
+  IntersectionObserver; a failsafe removes it if `assets/scroll-reveal.js` never runs.
+
+  @example
+  {%- render 'scroll-reveal' -%}
+{%- enddoc -%}
+
+{%- if settings.reveal_on_scroll and request.design_mode == false -%}
+  <script>
+    (() => {
+      const root = document.documentElement;
+      if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      root.classList.add('reveal-ready');
+      setTimeout(() => {
+        if (!('revealActive' in root.dataset)) root.classList.remove('reveal-ready');
+      }, 3000);
+    })();
+  </script>
+  <script
+    src="{{ 'scroll-reveal.js' | asset_url }}"
+    type="module"
+  ></script>
+{%- endif -%}
+
+{% stylesheet %}
+  :root {
+    --reveal-ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --reveal-duration: 0.9s;
+    --reveal-media-duration: 1.4s;
+    --reveal-stagger: 0.09s;
+    --reveal-offset: 18px;
+  }
+
+  /*
+   * Image block banners.
+   * The image only settles from a slight zoom (never transparent), so it paints immediately
+   * and the page's Largest Contentful Paint is unaffected. Text and buttons fade up in order.
+   * Animations use fill-mode `backwards` so each element returns to its own transform and
+   * transitions (for example button hover effects) once its reveal ends.
+   */
+  .reveal-ready [data-reveal]:not([data-revealed]) .image-block__image {
+    transform: scale(1.08);
+  }
+
+  .reveal-ready [data-reveal][data-revealed] .image-block__image {
+    animation: reveal-settle var(--reveal-media-duration) var(--reveal-ease) backwards;
+  }
+
+  .reveal-ready
+    [data-reveal]:not([data-revealed])
+    :is(.image-block__content > :not(.group-block), .image-block__content .group-block-content > *) {
+    opacity: 0;
+  }
+
+  .reveal-ready
+    [data-reveal][data-revealed]
+    :is(.image-block__content > :not(.group-block), .image-block__content .group-block-content > *) {
+    animation: reveal-fade-up var(--reveal-duration) var(--reveal-ease) backwards;
+    animation-delay: calc(0.15s + var(--reveal-stagger) * var(--reveal-index, 0));
+  }
+
+  /* Hero: the media stays untouched (it is usually the page's main image); only content reveals.
+     Marquee and jumbo text keep their own motion. */
+  .reveal-ready
+    [data-reveal]:not([data-revealed])
+    :is(.hero__content-wrapper > :not(.group-block), .hero__content-wrapper .group-block-content > *):not(marquee-component, jumbo-text) {
+    opacity: 0;
+  }
+
+  .reveal-ready
+    [data-reveal][data-revealed]
+    :is(.hero__content-wrapper > :not(.group-block), .hero__content-wrapper .group-block-content > *):not(marquee-component, jumbo-text) {
+    animation: reveal-fade-up var(--reveal-duration) var(--reveal-ease) backwards;
+    animation-delay: calc(0.15s + var(--reveal-stagger) * var(--reveal-index, 0));
+  }
+
+  [data-reveal] :is(.hero__content-wrapper) > :nth-child(2) {
+    --reveal-index: 1;
+  }
+
+  [data-reveal] :is(.hero__content-wrapper) > :nth-child(3) {
+    --reveal-index: 2;
+  }
+
+  [data-reveal] :is(.hero__content-wrapper) > :nth-child(n + 4) {
+    --reveal-index: 3;
+  }
+
+  [data-reveal] :is(.image-block__content, .group-block-content) > :nth-child(2) {
+    --reveal-index: 1;
+  }
+
+  [data-reveal] :is(.image-block__content, .group-block-content) > :nth-child(3) {
+    --reveal-index: 2;
+  }
+
+  [data-reveal] :is(.image-block__content, .group-block-content) > :nth-child(4) {
+    --reveal-index: 3;
+  }
+
+  [data-reveal] :is(.image-block__content, .group-block-content) > :nth-child(n + 5) {
+    --reveal-index: 4;
+  }
+
+  /* Quick links: pills fade up one after another */
+  .reveal-ready [data-reveal]:not([data-revealed]) .quick-links__item {
+    opacity: 0;
+  }
+
+  .reveal-ready [data-reveal][data-revealed] .quick-links__item {
+    animation: reveal-fade-up var(--reveal-duration) var(--reveal-ease) backwards;
+    animation-delay: calc(0.1s + 0.05s * var(--reveal-index, 0));
+  }
+
+  .quick-links__item:nth-child(2) {
+    --reveal-index: 1;
+  }
+
+  .quick-links__item:nth-child(3) {
+    --reveal-index: 2;
+  }
+
+  .quick-links__item:nth-child(4) {
+    --reveal-index: 3;
+  }
+
+  .quick-links__item:nth-child(5) {
+    --reveal-index: 4;
+  }
+
+  .quick-links__item:nth-child(6) {
+    --reveal-index: 5;
+  }
+
+  .quick-links__item:nth-child(n + 7) {
+    --reveal-index: 6;
+  }
+
+  @keyframes reveal-settle {
+    from {
+      transform: scale(1.08);
+    }
+
+    to {
+      transform: scale(1);
+    }
+  }
+
+  @keyframes reveal-fade-up {
+    from {
+      opacity: 0;
+      transform: translateY(var(--reveal-offset));
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+{% endstylesheet %}

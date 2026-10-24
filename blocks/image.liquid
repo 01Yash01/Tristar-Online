@@ -66,6 +66,9 @@
   <div
     class="{{ class }} image-block--has-content border-style"
     style="{{ style }} {% render 'border-override', settings: block_settings %}"
+    {% if settings.reveal_on_scroll %}
+      data-reveal
+    {% endif %}
     {{ block.shopify_attributes }}
   >
     <div class="image-block__media">
