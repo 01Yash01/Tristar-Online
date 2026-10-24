@@ -60,6 +60,23 @@
       assign ratio = product.featured_media.preview_image.aspect_ratio | default: '1'
   endcase
 
+  # Without the card carousel, the second image is a CSS cross-fade layer instead of a slideshow swap
+  assign hover_media = null
+  assign hover_class = ''
+  if settings.show_second_image_on_hover and product.media.size > 0
+    if product.media.size == 1
+      assign hover_class = ' card-gallery--hover-zoom'
+    elsif settings.product_card_carousel == false
+      assign hover_candidates = product.media | reject: 'src', product.featured_media
+      assign hover_media = hover_candidates.first
+      if hover_media.preview_image
+        assign hover_class = ' card-gallery--hover-media'
+      else
+        assign hover_media = null
+      endif
+    endif
+  endif
+
   if block_settings.image_ratio == 'adapt' and block_settings.constrain_to_viewport
     if block_settings.constrain_to_viewport != ''
       assign constrain_to_viewport = true
@@ -70,14 +87,14 @@
 
 <div
   ref="cardGallery"
-  class="card-gallery card-gallery-{{ block.id }} spacing-style border-style{% if has_badges %} card-gallery--badge-{{ badge_position }}{% endif %}"
+  class="card-gallery card-gallery-{{ block.id }} spacing-style border-style{% if has_badges %} card-gallery--badge-{{ badge_position }}{% endif %}{{ hover_class }}"
   style="
     {% render 'border-override', settings: block_settings %}
     {% render 'spacing-style', settings: block_settings %}
     --gallery-aspect-ratio: {{ ratio }};
   "
   data-product-id="{{ product.id }}"
-  {% if settings.show_second_image_on_hover and product.media.size > 1 %}
+  {% if settings.show_second_image_on_hover and product.media.size > 1 and hover_media == null %}
     on:pointerenter="/previewImage"
     on:pointerleave="/resetImage"
   {% endif %}
@@ -142,7 +159,7 @@
           assign max_visible_slide_count = 1
           if settings.product_card_carousel
             assign max_visible_slide_count = 5
-          elsif settings.show_second_image_on_hover
+          elsif settings.show_second_image_on_hover and hover_media == null
             assign max_visible_slide_count = 2
           endif
 
@@ -209,6 +226,29 @@
           show_arrows: show_arrows,
           attributes: slideshow_attributes
         %}
+
+        {%- if hover_media -%}
+          {%- liquid
+            # Decorative duplicate of a gallery image; only pointer devices display (and so fetch) it
+            assign hover_sizes = 'auto, ' | append: image_sizes
+          -%}
+          <div
+            class="card-gallery__hover-media"
+            style="--product-media-fit: {{ media_fit | default: 'cover' }};"
+            aria-hidden="true"
+          >
+            {{
+              hover_media.preview_image
+              | image_url: width: 1600
+              | image_tag:
+                widths: '240, 352, 640, 832, 1200, 1600',
+                sizes: hover_sizes,
+                loading: 'lazy',
+                alt: '',
+                class: 'card-gallery__hover-image'
+            }}
+          </div>
+        {%- endif -%}
       {%- endif -%}
     </a>
   {% elsif product != blank and product.media.size == 0 %}
@@ -249,6 +289,69 @@
     overflow: hidden;
     container-type: inline-size; /* Make card-gallery a container */
     container-name: card-gallery-container; /* Optional: name the container */
+  }
+
+  /* Second image on hover: cross-fades over the first image on pointer devices */
+  .card-gallery {
+    --card-gallery-hover-duration: 0.45s;
+    --card-gallery-hover-zoom-duration: 0.7s;
+  }
+
+  .card-gallery__hover-media {
+    position: absolute;
+    inset: 0;
+    z-index: var(--layer-flat);
+    display: none;
+    opacity: 0;
+    transform: scale(1.06);
+    pointer-events: none;
+    transition: opacity var(--card-gallery-hover-duration) var(--ease-out-cubic),
+      transform var(--card-gallery-hover-zoom-duration) var(--ease-out-cubic);
+  }
+
+  .card-gallery__hover-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: var(--product-media-fit, cover);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .card-gallery__hover-media {
+      display: block;
+    }
+
+    .card-gallery--hover-media slideshow-component {
+      transition: opacity var(--card-gallery-hover-duration) var(--ease-out-cubic);
+    }
+
+    .card-gallery--hover-media:hover .card-gallery__hover-media {
+      opacity: 1;
+      transform: none;
+    }
+
+    .card-gallery--hover-media:hover slideshow-component {
+      opacity: 0;
+    }
+
+    .card-gallery--hover-zoom .product-media-container img {
+      transition: transform var(--card-gallery-hover-zoom-duration) var(--ease-out-cubic);
+    }
+
+    .card-gallery--hover-zoom:hover .product-media-container img {
+      transform: scale(1.05);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .card-gallery__hover-media,
+    .card-gallery--hover-media:hover .card-gallery__hover-media {
+      transform: none;
+    }
+
+    .card-gallery--hover-zoom:hover .product-media-container img {
+      transform: none;
+    }
   }
 
   @container (max-width: 70px) {
