@@ -1,9 +1,26 @@
-
+{% comment %}
+  Section contract.
+  Article page: merchant-ordered blocks (category, title, details, image, content) in a centered
+  reading column, followed by tags and share links, previous/next posts, comments, and related posts.
+  @example
+  <!-- Rendered by templates/article.json for /blogs/<blog>/<article> -->
+{% endcomment %}
 
 {% liquid
   if section.settings.background_color != blank
     render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
   endif
+
+  case section.settings.content_width
+    when 'narrow'
+      assign article_width = '720px'
+    when 'wide'
+      assign article_width = '1100px'
+    else
+      assign article_width = '880px'
+  endcase
+
+  assign article_url = request.origin | append: article.url
 %}
 
 <div
@@ -11,22 +28,174 @@
 ></div>
 <div class="section{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}">
   <div
-    class="
-      spacing-style
-      layout-panel-flex
-      layout-panel-flex--column
-      section-content-wrapper
-      mobile-column
-    "
+    class="blog-article spacing-style"
     style="
-      {% render 'layout-panel-style', settings: section.settings %}
       {% render 'spacing-style', settings: section.settings %}
+      --blog-article-width: {{ article_width }};
+      --blog-card-corner-radius: {{ section.settings.corner_radius }}px;
     "
   >
-    {% content_for 'blocks' %}
+    <div
+      class="
+        blog-article__column
+        layout-panel-flex
+        layout-panel-flex--column
+        section-content-wrapper
+        mobile-column
+      "
+      style="{% render 'layout-panel-style', settings: section.settings %}"
+    >
+      {% content_for 'blocks' %}
+    </div>
+
+    {%- if section.settings.show_tags_share -%}
+      <div class="blog-article__column blog-article__footer">
+        {%- if article.tags.size > 0 -%}
+          <div class="blog-article__group">
+            <span class="blog-article__label">{{ 'blogs.article.tags_label' | t }}</span>
+            <ul
+              class="blog-article__list"
+              role="list"
+            >
+              {%- for tag in article.tags -%}
+                <li>
+                  <a
+                    href="{{ blog.url }}/tagged/{{ tag | handleize }}"
+                    class="blog-article__tag"
+                  >
+                    {{- tag | escape -}}
+                  </a>
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+
+        <div class="blog-article__group">
+          <span class="blog-article__label">{{ 'blogs.article.share_label' | t }}</span>
+          <ul
+            class="blog-article__list"
+            role="list"
+          >
+            <li>
+              <a
+                href="https://www.facebook.com/sharer/sharer.php?u={{ article_url | url_encode }}"
+                class="blog-article__share"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="{{ 'blogs.article.share_facebook' | t }}"
+              >
+                <svg
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  {%- render 'icon', icon: 'facebook' -%}
+                </svg>
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://x.com/intent/post?text={{ article.title | url_encode }}&url={{ article_url | url_encode }}"
+                class="blog-article__share"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="{{ 'blogs.article.share_x' | t }}"
+              >
+                <svg
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  {%- render 'icon', icon: 'x' -%}
+                </svg>
+              </a>
+            </li>
+            <li>
+              {%- liquid
+                if article.image
+                  assign pin_media = article.image | image_url: width: 1200 | prepend: 'https:'
+                endif
+              -%}
+              <a
+                href="https://pinterest.com/pin/create/button/?url={{ article_url | url_encode }}&description={{ article.title | url_encode }}{% if pin_media %}&media={{ pin_media | url_encode }}{% endif %}"
+                class="blog-article__share"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="{{ 'blogs.article.share_pinterest' | t }}"
+              >
+                <svg
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                  focusable="false"
+                >
+                  {%- render 'icon', icon: 'pinterest' -%}
+                </svg>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    {%- endif -%}
+
+    {%- liquid
+      assign show_navigation = false
+      if section.settings.show_navigation
+        if blog.previous_article or blog.next_article
+          assign show_navigation = true
+        endif
+      endif
+    -%}
+    {%- if show_navigation -%}
+      <nav
+        class="blog-article__column blog-article__nav"
+        aria-label="{{ 'blogs.article.post_navigation' | t }}"
+      >
+        {%- if blog.previous_article -%}
+          <a
+            href="{{ blog.previous_article.url }}"
+            class="blog-article__nav-link"
+            rel="prev"
+          >
+            <span class="blog-article__nav-label">
+              <span
+                class="svg-wrapper blog-article__nav-icon blog-article__nav-icon--prev"
+                aria-hidden="true"
+              >
+                {{- 'icon-arrow.svg' | inline_asset_content -}}
+              </span>
+              {{- 'blogs.article.previous_post' | t -}}
+            </span>
+            <span class="blog-article__nav-title">{{ blog.previous_article.title | escape }}</span>
+          </a>
+        {%- endif -%}
+
+        {%- if blog.next_article -%}
+          <a
+            href="{{ blog.next_article.url }}"
+            class="blog-article__nav-link blog-article__nav-link--next"
+            rel="next"
+          >
+            <span class="blog-article__nav-label">
+              {{- 'blogs.article.next_post' | t -}}
+              <span
+                class="svg-wrapper blog-article__nav-icon"
+                aria-hidden="true"
+              >
+                {{- 'icon-arrow.svg' | inline_asset_content -}}
+              </span>
+            </span>
+            <span class="blog-article__nav-title">{{ blog.next_article.title | escape }}</span>
+          </a>
+        {%- endif -%}
+      </nav>
+    {%- endif -%}
 
     {% if blog.comments_enabled? %}
-      <div class="blog-post-comments-container">
+      <div class="blog-article__column blog-post-comments-container">
         <h2 class="h3">{{- 'blogs.article.comments_heading' | t: count: article.comments_count -}}</h2>
 
         <div class="blog-post-comments">
@@ -53,6 +222,65 @@
         {% render 'blog-comment-form', article: article, section_id: section.id %}
       </div>
     {% endif %}
+
+    {%- if section.settings.show_related -%}
+      {% liquid
+        # Posts sharing the article's category come first, then the newest remaining posts
+        assign related_limit = 3
+        assign related_count = 0
+        assign related_ids = article.id | append: ','
+        assign category = article.tags.first
+
+        capture related_items
+          if category != blank
+            for related in blog.articles
+              if related_count >= related_limit
+                break
+              endif
+              assign related_key = related.id | append: ','
+              if related_ids contains related_key
+                continue
+              endif
+              unless related.tags contains category
+                continue
+              endunless
+              echo '<li>'
+              render 'blog-card', article: related, image_ratio: 'landscape', image_sizes: '(min-width: 990px) 33vw, (min-width: 750px) 50vw, 100vw'
+              echo '</li>'
+              assign related_ids = related_ids | append: related_key
+              assign related_count = related_count | plus: 1
+            endfor
+          endif
+
+          for related in blog.articles
+            if related_count >= related_limit
+              break
+            endif
+            assign related_key = related.id | append: ','
+            if related_ids contains related_key
+              continue
+            endif
+            echo '<li>'
+            render 'blog-card', article: related, image_ratio: 'landscape', image_sizes: '(min-width: 990px) 33vw, (min-width: 750px) 50vw, 100vw'
+            echo '</li>'
+            assign related_ids = related_ids | append: related_key
+            assign related_count = related_count | plus: 1
+          endfor
+        endcapture
+      %}
+
+      {%- if related_count > 0 -%}
+        <div class="blog-article__related">
+          <h2 class="blog-article__related-heading h3">{{ 'blogs.article.related_posts' | t }}</h2>
+          <ul
+            class="blog-article__related-grid"
+            role="list"
+          >
+            {{ related_items }}
+          </ul>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
   </div>
 </div>
 
@@ -61,10 +289,188 @@
 </script>
 
 {% stylesheet %}
-  .blog-post-comments-container {
+  .blog-article {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(32px, 4vw, 48px);
+  }
+
+  .blog-article__column {
     width: 100%;
+    max-width: var(--blog-article-width, 880px);
+    margin-inline: auto;
+  }
+
+  /* Tags and share */
+  .blog-article__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap-lg, 20px);
+    padding-block-start: clamp(24px, 3vw, 32px);
+    border-block-start: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-10));
+  }
+
+  .blog-article__group {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--gap-sm, 12px);
+  }
+
+  .blog-article__label {
+    font-size: var(--font-size--sm, 0.875rem);
+    font-weight: 600;
+  }
+
+  .blog-article__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap-xs, 8px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .blog-article__tag,
+  .blog-article__share {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-15));
+    color: var(--color-foreground);
+    text-decoration: none;
+    transition: border-color var(--animation-speed) var(--animation-easing),
+      background-color var(--animation-speed) var(--animation-easing),
+      color var(--animation-speed) var(--animation-easing);
+  }
+
+  .blog-article__tag {
+    min-height: 34px;
+    padding-inline: 14px;
+    border-radius: 999px;
+    font-size: var(--font-size--sm, 0.875rem);
+  }
+
+  .blog-article__share {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+
+  .blog-article__share svg {
+    width: 18px;
+    height: 18px;
+  }
+
+  .blog-article__tag:hover,
+  .blog-article__share:hover {
+    border-color: var(--color-foreground);
+    background-color: var(--color-foreground);
+    color: var(--color-background);
+  }
+
+  /* Previous and next posts */
+  .blog-article__nav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--gap-lg, 20px);
+    padding-block-start: clamp(24px, 3vw, 32px);
+    border-block-start: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-10));
+  }
+
+  .blog-article__nav-link {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-xs, 8px);
+    min-width: 0;
+    color: var(--color-foreground);
+    text-decoration: none;
+  }
+
+  .blog-article__nav-link--next {
+    grid-column: 2;
+    align-items: flex-end;
+    text-align: end;
+  }
+
+  .blog-article__nav-label {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gap-xs, 8px);
+    color: var(--color-foreground-muted);
+    font-size: var(--font-size--sm, 0.875rem);
+  }
+
+  .blog-article__nav-icon {
+    display: inline-flex;
+    width: 16px;
+    height: 16px;
+    transition: transform var(--animation-speed) var(--animation-easing);
+  }
+
+  .blog-article__nav-icon--prev,
+  [dir='rtl'] .blog-article__nav-icon:not(.blog-article__nav-icon--prev) {
+    transform: scaleX(-1);
+  }
+
+  [dir='rtl'] .blog-article__nav-icon--prev {
+    transform: none;
+  }
+
+  .blog-article__nav-title {
+    max-width: 100%;
+    overflow: hidden;
+    font-weight: 600;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .blog-article__nav-link:hover .blog-article__nav-title {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  @media screen and (max-width: 749px) {
+    .blog-article__nav-title {
+      display: none;
+    }
+  }
+
+  /* Related posts use the full page width */
+  .blog-article__related {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(24px, 3vw, 40px);
+    padding-block-start: clamp(32px, 5vw, 64px);
+  }
+
+  .blog-article__related-heading {
+    margin: 0;
+    text-align: center;
+  }
+
+  .blog-article__related-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(36px, 4vw, 56px) clamp(20px, 2.5vw, 36px);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    @media screen and (min-width: 750px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media screen and (min-width: 990px) {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  /* Comments */
+  .blog-post-comments-container {
     max-width: var(--normal-content-width);
-    margin: 0 auto;
   }
 
   .blog-post-comments {
@@ -93,10 +499,6 @@
     color: var(--color-foreground);
   }
 
-  .blog-post-comments-pagination .current {
-    color: var(--color-foreground);
-  }
-
   .blog-post-comments-pagination .current,
   .blog-post-comments-pagination a {
     display: block;
@@ -118,6 +520,9 @@
     },
     {
       "type": "@app"
+    },
+    {
+      "type": "_blog-post-category"
     },
     {
       "type": "_blog-post-title"
@@ -148,6 +553,26 @@
       "visible_if": "{{ section.settings.gap < 0 }}"
     },
     {
+      "type": "select",
+      "id": "content_width",
+      "label": "t:settings.content_width",
+      "options": [
+        {
+          "value": "narrow",
+          "label": "t:options.narrow"
+        },
+        {
+          "value": "normal",
+          "label": "t:options.normal"
+        },
+        {
+          "value": "wide",
+          "label": "t:options.wide"
+        }
+      ],
+      "default": "normal"
+    },
+    {
       "type": "range",
       "id": "gap",
       "label": "t:settings.gap",
@@ -156,6 +581,35 @@
       "step": 1,
       "unit": "px",
       "default": 12
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tags_share",
+      "label": "t:settings.blog_show_tags_share",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_navigation",
+      "label": "t:settings.blog_show_navigation",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_related",
+      "label": "t:settings.blog_show_related",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "corner_radius",
+      "label": "t:settings.corner_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 12,
+      "visible_if": "{{ section.settings.show_related }}"
     },
     {
       "type": "color",

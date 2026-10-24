@@ -11,6 +11,13 @@
     "section": {
       "type": "main-blog-post",
       "blocks": {
+        "blog-post-category": {
+          "type": "_blog-post-category",
+          "settings": {
+            "alignment": "center"
+          },
+          "blocks": {}
+        },
         "blog-post-title": {
           "type": "text",
           "name": "t:names.title",
@@ -40,7 +47,7 @@
           "name": "t:names.details",
           "settings": {
             "show_date": true,
-            "show_author": false,
+            "show_author": true,
             "alignment": "center",
             "show_alignment": true,
             "padding-block-start": 0,
@@ -61,9 +68,9 @@
             "border": "none",
             "border_width": 1,
             "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
+            "border_radius": 12,
+            "padding-block-start": 16,
+            "padding-block-end": 16,
             "padding-inline-start": 0,
             "padding-inline-end": 0
           },
@@ -76,6 +83,7 @@
         }
       },
       "block_order": [
+        "blog-post-category",
         "blog-post-title",
         "blog-post-details",
         "blog-post-image",
@@ -83,7 +91,12 @@
       ],
       "settings": {
         "content_direction": "column",
-        "gap": 32,
+        "content_width": "normal",
+        "gap": 16,
+        "show_tags_share": true,
+        "show_navigation": true,
+        "show_related": true,
+        "corner_radius": 12,
         "background_color": "{{ settings.color_palette.background }}",
         "padding-block-start": 40,
         "padding-block-end": 80

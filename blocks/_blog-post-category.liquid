@@ -1,0 +1,66 @@
+{%- doc -%}
+  Renders the article's category (its first tag) as a small uppercase link to the tagged blog page.
+  Renders nothing when the article has no tags.
+
+  @example
+  {% content_for 'block', type: '_blog-post-category', id: 'blog-post-category' %}
+{%- enddoc -%}
+
+{%- liquid
+  assign category = article.tags.first
+  case block.settings.alignment
+    when 'center'
+      assign align_self = 'center'
+    when 'right'
+      assign align_self = 'flex-end'
+    else
+      assign align_self = 'flex-start'
+  endcase
+-%}
+
+{%- if category != blank -%}
+  <a
+    href="{{ blog.url }}/tagged/{{ category | handleize }}"
+    class="blog-post-category"
+    style="--blog-post-category-align: {{ align_self }};"
+    {{ block.shopify_attributes }}
+  >
+    {{- category | escape -}}
+  </a>
+{%- endif -%}
+
+{% stylesheet %}
+  .blog-post-category {
+    align-self: var(--blog-post-category-align, flex-start);
+    color: var(--color-foreground-muted);
+    font-size: var(--font-size--xs, 0.75rem);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .blog-post-category:hover {
+    color: var(--color-foreground);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.blog_post_category",
+  "settings": [
+    {
+      "type": "text_alignment",
+      "id": "alignment",
+      "label": "t:settings.alignment",
+      "default": "center"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.blog_post_category",
+      "category": "t:categories.blog_post"
+    }
+  ]
+}
+{% endschema %}

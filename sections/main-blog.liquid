@@ -1,255 +1,371 @@
-
-
-<script
-  src="{{ 'blog-posts-list.js' | asset_url }}"
-  type="module"
-  fetchpriority="low"
-></script>
+{% comment %}
+  Section contract.
+  Blog listing: the latest post as a large featured card, a tag filter, then a paginated grid.
+  The featured card shows only on the first unfiltered page.
+  @example
+  <!-- Rendered by templates/blog.json for /blogs/<handle> and /blogs/<handle>/tagged/<tag> -->
+{% endcomment %}
 
 {% liquid
   if section.settings.background_color != blank
     render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
   endif
+
+  assign columns = section.settings.columns | default: 3
+  assign posts_per_page = section.settings.posts_per_page | default: 9
+
+  # Grid images: 1 column on phones, 2 on tablets, the chosen count on desktop
+  assign grid_vw = 100 | divided_by: columns
+  capture grid_sizes
+    echo '(min-width: 990px) ' | append: grid_vw | append: 'vw, (min-width: 750px) 50vw, 100vw'
+  endcapture
 %}
 
-<blog-posts-list section-id="{{ section.id }}">
-  <div
-    class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
-  ></div>
-  <div
-    class="
-      section
-      {% if section.settings.background_color != blank %}color-custom-{{ section.id }}{% endif %}
-      blog-posts
-      spacing-style
-      size-style
-    "
-    data-testid="blog-posts"
-    style="{% render 'spacing-style', settings: section.settings %}"
-  >
-    {% content_for 'blocks' %}
+<div
+  class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
+></div>
+<div
+  class="
+    section
+    {% if section.settings.background_color != blank %}color-custom-{{ section.id }}{% endif %}
+    blog-page
+    spacing-style
+  "
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+    --blog-columns: {{ columns }};
+    --blog-card-corner-radius: {{ section.settings.corner_radius }}px;
+  "
+  data-testid="blog-posts"
+>
+  {% paginate blog.articles by posts_per_page %}
+    {% liquid
+      assign show_featured = false
+      if section.settings.show_featured and paginate.current_page == 1 and current_tags == blank and blog.articles.size > 1
+        assign show_featured = true
+      endif
+    %}
 
-    <div
-      ref="grid"
-      class="blog-posts-container"
-    >
-      {% liquid
-        assign items_on_page = blog.articles.size
-        assign image_index = 0
+    <h1 class="visually-hidden">{{ blog.title | escape }}</h1>
 
-        # The first two images reach the initial mobile viewport; later images use native lazy-loading.
-        assign eager_image_count = 2
-
-        # These sizes mirror --narrow-page-width in theme-styles-variables.liquid,
-        # --page-margin in base.css, and --columns-gap plus the mobile breakpoint below.
-        # Desktop content uses a 40px page margin on each side, with 36px column gaps.
-        # Compact cards use three columns and two gaps, standard cards use two columns and one gap,
-        # and the hero image uses 70% of the full-width card after its image-content gap.
-        assign compact_image_sizes = '(min-width: 1520px) 456px, (min-width: 750px) calc(33.33vw - 51px), calc(100vw - 32px)'
-        assign standard_image_sizes = '(min-width: 1520px) 702px, (min-width: 750px) calc(50vw - 58px), calc(100vw - 32px)'
-        assign hero_image_sizes = '(min-width: 1520px) 983px, (min-width: 750px) calc(70vw - 81px), calc(100vw - 32px)'
-      %}
-      {% for article in blog.articles %}
-        {% liquid
-          # Defaults for compact layout
-          assign col_span = 2
-          assign scale = 0.6
-          assign is_horizontal = false
-
-          case items_on_page
-            when 1
-              # Single post: full width hero
-              assign col_span = 6
-              assign scale = 1
-              assign is_horizontal = true
-            when 2
-              # Two posts: both standard side by side
-              assign col_span = 3
-              assign scale = 0.8
-            when 3
-              # Three posts: hero + 2 standard
-              if forloop.index == 1
-                assign col_span = 6
-                assign scale = 1
-                assign is_horizontal = true
-              else
-                assign col_span = 3
-                assign scale = 0.8
-              endif
-            when 4
-              # Four posts: all standard in 2x2 grid
-              assign col_span = 3
-              assign scale = 0.8
-            when 5
-              # Five posts: hero + 4 standard
-              if forloop.index == 1
-                assign col_span = 6
-                assign scale = 1
-                assign is_horizontal = true
-              else
-                assign col_span = 3
-                assign scale = 0.8
-              endif
-            else
-              # 6+ posts: hero, 2 standard, rest compact
-              if forloop.index == 1
-                assign col_span = 6
-                assign scale = 1
-                assign is_horizontal = true
-              elsif forloop.index <= 3
-                assign col_span = 3
-                assign scale = 0.8
-              else
-                assign col_span = 2
-                assign scale = 0.6
-              endif
-          endcase
-
-          case col_span
-            when 2
-              assign image_sizes = compact_image_sizes
-            when 3
-              assign image_sizes = standard_image_sizes
-            when 6
-              assign image_sizes = hero_image_sizes
-            else
-              # Safe fallback for a future span; add a matching sizes value with any new layout.
-              assign image_sizes = '100vw'
-          endcase
-
-          assign image_loading = 'lazy'
-          assign image_fetch_priority = 'auto'
-          if article.image
-            assign image_index = image_index | plus: 1
-
-            if image_index <= eager_image_count
-              assign image_loading = 'eager'
-            endif
-
-            if image_index == 1
-              assign image_fetch_priority = 'high'
-            endif
-          endif
+    {%- if show_featured -%}
+      <div class="blog-page__featured">
+        {% render 'blog-card',
+          article: blog.articles.first,
+          variant: 'featured',
+          heading_tag: 'h2',
+          image_ratio: section.settings.image_ratio,
+          image_sizes: '(min-width: 750px) 60vw, 100vw',
+          image_loading: 'eager',
+          image_fetch_priority: 'high',
+          show_category: section.settings.show_category,
+          show_date: section.settings.show_date,
+          show_author: section.settings.show_author
         %}
-        {% # Keep the mobile breakpoint in the style block below in sync with the responsive image sizes above. %}
-        {% style %}
-          [data-blog-index="{{ section.id }}-{{ forloop.index }}"] {
-            --col-span: {{ col_span }};
-            --blog-post-card-scale: {{ scale }};
-          }
+      </div>
+    {%- endif -%}
 
-          @media screen and (max-width: 749px) {
-            [data-blog-index="{{ section.id }}-{{ forloop.index }}"] {
-              --col-span: 6;
-              --blog-post-card-scale: 0.5;
-            }
-          }
-        {% endstyle %}
-        <div
-          class="blog-post-item"
-          data-testid="blog-post-item"
-          data-blog-index="{{ section.id }}-{{ forloop.index }}"
+    <div class="blog-page__header">
+      <p
+        class="blog-page__title h2"
+        aria-hidden="true"
+      >
+        {{ blog.title | escape }}
+      </p>
+
+      {%- if section.settings.show_tags and blog.all_tags.size > 0 -%}
+        <nav
+          class="blog-page__tags"
+          aria-label="{{ 'blogs.article.filter_label' | t }}"
         >
-          {% content_for 'block',
-            id: 'static-blog-post-card',
-            type: '_blog-post-card',
-            article: article,
-            image_sizes: image_sizes,
-            image_loading: image_loading,
-            image_fetch_priority: image_fetch_priority,
-            is_horizontal: is_horizontal
-          %}
-        </div>
-      {% endfor %}
+          <ul
+            class="blog-page__tag-list"
+            role="list"
+          >
+            <li>
+              <a
+                href="{{ blog.url }}"
+                class="blog-page__tag{% if current_tags == blank %} blog-page__tag--active{% endif %}"
+                {% if current_tags == blank %}
+                  aria-current="page"
+                {% endif %}
+              >
+                {{- 'blogs.article.all_posts' | t -}}
+              </a>
+            </li>
+            {%- for tag in blog.all_tags -%}
+              {%- assign is_active = false -%}
+              {%- if current_tags contains tag -%}
+                {%- assign is_active = true -%}
+              {%- endif -%}
+              <li>
+                <a
+                  href="{{ blog.url }}/tagged/{{ tag | handleize }}"
+                  class="blog-page__tag{% if is_active %} blog-page__tag--active{% endif %}"
+                  {% if is_active %}
+                    aria-current="page"
+                  {% endif %}
+                >
+                  {{- tag | escape -}}
+                </a>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </nav>
+      {%- endif -%}
     </div>
-  </div>
-</blog-posts-list>
+
+    {%- if blog.articles.size > 0 -%}
+      <ul
+        class="blog-page__grid"
+        role="list"
+      >
+        {%- for article in blog.articles -%}
+          {%- if show_featured and forloop.first -%}
+            {%- continue -%}
+          {%- endif -%}
+          {% liquid
+            # Without a featured post, the first row is the top of the page and loads eagerly
+            assign image_loading = 'lazy'
+            assign image_fetch_priority = 'auto'
+            if show_featured == false and forloop.index <= columns
+              assign image_loading = 'eager'
+              if forloop.first
+                assign image_fetch_priority = 'high'
+              endif
+            endif
+          %}
+          <li class="blog-page__item">
+            {% render 'blog-card',
+              article: article,
+              heading_tag: 'h3',
+              image_ratio: section.settings.image_ratio,
+              image_sizes: grid_sizes,
+              image_loading: image_loading,
+              image_fetch_priority: image_fetch_priority,
+              show_category: section.settings.show_category,
+              show_date: section.settings.show_date,
+              show_author: section.settings.show_author,
+              show_excerpt: section.settings.show_excerpt
+            %}
+          </li>
+        {%- endfor -%}
+      </ul>
+
+      {% render 'pagination-controls', paginate: paginate %}
+    {%- else -%}
+      <p class="blog-page__empty">{{ 'blogs.article.no_posts' | t }}</p>
+    {%- endif -%}
+  {% endpaginate %}
+</div>
 
 {% stylesheet %}
-  /**
-   * Blog posts page layout
-   */
-  .blog-posts {
-    --page-content-width: var(--narrow-page-width);
-    --page-width: calc(var(--page-content-width) + (var(--page-margin) * 2));
-
-    /* Keep the responsive image sizes above in sync with this gap. */
-    --columns-gap: 36px;
-    --rows-gap: 36px;
+  .blog-page {
+    --blog-gap: clamp(20px, 2.5vw, 36px);
   }
 
-  .blog-posts-container {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 1rem;
-    width: 100%;
-    column-gap: var(--columns-gap);
-    row-gap: var(--rows-gap);
+  .blog-page__featured {
+    padding-block-end: clamp(32px, 5vw, 64px);
+    margin-block-end: clamp(32px, 5vw, 64px);
+    border-block-end: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-10));
   }
 
-  /**
-   * Blog post item grid positioning and scaling.
-   * Layout is calculated in Liquid based on total article count.
-   * Mobile overrides are applied per-item in inline styles for proper specificity.
-   */
-  .blog-post-item {
-    grid-column: span var(--col-span);
-    background-color: var(--color-background);
+  .blog-page__header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-lg, 20px);
+    margin-block-end: clamp(24px, 3vw, 40px);
   }
 
-  /**
-   * When there's no image, the blog post item has a border.
-   */
-  .blog-post-item {
-    border: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-20));
-    padding: 0 1rem 1rem;
+  .blog-page__title {
+    margin: 0;
   }
 
-  .blog-post-item:has(.blog-post-card__image-container) {
-    border: none;
+  .blog-page__tag-list {
+    display: flex;
+    gap: var(--gap-xs, 8px);
+    margin: 0;
     padding: 0;
+    list-style: none;
+
+    /* Phones scroll the tags sideways instead of wrapping into many rows */
+    @media screen and (max-width: 749px) {
+      margin-inline: calc(-1 * var(--page-margin, 16px));
+      padding-inline: var(--page-margin, 16px);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    @media screen and (min-width: 750px) {
+      flex-wrap: wrap;
+    }
+  }
+
+  .blog-page__tag-list::-webkit-scrollbar {
+    display: none;
+  }
+
+  .blog-page__tag {
+    display: inline-flex;
+    align-items: center;
+    min-height: 40px;
+    padding-inline: 18px;
+    border: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-15));
+    border-radius: 999px;
+    color: var(--color-foreground);
+    font-size: var(--font-size--sm, 0.875rem);
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color var(--animation-speed) var(--animation-easing),
+      border-color var(--animation-speed) var(--animation-easing),
+      color var(--animation-speed) var(--animation-easing);
+  }
+
+  .blog-page__tag:hover {
+    border-color: var(--color-foreground);
+  }
+
+  .blog-page__tag--active {
+    border-color: var(--color-foreground);
+    background-color: var(--color-foreground);
+    color: var(--color-background);
+  }
+
+  .blog-page__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(36px, 4vw, 56px) var(--blog-gap);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    @media screen and (min-width: 750px) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    @media screen and (min-width: 990px) {
+      grid-template-columns: repeat(var(--blog-columns), minmax(0, 1fr));
+    }
+  }
+
+  .blog-page .pagination {
+    margin-block-start: clamp(40px, 5vw, 64px);
+  }
+
+  .blog-page__empty {
+    color: var(--color-foreground-muted);
   }
 {% endstylesheet %}
 
 {% schema %}
 {
   "name": "t:names.blog_posts",
-  "blocks": [
-    {
-      "type": "@theme"
-    },
-    {
-      "type": "@app"
-    },
-    {
-      "type": "text"
-    },
-    {
-      "type": "icon"
-    },
-    {
-      "type": "image"
-    },
-    {
-      "type": "button"
-    },
-    {
-      "type": "video"
-    },
-    {
-      "type": "group"
-    },
-    {
-      "type": "spacer"
-    },
-    {
-      "type": "_divider"
-    }
-  ],
   "disabled_on": {
     "groups": ["header"]
   },
   "settings": [
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_featured",
+      "label": "t:settings.blog_show_featured",
+      "info": "t:info.blog_show_featured",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_tags",
+      "label": "t:settings.blog_show_tags",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "columns",
+      "label": "t:settings.columns",
+      "min": 2,
+      "max": 4,
+      "step": 1,
+      "default": 3
+    },
+    {
+      "type": "range",
+      "id": "posts_per_page",
+      "label": "t:settings.blog_posts_per_page",
+      "min": 4,
+      "max": 24,
+      "step": 1,
+      "default": 10
+    },
+    {
+      "type": "header",
+      "content": "t:content.cards_layout"
+    },
+    {
+      "type": "select",
+      "id": "image_ratio",
+      "label": "t:settings.aspect_ratio",
+      "options": [
+        {
+          "value": "landscape",
+          "label": "t:options.landscape"
+        },
+        {
+          "value": "square",
+          "label": "t:options.square"
+        },
+        {
+          "value": "portrait",
+          "label": "t:options.portrait"
+        },
+        {
+          "value": "adapt",
+          "label": "t:options.auto"
+        }
+      ],
+      "default": "landscape"
+    },
+    {
+      "type": "range",
+      "id": "corner_radius",
+      "label": "t:settings.corner_radius",
+      "min": 0,
+      "max": 32,
+      "step": 1,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "checkbox",
+      "id": "show_category",
+      "label": "t:settings.blog_show_category",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_date",
+      "label": "t:settings.show_date",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_author",
+      "label": "t:settings.show_author",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_excerpt",
+      "label": "t:settings.blog_show_excerpt",
+      "default": false
+    },
+    {
+      "type": "header",
+      "content": "t:content.section_layout"
+    },
     {
       "type": "color",
       "id": "background_color",

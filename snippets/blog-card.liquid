@@ -1,0 +1,268 @@
+{%- doc -%}
+  Renders a blog article card: image, category (first tag), title, date and author,
+  and optionally an excerpt and a read more button. Owns the card styles, so render it
+  from every consumer (blog page, featured post, related posts).
+
+  @param {object} article - The article to render
+  @param {string} [variant] - 'grid' (default) or 'featured' (large horizontal card)
+  @param {string} [heading_tag] - Title element, defaults to 'h3'
+  @param {string} [image_ratio] - 'landscape' (default), 'square', 'portrait' or 'adapt'
+  @param {string} [image_sizes] - Responsive sizes value for the image
+  @param {string} [image_loading] - 'lazy' (default) or 'eager'
+  @param {string} [image_fetch_priority] - 'auto' (default) or 'high'
+  @param {boolean} [show_category] - Show the first tag above the title, defaults to true
+  @param {boolean} [show_date] - Show the published date, defaults to true
+  @param {boolean} [show_author] - Show the author, defaults to true
+  @param {boolean} [show_excerpt] - Show a two-line excerpt (always shown on featured)
+
+  @example
+  {% render 'blog-card', article: article, variant: 'featured', heading_tag: 'h2', image_loading: 'eager', image_fetch_priority: 'high' %}
+{%- enddoc -%}
+
+{%- liquid
+  assign variant = variant | default: 'grid'
+  assign heading_tag = heading_tag | default: 'h3'
+  assign image_loading = image_loading | default: 'lazy'
+  assign image_fetch_priority = image_fetch_priority | default: 'auto'
+  assign image_sizes = image_sizes | default: '(min-width: 750px) 33vw, 100vw'
+
+  if show_category == false
+    assign show_category = false
+  else
+    assign show_category = true
+  endif
+  if show_date == false
+    assign show_date = false
+  else
+    assign show_date = true
+  endif
+  if show_author == false
+    assign show_author = false
+  else
+    assign show_author = true
+  endif
+
+  if variant == 'featured'
+    assign show_excerpt = true
+  endif
+
+  case image_ratio
+    when 'square'
+      assign ratio = '1'
+    when 'portrait'
+      assign ratio = '4 / 5'
+    when 'adapt'
+      assign ratio = article.image.aspect_ratio | default: 1.7778
+    else
+      assign ratio = '16 / 9'
+  endcase
+
+  if image_loading == 'lazy'
+    assign image_sizes = 'auto, ' | append: image_sizes
+  endif
+
+  assign category = article.tags.first
+  # The article URL minus its handle is the blog URL (keeps any locale prefix)
+  assign blog_url = article.url | split: article.handle | first
+  assign excerpt = article.excerpt_or_content | strip_html | strip | truncatewords: 40
+-%}
+
+<article
+  class="blog-card blog-card--{{ variant }}"
+  style="--blog-card-ratio: {{ ratio }};"
+>
+  <a
+    href="{{ article.url }}"
+    class="blog-card__media"
+    tabindex="-1"
+    aria-hidden="true"
+  >
+    {%- if article.image -%}
+      {{
+        article.image
+        | image_url: width: 2000
+        | image_tag:
+          widths: '400, 640, 832, 1000, 1500, 2000',
+          sizes: image_sizes,
+          loading: image_loading,
+          fetchpriority: image_fetch_priority,
+          alt: '',
+          class: 'blog-card__image'
+      }}
+    {%- else -%}
+      <span class="blog-card__image blog-card__image--empty"></span>
+    {%- endif -%}
+  </a>
+
+  <div class="blog-card__content">
+    {%- if show_category and category != blank -%}
+      <a
+        href="{{ blog_url }}tagged/{{ category | handleize }}"
+        class="blog-card__category"
+      >
+        {{- category | escape -}}
+      </a>
+    {%- endif -%}
+
+    <{{ heading_tag }} class="blog-card__title {% if variant == 'featured' %}h2{% else %}h4{% endif %}">
+      <a href="{{ article.url }}">{{ article.title | escape }}</a>
+    </{{ heading_tag }}>
+
+    {%- if show_date or show_author -%}
+      <p class="blog-card__meta">
+        {%- if show_date -%}
+          {{ article.published_at | time_tag: format: 'date' }}
+        {%- endif -%}
+        {%- if show_date and show_author and article.author != blank -%}
+          <span
+            class="blog-card__separator"
+            aria-hidden="true"
+          ></span>
+        {%- endif -%}
+        {%- if show_author and article.author != blank -%}
+          <span>{{ article.author | escape }}</span>
+        {%- endif -%}
+      </p>
+    {%- endif -%}
+
+    {%- if show_excerpt and excerpt != blank -%}
+      <p class="blog-card__excerpt">{{ excerpt }}</p>
+    {%- endif -%}
+
+    {%- if variant == 'featured' -%}
+      <a
+        href="{{ article.url }}"
+        class="button blog-card__button"
+      >
+        {{- 'blogs.article.read_more' | t -}}
+        <span class="visually-hidden">: {{ article.title | escape }}</span>
+      </a>
+    {%- endif -%}
+  </div>
+</article>
+
+{% stylesheet %}
+  .blog-card {
+    --blog-card-radius: var(--blog-card-corner-radius, 12px);
+    --blog-card-muted: var(--color-foreground-muted);
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-lg, 20px);
+    min-width: 0;
+  }
+
+  .blog-card__media {
+    display: block;
+    overflow: hidden;
+    aspect-ratio: var(--blog-card-ratio);
+    border-radius: var(--blog-card-radius);
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-5));
+  }
+
+  .blog-card__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .blog-card:hover .blog-card__image {
+      transform: scale(1.04);
+    }
+  }
+
+  .blog-card__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--gap-xs, 8px);
+    min-width: 0;
+  }
+
+  .blog-card__category {
+    color: var(--blog-card-muted);
+    font-size: var(--font-size--xs, 0.75rem);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-decoration: none;
+    text-transform: uppercase;
+  }
+
+  .blog-card__category:hover {
+    color: var(--color-foreground);
+  }
+
+  .blog-card__title {
+    margin: 0;
+    overflow-wrap: anywhere;
+    text-wrap: balance;
+  }
+
+  .blog-card__title a {
+    color: var(--color-foreground);
+    text-decoration: none;
+    background-image: linear-gradient(currentColor, currentColor);
+    background-position: 0 100%;
+    background-repeat: no-repeat;
+    background-size: 0 1px;
+    transition: background-size 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .blog-card__title a:hover,
+  .blog-card__title a:focus-visible {
+    background-size: 100% 1px;
+  }
+
+  .blog-card__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--gap-xs, 8px);
+    margin: 0;
+    color: var(--blog-card-muted);
+    font-size: var(--font-size--sm, 0.875rem);
+  }
+
+  .blog-card__separator {
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: currentColor;
+  }
+
+  .blog-card__excerpt {
+    display: -webkit-box;
+    margin: var(--margin-xs, 4px) 0 0;
+    overflow: hidden;
+    color: var(--blog-card-muted);
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+
+  /* Featured: large horizontal card at the top of the blog */
+  .blog-card--featured .blog-card__content {
+    gap: var(--gap-sm, 12px);
+  }
+
+  .blog-card--featured .blog-card__excerpt {
+    -webkit-line-clamp: 3;
+    line-clamp: 3;
+  }
+
+  .blog-card__button {
+    margin-block-start: var(--margin-lg, 16px);
+  }
+
+  @media screen and (min-width: 750px) {
+    .blog-card--featured {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      align-items: center;
+      gap: clamp(32px, 4vw, 64px);
+    }
+  }
+{% endstylesheet %}
