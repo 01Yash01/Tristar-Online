@@ -76,10 +76,10 @@
           {% if predictive_search.resources.collections.size > 0 %}
             {% assign resource_title = 'content.search_results_resource_collections' | t %}
 
-            {% render 'predictive-search-resource-carousel',
+            {% render 'predictive-search-collection-links',
               title: resource_title,
-              resource_type: 'collection',
-              resources: predictive_search.resources.collections
+              collections: predictive_search.resources.collections,
+              limit: 4
             %}
           {% endif %}
 

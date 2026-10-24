@@ -1,0 +1,52 @@
+{%- doc -%}
+  Renders a compact grid of collection links in predictive search: curated popular
+  collections before the shopper types, or matching collections in live results.
+  Items join the search keyboard navigation through `resultsItems[]`.
+  Styles live in `predictive-search-styles`.
+
+  @param {string} title - Heading shown above the links.
+  @param {collection[]} collections - Collections to link to.
+  @param {number} [limit] - Maximum number of collections to show. Defaults to 8.
+
+  @example
+  {% render 'predictive-search-collection-links', title: 'Popular categories', collections: settings.search_popular_collections, limit: 8 %}
+{%- enddoc -%}
+
+{%- assign limit = limit | default: 8 -%}
+
+<div class="predictive-search-collections">
+  <h4 class="predictive-search-results__title">{{ title }}</h4>
+  <ul class="predictive-search-results__list predictive-search-collections__list list-unstyled">
+    {%- for item in collections limit: limit -%}
+      {%- assign item_image = item.featured_image | default: item.products.first.featured_image -%}
+      <li
+        class="predictive-search-collections__item"
+        ref="resultsItems[]"
+      >
+        <a
+          href="{{ item.url }}"
+          class="predictive-search-collections__link"
+        >
+          <span class="predictive-search-collections__media">
+            {%- if item_image != blank -%}
+              {{
+                item_image
+                | image_url: width: 120
+                | image_tag:
+                  width: 48,
+                  height: 48,
+                  widths: '48, 96, 120',
+                  sizes: '48px',
+                  loading: 'lazy',
+                  alt: ''
+              }}
+            {%- else -%}
+              {{ 'collection-1' | placeholder_svg_tag }}
+            {%- endif -%}
+          </span>
+          <span class="predictive-search-collections__name">{{ item.title | escape }}</span>
+        </a>
+      </li>
+    {%- endfor -%}
+  </ul>
+</div>

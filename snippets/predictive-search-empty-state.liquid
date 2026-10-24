@@ -1,5 +1,6 @@
 {% doc %}
-  Renders the predictive search empty state
+  Renders the predictive search empty state: merchant-curated trending searches and
+  popular collections (theme settings), followed by the empty state products.
 
   @param {number} shadow_opacity - shadow opacity for the empty state container shadow
   @param {string} products_test_id - a playwright test id, used to differentiate empty state from 'real' search results
@@ -18,6 +19,50 @@
 >
   {% if load_empty_state %}
     <div class="predictive-search-results__inner">
+      {%- liquid
+        assign trending_list = settings.search_trending_terms | split: ','
+        assign trending_terms = ''
+        for term in trending_list
+          assign stripped = term | strip
+          if stripped != blank
+            assign trending_terms = trending_terms | append: stripped | append: '||'
+          endif
+        endfor
+        assign trending_terms = trending_terms | split: '||' | compact
+      -%}
+
+      {%- if trending_terms.size > 0 -%}
+        <div class="predictive-search-trending">
+          <h4 class="predictive-search-results__title predictive-search-trending__title">
+            {{- 'content.search_trending' | t -}}
+          </h4>
+          <ul class="predictive-search-results__wrapper predictive-search-results__wrapper-queries list-unstyled">
+            {%- for term in trending_terms -%}
+              <li
+                class="predictive-search-results__card--query"
+                ref="resultsItems[]"
+              >
+                <a
+                  class="pills__pill predictive-search-results__pill"
+                  href="{{ routes.search_url }}?q={{ term | url_encode }}&amp;options%5Bprefix%5D=last"
+                >
+                  {{- term | escape -}}
+                </a>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+
+      {%- if settings.search_popular_collections != blank -%}
+        {%- assign popular_title = 'content.search_popular_collections' | t -%}
+        {% render 'predictive-search-collection-links',
+          title: popular_title,
+          collections: settings.search_popular_collections,
+          limit: 8
+        %}
+      {%- endif -%}
+
       {% liquid
         assign collection = settings.empty_state_collection | default: collections.all
         assign default_title = 'content.search_results_resource_products' | t

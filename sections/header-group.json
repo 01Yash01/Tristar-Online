@@ -109,7 +109,6 @@
         "search_bar_corner_radius": 24,
         "search_bar_button": true,
         "search_bar_hints": "iPhone 17 Pro, Samsung Galaxy S26, AirPods Pro,  Gaming Consoles, Smart watches",
-        "search_bar_categories": true,
         "search_bar_background_color": "#ffffff",
         "show_country": true,
         "country_selector_style": true,

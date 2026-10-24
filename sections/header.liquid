@@ -145,7 +145,7 @@
       if section.settings.search_row == 'bottom'
         assign search_bar_variant = 'desktop'
       endif
-      render 'header-search', section_id: section.id, variant: search_bar_variant, style: section.settings.search_bar_style, show_button: section.settings.search_bar_button, hints: section.settings.search_bar_hints, corner_radius: section.settings.search_bar_corner_radius, background_color: section.settings.search_bar_background_color, show_categories: section.settings.search_bar_categories
+      render 'header-search', section_id: section.id, variant: search_bar_variant, style: section.settings.search_bar_style, show_button: section.settings.search_bar_button, hints: section.settings.search_bar_hints, corner_radius: section.settings.search_bar_corner_radius, background_color: section.settings.search_bar_background_color
     else
       render 'search', style: search_style, class: search_class, display_style: section.settings.actions_display_style
     endif
@@ -162,7 +162,7 @@
   if search_bar
     if section.settings.search_row == 'bottom'
       capture drawer_search
-        render 'header-search', section_id: section.id, variant: 'mobile', style: section.settings.search_bar_style, show_button: section.settings.search_bar_button, hints: section.settings.search_bar_hints, corner_radius: section.settings.search_bar_corner_radius, background_color: section.settings.search_bar_background_color, show_categories: section.settings.search_bar_categories
+        render 'header-search', section_id: section.id, variant: 'mobile', style: section.settings.search_bar_style, show_button: section.settings.search_bar_button, hints: section.settings.search_bar_hints, corner_radius: section.settings.search_bar_corner_radius, background_color: section.settings.search_bar_background_color
       endcapture
     endif
   elsif section.settings.search_row == 'bottom' or search_style != 'none' and skip_drawer_search == false
@@ -1523,14 +1523,6 @@
       "id": "search_bar_hints",
       "label": "t:settings.search_bar_hints",
       "info": "t:info.search_bar_hints",
-      "visible_if": "{{ section.settings.show_search and section.settings.search_style == 'bar' }}"
-    },
-    {
-      "type": "checkbox",
-      "id": "search_bar_categories",
-      "label": "t:settings.search_bar_categories",
-      "info": "t:info.search_bar_categories",
-      "default": false,
       "visible_if": "{{ section.settings.show_search and section.settings.search_style == 'bar' }}"
     },
     {

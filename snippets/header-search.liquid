@@ -10,10 +10,9 @@
   @param {string} [hints] - Comma-separated search terms rotated inside the bar.
   @param {number} [corner_radius] - Corner radius in pixels.
   @param {color} [background_color] - Field background; blank keeps the style default.
-  @param {boolean} [show_categories] - Whether to show the product type dropdown.
 
   @example
-  {% render 'header-search', section_id: section.id, style: 'filled', show_button: true, hints: 'iPhone 16, AirPods', corner_radius: 24, background_color: '#ffffff', show_categories: true %}
+  {% render 'header-search', section_id: section.id, style: 'filled', show_button: true, hints: 'iPhone 16, AirPods', corner_radius: 24, background_color: '#ffffff' %}
 {%- enddoc -%}
 
 {%- liquid
@@ -39,17 +38,6 @@
   if variant != 'both'
     assign class = class | append: ' header-search--' | append: variant
   endif
-
-  # Categories are product types; the dropdown only makes sense with at least one
-  assign product_types = shop.types | compact
-  assign show_categories = show_categories | default: false
-  if product_types.size == 0
-    assign show_categories = false
-  endif
-  if show_categories
-    assign class = class | append: ' header-search--has-category'
-  endif
-  assign category_id = 'HeaderSearchCategory-' | append: section_id | append: '-' | append: variant
 -%}
 
 <script
@@ -69,36 +57,11 @@
     method="get"
     role="search"
     class="header-search__form"
-    on:submit="/handleSubmit"
   >
     <div
       class="header-search__field"
       ref="field"
     >
-      {%- if show_categories -%}
-        <span class="header-search__category">
-          <label
-            for="{{ category_id }}"
-            class="visually-hidden"
-          >
-            {{- 'content.search_bar_category_label' | t -}}
-          </label>
-          <select
-            id="{{ category_id }}"
-            class="header-search__category-select"
-            ref="category"
-          >
-            <option value="">{{ 'content.search_bar_category_all' | t }}</option>
-            {%- for type in product_types -%}
-              <option value="{{ type | escape }}">{{ type | escape }}</option>
-            {%- endfor -%}
-          </select>
-          <span class="svg-wrapper header-search__category-caret">
-            {{- 'icon-caret.svg' | inline_asset_content -}}
-          </span>
-        </span>
-      {%- endif -%}
-
       <label
         for="{{ input_id }}"
         class="visually-hidden"
@@ -182,7 +145,6 @@
     --header-search-max-width: 46rem;
     --header-search-ring: rgb(var(--color-foreground-rgb) / var(--opacity-10));
     --header-search-background: rgb(var(--color-foreground-rgb) / var(--opacity-5));
-    --header-search-category-width: 9.5rem;
     --header-search-text-start: calc(var(--header-search-icon-inset) + var(--icon-size-md) + var(--padding-sm));
     --header-search-text-end: var(--padding-sm);
 
@@ -195,19 +157,11 @@
 
     @media screen and (max-width: 749px) {
       --header-search-height: 46px;
-      --header-search-category-width: 5rem;
       --header-search-text-start: var(--padding-lg);
       --header-search-text-end: calc(var(--header-search-icon-inset) + var(--icon-size-md) - var(--header-search-inset));
 
       max-width: none;
     }
-  }
-
-  /* Text starts after the category dropdown instead of the leading icon */
-  .header-search--has-category {
-    --header-search-text-start: calc(
-      var(--header-search-inset) + var(--header-search-category-width) + var(--padding-md)
-    );
   }
 
   .header__column--center .header-search {
@@ -298,6 +252,11 @@
     }
   }
 
+  /* Outranks the global `input:not([type='checkbox'], [type='radio'])` fill so the field color shows through */
+  .header-search .header-search__input {
+    background-color: transparent;
+  }
+
   .header-search__input:is(:focus, :focus-visible, :hover) {
     outline: none;
     box-shadow: none;
@@ -360,6 +319,7 @@
     color: var(--color-foreground);
     font-weight: 500;
     text-overflow: ellipsis;
+    quotes: none;
   }
 
   .header-search__kbd {
@@ -451,98 +411,13 @@
     }
   }
 
-  /* Category dropdown: a compact select divided from the query by a hairline */
-  .header-search__category {
-    position: relative;
-    display: flex;
-    flex: 0 0 var(--header-search-category-width);
-    align-items: center;
-    min-width: 0;
-    height: 100%;
-  }
-
-  .header-search__category::after {
-    content: '';
-    position: absolute;
-    inset-block: 22%;
-    inset-inline-end: 0;
-    border-inline-end: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-15));
-    pointer-events: none;
-  }
-
-  .header-search__category-select {
-    width: 100%;
-    height: 100%;
-    padding-block: 0;
-    padding-inline: var(--padding-md) calc(var(--padding-md) + var(--icon-size-xs, 12px));
-    overflow: hidden;
-    border: 0;
-    border-radius: max(0px, calc(var(--header-search-radius) - var(--header-search-inset)));
-    background: transparent;
-    color: inherit;
-    font-family: var(--font-body--family);
-    font-size: var(--font-size--sm);
-    font-weight: 600;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    cursor: pointer;
-    -webkit-appearance: none;
-    appearance: none;
-
-    /* 16px minimum prevents iOS zooming the page on focus */
-    @media screen and (max-width: 749px) {
-      font-size: 16px;
-    }
-  }
-
-  .header-search__category-select:focus {
-    outline: none;
-  }
-
-  .header-search__category-select:focus-visible {
-    outline: var(--focus-outline-width, 2px) solid currentColor;
-    outline-offset: -2px;
-  }
-
-  .header-search__category-caret {
-    position: absolute;
-    inset-inline-end: var(--padding-md);
-    display: flex;
-    width: var(--icon-size-xs, 12px);
-    height: var(--icon-size-xs, 12px);
-    pointer-events: none;
-  }
-
-  .header-search__category-caret svg {
-    width: 100%;
-    height: 100%;
-  }
-
-  /* With a category, the search icon trails the field (or the submit button carries it) */
-  .header-search--has-category .header-search__icon {
-    inset-inline: auto var(--header-search-icon-inset);
-  }
-
-  .header-search--has-category .header-search__field:has(.header-search__submit) .header-search__icon {
-    display: none;
-  }
-
-  .header-search--has-category .header-search__field:not(:has(.header-search__submit)) {
-    --header-search-text-end: calc(var(--header-search-icon-inset) + var(--icon-size-md) - var(--header-search-inset));
-  }
-
-  .header-search--has-category .header-search__field:not(:has(.header-search__submit)) .header-search__hint {
-    inset-inline-end: calc(var(--header-search-icon-inset) + var(--icon-size-md) + var(--padding-sm));
-  }
-
   /* Phones: the bar opens the predictive search modal, so the icon trails the field like a search key */
   @media screen and (max-width: 749px) {
     .header-search__submit {
       display: none;
     }
 
-    .header-search__icon,
-    .header-search--has-category .header-search__icon {
+    .header-search__icon {
       display: flex;
       inset-inline: auto var(--header-search-icon-inset);
       color: var(--color-foreground);
@@ -550,12 +425,6 @@
 
     .header-search .header-search__field .header-search__hint {
       inset-inline-end: calc(var(--header-search-icon-inset) + var(--icon-size-md) + var(--padding-sm));
-    }
-
-    .header-search--has-category {
-      --header-search-text-start: calc(
-        var(--header-search-inset) + var(--header-search-category-width) + var(--padding-sm)
-      );
     }
   }
 

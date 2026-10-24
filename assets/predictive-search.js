@@ -89,11 +89,12 @@ class PredictiveSearchComponent extends Component {
   }
 
   /**
-   * Handles the CMD+K key combination.
+   * Handles the Cmd+K (macOS) or Ctrl+K (Windows, Linux) key combination.
    * @param {KeyboardEvent} event - The keyboard event.
    */
   #handleKeyboardShortcut = (event) => {
-    if (event.metaKey && event.key === 'k') {
+    if ((event.metaKey || event.ctrlKey) && !event.altKey && event.key.toLowerCase() === 'k') {
+      event.preventDefault();
       this.dialog?.toggleDialog();
     }
   };
@@ -235,6 +236,8 @@ class PredictiveSearchComponent extends Component {
         } else {
           const searchUrl = new URL(Theme.routes.search_url, location.origin);
           searchUrl.searchParams.set('q', this.refs.searchInput.value);
+          // Match the form submit so partial words ("iph") still find products.
+          searchUrl.searchParams.set('options[prefix]', 'last');
           window.location.href = searchUrl.toString();
         }
         break;
