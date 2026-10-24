@@ -1,0 +1,59 @@
+{%- doc -%}
+  Renders a hero background video over its preview image. The preview paints first and the
+  video fades in once it is actually playing (driven by `assets/hero-video.js`), so the hero
+  never flashes an empty frame. Without JavaScript the video simply autoplays.
+
+  @param {object} video - The Shopify video object
+  @param {string} wrapper_class - Classes for the media wrapper (desktop and/or mobile visibility)
+  @param {string} testid - data-testid for the video element
+  @param {string} [sizes] - Responsive sizes for the preview image
+  @param {string} [widths] - Responsive widths for the preview image
+  @param {string} [loading] - 'eager' (default) or 'lazy' for the preview image
+  @param {string} [fetch_priority] - Fetch priority for the preview image
+
+  @example
+  {% render 'hero-video-media', video: section.settings.video_1, wrapper_class: 'hero__media-wrapper hero__media-wrapper--desktop', testid: 'hero-desktop-video-1' %}
+{%- enddoc -%}
+
+<div class="{{ wrapper_class }}">
+  {%- if video.preview_image -%}
+    {{
+      video.preview_image
+      | image_url: width: 1920
+      | image_tag:
+        widths: widths,
+        sizes: sizes,
+        loading: loading,
+        fetchpriority: fetch_priority,
+        alt: '',
+        class: 'hero__media hero__video-poster'
+    }}
+  {%- endif -%}
+  {{
+    video
+    | video_tag:
+      poster: nil,
+      autoplay: true,
+      loop: true,
+      controls: false,
+      muted: true,
+      playsinline: true,
+      class: 'hero__media hero__video',
+      data-testid: testid
+  }}
+</div>
+
+{% stylesheet %}
+  .hero__video-poster {
+    position: absolute;
+    inset: 0;
+  }
+
+  .hero__video {
+    transition: opacity 0.6s var(--ease-out-cubic);
+  }
+
+  [data-video-pending] .hero__video {
+    opacity: 0;
+  }
+{% endstylesheet %}

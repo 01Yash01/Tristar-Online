@@ -62,8 +62,12 @@
   assign media_wrapper_desktop_class = 'hero__media-wrapper hero__media-wrapper--desktop'
   assign media_wrapper_mobile_class = 'hero__media-wrapper hero__media-wrapper--mobile'
   # If there is no custom mobile media to show, we add the mobile class to the desktop classes so content is always shown on mobile.
+  # A desktop-only video wrapper is hidden on phones, so its preview image can wait (lazy images
+  # inside display: none are never fetched). When it doubles as the mobile media it loads eagerly.
+  assign poster_loading_desktop = 'lazy'
   if section.settings.custom_mobile_media == false or section.settings.custom_mobile_media == true and media_count_mobile == 0
     assign media_wrapper_desktop_class = media_wrapper_desktop_class | append: ' hero__media-wrapper--mobile'
+    assign poster_loading_desktop = 'eager'
   endif
 
   # Should we show the blurred reflection on mobile?
@@ -112,6 +116,15 @@
   # Index 2 keeps priority when a slim strip (e.g. collection pills) sits above the hero
   if section.index <= 2
     assign fetch_priority = 'high'
+  endif
+
+  # Videos get the hero-video element (fade-in, off-screen pause, play/pause button)
+  assign has_video = false
+  assign hero_tag = 'div'
+  assign media_types = media_1 | append: media_2 | append: media_1_mobile | append: media_2_mobile
+  if media_types contains 'video'
+    assign has_video = true
+    assign hero_tag = 'hero-video'
   endif
 %}
 
@@ -166,19 +179,15 @@
   {%- endif -%}
 
   {%- if media_1 == 'video' -%}
-    <div class="{{ media_wrapper_desktop_class }}">
-      {{
-        section.settings.video_1
-        | video_tag:
-          poster: nil,
-          autoplay: true,
-          loop: true,
-          controls: false,
-          muted: true,
-          class: 'hero__media',
-          data-testid: 'hero-desktop-video-1'
-      }}
-    </div>
+    {% render 'hero-video-media',
+      video: section.settings.video_1,
+      wrapper_class: media_wrapper_desktop_class,
+      testid: 'hero-desktop-video-1',
+      sizes: sizes,
+      widths: widths,
+      loading: poster_loading_desktop,
+      fetch_priority: fetch_priority
+    %}
   {%- endif -%}
 
   {%- comment -%} Mobile-only slot 1 media (when desktop is different type) {%- endcomment -%}
@@ -202,19 +211,15 @@
     {%- endif -%}
 
     {%- if media_1_mobile == 'video' -%}
-      <div class="{{ media_wrapper_mobile_class }}">
-        {{
-          section.settings.video_1_mobile
-          | video_tag:
-            poster: nil,
-            autoplay: true,
-            loop: true,
-            controls: false,
-            muted: true,
-            class: 'hero__media',
-            data-testid: 'hero-mobile-video-1'
-        }}
-      </div>
+      {% render 'hero-video-media',
+        video: section.settings.video_1_mobile,
+        wrapper_class: media_wrapper_mobile_class,
+        testid: 'hero-mobile-video-1',
+        sizes: sizes_mobile,
+        widths: mobile_widths,
+        loading: 'lazy',
+        fetch_priority: fetch_priority
+      %}
     {%- endif -%}
   {%- endif -%}
 {% endcapture %}
@@ -270,19 +275,15 @@
   {%- endif -%}
 
   {%- if media_2 == 'video' -%}
-    <div class="{{ media_wrapper_desktop_class }}">
-      {{
-        section.settings.video_2
-        | video_tag:
-          poster: nil,
-          autoplay: true,
-          loop: true,
-          controls: false,
-          muted: true,
-          class: 'hero__media',
-          data-testid: 'hero-desktop-video-2'
-      }}
-    </div>
+    {% render 'hero-video-media',
+      video: section.settings.video_2,
+      wrapper_class: media_wrapper_desktop_class,
+      testid: 'hero-desktop-video-2',
+      sizes: sizes,
+      widths: widths,
+      loading: poster_loading_desktop,
+      fetch_priority: fetch_priority
+    %}
   {%- endif -%}
 
   {%- comment -%} Mobile-only slot 2 media (when desktop is different type) {%- endcomment -%}
@@ -306,19 +307,15 @@
     {%- endif -%}
 
     {%- if media_2_mobile == 'video' -%}
-      <div class="{{ media_wrapper_mobile_class }}">
-        {{
-          section.settings.video_2_mobile
-          | video_tag:
-            poster: nil,
-            autoplay: true,
-            loop: true,
-            controls: false,
-            muted: true,
-            class: 'hero__media',
-            data-testid: 'hero-mobile-video-2'
-        }}
-      </div>
+      {% render 'hero-video-media',
+        video: section.settings.video_2_mobile,
+        wrapper_class: media_wrapper_mobile_class,
+        testid: 'hero-mobile-video-2',
+        sizes: sizes_mobile,
+        widths: mobile_widths,
+        loading: 'lazy',
+        fetch_priority: fetch_priority
+      %}
     {%- endif -%}
   {%- endif -%}
 {% endcapture %}
@@ -460,10 +457,18 @@
 {% # A first-section hero consumes `--header-group-height` at first paint (`.hero-wrapper:first-child` rule below) %}
 {% render 'measure-header-heights', only_when_first_section: true %}
 
-<div
+{%- if has_video -%}
+  <script
+    src="{{ 'hero-video.js' | asset_url }}"
+    type="module"
+  ></script>
+{%- endif -%}
+
+<{{ hero_tag }}
   id="Hero-{{ section.id }}"
-  class="hero{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}{% if section.blocks.size == 0 and section.settings.section_height == 'auto' %} hero--no-blocks-auto-height{% endif %}{% if section.settings.stack_media_on_mobile %} hero--stack-mobile{% endif %}"
+  class="hero{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}{% if section.blocks.size == 0 and section.settings.section_height == 'auto' %} hero--no-blocks-auto-height{% endif %}{% if section.settings.stack_media_on_mobile %} hero--stack-mobile{% endif %} hero--media-{{ section.settings.media_width | default: 'full' }} hero--scroll-zoom-{{ section.settings.scroll_zoom }}"
   style="
+    --hero-radius: {{ section.settings.corner_radius | default: 0 }}px;
     --hero-border-style: {{ section.settings.border }};
     --hero-border-width: {{ section.settings.border_width }}px;
     --hero-border-opacity: {{ section.settings.border_opacity }}%;
@@ -481,6 +486,10 @@
   {% endif %}
   {% if section.settings.blurred_reflection and has_only_video == false or has_only_video_mobile == false %}
     data-blur-shadow="true"
+  {% endif %}
+  {% # Text reveals only when media carries the hero, so a text-only hero never delays its first paint %}
+  {% if settings.reveal_on_scroll and media_count > 0 %}
+    data-reveal
   {% endif %}
 >
   {% if section.settings.blurred_reflection %}
@@ -546,8 +555,33 @@
     >
       {% content_for 'blocks' %}
     </div>
+
+    {%- if has_video and section.settings.show_video_controls -%}
+      <button
+        type="button"
+        class="hero__video-toggle"
+        ref="toggle"
+        on:click="/toggle"
+        aria-label="{{ 'accessibility.pause_video' | t }}"
+        data-label-play="{{ 'accessibility.play_video' | t }}"
+        data-label-pause="{{ 'accessibility.pause_video' | t }}"
+      >
+        <span
+          class="svg-wrapper hero__video-icon hero__video-icon--pause"
+          aria-hidden="true"
+        >
+          {{- 'icon-pause.svg' | inline_asset_content -}}
+        </span>
+        <span
+          class="svg-wrapper hero__video-icon hero__video-icon--play"
+          aria-hidden="true"
+        >
+          {{- 'icon-play.svg' | inline_asset_content -}}
+        </span>
+      </button>
+    {%- endif -%}
   </div>
-</div>
+</{{ hero_tag }}>
 
 {% stylesheet %}
   .hero-wrapper {
@@ -562,8 +596,101 @@
   }
 
   .hero {
+    display: block;
     position: relative;
     min-height: calc(var(--hero-min-height) - var(--hero-height-offset));
+  }
+
+  /* Rounded corners (0 by default). Isolation keeps Safari clipping transformed media to the radius;
+     it is skipped with the blurred reflection, whose blend mode must reach the page behind. */
+  .hero__container {
+    border-radius: var(--hero-radius, 0);
+  }
+
+  .hero:not([data-blur-shadow]) .hero__container {
+    isolation: isolate;
+  }
+
+  /* Contained: the media card sits inside the page margins instead of spanning the window.
+     Like other contained sections, the padding settings become the space around the card,
+     and the space inside the card follows the screen size. */
+  .hero--media-page .hero__container {
+    width: min(var(--page-width) - var(--page-margin) * 2, 100% - var(--page-margin) * 2);
+    margin-block: var(--padding-block-start) var(--padding-block-end);
+    margin-inline: auto;
+    padding-block: clamp(24px, 4vw, 48px);
+  }
+
+  /* Scroll zoom: the media settles from a slight zoom as the hero scrolls into view (CSS only) */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .hero--scroll-zoom-true .hero__media-grid {
+        animation: hero-scroll-zoom linear both;
+        animation-timeline: view();
+        animation-range: entry 0% cover 45%;
+      }
+    }
+  }
+
+  @keyframes hero-scroll-zoom {
+    from {
+      transform: scale(1.08);
+    }
+
+    to {
+      transform: scale(1);
+    }
+  }
+
+  /* Play/pause button for background video */
+  .hero__video-toggle {
+    position: absolute;
+    inset-block-start: var(--padding-lg, 16px);
+    inset-inline-end: var(--padding-lg, 16px);
+    z-index: var(--layer-raised);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border: 1px solid rgb(var(--color-white-rgb) / 0.3);
+    border-radius: 50%;
+    background-color: rgb(0 0 0 / 0.28);
+    color: var(--color-white);
+    cursor: pointer;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    transition: background-color var(--animation-speed) var(--animation-easing);
+  }
+
+  /* The button only works once the video component is defined */
+  hero-video:not(:defined) .hero__video-toggle {
+    display: none;
+  }
+
+  .hero__video-toggle:hover {
+    background-color: rgb(0 0 0 / 0.45);
+  }
+
+  .hero__video-toggle:focus-visible {
+    outline: 2px solid var(--color-white);
+    outline-offset: 2px;
+  }
+
+  .hero__video-icon {
+    display: flex;
+    width: 18px;
+    height: 18px;
+  }
+
+  .hero__video-icon--play,
+  .hero__video-toggle[data-paused] .hero__video-icon--pause {
+    display: none;
+  }
+
+  .hero__video-toggle[data-paused] .hero__video-icon--play {
+    display: flex;
   }
 
   .hero[data-shopify-visual-preview] {
@@ -1161,6 +1288,32 @@
       "visible_if": "{{ section.settings.section_height == 'custom' }}"
     },
     {
+      "type": "select",
+      "id": "media_width",
+      "label": "t:settings.media_width",
+      "options": [
+        {
+          "value": "full",
+          "label": "t:options.full"
+        },
+        {
+          "value": "page",
+          "label": "t:options.page"
+        }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "range",
+      "id": "corner_radius",
+      "label": "t:settings.corner_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    },
+    {
       "type": "header",
       "content": "t:content.appearance"
     },
@@ -1237,6 +1390,20 @@
       "visible_if": "{{ section.settings.blurred_reflection and section.settings.media_type_1 != 'video' or section.settings.media_type_2 != 'video' }}"
     },
     {
+      "type": "checkbox",
+      "id": "scroll_zoom",
+      "label": "t:settings.hero_scroll_zoom",
+      "info": "t:info.hero_scroll_zoom",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_video_controls",
+      "label": "t:settings.hero_show_video_controls",
+      "info": "t:info.hero_show_video_controls",
+      "default": false
+    },
+    {
       "type": "header",
       "content": "t:content.padding"
     },
@@ -1262,6 +1429,126 @@
     }
   ],
   "presets": [
+    {
+      "name": "t:names.video_banner",
+      "category": "t:categories.banners",
+      "blocks": {
+        "content": {
+          "type": "group",
+          "name": "t:names.group",
+          "settings": {
+            "content_direction": "column",
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "flex-end",
+            "gap": 12,
+            "width": "custom",
+            "custom_width": 50,
+            "width_mobile": "fill"
+          },
+          "blocks": {
+            "label": {
+              "type": "text",
+              "settings": {
+                "text": "t:html_defaults.video_banner_label",
+                "type_preset": "custom",
+                "font_size": "0.75rem",
+                "case": "uppercase"
+              }
+            },
+            "heading": {
+              "type": "text",
+              "settings": {
+                "text": "t:html_defaults.new_arrivals_h2",
+                "type_preset": "h1",
+                "max_width": "narrow"
+              }
+            },
+            "button": {
+              "type": "button",
+              "settings": {
+                "label": "t:text_defaults.shop_now_button_label",
+                "link": "shopify://collections/all"
+              }
+            }
+          },
+          "block_order": ["label", "heading", "button"]
+        },
+        "spotlight": {
+          "type": "product-spotlight",
+          "settings": {
+            "label": "t:text_defaults.featured_product",
+            "style": "glass"
+          }
+        }
+      },
+      "block_order": ["content", "spotlight"],
+      "settings": {
+        "media_type_1": "video",
+        "media_width": "page",
+        "corner_radius": 16,
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "space-between",
+        "vertical_alignment": "flex-end",
+        "gap": 24,
+        "section_height": "medium",
+        "toggle_overlay": true,
+        "overlay_style": "gradient",
+        "gradient_direction": "to top",
+        "scroll_zoom": true,
+        "show_video_controls": true,
+        "padding-block-start": 24,
+        "padding-block-end": 24
+      }
+    },
+    {
+      "name": "t:names.video_banner_centered",
+      "category": "t:categories.banners",
+      "blocks": {
+        "label": {
+          "type": "text",
+          "settings": {
+            "text": "t:html_defaults.video_banner_label",
+            "type_preset": "custom",
+            "font_size": "0.75rem",
+            "case": "uppercase"
+          }
+        },
+        "heading": {
+          "type": "text",
+          "settings": {
+            "text": "t:html_defaults.new_arrivals_h2",
+            "type_preset": "h1",
+            "max_width": "narrow",
+            "alignment": "center"
+          }
+        },
+        "button": {
+          "type": "button",
+          "settings": {
+            "label": "t:text_defaults.shop_now_button_label",
+            "link": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": ["label", "heading", "button"],
+      "settings": {
+        "media_type_1": "video",
+        "media_width": "page",
+        "corner_radius": 16,
+        "content_direction": "column",
+        "horizontal_alignment_flex_direction_column": "center",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 16,
+        "section_height": "medium",
+        "toggle_overlay": true,
+        "overlay_style": "solid",
+        "scroll_zoom": true,
+        "show_video_controls": true,
+        "padding-block-start": 24,
+        "padding-block-end": 24
+      }
+    },
     {
       "name": "t:names.hero",
       "category": "t:categories.banners",

@@ -1,0 +1,257 @@
+{%- doc -%}
+  Renders a compact product card (image, title, price) that links to the product.
+  Designed to sit over hero media: the glass style is a frosted, translucent card with light
+  text for dark videos or images; the solid style uses the theme colors.
+
+  @example
+  {% content_for 'block', type: 'product-spotlight', id: 'product-spotlight' %}
+{%- enddoc -%}
+
+{%- liquid
+  assign block_settings = block.settings
+  assign product = block_settings.product
+  assign style = block_settings.style | default: 'glass'
+  assign tag = 'a'
+  if product == blank
+    assign tag = 'div'
+  endif
+-%}
+
+{%- if product != blank or request.design_mode -%}
+  <{{ tag }}
+    {% if product != blank %}
+      href="{{ product.url }}"
+    {% endif %}
+    class="product-spotlight product-spotlight--{{ style }}"
+    {{ block.shopify_attributes }}
+  >
+    {%- if block_settings.show_image -%}
+      <span class="product-spotlight__media">
+        {%- if product.featured_image -%}
+          {{
+            product.featured_image
+            | image_url: width: 240
+            | image_tag:
+              widths: '80, 120, 160, 240',
+              sizes: '72px',
+              loading: 'lazy',
+              alt: '',
+              class: 'product-spotlight__image'
+          }}
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'product-spotlight__image' }}
+        {%- endif -%}
+      </span>
+    {%- endif -%}
+
+    <span class="product-spotlight__info">
+      {%- if block_settings.label != blank -%}
+        <span class="product-spotlight__label">{{ block_settings.label | escape }}</span>
+      {%- endif -%}
+      <span class="product-spotlight__title">
+        {%- if product != blank -%}
+          {{- product.title | escape -}}
+        {%- else -%}
+          {{- 'content.product_spotlight_placeholder' | t -}}
+        {%- endif -%}
+      </span>
+      {%- if block_settings.show_price and product != blank -%}
+        <span class="product-spotlight__price">
+          {{- product.price | money -}}
+          {%- if product.compare_at_price > product.price -%}
+            <s class="product-spotlight__compare">{{ product.compare_at_price | money }}</s>
+          {%- endif -%}
+        </span>
+      {%- endif -%}
+    </span>
+
+    <span
+      class="svg-wrapper product-spotlight__arrow"
+      aria-hidden="true"
+    >
+      {{- 'icon-arrow.svg' | inline_asset_content -}}
+    </span>
+  </{{ tag }}>
+{%- endif -%}
+
+{% stylesheet %}
+  .product-spotlight {
+    --product-spotlight-radius: 18px;
+
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: max-content;
+    max-width: min(340px, 100%);
+    padding: 10px 16px 10px 10px;
+    border-radius: var(--product-spotlight-radius);
+    text-decoration: none;
+    transition: background-color 0.3s var(--ease-out-cubic), transform 0.3s var(--ease-out-cubic);
+  }
+
+  /* Frosted glass over media; a darker tint keeps text legible where backdrop blur is unsupported */
+  .product-spotlight--glass {
+    border: 1px solid rgb(var(--color-white-rgb) / 0.28);
+    background-color: rgb(0 0 0 / 0.42);
+    color: var(--color-white);
+    box-shadow: 0 10px 30px rgb(0 0 0 / 0.18);
+  }
+
+  @supports (backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px)) {
+    .product-spotlight--glass {
+      background-color: rgb(var(--color-white-rgb) / 0.14);
+      -webkit-backdrop-filter: blur(18px) saturate(1.4);
+      backdrop-filter: blur(18px) saturate(1.4);
+    }
+  }
+
+  .product-spotlight--solid {
+    border: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-10));
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    box-shadow: 0 10px 30px rgb(0 0 0 / 0.12);
+  }
+
+  .product-spotlight:is(a):hover {
+    transform: translateY(-2px);
+  }
+
+  .product-spotlight--glass:is(a):hover {
+    background-color: rgb(var(--color-white-rgb) / 0.22);
+  }
+
+  .product-spotlight__media {
+    flex: 0 0 72px;
+    width: 72px;
+    height: 72px;
+    overflow: hidden;
+    border-radius: calc(var(--product-spotlight-radius) - 8px);
+    background-color: var(--color-white);
+  }
+
+  .product-spotlight__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .product-spotlight__info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+  }
+
+  .product-spotlight__label {
+    font-size: var(--font-size--xs, 0.75rem);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0.8;
+  }
+
+  .product-spotlight__title {
+    display: -webkit-box;
+    overflow: hidden;
+    font-weight: 600;
+    line-height: 1.3;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+
+  .product-spotlight__price {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: var(--font-size--sm, 0.875rem);
+  }
+
+  .product-spotlight__compare {
+    opacity: 0.65;
+  }
+
+  .product-spotlight__arrow {
+    display: flex;
+    flex: 0 0 auto;
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s var(--ease-out-cubic);
+  }
+
+  .product-spotlight:is(a):hover .product-spotlight__arrow {
+    transform: translateX(3px);
+  }
+
+  [dir='rtl'] .product-spotlight__arrow {
+    transform: scaleX(-1);
+  }
+
+  [dir='rtl'] .product-spotlight:is(a):hover .product-spotlight__arrow {
+    transform: scaleX(-1) translateX(3px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .product-spotlight,
+    .product-spotlight__arrow {
+      transition: none;
+    }
+
+    .product-spotlight:is(a):hover {
+      transform: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.product_spotlight",
+  "tag": null,
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "t:settings.product"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "t:settings.product_spotlight_label"
+    },
+    {
+      "type": "select",
+      "id": "style",
+      "label": "t:settings.style",
+      "options": [
+        {
+          "value": "glass",
+          "label": "t:options.glass"
+        },
+        {
+          "value": "solid",
+          "label": "t:options.solid"
+        }
+      ],
+      "default": "glass"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_image",
+      "label": "t:settings.product_spotlight_show_image",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "label": "t:settings.product_spotlight_show_price",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.product_spotlight",
+      "category": "t:categories.product"
+    }
+  ]
+}
+{% endschema %}
