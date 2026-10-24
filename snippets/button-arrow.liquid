@@ -44,7 +44,7 @@
   elsif aria_label == blank and closest.product != blank
     assign aria_label = closest.product.title
   elsif aria_label == blank
-    assign aria_label = 'general.accessibility.link' | t | default: 'View'
+    assign aria_label = 'accessibility.view_link' | t
   endif
 -%}
 

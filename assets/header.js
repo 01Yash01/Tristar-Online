@@ -78,6 +78,13 @@ class HeaderComponent extends Component {
     const roundedHeaderHeight = Math.round(entry.borderBoxSize[0].blockSize);
     document.body.style.setProperty('--header-height', `${roundedHeaderHeight}px`);
 
+    // Keep the underlay's row boundary in sync; a stale value paints the bottom-row color behind top-row content.
+    // Must stay fractional (see updateHeaderHeights in utilities.js).
+    const topRow = this.querySelector('.header__row--top');
+    if (topRow instanceof HTMLElement) {
+      this.style.setProperty('--top-row-height', `${topRow.getBoundingClientRect().height}px`);
+    }
+
     // Check if the menu drawer should be hidden in favor of the header menu
     if (this.#menuDrawerHiddenWidth && window.innerWidth > this.#menuDrawerHiddenWidth) {
       this.#updateMenuVisibility(false);

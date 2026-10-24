@@ -862,8 +862,9 @@ button.shopify-payment-button__button--unbranded {
   text-transform: var(--button-text-case-primary);
 }
 
-.button::before,
-.button-secondary::before,
+/* Icon-only `.button-unstyled` controls (slideshow arrows, close buttons) have no fill to wipe */
+.button:not(.button-unstyled)::before,
+.button-secondary:not(.button-unstyled)::before,
 .button-custom::before,
 button.shopify-payment-button__button--unbranded::before {
   content: "";
@@ -884,8 +885,8 @@ button.shopify-payment-button__button--unbranded::before {
   background-color: var(--button-hover-wipe-bg, var(--color-secondary-button-hover-background, #000000));
 }
 
-.button:hover:not([disabled])::before,
-.button-secondary:hover:not([disabled])::before,
+.button:not(.button-unstyled):hover:not([disabled])::before,
+.button-secondary:not(.button-unstyled):hover:not([disabled])::before,
 .button-custom:hover:not([disabled])::before,
 button.shopify-payment-button__button--unbranded:hover:not([disabled])::before {
   width: calc(100% + 2px);
