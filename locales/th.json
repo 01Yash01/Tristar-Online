@@ -73,6 +73,7 @@
     "nested_product": "{{ product_title }} สำหรับ {{ parent_title }}",
     "remove": "ลบ",
     "view_pricing_info": "ดูข้อมูลการกำหนดราคา",
+    "view_link": "View",
     "slideshow": "สไลด์โชว์",
     "header_navigation_label": "หลัก",
     "home_logo_alt": "{{ store_name }} - หน้าหลัก",
@@ -130,6 +131,9 @@
     "back_to_main_menu": "กลับไปที่เมนูหลัก"
   },
   "content": {
+    "quick_links": "Quick links",
+    "quick_link_placeholder": "Choose a collection",
+    "product_spotlight_placeholder": "Choose a product",
     "reviews": "รีวิว",
     "language": "ภาษา",
     "localization_region_and_language": "ภูมิภาคและภาษา",
@@ -167,11 +171,15 @@
     "product_badge_sale": "ลดราคา",
     "search_input_label": "การค้นหา",
     "search_input_placeholder": "ค้นหา",
+    "search_bar_hint_prefix": "Search for",
+    "search_bar_placeholder": "Search products, brands and more",
     "search_results": "ผลลัพธ์การค้นหา",
     "search_results_label": "ผลลัพธ์การค้นหา",
     "search_results_no_results": "ไม่พบผลการค้นหาสำหรับ \"{{ terms }}\" ลองใช้คำค้นหาอื่น",
     "search_results_resource_articles": "โพสต์บล็อก",
     "search_results_resource_collections": "คอลเลกชัน",
+    "search_popular_collections": "Popular categories",
+    "search_trending": "Trending searches",
     "search_results_resource_pages": "หน้า",
     "search_results_resource_products": "สินค้า",
     "search_results_resource_queries": "คำแนะนำการค้นหา",
@@ -336,6 +344,19 @@
   "blogs": {
     "article": {
       "comment_author_separator": "•",
+      "read_more": "Read more",
+      "all_posts": "All posts",
+      "filter_label": "Filter posts by tag",
+      "no_posts": "No posts found.",
+      "tags_label": "Tags:",
+      "share_label": "Share:",
+      "share_facebook": "Share on Facebook",
+      "share_x": "Share on X",
+      "share_pinterest": "Pin on Pinterest",
+      "post_navigation": "More posts",
+      "previous_post": "Previous post",
+      "next_post": "Next post",
+      "related_posts": "Related posts",
       "comments_heading": {
         "one": "{{ count }} ความคิดเห็น",
         "other": "{{ count }} ความคิดเห็น"

@@ -73,6 +73,7 @@
     "nested_product": "{{ product_title }} voor {{ parent_title }}",
     "remove": "Verwijderen",
     "view_pricing_info": "Prijsinformatie bekijken",
+    "view_link": "View",
     "slideshow": "Diavoorstelling",
     "header_navigation_label": "Primair",
     "home_logo_alt": "{{ store_name }} - Home",
@@ -130,6 +131,9 @@
     "back_to_main_menu": "Terug naar hoofdmenu"
   },
   "content": {
+    "quick_links": "Quick links",
+    "quick_link_placeholder": "Choose a collection",
+    "product_spotlight_placeholder": "Choose a product",
     "reviews": "recensies",
     "no_results_found": "Geen resultaten gevonden",
     "language": "Taal",
@@ -167,11 +171,15 @@
     "product_badge_sale": "Uitverkoop",
     "search_input_label": "Zoeken",
     "search_input_placeholder": "Zoekopdracht",
+    "search_bar_hint_prefix": "Search for",
+    "search_bar_placeholder": "Search products, brands and more",
     "search_results": "Zoekresultaten",
     "search_results_label": "Zoekresultaten",
     "search_results_no_results": "Geen resultaten gevonden voor '{{ terms }}'. Probeer een andere zoekopdracht.",
     "search_results_resource_articles": "Blogposts",
     "search_results_resource_collections": "Collecties",
+    "search_popular_collections": "Popular categories",
+    "search_trending": "Trending searches",
     "search_results_resource_pages": "Pagina's",
     "search_results_resource_products": "Producten",
     "search_results_resource_queries": "Zoeksuggesties",
@@ -304,6 +312,19 @@
   "blogs": {
     "article": {
       "comment_author_separator": "•",
+      "read_more": "Read more",
+      "all_posts": "All posts",
+      "filter_label": "Filter posts by tag",
+      "no_posts": "No posts found.",
+      "tags_label": "Tags:",
+      "share_label": "Share:",
+      "share_facebook": "Share on Facebook",
+      "share_x": "Share on X",
+      "share_pinterest": "Pin on Pinterest",
+      "post_navigation": "More posts",
+      "previous_post": "Previous post",
+      "next_post": "Next post",
+      "related_posts": "Related posts",
       "comments_heading": {
         "one": "{{ count }} reactie",
         "other": "{{ count }} reacties"

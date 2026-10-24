@@ -59,6 +59,7 @@
     "find_country": "البحث عن البلد",
     "view_disclosure_information_for_product": "عرض معلومات الإفصاح لـ {{ product_title }}",
     "view_pricing_info": "عرض معلومات التسعير",
+    "view_link": "View",
     "price_filter_low": "سعر منخفض",
     "price_filter_high": "سعر مرتفع",
     "filter_count": {
@@ -140,6 +141,19 @@
   "blogs": {
     "article": {
       "comment_author_separator": "•",
+      "read_more": "Read more",
+      "all_posts": "All posts",
+      "filter_label": "Filter posts by tag",
+      "no_posts": "No posts found.",
+      "tags_label": "Tags:",
+      "share_label": "Share:",
+      "share_facebook": "Share on Facebook",
+      "share_x": "Share on X",
+      "share_pinterest": "Pin on Pinterest",
+      "post_navigation": "More posts",
+      "previous_post": "Previous post",
+      "next_post": "Next post",
+      "related_posts": "Related posts",
       "comments_heading": {
         "one": "{{ count }} تعليق",
         "other": "{{ count }} من التعليقات",
@@ -162,6 +176,9 @@
     }
   },
   "content": {
+    "quick_links": "Quick links",
+    "quick_link_placeholder": "Choose a collection",
+    "product_spotlight_placeholder": "Choose a product",
     "cancel": "إلغاء",
     "discount": "الخصم",
     "account_title": "الحساب",
@@ -245,6 +262,8 @@
     "read_more": "قراءة المزيد...",
     "search_input_label": "بحث",
     "search_input_placeholder": "بحث",
+    "search_bar_hint_prefix": "Search for",
+    "search_bar_placeholder": "Search products, brands and more",
     "search": "بحث",
     "search_results": "نتائج البحث",
     "search_results_label": "نتائج البحث",
@@ -252,6 +271,8 @@
     "search_results_no_results_check_spelling": "لم يتم العثور على نتائج لـ \"{{ terms }}\". تحقق من التهجئة أو استخدم كلمة أو عبارة مختلفة.",
     "search_results_resource_articles": "منشورات المدونة",
     "search_results_resource_collections": "المجموعات",
+    "search_popular_collections": "Popular categories",
+    "search_trending": "Trending searches",
     "search_results_resource_pages": "الصفحات",
     "search_results_resource_products": "المنتجات",
     "search_results_resource_queries": "اقتراحات البحث",

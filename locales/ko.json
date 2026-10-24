@@ -73,6 +73,7 @@
     "nested_product": "{{ parent_title }}용 {{ product_title }}",
     "remove": "제거",
     "view_pricing_info": "가격 정보 보기",
+    "view_link": "View",
     "slideshow": "슬라이드 쇼",
     "header_navigation_label": "기본",
     "home_logo_alt": "{{ store_name }} - 홈",
@@ -130,6 +131,9 @@
     "zoom_media": "{{ index }} 미디어 확대/축소"
   },
   "content": {
+    "quick_links": "Quick links",
+    "quick_link_placeholder": "Choose a collection",
+    "product_spotlight_placeholder": "Choose a product",
     "reviews": "리뷰",
     "language": "언어",
     "localization_region_and_language": "지역 및 언어",
@@ -167,11 +171,15 @@
     "product_badge_sale": "판매",
     "search_input_label": "검색",
     "search_input_placeholder": "검색",
+    "search_bar_hint_prefix": "Search for",
+    "search_bar_placeholder": "Search products, brands and more",
     "search_results": "검색 결과",
     "search_results_label": "검색 결과",
     "search_results_no_results": "\"{{ terms }}\"에 대한 검색 결과가 없습니다. 다시 검색해 보세요",
     "search_results_resource_articles": "블로그 게시물",
     "search_results_resource_collections": "컬렉션",
+    "search_popular_collections": "Popular categories",
+    "search_trending": "Trending searches",
     "search_results_resource_pages": "페이지",
     "search_results_resource_products": "제품",
     "search_results_resource_queries": "검색 제안",
@@ -336,6 +344,19 @@
   "blogs": {
     "article": {
       "comment_author_separator": "•",
+      "read_more": "Read more",
+      "all_posts": "All posts",
+      "filter_label": "Filter posts by tag",
+      "no_posts": "No posts found.",
+      "tags_label": "Tags:",
+      "share_label": "Share:",
+      "share_facebook": "Share on Facebook",
+      "share_x": "Share on X",
+      "share_pinterest": "Pin on Pinterest",
+      "post_navigation": "More posts",
+      "previous_post": "Previous post",
+      "next_post": "Next post",
+      "related_posts": "Related posts",
       "comments_heading": {
         "one": "댓글 {{ count }}개",
         "other": "댓글 {{ count }}개"

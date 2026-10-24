@@ -73,6 +73,7 @@
     "nested_product": "{{ product_title }}（{{ parent_title }}）",
     "remove": "删除",
     "view_pricing_info": "查看定价信息",
+    "view_link": "View",
     "slideshow": "幻灯片",
     "header_navigation_label": "主要",
     "home_logo_alt": "{{ store_name }} - 主页",
@@ -130,6 +131,9 @@
     "back_to_main_menu": "返回主菜单"
   },
   "content": {
+    "quick_links": "Quick links",
+    "quick_link_placeholder": "Choose a collection",
+    "product_spotlight_placeholder": "Choose a product",
     "reviews": "评价",
     "no_results_found": "未找到结果",
     "language": "语言",
@@ -173,11 +177,15 @@
     },
     "search_input_label": "搜索",
     "search_input_placeholder": "搜索",
+    "search_bar_hint_prefix": "Search for",
+    "search_bar_placeholder": "Search products, brands and more",
     "search_results": "搜索结果",
     "search_results_label": "搜索结果",
     "search_results_no_results": "未找到“{{ terms }}”的相关结果。尝试其他搜索词。",
     "search_results_resource_articles": "博客文章",
     "search_results_resource_collections": "产品系列",
+    "search_popular_collections": "Popular categories",
+    "search_trending": "Trending searches",
     "search_results_resource_pages": "页面",
     "search_results_resource_products": "产品",
     "search_results_resource_queries": "搜索建议",
@@ -336,6 +344,19 @@
   "blogs": {
     "article": {
       "comment_author_separator": "•",
+      "read_more": "Read more",
+      "all_posts": "All posts",
+      "filter_label": "Filter posts by tag",
+      "no_posts": "No posts found.",
+      "tags_label": "Tags:",
+      "share_label": "Share:",
+      "share_facebook": "Share on Facebook",
+      "share_x": "Share on X",
+      "share_pinterest": "Pin on Pinterest",
+      "post_navigation": "More posts",
+      "previous_post": "Previous post",
+      "next_post": "Next post",
+      "related_posts": "Related posts",
       "comments_heading": {
         "one": "{{ count }} 条评论",
         "other": "{{ count }} 条评论"

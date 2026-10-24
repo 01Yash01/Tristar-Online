@@ -1150,6 +1150,13 @@
         "default": true
       },
       {
+        "type": "checkbox",
+        "id": "reveal_on_scroll",
+        "label": "t:settings.reveal_on_scroll",
+        "info": "t:info.reveal_on_scroll",
+        "default": true
+      },
+      {
         "type": "select",
         "id": "card_hover_effect",
         "label": "t:settings.card_hover_effect",
@@ -1900,6 +1907,23 @@
         "id": "empty_state_collection",
         "label": "t:settings.empty_state_collection",
         "info": "t:settings.empty_state_collection_info"
+      },
+      {
+        "type": "header",
+        "content": "t:content.search_suggestions"
+      },
+      {
+        "type": "text",
+        "id": "search_trending_terms",
+        "label": "t:settings.search_trending_terms",
+        "info": "t:info.search_trending_terms"
+      },
+      {
+        "type": "collection_list",
+        "id": "search_popular_collections",
+        "label": "t:settings.search_popular_collections",
+        "info": "t:info.search_popular_collections",
+        "limit": 8
       },
       {
         "type": "header",

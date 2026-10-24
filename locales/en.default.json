@@ -64,6 +64,7 @@
     "find_country": "Find country",
     "view_disclosure_information_for_product": "View disclosure information for {{ product_title }}",
     "view_pricing_info": "View pricing information",
+    "view_link": "View",
     "price_filter_low": "Low price",
     "price_filter_high": "High price"
   },
@@ -148,7 +149,20 @@
         "one": "{{ count }} comment",
         "other": "{{ count }} comments"
       },
-      "comment_author_separator": "•"
+      "comment_author_separator": "•",
+      "read_more": "Read more",
+      "all_posts": "All posts",
+      "filter_label": "Filter posts by tag",
+      "no_posts": "No posts found.",
+      "tags_label": "Tags:",
+      "share_label": "Share:",
+      "share_facebook": "Share on Facebook",
+      "share_x": "Share on X",
+      "share_pinterest": "Pin on Pinterest",
+      "post_navigation": "More posts",
+      "previous_post": "Previous post",
+      "next_post": "Next post",
+      "related_posts": "Related posts"
     },
     "comment_form": {
       "email": "Email",
@@ -163,6 +177,9 @@
     }
   },
   "content": {
+    "quick_links": "Quick links",
+    "quick_link_placeholder": "Choose a collection",
+    "product_spotlight_placeholder": "Choose a product",
     "cancel": "Cancel",
     "discount": "Discount",
     "account_title": "Account",
@@ -170,7 +187,7 @@
     "account_title_personalized": "Hi {{ first_name }}",
     "account_orders": "Orders",
     "account_profile": "Profile",
-    "blog_details_separator": "|",
+    "blog_details_separator": "•",
     "cart_estimated_total": "Estimated total",
     "cart_title": "Cart",
     "cart_subtotal": "Subtotal",
@@ -256,8 +273,6 @@
     "search_input_placeholder": "Search",
     "search_bar_hint_prefix": "Search for",
     "search_bar_placeholder": "Search products, brands and more",
-    "search_bar_category_label": "Search category",
-    "search_bar_category_all": "All",
     "search": "Search",
     "search_results": "Search results",
     "search_results_label": "Search results",
@@ -265,6 +280,8 @@
     "search_results_no_results_check_spelling": "No results found for \"{{ terms }}\". Check the spelling or use a different word or phrase.",
     "search_results_resource_articles": "Blog posts",
     "search_results_resource_collections": "Collections",
+    "search_popular_collections": "Popular categories",
+    "search_trending": "Trending searches",
     // Section heading for Shopify store pages in search results
     "search_results_resource_pages": "Pages",
     "search_results_resource_products": "Products",

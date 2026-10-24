@@ -73,6 +73,7 @@
     "nested_product": "適用於 {{ parent_title }} 的 {{ product_title }}",
     "remove": "移除",
     "view_pricing_info": "檢視定價資訊",
+    "view_link": "View",
     "slideshow": "素材輪播",
     "header_navigation_label": "主要",
     "home_logo_alt": "{{ store_name }} - 首頁",
@@ -130,6 +131,9 @@
     "back_to_main_menu": "返回主選單"
   },
   "content": {
+    "quick_links": "Quick links",
+    "quick_link_placeholder": "Choose a collection",
+    "product_spotlight_placeholder": "Choose a product",
     "reviews": "評論數",
     "no_results_found": "找不到結果",
     "language": "語言",
@@ -167,11 +171,15 @@
     "product_badge_sale": "特賣",
     "search_input_label": "搜尋",
     "search_input_placeholder": "搜尋",
+    "search_bar_hint_prefix": "Search for",
+    "search_bar_placeholder": "Search products, brands and more",
     "search_results": "搜尋結果",
     "search_results_label": "搜尋結果",
     "search_results_no_results": "找不到「{{ terms }}」的相關結果。請試著搜尋其他內容。",
     "search_results_resource_articles": "網誌文章",
     "search_results_resource_collections": "商品系列",
+    "search_popular_collections": "Popular categories",
+    "search_trending": "Trending searches",
     "search_results_resource_pages": "頁面",
     "search_results_resource_products": "商品",
     "search_results_resource_queries": "搜尋建議",
@@ -304,6 +312,19 @@
   "blogs": {
     "article": {
       "comment_author_separator": "•",
+      "read_more": "Read more",
+      "all_posts": "All posts",
+      "filter_label": "Filter posts by tag",
+      "no_posts": "No posts found.",
+      "tags_label": "Tags:",
+      "share_label": "Share:",
+      "share_facebook": "Share on Facebook",
+      "share_x": "Share on X",
+      "share_pinterest": "Pin on Pinterest",
+      "post_navigation": "More posts",
+      "previous_post": "Previous post",
+      "next_post": "Next post",
+      "related_posts": "Related posts",
       "comments_heading": {
         "one": "{{ count }} 則留言",
         "other": "{{ count }} 則留言"

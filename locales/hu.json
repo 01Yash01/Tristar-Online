@@ -73,6 +73,7 @@
     "discount_menu": "Kedvezménykódok",
     "remove": "Eltávolítás",
     "view_pricing_info": "Árképzési adatok megtekintése",
+    "view_link": "View",
     "slideshow": "Diavetítés",
     "header_navigation_label": "Elsődleges",
     "home_logo_alt": "{{ store_name }} - Kezdőlap",
@@ -130,6 +131,9 @@
     "back_to_main_menu": "Vissza a főmenübe"
   },
   "content": {
+    "quick_links": "Quick links",
+    "quick_link_placeholder": "Choose a collection",
+    "product_spotlight_placeholder": "Choose a product",
     "reviews": "összegzés",
     "no_results_found": "Nincs találat",
     "language": "Nyelv",
@@ -173,11 +177,15 @@
     },
     "search_input_label": "Keresés",
     "search_input_placeholder": "Keresés",
+    "search_bar_hint_prefix": "Search for",
+    "search_bar_placeholder": "Search products, brands and more",
     "search_results": "Találatok",
     "search_results_label": "Találatok",
     "search_results_no_results": "Nincs találat erre: „{{ terms }}”. Próbálj meg másra rákeresni.",
     "search_results_resource_articles": "Blogbejegyzések",
     "search_results_resource_collections": "Kollekciók",
+    "search_popular_collections": "Popular categories",
+    "search_trending": "Trending searches",
     "search_results_resource_pages": "Oldalak",
     "search_results_resource_products": "Termékek",
     "search_results_resource_queries": "Javaslatok keresése",
@@ -304,6 +312,19 @@
   "blogs": {
     "article": {
       "comment_author_separator": "•",
+      "read_more": "Read more",
+      "all_posts": "All posts",
+      "filter_label": "Filter posts by tag",
+      "no_posts": "No posts found.",
+      "tags_label": "Tags:",
+      "share_label": "Share:",
+      "share_facebook": "Share on Facebook",
+      "share_x": "Share on X",
+      "share_pinterest": "Pin on Pinterest",
+      "post_navigation": "More posts",
+      "previous_post": "Previous post",
+      "next_post": "Next post",
+      "related_posts": "Related posts",
       "comments_heading": {
         "one": "{{ count }} hozzászólás",
         "other": "{{ count }} hozzászólás"
