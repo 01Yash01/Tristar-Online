@@ -107,6 +107,16 @@
     --reveal-index: 4;
   }
 
+  /* Product list side banner: its text, buttons, and countdown fade up in order */
+  .reveal-ready [data-reveal]:not([data-revealed]) .product-list-banner__content .group-block-content > * {
+    opacity: 0;
+  }
+
+  .reveal-ready [data-reveal][data-revealed] .product-list-banner__content .group-block-content > * {
+    animation: reveal-fade-up var(--reveal-duration) var(--reveal-ease) backwards;
+    animation-delay: calc(0.15s + var(--reveal-stagger) * var(--reveal-index, 0));
+  }
+
   /* Quick links: pills fade up one after another */
   .reveal-ready [data-reveal]:not([data-revealed]) .quick-links__item {
     opacity: 0;
