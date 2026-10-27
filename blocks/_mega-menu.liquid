@@ -1,0 +1,630 @@
+{%- doc -%}
+  Renders the custom panel for one top-level header menu item. The header menu renders one of
+  these static blocks per item position. With the "Theme default" layout it renders nothing, and
+  the menu falls back to its standard panel, so existing menus are unchanged until configured.
+
+  @param {object} menu_link - The top-level menu link this panel belongs to
+
+  @example
+  {% content_for 'block', type: '_mega-menu', id: 'menu-panel-1', menu_link: link %}
+{%- enddoc -%}
+
+{%- liquid
+  assign block_settings = block.settings
+
+  # Images and other heavy content render on the deferred header hydration pass and in the editor,
+  # which keeps the first paint of every page light (see assets/section-hydration.js).
+  assign render_media = false
+  if section.index == blank or request.design_mode
+    assign render_media = true
+  endif
+-%}
+
+{%- comment -%}
+  Promotion blocks render once and unconditionally (a dynamic block area can't sit in a condition);
+  the layouts that show promotions output them below.
+{%- endcomment -%}
+{%- capture promotions -%}
+  {% content_for 'blocks' %}
+{%- endcapture -%}
+
+{%- case block_settings.layout -%}
+  {%- when 'tabs' -%}
+    {%- if menu_link.links != blank -%}
+      {% render 'mega-menu-tabs',
+        menu_link: menu_link,
+        block_settings: block_settings,
+        block_id: block.id,
+        block_attributes: block.shopify_attributes,
+        render_media: render_media
+      %}
+    {%- endif -%}
+
+  {%- when 'promos', 'links_promos' -%}
+    {%- liquid
+      assign has_promotions = false
+      if promotions contains 'mega-promo'
+        assign has_promotions = true
+      endif
+
+      assign show_links = false
+      if block_settings.layout == 'links_promos' and menu_link.links != blank
+        assign show_links = true
+      endif
+
+      assign promo_columns = block_settings.promos_columns | default: 3
+      assign promo_columns_tablet = promo_columns | at_most: 2
+
+      # Share of the panel width the promotions take when they sit beside link columns
+      case promo_columns
+        when 1
+          assign promos_share = '32%'
+          assign links_columns = 4
+        when 2
+          assign promos_share = '48%'
+          assign links_columns = 3
+        when 3
+          assign promos_share = '62%'
+          assign links_columns = 2
+        else
+          assign promos_share = '70%'
+          assign links_columns = 2
+      endcase
+
+      case block_settings.promo_image_ratio
+        when 'square'
+          assign promo_ratio = '1'
+        when 'portrait'
+          assign promo_ratio = '4 / 5'
+        else
+          assign promo_ratio = '16 / 10'
+      endcase
+
+      assign list_id = 'MegaPanelList-' | append: block.id
+    -%}
+
+    {%- if has_promotions or show_links or request.design_mode -%}
+      <div
+        class="mega-promos{% if show_links %} mega-promos--with-links mega-promos--promos-{{ block_settings.promos_position }}{% endif %}"
+        style="
+          --mega-promos-columns: {{ promo_columns }};
+          --mega-promos-columns-tablet: {{ promo_columns_tablet }};
+          --mega-promos-share: {{ promos_share }};
+          --mega-promo-ratio: {{ promo_ratio }};
+          --mega-promo-radius: {{ block_settings.promo_radius }}px;
+        "
+        data-menu-panel
+        {{ block.shopify_attributes }}
+      >
+        {%- if show_links -%}
+          <div
+            class="mega-promos__links mega-menu__grid"
+            data-menu-grid-id="{{ list_id }}"
+          >
+            {% render 'mega-menu-list',
+              parent_link: menu_link,
+              id: list_id,
+              section: section,
+              grid_columns_count: links_columns,
+              grid_columns_count_tablet: 2,
+              menu_content_type: 'text'
+            %}
+          </div>
+        {%- endif -%}
+
+        {%- if has_promotions -%}
+          <div class="mega-promos__cards">{{ promotions }}</div>
+        {%- elsif request.design_mode -%}
+          <p class="mega-promos__hint">{{ 'content.mega_menu_promos_hint' | t }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+
+  {%- when 'products' -%}
+    {%- liquid
+      # Products come from the chosen collection, or from the menu item's own collection
+      assign products_collection = block_settings.products_collection
+      if products_collection == blank and menu_link.type == 'collection_link'
+        assign products_collection = menu_link.object
+      endif
+
+      assign show_links = false
+      if block_settings.products_show_links and menu_link.links != blank
+        assign show_links = true
+      endif
+
+      assign product_count = block_settings.products_count | default: 4
+      assign product_columns = block_settings.products_columns | default: 4
+      assign product_columns_tablet = product_columns | at_most: 3
+
+      # On tablets, keep the same number of rows as desktop by dropping the overflow cards
+      assign product_rows = product_count | times: 1.0 | divided_by: product_columns | ceil
+      assign tablet_limit = product_columns_tablet | times: product_rows
+
+      case product_columns
+        when 2
+          assign products_share = '45%'
+          assign links_columns = 3
+        when 3
+          assign products_share = '58%'
+          assign links_columns = 2
+        when 4
+          assign products_share = '68%'
+          assign links_columns = 2
+        else
+          assign products_share = '74%'
+          assign links_columns = 1
+      endcase
+
+      case block_settings.products_image_ratio
+        when 'square'
+          assign product_ratio = '1'
+        when 'portrait'
+          assign product_ratio = '4 / 5'
+        else
+          assign product_ratio = 'adapt'
+      endcase
+
+      assign list_id = 'MegaPanelList-' | append: block.id
+    -%}
+
+    {%- if products_collection != blank or request.design_mode -%}
+      <div
+        class="mega-products{% if show_links %} mega-products--with-links{% endif %}"
+        style="
+          --mega-products-columns: {{ product_columns }};
+          --mega-products-columns-tablet: {{ product_columns_tablet }};
+          --mega-products-share: {{ products_share }};
+          --resource-card-corner-radius: {{ block_settings.products_image_radius }}px;
+        "
+        data-menu-panel
+        {{ block.shopify_attributes }}
+      >
+        {%- if show_links -%}
+          <div
+            class="mega-products__links mega-menu__grid"
+            data-menu-grid-id="{{ list_id }}"
+          >
+            {% render 'mega-menu-list',
+              parent_link: menu_link,
+              id: list_id,
+              section: section,
+              grid_columns_count: links_columns,
+              grid_columns_count_tablet: 1,
+              menu_content_type: 'text'
+            %}
+          </div>
+        {%- endif -%}
+
+        <div class="mega-products__main">
+          {%- if products_collection == blank -%}
+            <p class="mega-promos__hint">{{ 'content.mega_menu_products_hint' | t }}</p>
+          {%- else -%}
+            <div class="mega-products__header">
+              <p class="mega-products__title">{{ products_collection.title | escape }}</p>
+              {%- if block_settings.products_view_all -%}
+                <a
+                  href="{{ products_collection.url }}"
+                  class="mega-products__view-all"
+                >
+                  {{- 'content.mega_menu_view_all' | t -}}
+                  <span class="visually-hidden">: {{ products_collection.title | escape }}</span>
+                </a>
+              {%- endif -%}
+            </div>
+
+            <ul
+              class="mega-products__grid list-unstyled"
+              role="list"
+            >
+              {%- if render_media -%}
+                {%- paginate products_collection.products by product_count -%}
+                  {%- for product in products_collection.products -%}
+                    <li class="mega-products__item{% if forloop.index > tablet_limit %} mega-products__item--desktop{% endif %}">
+                      {% render 'resource-card',
+                        resource: product,
+                        resource_type: 'product',
+                        image_hover: true,
+                        image_aspect_ratio: product_ratio,
+                        image_sizes: '(min-width: 990px) 18vw, 30vw'
+                      %}
+                    </li>
+                  {%- endfor -%}
+                {%- endpaginate -%}
+              {%- else -%}
+                {%- comment -%} Light placeholders on first paint; the header hydration pass fills in the cards {%- endcomment -%}
+                {%- for i in (1..product_count) -%}
+                  <li
+                    class="mega-products__item{% if forloop.index > tablet_limit %} mega-products__item--desktop{% endif %}"
+                    aria-hidden="true"
+                  >
+                    <span class="mega-products__skeleton"></span>
+                  </li>
+                {%- endfor -%}
+              {%- endif -%}
+            </ul>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+{%- endcase -%}
+
+{% stylesheet %}
+  /* Promotions panels: promotion cards on their own, or beside the item's link columns */
+  .mega-promos {
+    display: grid;
+    gap: clamp(24px, 3vw, 48px);
+    align-items: start;
+    width: 100%;
+    white-space: normal;
+  }
+
+  .mega-promos__cards {
+    display: grid;
+    grid-template-columns: repeat(var(--mega-promos-columns-tablet), minmax(0, 1fr));
+    gap: var(--gap-lg, 16px);
+    min-width: 0;
+
+    @media screen and (min-width: 990px) {
+      grid-template-columns: repeat(var(--mega-promos-columns), minmax(0, 1fr));
+    }
+  }
+
+  .mega-promos--with-links {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 50%);
+
+    @media screen and (min-width: 990px) {
+      grid-template-columns: minmax(0, 1fr) minmax(0, var(--mega-promos-share));
+    }
+  }
+
+  .mega-promos--with-links.mega-promos--promos-start {
+    grid-template-columns: minmax(0, 50%) minmax(0, 1fr);
+
+    @media screen and (min-width: 990px) {
+      grid-template-columns: minmax(0, var(--mega-promos-share)) minmax(0, 1fr);
+    }
+  }
+
+  .mega-promos--promos-start .mega-promos__cards {
+    order: -1;
+  }
+
+  /* Products panel: product cards from a collection, optionally beside the item's link columns */
+  .mega-products {
+    display: grid;
+    gap: clamp(24px, 3vw, 48px);
+    align-items: start;
+    width: 100%;
+    white-space: normal;
+  }
+
+  .mega-products--with-links {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 60%);
+
+    @media screen and (min-width: 990px) {
+      grid-template-columns: minmax(0, 1fr) minmax(0, var(--mega-products-share));
+    }
+  }
+
+  .mega-products__main {
+    min-width: 0;
+  }
+
+  .mega-products__header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--gap-md, 16px);
+    margin-block-end: var(--gap-lg, 20px);
+  }
+
+  .mega-products__title {
+    margin: 0;
+    color: var(--color-foreground);
+    font-family: var(--menu-parent-font-family);
+    font-weight: var(--menu-parent-font-weight);
+    font-size: var(--font-size--lg, 1.125rem);
+    text-transform: var(--menu-parent-font-case);
+  }
+
+  .mega-products__view-all {
+    flex: 0 0 auto;
+    color: var(--color-foreground);
+    font-size: var(--font-size--sm, 0.875rem);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .mega-products__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--mega-products-columns-tablet), minmax(0, 1fr));
+    gap: var(--gap-lg, 16px);
+    margin: 0;
+    padding: 0;
+
+    @media screen and (min-width: 990px) {
+      grid-template-columns: repeat(var(--mega-products-columns), minmax(0, 1fr));
+    }
+  }
+
+  @media screen and (max-width: 989px) {
+    .mega-products__item--desktop {
+      display: none;
+    }
+  }
+
+  .mega-products__skeleton {
+    display: block;
+    aspect-ratio: 1;
+    border-radius: var(--resource-card-corner-radius);
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-5));
+  }
+
+  .mega-promos__hint {
+    margin: 0;
+    padding: var(--padding-lg, 16px);
+    border: 1px dashed currentColor;
+    border-radius: 8px;
+    font-size: var(--font-size--sm, 0.875rem);
+    opacity: 0.75;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.menu_panel",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "_mega-menu-promo"
+    }
+  ],
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "t:content.menu_panel_info"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "t:settings.menu_panel_layout",
+      "options": [
+        {
+          "value": "default",
+          "label": "t:options.menu_panel_default"
+        },
+        {
+          "value": "tabs",
+          "label": "t:options.menu_panel_tabs"
+        },
+        {
+          "value": "links_promos",
+          "label": "t:options.menu_panel_links_promos"
+        },
+        {
+          "value": "promos",
+          "label": "t:options.menu_panel_promos"
+        },
+        {
+          "value": "products",
+          "label": "t:options.menu_panel_products"
+        }
+      ],
+      "default": "default"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:info.menu_panel_tabs",
+      "visible_if": "{{ block.settings.layout == 'tabs' }}"
+    },
+    {
+      "type": "range",
+      "id": "tabs_columns",
+      "label": "t:settings.columns",
+      "min": 2,
+      "max": 6,
+      "step": 1,
+      "default": 4,
+      "visible_if": "{{ block.settings.layout == 'tabs' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "tabs_show_images",
+      "label": "t:settings.menu_panel_show_images",
+      "default": true,
+      "visible_if": "{{ block.settings.layout == 'tabs' }}"
+    },
+    {
+      "type": "select",
+      "id": "tabs_image_ratio",
+      "label": "t:settings.aspect_ratio",
+      "options": [
+        {
+          "value": "landscape",
+          "label": "t:options.landscape"
+        },
+        {
+          "value": "square",
+          "label": "t:options.square"
+        },
+        {
+          "value": "portrait",
+          "label": "t:options.portrait"
+        }
+      ],
+      "default": "landscape",
+      "visible_if": "{{ block.settings.layout == 'tabs' and block.settings.tabs_show_images }}"
+    },
+    {
+      "type": "range",
+      "id": "tabs_image_radius",
+      "label": "t:settings.corner_radius",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 8,
+      "visible_if": "{{ block.settings.layout == 'tabs' and block.settings.tabs_show_images }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "tabs_show_view_all",
+      "label": "t:settings.menu_panel_view_all",
+      "default": true,
+      "visible_if": "{{ block.settings.layout == 'tabs' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.menu_panel_promos",
+      "visible_if": "{{ block.settings.layout == 'promos' or block.settings.layout == 'links_promos' }}"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:info.menu_panel_promos",
+      "visible_if": "{{ block.settings.layout == 'promos' or block.settings.layout == 'links_promos' }}"
+    },
+    {
+      "type": "select",
+      "id": "promos_position",
+      "label": "t:settings.menu_panel_promos_position",
+      "options": [
+        {
+          "value": "end",
+          "label": "t:options.direction_end"
+        },
+        {
+          "value": "start",
+          "label": "t:options.direction_start"
+        }
+      ],
+      "default": "end",
+      "visible_if": "{{ block.settings.layout == 'links_promos' }}"
+    },
+    {
+      "type": "range",
+      "id": "promos_columns",
+      "label": "t:settings.menu_panel_promos_columns",
+      "min": 1,
+      "max": 4,
+      "step": 1,
+      "default": 3,
+      "visible_if": "{{ block.settings.layout == 'promos' or block.settings.layout == 'links_promos' }}"
+    },
+    {
+      "type": "select",
+      "id": "promo_image_ratio",
+      "label": "t:settings.aspect_ratio",
+      "options": [
+        {
+          "value": "landscape",
+          "label": "t:options.landscape"
+        },
+        {
+          "value": "square",
+          "label": "t:options.square"
+        },
+        {
+          "value": "portrait",
+          "label": "t:options.portrait"
+        }
+      ],
+      "default": "landscape",
+      "visible_if": "{{ block.settings.layout == 'promos' or block.settings.layout == 'links_promos' }}"
+    },
+    {
+      "type": "range",
+      "id": "promo_radius",
+      "label": "t:settings.corner_radius",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 12,
+      "visible_if": "{{ block.settings.layout == 'promos' or block.settings.layout == 'links_promos' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.menu_panel_products",
+      "visible_if": "{{ block.settings.layout == 'products' }}"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:info.menu_panel_products",
+      "visible_if": "{{ block.settings.layout == 'products' }}"
+    },
+    {
+      "type": "collection",
+      "id": "products_collection",
+      "label": "t:settings.menu_panel_products_collection",
+      "info": "t:info.menu_panel_products_collection"
+    },
+    {
+      "type": "range",
+      "id": "products_count",
+      "label": "t:settings.menu_panel_products_count",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4,
+      "visible_if": "{{ block.settings.layout == 'products' }}"
+    },
+    {
+      "type": "range",
+      "id": "products_columns",
+      "label": "t:settings.menu_panel_products_columns",
+      "min": 2,
+      "max": 5,
+      "step": 1,
+      "default": 4,
+      "visible_if": "{{ block.settings.layout == 'products' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "products_show_links",
+      "label": "t:settings.menu_panel_products_links",
+      "default": true,
+      "visible_if": "{{ block.settings.layout == 'products' }}"
+    },
+    {
+      "type": "select",
+      "id": "products_image_ratio",
+      "label": "t:settings.aspect_ratio",
+      "options": [
+        {
+          "value": "adapt",
+          "label": "t:options.auto"
+        },
+        {
+          "value": "square",
+          "label": "t:options.square"
+        },
+        {
+          "value": "portrait",
+          "label": "t:options.portrait"
+        }
+      ],
+      "default": "square",
+      "visible_if": "{{ block.settings.layout == 'products' }}"
+    },
+    {
+      "type": "range",
+      "id": "products_image_radius",
+      "label": "t:settings.corner_radius",
+      "min": 0,
+      "max": 24,
+      "step": 2,
+      "unit": "px",
+      "default": 8,
+      "visible_if": "{{ block.settings.layout == 'products' }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "products_view_all",
+      "label": "t:settings.menu_panel_view_all",
+      "default": true,
+      "visible_if": "{{ block.settings.layout == 'products' }}"
+    }
+  ]
+}
+{% endschema %}

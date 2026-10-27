@@ -94,13 +94,53 @@
 
     {% capture children %}
       {% for link in block_settings.menu.links %}
+        {%- comment -%}
+          Each top-level item position has its own static "Menu panel" block (static block IDs must
+          be string literals, hence the case). A panel left on "Theme default" renders nothing and the
+          item keeps the standard mega menu below.
+        {%- endcomment -%}
+        {%- capture menu_panel -%}
+          {%- case forloop.index -%}
+            {%- when 1 -%}
+              {% content_for 'block', type: '_mega-menu', id: 'menu-panel-1', menu_link: link %}
+            {%- when 2 -%}
+              {% content_for 'block', type: '_mega-menu', id: 'menu-panel-2', menu_link: link %}
+            {%- when 3 -%}
+              {% content_for 'block', type: '_mega-menu', id: 'menu-panel-3', menu_link: link %}
+            {%- when 4 -%}
+              {% content_for 'block', type: '_mega-menu', id: 'menu-panel-4', menu_link: link %}
+            {%- when 5 -%}
+              {% content_for 'block', type: '_mega-menu', id: 'menu-panel-5', menu_link: link %}
+            {%- when 6 -%}
+              {% content_for 'block', type: '_mega-menu', id: 'menu-panel-6', menu_link: link %}
+            {%- when 7 -%}
+              {% content_for 'block', type: '_mega-menu', id: 'menu-panel-7', menu_link: link %}
+            {%- when 8 -%}
+              {% content_for 'block', type: '_mega-menu', id: 'menu-panel-8', menu_link: link %}
+            {%- when 9 -%}
+              {% content_for 'block', type: '_mega-menu', id: 'menu-panel-9', menu_link: link %}
+            {%- when 10 -%}
+              {% content_for 'block', type: '_mega-menu', id: 'menu-panel-10', menu_link: link %}
+          {%- endcase -%}
+        {%- endcapture -%}
+        {%- liquid
+          # A panel counts only when it renders its marker; editor comments or whitespace don't
+          assign has_panel = false
+          if menu_panel contains 'data-menu-panel'
+            assign has_panel = true
+          endif
+          assign has_submenu = false
+          if link.links != blank or has_panel
+            assign has_submenu = true
+          endif
+        -%}
         <li
           class="menu-list__list-item"
           on:blur="/deactivate"
           on:pointerenter="/activate"
           on:pointerleave="/deactivate"
         >
-          {%- if link.links != blank -%}
+          {%- if has_submenu -%}
             <span class="menu-list__trigger">
           {%- endif -%}
           <a
@@ -114,7 +154,7 @@
           >
             <span class="menu-list__link-title">{{- link.title -}}</span>
           </a>
-          {%- if link.links != blank -%}
+          {%- if has_submenu -%}
             <button
               type="button"
               class="menu-list__disclosure button-unstyled"
@@ -147,22 +187,49 @@
               >
                 {% assign list_id = 'MegaMenuList-' | append: forloop.index %}
                 <div class="mega-menu section section--full-width-margin section--{{ section.settings.section_width }}">
-                  <div
-                    class="mega-menu__grid"
-                    data-menu-grid-id="{{ list_id }}"
-                  >
-                    {% render 'mega-menu-list',
-                      parent_link: link,
-                      id: list_id,
-                      section: section,
-                      grid_columns_count: 6,
-                      grid_columns_count_tablet: 4,
-                      grid_columns_count_collection_images: 8,
-                      menu_content_type: menu_content_type,
-                      content_aspect_ratio: ratio,
-                      image_border_radius: image_border_radius
-                    %}
-                  </div>
+                  {%- if has_panel -%}
+                    <div class="mega-menu__panel{% if link.links != blank %} mega-menu__panel--has-fallback{% endif %}">
+                      {{- menu_panel -}}
+                    </div>
+
+                    {%- comment -%}
+                      Wide custom panels don't fit the narrow "More" overflow menu, where the plain list
+                      is shown instead (text only, so it stays light).
+                    {%- endcomment -%}
+                    {%- if link.links != blank -%}
+                      <div
+                        class="mega-menu__grid mega-menu__panel-fallback"
+                        data-menu-grid-id="{{ list_id }}"
+                      >
+                        {% render 'mega-menu-list',
+                          parent_link: link,
+                          id: list_id,
+                          section: section,
+                          grid_columns_count: 6,
+                          grid_columns_count_tablet: 4,
+                          grid_columns_count_collection_images: 8,
+                          menu_content_type: 'text'
+                        %}
+                      </div>
+                    {%- endif -%}
+                  {%- else -%}
+                    <div
+                      class="mega-menu__grid"
+                      data-menu-grid-id="{{ list_id }}"
+                    >
+                      {% render 'mega-menu-list',
+                        parent_link: link,
+                        id: list_id,
+                        section: section,
+                        grid_columns_count: 6,
+                        grid_columns_count_tablet: 4,
+                        grid_columns_count_collection_images: 8,
+                        menu_content_type: menu_content_type,
+                        content_aspect_ratio: ratio,
+                        image_border_radius: image_border_radius
+                      %}
+                    </div>
+                  {%- endif -%}
                 </div>
               </div>
             </div>
@@ -809,6 +876,22 @@
     display: contents;
   }
 
+  /* Custom menu panels (blocks/_mega-menu.liquid). In the narrow "More" overflow menu, panels for
+     items with sub-links swap for the plain list, rendered alongside them for that purpose only.
+     Panels without sub-links (promotions only) have no list to fall back to, so they stay. */
+  .mega-menu__panel {
+    min-width: 0;
+  }
+
+  .mega-menu__panel-fallback,
+  .menu-list__list-item[slot='overflow'] .mega-menu__panel--has-fallback {
+    display: none;
+  }
+
+  .menu-list__list-item[slot='overflow'] .mega-menu__panel-fallback {
+    display: grid;
+  }
+
   /* Hide product cards in collapsed submenus from the IntersectionObserver that fires product view events */
   .menu-list__list-item:not(:has([aria-expanded='true'])) > .menu-list__submenu product-component {
     display: none;
@@ -819,6 +902,11 @@
 {
   "name": "t:names.menu",
   "tag": null,
+  "blocks": [
+    {
+      "type": "_mega-menu"
+    }
+  ],
   "settings": [
     {
       "type": "link_list",

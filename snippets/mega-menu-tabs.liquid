@@ -1,0 +1,345 @@
+{%- doc -%}
+  Renders the "Category tabs" mega menu panel: the menu item's sub-items as tabs down the side,
+  each revealing a grid of its own sub-items (with collection images). Tabs and their panels are
+  interleaved in the DOM so keyboard order runs tab, its links, next tab. All panels share one
+  grid area, so the panel height stays steady while tabs switch. Behavior: assets/mega-menu-tabs.js.
+
+  @param {object} menu_link - The top-level menu link whose sub-items become tabs
+  @param {object} block_settings - The menu panel block settings
+  @param {string} block_id - The menu panel block ID, for unique element IDs
+  @param {string} [block_attributes] - The menu panel block's editor attributes
+  @param {boolean} [render_media] - Whether to render images (false on the light first paint)
+
+  @example
+  {% render 'mega-menu-tabs', menu_link: link, block_settings: block.settings, block_id: block.id, block_attributes: block.shopify_attributes, render_media: true %}
+{%- enddoc -%}
+
+{%- liquid
+  assign columns = block_settings.tabs_columns | default: 4
+  assign columns_tablet = columns | at_most: 3
+  assign show_images = block_settings.tabs_show_images
+
+  case block_settings.tabs_image_ratio
+    when 'square'
+      assign image_ratio = '1'
+    when 'portrait'
+      assign image_ratio = '4 / 5'
+    else
+      assign image_ratio = '16 / 10'
+  endcase
+
+  assign tile_width = 1000 | divided_by: columns
+  assign image_sizes = '(min-width: 990px) ' | append: tile_width | append: 'px, 30vw'
+-%}
+
+<script
+  src="{{ 'mega-menu-tabs.js' | asset_url }}"
+  type="module"
+></script>
+
+<mega-menu-tabs
+  class="mega-tabs"
+  data-menu-panel
+  style="
+    --mega-tabs-count: {{ menu_link.links.size }};
+    --mega-tabs-columns: {{ columns }};
+    --mega-tabs-columns-tablet: {{ columns_tablet }};
+    --mega-tabs-image-ratio: {{ image_ratio }};
+    --mega-tabs-image-radius: {{ block_settings.tabs_image_radius | default: 0 }}px;
+  "
+  {{ block_attributes }}
+>
+  {%- for tab in menu_link.links -%}
+    {%- assign tab_id = 'MegaTab-' | append: block_id | append: '-' | append: forloop.index -%}
+    <a
+      href="{{ tab.url }}"
+      id="{{ tab_id }}"
+      class="mega-tabs__tab"
+      style="grid-row: {{ forloop.index }};"
+      ref="tabs[]"
+      data-skip-node-update
+      {% if forloop.first %}
+        data-active
+      {% endif %}
+      on:pointerenter="/hoverTab/{{ forloop.index0 }}"
+      on:pointerleave="/leaveTab"
+      on:focus="/focusTab/{{ forloop.index0 }}"
+      on:click="/tapTab/{{ forloop.index0 }}"
+    >
+      <span class="mega-tabs__tab-title">{{ tab.title | escape }}</span>
+      <svg
+        class="mega-tabs__tab-icon"
+        aria-hidden="true"
+        focusable="false"
+        viewBox="0 0 10 6"
+      >
+        {%- render 'icon', icon: 'caret' -%}
+      </svg>
+    </a>
+
+    <div
+      class="mega-tabs__panel"
+      role="group"
+      aria-labelledby="{{ tab_id }}"
+      ref="panels[]"
+      data-skip-node-update
+      {% if forloop.first %}
+        data-active
+      {% else %}
+        inert
+      {% endif %}
+      on:pointerenter="/holdPanel"
+    >
+      <div class="mega-tabs__panel-header">
+        <p class="mega-tabs__panel-title">{{ tab.title | escape }}</p>
+        {%- if block_settings.tabs_show_view_all -%}
+          <a
+            href="{{ tab.url }}"
+            class="mega-tabs__view-all"
+          >
+            {{- 'content.mega_menu_view_all' | t -}}
+            <span class="visually-hidden">: {{ tab.title | escape }}</span>
+          </a>
+        {%- endif -%}
+      </div>
+
+      <ul
+        class="mega-tabs__grid list-unstyled"
+        role="list"
+      >
+        {%- liquid
+          # A tab without sub-items shows a single tile for the tab itself
+          if tab.links != blank
+            assign grid_links = tab.links
+            assign grid_limit = tab.links.size
+          else
+            assign grid_links = menu_link.links | where: 'url', tab.url
+            assign grid_limit = 1
+          endif
+        -%}
+        {%- for item in grid_links limit: grid_limit -%}
+          {%- liquid
+            assign item_image = nil
+            if item.type == 'collection_link' or item.type == 'product_link'
+              assign item_image = item.object.featured_image
+            endif
+          -%}
+          <li>
+            <a
+              href="{{ item.url }}"
+              class="mega-tabs__item"
+            >
+              {%- if show_images -%}
+                <span class="mega-tabs__media">
+                  {%- if render_media and item_image -%}
+                    {{
+                      item_image
+                      | image_url: width: 480
+                      | image_tag:
+                        widths: '160, 240, 320, 480',
+                        sizes: image_sizes,
+                        loading: 'lazy',
+                        alt: '',
+                        class: 'mega-tabs__image'
+                    }}
+                  {%- else -%}
+                    <span
+                      class="mega-tabs__placeholder"
+                      aria-hidden="true"
+                    >
+                      {{- item.title | slice: 0 | upcase -}}
+                    </span>
+                  {%- endif -%}
+                </span>
+              {%- endif -%}
+              <span class="mega-tabs__item-title">{{ item.title | escape }}</span>
+            </a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+  {%- endfor -%}
+</mega-menu-tabs>
+
+{% stylesheet %}
+  .mega-tabs {
+    --mega-tabs-sidebar-width: clamp(200px, 22%, 280px);
+
+    display: grid;
+    grid-template-columns: var(--mega-tabs-sidebar-width) minmax(0, 1fr);
+
+    /* One row per tab plus a filler row, so tabs keep their own height while panels span them all */
+    grid-template-rows: repeat(var(--mega-tabs-count), min-content) 1fr;
+    column-gap: clamp(24px, 3vw, 48px);
+    align-items: start;
+    width: 100%;
+    white-space: normal;
+  }
+
+  .mega-tabs__tab {
+    grid-column: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--gap-sm, 12px);
+    padding: 8px 12px;
+    border-radius: 8px;
+    color: var(--menu-child-font-color);
+    font-family: var(--menu-parent-font-family);
+    font-style: var(--menu-parent-font-style);
+    font-weight: var(--menu-parent-font-weight);
+    font-size: var(--menu-child-font-size);
+    line-height: var(--menu-child-font-line-height);
+    text-transform: var(--menu-parent-font-case);
+    text-decoration: none;
+    transition: background-color var(--animation-speed) var(--animation-easing);
+  }
+
+  .mega-tabs__tab:hover,
+  .mega-tabs__tab[data-active] {
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-5));
+  }
+
+  .mega-tabs__tab[data-active] {
+    color: var(--color-foreground);
+  }
+
+  .mega-tabs__tab-icon {
+    flex: 0 0 auto;
+    width: 10px;
+    height: 6px;
+    fill: currentColor;
+    opacity: 0;
+    transform: rotate(-90deg);
+    transition: opacity var(--animation-speed) var(--animation-easing);
+  }
+
+  .mega-tabs__tab[data-active] .mega-tabs__tab-icon {
+    opacity: 1;
+  }
+
+  [dir='rtl'] .mega-tabs__tab-icon {
+    transform: rotate(90deg);
+  }
+
+  /* Every panel sits in the same area; only the active one is visible and reachable */
+  .mega-tabs__panel {
+    grid-column: 2;
+    grid-row: 1 / -1;
+    min-width: 0;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.2s ease, visibility 0s linear 0.2s;
+  }
+
+  .mega-tabs__panel[data-active] {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.25s ease;
+  }
+
+  .mega-tabs__panel-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--gap-md, 16px);
+    margin-block-end: var(--gap-lg, 20px);
+  }
+
+  .mega-tabs__panel-title {
+    margin: 0;
+    color: var(--color-foreground);
+    font-family: var(--menu-parent-font-family);
+    font-weight: var(--menu-parent-font-weight);
+    font-size: var(--font-size--lg, 1.125rem);
+    text-transform: var(--menu-parent-font-case);
+  }
+
+  .mega-tabs__view-all {
+    flex: 0 0 auto;
+    color: var(--color-foreground);
+    font-size: var(--font-size--sm, 0.875rem);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .mega-tabs__grid {
+    display: grid;
+    grid-template-columns: repeat(var(--mega-tabs-columns-tablet), minmax(0, 1fr));
+    gap: var(--gap-xl, 24px) var(--gap-lg, 20px);
+    margin: 0;
+    padding: 0;
+
+    @media screen and (min-width: 990px) {
+      grid-template-columns: repeat(var(--mega-tabs-columns), minmax(0, 1fr));
+    }
+  }
+
+  .mega-tabs__item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: var(--menu-child-font-color);
+    font-family: var(--menu-child-font-family);
+    font-style: var(--menu-child-font-style);
+    font-weight: var(--menu-child-font-weight);
+    font-size: var(--menu-child-font-size);
+    line-height: var(--menu-child-font-line-height);
+    text-transform: var(--menu-child-font-case);
+    text-decoration: none;
+  }
+
+  .mega-tabs__item:hover {
+    color: var(--menu-child-active-font-color);
+  }
+
+  .mega-tabs__media {
+    display: flex;
+    overflow: hidden;
+    aspect-ratio: var(--mega-tabs-image-ratio);
+    border-radius: var(--mega-tabs-image-radius);
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-5));
+  }
+
+  .mega-tabs__image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s var(--ease-out-cubic);
+  }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .mega-tabs__item:hover .mega-tabs__image {
+      transform: scale(1.05);
+    }
+  }
+
+  .mega-tabs__placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-40));
+    font-size: var(--font-size--2xl, 1.5rem);
+    font-weight: 600;
+  }
+
+  .mega-tabs__item-title {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mega-tabs__panel,
+    .mega-tabs__panel[data-active],
+    .mega-tabs__tab,
+    .mega-tabs__tab-icon {
+      transition: none;
+    }
+  }
+{% endstylesheet %}

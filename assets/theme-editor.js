@@ -21,6 +21,13 @@ const slideshowState = {
  */
 document.addEventListener('shopify:block:select', function (event) {
   if (event.target instanceof HTMLElement) {
+    // Open the header menu item that owns a selected custom menu panel (or a block inside it),
+    // so the panel is visible while it is being edited.
+    const menuPanel = event.target.closest('.mega-menu__panel');
+    if (menuPanel) {
+      menuPanel.closest('.menu-list__list-item')?.dispatchEvent(new PointerEvent('pointerenter'));
+    }
+
     // Check if the selected element is specifically a product-card block itself
     // Not a child block within the product card
 
