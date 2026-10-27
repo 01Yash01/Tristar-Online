@@ -9,6 +9,11 @@
  */
 {
   "names": {
+    "menu_promo": "Promotion",
+    "menu_panel": "Menu panel",
+    "vendor": "Brand",
+    "product_list_banner_content": "Banner content",
+    "countdown": "Countdown",
     "products_with_banner": "Products with banner",
     "quick_links": "Quick links",
     "quick_link": "Quick link",
@@ -179,6 +184,27 @@
     "disclosures": "Pflichtangaben"
   },
   "settings": {
+    "menu_panel_products_collection": "Products collection",
+    "menu_panel_products_count": "Products to show",
+    "menu_panel_products_columns": "Products per row",
+    "menu_panel_products_links": "Show sub-links beside products",
+    "menu_panel_promos_position": "Promotions side",
+    "menu_panel_promos_columns": "Promotions per row",
+    "menu_promo_button_label": "Button label",
+    "menu_panel_layout": "Panel layout",
+    "menu_panel_show_images": "Show collection images",
+    "menu_panel_view_all": "Show \"View all\" link",
+    "product_list_banner_mobile_image": "Mobile image",
+    "product_list_banner_zoom": "Zoom on hover",
+    "product_list_banner_padding": "Inner padding",
+    "product_list_banner_border": "Show border",
+    "badge_sale_style": "Sale badge text",
+    "countdown_end_date": "End date",
+    "countdown_end_time": "End time",
+    "countdown_heading": "Heading",
+    "countdown_show_seconds": "Show seconds",
+    "countdown_after_end": "When it ends",
+    "countdown_expired_message": "Ended message",
     "product_list_banner_width": "Banner width",
     "product_list_banner_mobile": "Show banner on mobile",
     "quick_links_hover_effect": "Hover effect",
@@ -630,6 +656,19 @@
     "customer_account_menu": "Kundenkontomenü"
   },
   "options": {
+    "menu_panel_products": "Products",
+    "menu_panel_links_promos": "Links + promotions",
+    "menu_panel_promos": "Promotions only",
+    "menu_promo_dark": "Dark",
+    "menu_panel_default": "Theme default",
+    "menu_panel_tabs": "Category tabs",
+    "badge_sale_text": "Sale",
+    "badge_sale_percentage": "Percentage off (-15%)",
+    "badge_sale_amount": "Amount saved (Save 500)",
+    "countdown_hide": "Hide the countdown",
+    "countdown_message": "Show a message",
+    "countdown_boxed": "Boxed",
+    "countdown_minimal": "Minimal",
     "quick_links_hover_fill": "Fill from left",
     "quick_links_hover_border": "Border only",
     "glass": "Glass",
@@ -917,6 +956,9 @@
     "direction_top_start": "Oben links"
   },
   "content": {
+    "menu_panel_products": "Products",
+    "menu_panel_promos": "Promotions",
+    "menu_panel_info": "Menu panels follow your menu order: panel 1 belongs to the first top menu item, panel 2 to the second, and so on. Theme default keeps the standard menu.",
     "product_list_banner": "Side banner",
     "background_video": "Hintergrundvideo",
     "describe_the_video_for": "Beschreibe das Video für Kunden, die Bildschirmlesegeräte benutzen. [Mehr Informationen](https://help.shopify.com/manual/online-store/themes/theme-structure/theme-features#video-block)",
@@ -1105,6 +1147,9 @@
     "featured_collection_h3": "<h3>Vorgestellte Kategorie</h3>"
   },
   "text_defaults": {
+    "menu_promo_heading": "New arrivals",
+    "countdown_label": "Limited time only",
+    "countdown_expired": "This deal has ended",
     "featured_product": "Featured",
     "collapsible_row": "Einklappbare Zeile",
     "button_label": "Jetzt einkaufen",
@@ -1144,6 +1189,15 @@
     "disclosures": "Pflichtangaben"
   },
   "info": {
+    "menu_panel_products_collection": "Only used by the Products layout. Leave empty to use the menu item's own collection.",
+    "menu_panel_products": "Shows product cards from the chosen collection. Leave it empty to use this menu item's own collection.",
+    "menu_panel_promos": "Add Promotion blocks inside this panel. With Links + promotions, the menu item's sub-links show beside them.",
+    "menu_panel_tabs": "Sub-items of this menu item become tabs, and each tab shows its own sub-items as a grid. Images come from each collection's image.",
+    "product_list_banner_mobile_image": "Optional. Shown on phones instead of the main image.",
+    "product_list_banner_fit": "Cover fills the banner and may crop the edges. Contain always shows the whole image.",
+    "badge_sale_style": "Percentage and amount are calculated from the compare-at price.",
+    "countdown_end_date": "Format YYYY-MM-DD, for example 2026-12-31. Uses your store time zone.",
+    "countdown_end_time": "24-hour format HH:MM, for example 23:59.",
     "product_list_banner_image": "Shown beside the products. Leave empty for a standard product list.",
     "quick_links_hover_colors": "Also used for the pill of the page being viewed. Leave empty to use the theme text and background colors.",
     "quick_link_collection": "Fills the label, link, and image automatically.",

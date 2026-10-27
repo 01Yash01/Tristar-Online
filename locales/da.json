@@ -131,6 +131,17 @@
     "back_to_main_menu": "Tilbage til hovedmenu"
   },
   "content": {
+    "mega_menu_products_hint": "Choose a collection for this menu panel in the theme editor sidebar.",
+    "mega_menu_promos_hint": "Add Promotion blocks to this menu panel in the theme editor sidebar.",
+    "mega_menu_view_all": "View all",
+    "product_badge_sale_percent": "-{{ percent }}%",
+    "product_badge_sale_amount": "Save {{ amount }}",
+    "countdown_days": "Days",
+    "countdown_hours": "Hours",
+    "countdown_minutes": "Mins",
+    "countdown_seconds": "Secs",
+    "countdown_label": "Offer ends {{ date }}",
+    "countdown_setup_hint": "Countdown: enter an end date as YYYY-MM-DD to show the timer.",
     "quick_links": "Quick links",
     "quick_link_placeholder": "Choose a collection",
     "product_spotlight_placeholder": "Choose a product",
