@@ -108,4 +108,28 @@
   .custom-section-content {
     z-index: var(--layer-flat);
   }
+
+  /*
+   * A row of exactly four boxes (group blocks) that isn't stacked on mobile would wrap 3 + 1 on
+   * phones. Lay it out two by two instead. Tablets and desktops keep the single row, and rows with
+   * any other number or kind of items keep the theme's normal wrapping.
+   */
+  @media screen and (max-width: 749px) {
+    .custom-section-content
+      .layout-panel-flex--row:not(.mobile-column):has(> .group-block:nth-child(4):last-child):not(
+        :has(> :not(.group-block))
+      ) {
+      flex-wrap: wrap;
+    }
+
+    .custom-section-content
+      .layout-panel-flex--row:not(.mobile-column):has(> .group-block:nth-child(4):last-child):not(
+        :has(> :not(.group-block))
+      )
+      > .group-block {
+      flex: 0 0 calc((100% - var(--gap, 16px)) / 2);
+      width: calc((100% - var(--gap, 16px)) / 2);
+      min-width: 0;
+    }
+  }
 {% endstylesheet %}
