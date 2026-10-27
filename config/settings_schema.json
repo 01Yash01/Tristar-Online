@@ -1217,6 +1217,27 @@
         "default": 40
       },
       {
+        "type": "select",
+        "id": "badge_sale_style",
+        "label": "t:settings.badge_sale_style",
+        "info": "t:info.badge_sale_style",
+        "options": [
+          {
+            "value": "text",
+            "label": "t:options.badge_sale_text"
+          },
+          {
+            "value": "percentage",
+            "label": "t:options.badge_sale_percentage"
+          },
+          {
+            "value": "amount",
+            "label": "t:options.badge_sale_amount"
+          }
+        ],
+        "default": "text"
+      },
+      {
         "type": "header",
         "content": "t:settings.colors"
       },
