@@ -112,6 +112,13 @@ class HeaderComponent extends Component {
         this.dataset.stickyState = isIntersecting ? 'inactive' : 'active';
         if (this.dataset.themeColor) changeMetaThemeColor(this.dataset.themeColor);
       } else {
+        // 'idle' hides the header while it is scrolled past. If its natural position is in view it
+        // can't be scrolled past, so show it; otherwise a stale 'idle' (for example after the
+        // viewport crosses the scroll-container breakpoint) leaves an invisible header at the top.
+        if (isIntersecting && this.dataset.stickyState === 'idle') {
+          this.dataset.stickyState = 'inactive';
+          this.dataset.scrollDirection = 'none';
+        }
         this.#offscreen = !isIntersecting || this.dataset.stickyState === 'active';
       }
     }, config);
@@ -161,6 +168,15 @@ class HeaderComponent extends Component {
       this.#scrollContainer.removeEventListener('scroll', this.#handleWindowScroll);
       this.#scrollContainer = getScrollEventTarget();
       this.#scrollContainer.addEventListener('scroll', this.#handleWindowScroll);
+    }
+
+    // Scroll state recorded against the old container no longer applies. Start fresh; the new
+    // observer below reports where the header actually is.
+    this.#lastScrollTop = getScrollTop();
+    this.#offscreen = false;
+    if (stickyMode !== 'always') {
+      this.dataset.stickyState = 'inactive';
+      this.dataset.scrollDirection = 'none';
     }
 
     // Recreate IntersectionObserver with the new root
