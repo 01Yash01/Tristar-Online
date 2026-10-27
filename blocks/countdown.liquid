@@ -1,0 +1,365 @@
+{%- doc -%}
+  Renders a countdown to an end date and time in the store's time zone (for example a flash sale).
+  The digits are rendered in Liquid and kept live by `assets/countdown-timer.js`. When the time is
+  up the block hides itself or shows a message. An invalid or missing date renders nothing on the
+  storefront and a setup hint in the theme editor.
+
+  @example
+  {% content_for 'block', type: 'countdown', id: 'countdown' %}
+{%- enddoc -%}
+
+{%- liquid
+  assign block_settings = block.settings
+  assign date_parts = block_settings.end_date | strip | split: '-'
+  assign time_text = block_settings.end_time | strip | default: '23:59'
+  assign time_parts = time_text | split: ':'
+
+  # Accept only YYYY-MM-DD and HH:MM, so a typo never produces a wrong deadline
+  assign is_valid = false
+  if date_parts.size == 3 and time_parts.size == 2
+    assign year = date_parts[0] | plus: 0
+    assign month = date_parts[1] | plus: 0
+    assign day = date_parts[2] | plus: 0
+    assign hour = time_parts[0] | plus: 0
+    assign minute = time_parts[1] | plus: 0
+    if year > 2000 and month >= 1 and month <= 12 and day >= 1 and day <= 31 and hour <= 23 and minute <= 59
+      assign is_valid = true
+    endif
+  endif
+
+  if is_valid
+    # Parsed in the store's time zone, so every shopper counts down to the same moment
+    assign end_text = block_settings.end_date | strip | append: ' ' | append: time_text
+    assign end_epoch = end_text | date: '%s' | plus: 0
+    assign now_epoch = 'now' | date: '%s' | plus: 0
+    assign remaining = end_epoch | minus: now_epoch
+    if end_epoch < 1000000000
+      assign is_valid = false
+    endif
+  endif
+
+  if remaining < 0
+    assign remaining = 0
+  endif
+  assign days = remaining | divided_by: 86400
+  assign hours = remaining | modulo: 86400 | divided_by: 3600
+  assign minutes = remaining | modulo: 3600 | divided_by: 60
+  assign seconds = remaining | modulo: 60
+
+  assign is_expired = false
+  if is_valid and remaining == 0
+    assign is_expired = true
+  endif
+
+  assign hide_now = false
+  if is_expired and block_settings.after_end == 'hide'
+    assign hide_now = true
+  endif
+-%}
+
+{%- if is_valid == false -%}
+  {%- if request.design_mode -%}
+    <p
+      class="countdown-hint"
+      {{ block.shopify_attributes }}
+    >
+      {{ 'content.countdown_setup_hint' | t }}
+    </p>
+  {%- endif -%}
+{%- elsif hide_now == false or request.design_mode -%}
+  <script
+    src="{{ 'countdown-timer.js' | asset_url }}"
+    type="module"
+  ></script>
+
+  <countdown-timer
+    class="countdown countdown--{{ block_settings.style }} countdown--{{ block_settings.size }}"
+    style="--countdown-align: {{ block_settings.alignment }};"
+    data-end="{{ end_epoch }}"
+    data-after-end="{{ block_settings.after_end }}"
+    role="timer"
+    aria-label="{{ 'content.countdown_label' | t: date: end_text }}"
+    {{ block.shopify_attributes }}
+  >
+    {%- if block_settings.label != blank -%}
+      <span class="countdown__label">{{ block_settings.label | escape }}</span>
+    {%- endif -%}
+
+    <span
+      class="countdown__units"
+      ref="units"
+      aria-hidden="true"
+      {% if is_expired and block_settings.after_end == 'message' %}
+        hidden
+      {% endif %}
+    >
+      <span class="countdown__unit">
+        <span
+          class="countdown__value"
+          ref="days"
+        >
+          {%- if days < 10 -%}0{%- endif -%}{{- days -}}
+        </span>
+        <span class="countdown__name">{{ 'content.countdown_days' | t }}</span>
+      </span>
+      <span class="countdown__separator">:</span>
+      <span class="countdown__unit">
+        <span
+          class="countdown__value"
+          ref="hours"
+        >
+          {%- if hours < 10 -%}0{%- endif -%}{{- hours -}}
+        </span>
+        <span class="countdown__name">{{ 'content.countdown_hours' | t }}</span>
+      </span>
+      <span class="countdown__separator">:</span>
+      <span class="countdown__unit">
+        <span
+          class="countdown__value"
+          ref="minutes"
+        >
+          {%- if minutes < 10 -%}0{%- endif -%}{{- minutes -}}
+        </span>
+        <span class="countdown__name">{{ 'content.countdown_minutes' | t }}</span>
+      </span>
+      {%- if block_settings.show_seconds -%}
+        <span class="countdown__separator">:</span>
+        <span class="countdown__unit">
+          <span
+            class="countdown__value"
+            ref="seconds"
+          >
+            {%- if seconds < 10 -%}0{%- endif -%}{{- seconds -}}
+          </span>
+          <span class="countdown__name">{{ 'content.countdown_seconds' | t }}</span>
+        </span>
+      {%- endif -%}
+    </span>
+
+    {%- if block_settings.after_end == 'message' -%}
+      <span
+        class="countdown__expired"
+        ref="expired"
+        {% unless is_expired %}
+          hidden
+        {% endunless %}
+      >
+        {{- block_settings.expired_message | escape -}}
+      </span>
+    {%- endif -%}
+  </countdown-timer>
+{%- endif -%}
+
+{% stylesheet %}
+  .countdown {
+    --countdown-value-size: 1.25rem;
+    --countdown-unit-min-width: 52px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: var(--countdown-align, flex-start);
+    gap: var(--gap-xs, 8px);
+    color: inherit;
+  }
+
+  .countdown--small {
+    --countdown-value-size: 1rem;
+    --countdown-unit-min-width: 44px;
+  }
+
+  .countdown--large {
+    --countdown-value-size: 1.75rem;
+    --countdown-unit-min-width: 64px;
+  }
+
+  .countdown__label {
+    font-size: var(--font-size--sm, 0.875rem);
+    font-weight: 600;
+  }
+
+  .countdown__units {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .countdown[hidden],
+  .countdown__units[hidden],
+  .countdown__expired[hidden] {
+    display: none;
+  }
+
+  .countdown__unit {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    min-width: var(--countdown-unit-min-width);
+  }
+
+  .countdown__value {
+    font-size: var(--countdown-value-size);
+    font-weight: 700;
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .countdown__name {
+    font-size: var(--font-size--xs, 0.75rem);
+    opacity: 0.75;
+  }
+
+  .countdown__separator {
+    align-self: flex-start;
+    font-size: var(--countdown-value-size);
+    font-weight: 700;
+    line-height: 1.1;
+    opacity: 0.6;
+  }
+
+  /* Boxed: light tiles that read well over dark images and on plain backgrounds */
+  .countdown--boxed .countdown__unit {
+    padding: 8px 6px;
+    border-radius: 10px;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    box-shadow: 0 2px 10px rgb(0 0 0 / 0.08);
+  }
+
+  .countdown--boxed .countdown__separator {
+    align-self: center;
+  }
+
+  .countdown__expired {
+    font-weight: 600;
+  }
+
+  .countdown-hint {
+    padding: 8px 12px;
+    border: 1px dashed currentColor;
+    border-radius: 8px;
+    font-size: var(--font-size--sm, 0.875rem);
+    opacity: 0.8;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.countdown",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "end_date",
+      "label": "t:settings.countdown_end_date",
+      "info": "t:info.countdown_end_date",
+      "placeholder": "2026-12-31"
+    },
+    {
+      "type": "text",
+      "id": "end_time",
+      "label": "t:settings.countdown_end_time",
+      "info": "t:info.countdown_end_time",
+      "placeholder": "23:59",
+      "default": "23:59"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "t:settings.countdown_heading",
+      "default": "t:text_defaults.countdown_label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_seconds",
+      "label": "t:settings.countdown_show_seconds",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "after_end",
+      "label": "t:settings.countdown_after_end",
+      "options": [
+        {
+          "value": "hide",
+          "label": "t:options.countdown_hide"
+        },
+        {
+          "value": "message",
+          "label": "t:options.countdown_message"
+        }
+      ],
+      "default": "hide"
+    },
+    {
+      "type": "text",
+      "id": "expired_message",
+      "label": "t:settings.countdown_expired_message",
+      "default": "t:text_defaults.countdown_expired",
+      "visible_if": "{{ block.settings.after_end == 'message' }}"
+    },
+    {
+      "type": "select",
+      "id": "style",
+      "label": "t:settings.style",
+      "options": [
+        {
+          "value": "boxed",
+          "label": "t:options.countdown_boxed"
+        },
+        {
+          "value": "minimal",
+          "label": "t:options.countdown_minimal"
+        }
+      ],
+      "default": "boxed"
+    },
+    {
+      "type": "select",
+      "id": "size",
+      "label": "t:settings.size",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:options.small"
+        },
+        {
+          "value": "medium",
+          "label": "t:options.medium"
+        },
+        {
+          "value": "large",
+          "label": "t:options.large"
+        }
+      ],
+      "default": "medium"
+    },
+    {
+      "type": "select",
+      "id": "alignment",
+      "label": "t:settings.alignment",
+      "options": [
+        {
+          "value": "flex-start",
+          "label": "t:options.left"
+        },
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "flex-end",
+          "label": "t:options.right"
+        }
+      ],
+      "default": "flex-start"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.countdown",
+      "category": "t:categories.basic"
+    }
+  ]
+}
+{% endschema %}
