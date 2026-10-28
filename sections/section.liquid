@@ -532,208 +532,260 @@
       "name": "t:names.faq_section",
       "category": "t:categories.text",
       "blocks": {
-        "text": {
-          "type": "text",
-          "name": "t:names.heading",
+        "intro": {
+          "type": "group",
+          "name": "t:names.group",
           "settings": {
-            "text": "t:html_defaults.faq",
-            "type_preset": "h3",
-            "font": "var(--font-body--family)",
-            "font_size": "",
-            "line_height": "normal",
-            "letter_spacing": "normal",
-            "case": "none",
-            "wrap": "pretty",
-            "width": "fit-content",
-            "max_width": "narrow",
-            "alignment": "left",
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
-          }
+            "content_direction": "column",
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "flex-start",
+            "gap": 16,
+            "width": "custom",
+            "custom_width": 36,
+            "width_mobile": "fill",
+            "height": "fit"
+          },
+          "blocks": {
+            "eyebrow": {
+              "type": "text",
+              "name": "t:names.subheading",
+              "settings": {
+                "text": "t:html_defaults.faq_eyebrow",
+                "type_preset": "custom",
+                "font": "var(--font-subheading--family)",
+                "font_size": "0.75rem",
+                "letter_spacing": "loose",
+                "case": "uppercase",
+                "width": "fit-content"
+              }
+            },
+            "heading": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "t:html_defaults.faq_heading",
+                "type_preset": "h3",
+                "wrap": "balance",
+                "width": "100%",
+                "max_width": "normal"
+              }
+            },
+            "text": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "t:html_defaults.faq_intro",
+                "type_preset": "rte",
+                "width": "100%",
+                "max_width": "normal"
+              }
+            },
+            "button": {
+              "type": "button",
+              "name": "t:names.button",
+              "settings": {
+                "label": "t:text_defaults.faq_contact_button",
+                "link": "shopify://pages/contact",
+                "open_in_new_tab": false,
+                "style_class": "button",
+                "width": "fit-content",
+                "width_mobile": "fit-content"
+              }
+            }
+          },
+          "block_order": ["eyebrow", "heading", "text", "button"]
         },
         "accordion": {
           "type": "accordion",
           "name": "t:names.accordion",
           "settings": {
-            "icon": "caret",
-            "dividers": true,
-            "type_preset": "h5",
-            "border": "none",
-            "border_width": 1,
-            "border_opacity": 100,
-            "border_radius": 0,
-            "padding-block-start": 0,
-            "padding-block-end": 0,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "row_style": "cards",
+            "icon": "plus_circle",
+            "show_numbers": true,
+            "card_corner_radius": 12,
+            "gap": 12,
+            "type_preset": "h5"
           },
           "blocks": {
-            "accordion_row_1": {
-              "type": "_accordion-row",
-              "settings": {
-                "heading": "t:text_defaults.what_is_return_policy"
-              },
-              "blocks": {
-                "text": {
-                  "type": "text",
-                  "settings": {
-                    "text": "t:html_defaults.goal_for_every_customer",
-                    "type_preset": "rte",
-                    "font": "var(--font-body--family)",
-                    "font_size": "",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "width": "100%",
-                    "max_width": "normal",
-                    "alignment": "left",
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  }
-                }
-              },
-              "block_order": ["text"]
-            },
-            "accordion_row_2": {
-              "type": "_accordion-row",
-              "settings": {
-                "heading": "t:text_defaults.are_purchases_final_sale"
-              },
-              "blocks": {
-                "text": {
-                  "type": "text",
-                  "settings": {
-                    "text": "t:html_defaults.unable_to_accept_returns",
-                    "type_preset": "rte",
-                    "font": "var(--font-body--family)",
-                    "font_size": "",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
-                    "width": "100%",
-                    "max_width": "normal",
-                    "alignment": "left",
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
-                  }
-                }
-              },
-              "block_order": ["text"]
-            },
-            "accordion_row_3": {
+            "row_1": {
               "type": "_accordion-row",
               "name": "t:names.accordion_row",
               "settings": {
-                "heading": "t:text_defaults.when_will_order_arrive"
+                "heading": "t:text_defaults.faq_free_shipping",
+                "open_by_default": true
               },
               "blocks": {
                 "text": {
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "t:html_defaults.work_quickly_to_ship",
+                    "text": "t:html_defaults.faq_free_shipping_answer",
                     "type_preset": "rte",
-                    "font": "var(--font-body--family)",
-                    "font_size": "",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
                     "width": "100%",
-                    "max_width": "normal",
-                    "alignment": "left",
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
+                    "max_width": "none"
                   }
                 }
               },
               "block_order": ["text"]
             },
-            "accordion_row_4": {
+            "row_2": {
               "type": "_accordion-row",
               "name": "t:names.accordion_row",
               "settings": {
-                "heading": "t:text_defaults.where_are_products_made"
+                "heading": "t:text_defaults.faq_delivery_time",
+                "open_by_default": false
               },
               "blocks": {
                 "text": {
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "t:html_defaults.made_local_and_global",
+                    "text": "t:html_defaults.faq_delivery_time_answer",
                     "type_preset": "rte",
-                    "font": "var(--font-body--family)",
-                    "font_size": "",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
                     "width": "100%",
-                    "max_width": "normal",
-                    "alignment": "left",
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
+                    "max_width": "none"
                   }
                 }
               },
               "block_order": ["text"]
             },
-            "accordion_row_5": {
+            "row_3": {
               "type": "_accordion-row",
               "name": "t:names.accordion_row",
               "settings": {
-                "heading": "t:text_defaults.how_much_for_shipping"
+                "heading": "t:text_defaults.faq_tracking",
+                "open_by_default": false
               },
               "blocks": {
                 "text": {
                   "type": "text",
                   "name": "t:names.text",
                   "settings": {
-                    "text": "t:html_defaults.shipping_based_on_location",
+                    "text": "t:html_defaults.faq_tracking_answer",
                     "type_preset": "rte",
-                    "font": "var(--font-body--family)",
-                    "font_size": "",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
-                    "case": "none",
-                    "wrap": "pretty",
                     "width": "100%",
-                    "max_width": "normal",
-                    "alignment": "left",
-                    "padding-block-start": 0,
-                    "padding-block-end": 0,
-                    "padding-inline-start": 0,
-                    "padding-inline-end": 0
+                    "max_width": "none"
+                  }
+                }
+              },
+              "block_order": ["text"]
+            },
+            "row_4": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_row",
+              "settings": {
+                "heading": "t:text_defaults.faq_returns",
+                "open_by_default": false
+              },
+              "blocks": {
+                "text": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "t:html_defaults.faq_returns_answer",
+                    "type_preset": "rte",
+                    "width": "100%",
+                    "max_width": "none"
+                  }
+                }
+              },
+              "block_order": ["text"]
+            },
+            "row_5": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_row",
+              "settings": {
+                "heading": "t:text_defaults.faq_faulty",
+                "open_by_default": false
+              },
+              "blocks": {
+                "text": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "t:html_defaults.faq_faulty_answer",
+                    "type_preset": "rte",
+                    "width": "100%",
+                    "max_width": "none"
+                  }
+                }
+              },
+              "block_order": ["text"]
+            },
+            "row_6": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_row",
+              "settings": {
+                "heading": "t:text_defaults.faq_warranty",
+                "open_by_default": false
+              },
+              "blocks": {
+                "text": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "t:html_defaults.faq_warranty_answer",
+                    "type_preset": "rte",
+                    "width": "100%",
+                    "max_width": "none"
+                  }
+                }
+              },
+              "block_order": ["text"]
+            },
+            "row_7": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_row",
+              "settings": {
+                "heading": "t:text_defaults.faq_refurbished_grades",
+                "open_by_default": false
+              },
+              "blocks": {
+                "text": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "t:html_defaults.faq_refurbished_grades_answer",
+                    "type_preset": "rte",
+                    "width": "100%",
+                    "max_width": "none"
+                  }
+                }
+              },
+              "block_order": ["text"]
+            },
+            "row_8": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_row",
+              "settings": {
+                "heading": "t:text_defaults.faq_payment",
+                "open_by_default": false
+              },
+              "blocks": {
+                "text": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "t:html_defaults.faq_payment_answer",
+                    "type_preset": "rte",
+                    "width": "100%",
+                    "max_width": "none"
                   }
                 }
               },
               "block_order": ["text"]
             }
           },
-          "block_order": ["accordion_row_1", "accordion_row_2", "accordion_row_3", "accordion_row_4", "accordion_row_5"]
+          "block_order": ["row_1", "row_2", "row_3", "row_4", "row_5", "row_6", "row_7", "row_8"]
         }
       },
-      "block_order": ["text", "accordion"],
+      "block_order": ["intro", "accordion"],
       "settings": {
-        "content_direction": "column",
+        "content_direction": "row",
         "vertical_on_mobile": true,
         "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "horizontal_alignment_flex_direction_column": "flex-start",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 32,
+        "vertical_alignment": "flex-start",
+        "gap": 48,
         "section_width": "page-width",
         "section_height": "",
         "background_media": "none",
@@ -743,8 +795,237 @@
         "border_width": 1,
         "border_opacity": 100,
         "border_radius": 0,
-        "padding-block-start": 48,
-        "padding-block-end": 48
+        "padding-block-start": 64,
+        "padding-block-end": 64
+      }
+    },
+    {
+      "name": "t:names.product_faq",
+      "category": "t:categories.text",
+      "blocks": {
+        "intro": {
+          "type": "group",
+          "name": "t:names.group",
+          "settings": {
+            "content_direction": "column",
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "flex-start",
+            "gap": 16,
+            "width": "custom",
+            "custom_width": 36,
+            "width_mobile": "fill",
+            "height": "fit"
+          },
+          "blocks": {
+            "eyebrow": {
+              "type": "text",
+              "name": "t:names.subheading",
+              "settings": {
+                "text": "t:html_defaults.product_faq_eyebrow",
+                "type_preset": "custom",
+                "font": "var(--font-subheading--family)",
+                "font_size": "0.75rem",
+                "letter_spacing": "loose",
+                "case": "uppercase",
+                "width": "fit-content"
+              }
+            },
+            "heading": {
+              "type": "text",
+              "name": "t:names.heading",
+              "settings": {
+                "text": "t:html_defaults.product_faq_heading",
+                "type_preset": "h3",
+                "wrap": "balance",
+                "width": "100%",
+                "max_width": "normal"
+              }
+            },
+            "text": {
+              "type": "text",
+              "name": "t:names.text",
+              "settings": {
+                "text": "t:html_defaults.product_faq_intro",
+                "type_preset": "rte",
+                "width": "100%",
+                "max_width": "normal"
+              }
+            },
+            "button": {
+              "type": "button",
+              "name": "t:names.button",
+              "settings": {
+                "label": "t:text_defaults.product_faq_button",
+                "link": "shopify://pages/contact",
+                "open_in_new_tab": false,
+                "style_class": "button",
+                "width": "fit-content",
+                "width_mobile": "fit-content"
+              }
+            }
+          },
+          "block_order": ["eyebrow", "heading", "text", "button"]
+        },
+        "accordion": {
+          "type": "accordion",
+          "name": "t:names.accordion",
+          "settings": {
+            "row_style": "cards",
+            "icon": "plus_circle",
+            "show_numbers": false,
+            "card_corner_radius": 12,
+            "gap": 12,
+            "type_preset": "h5"
+          },
+          "blocks": {
+            "row_1": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_row",
+              "settings": {
+                "heading": "t:text_defaults.product_faq_condition",
+                "open_by_default": true
+              },
+              "blocks": {
+                "text": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "t:html_defaults.product_faq_condition_answer",
+                    "type_preset": "rte",
+                    "width": "100%",
+                    "max_width": "none"
+                  }
+                }
+              },
+              "block_order": ["text"]
+            },
+            "row_2": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_row",
+              "settings": {
+                "heading": "t:text_defaults.product_faq_dispatch",
+                "open_by_default": false
+              },
+              "blocks": {
+                "text": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "t:html_defaults.product_faq_dispatch_answer",
+                    "type_preset": "rte",
+                    "width": "100%",
+                    "max_width": "none"
+                  }
+                }
+              },
+              "block_order": ["text"]
+            },
+            "row_3": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_row",
+              "settings": {
+                "heading": "t:text_defaults.product_faq_in_the_box",
+                "open_by_default": false
+              },
+              "blocks": {
+                "text": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "t:html_defaults.product_faq_in_the_box_answer",
+                    "type_preset": "rte",
+                    "width": "100%",
+                    "max_width": "none"
+                  }
+                }
+              },
+              "block_order": ["text"]
+            },
+            "row_4": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_row",
+              "settings": {
+                "heading": "t:text_defaults.product_faq_compatibility",
+                "open_by_default": false
+              },
+              "blocks": {
+                "text": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "t:html_defaults.product_faq_compatibility_answer",
+                    "type_preset": "rte",
+                    "width": "100%",
+                    "max_width": "none"
+                  }
+                }
+              },
+              "block_order": ["text"]
+            },
+            "row_5": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_row",
+              "settings": {
+                "heading": "t:text_defaults.product_faq_warranty",
+                "open_by_default": false
+              },
+              "blocks": {
+                "text": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "t:html_defaults.product_faq_warranty_answer",
+                    "type_preset": "rte",
+                    "width": "100%",
+                    "max_width": "none"
+                  }
+                }
+              },
+              "block_order": ["text"]
+            },
+            "row_6": {
+              "type": "_accordion-row",
+              "name": "t:names.accordion_row",
+              "settings": {
+                "heading": "t:text_defaults.product_faq_returns",
+                "open_by_default": false
+              },
+              "blocks": {
+                "text": {
+                  "type": "text",
+                  "name": "t:names.text",
+                  "settings": {
+                    "text": "t:html_defaults.product_faq_returns_answer",
+                    "type_preset": "rte",
+                    "width": "100%",
+                    "max_width": "none"
+                  }
+                }
+              },
+              "block_order": ["text"]
+            }
+          },
+          "block_order": ["row_1", "row_2", "row_3", "row_4", "row_5", "row_6"]
+        }
+      },
+      "block_order": ["intro", "accordion"],
+      "settings": {
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "flex-start",
+        "vertical_alignment": "flex-start",
+        "gap": 48,
+        "section_width": "page-width",
+        "section_height": "",
+        "background_media": "none",
+        "video_position": "cover",
+        "background_image_position": "cover",
+        "border": "none",
+        "border_width": 1,
+        "border_opacity": 100,
+        "border_radius": 0,
+        "padding-block-start": 64,
+        "padding-block-end": 64
       }
     },
     {
