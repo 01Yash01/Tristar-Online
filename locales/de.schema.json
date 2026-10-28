@@ -9,6 +9,8 @@
  */
 {
   "names": {
+    "product_condition": "Product condition",
+    "product_faq": "Product FAQ",
     "menu_promo": "Promotion",
     "menu_panel": "Menu panel",
     "vendor": "Brand",
@@ -184,6 +186,17 @@
     "disclosures": "Pflichtangaben"
   },
   "settings": {
+    "condition_override": "Condition",
+    "condition_fallback": "Products without a grade",
+    "condition_new_text": "Brand new",
+    "condition_pristine_text": "Pristine",
+    "condition_excellent_text": "Excellent",
+    "condition_good_text": "Good",
+    "condition_acceptable_text": "Acceptable",
+    "condition_guide_note": "Note",
+    "row_style": "Row style",
+    "show_numbers": "Show numbers",
+    "card_background": "Card background",
     "menu_panel_products_collection": "Products collection",
     "menu_panel_products_count": "Products to show",
     "menu_panel_products_columns": "Products per row",
@@ -656,6 +669,11 @@
     "customer_account_menu": "Kundenkontomenü"
   },
   "options": {
+    "condition_show_new": "Show as brand new",
+    "condition_hide": "Hide",
+    "lines": "Lines",
+    "cards": "Cards",
+    "plus_circle": "Plus in circle",
     "menu_panel_products": "Products",
     "menu_panel_links_promos": "Links + promotions",
     "menu_panel_promos": "Promotions only",
@@ -956,6 +974,7 @@
     "direction_top_start": "Oben links"
   },
   "content": {
+    "condition_guide": "Condition guide",
     "menu_panel_products": "Products",
     "menu_panel_promos": "Promotions",
     "menu_panel_info": "Menu panels follow your menu order: panel 1 belongs to the first top menu item, panel 2 to the second, and so on. Theme default keeps the standard menu.",
@@ -1089,6 +1108,26 @@
     "page_text_color_contrast_info": "Abschnitte mit einer benutzerdefinierten Hintergrundfarbe verwenden diese Textfarbe nur bei ausreichendem Farbkontrast."
   },
   "html_defaults": {
+    "faq_eyebrow": "<p>FAQ</p>",
+    "faq_heading": "<h2>Questions? We've got answers.</h2>",
+    "faq_intro": "<p>Everything you need to know about shopping with Tristar Online. Can't find what you're looking for? Our team is happy to help.</p>",
+    "faq_free_shipping_answer": "<p>Yes. Standard shipping is free on every order delivered within Australia, with no minimum spend. Express shipping and delivery to New Zealand are calculated at checkout.</p>",
+    "faq_delivery_time_answer": "<p>We dispatch orders within 1–2 business days. Standard delivery within Australia then takes 3–7 business days, or 2–3 business days with Express. Delivery to New Zealand takes 14–16 business days (standard) or 8–10 business days (Express). Please allow a little extra time during peak periods.</p>",
+    "faq_tracking_answer": "<p>As soon as your order ships, we'll email you a tracking number. You can also sign in to your account to check your order status at any time. We ship with Australia Post, DHL Express and Hunter Express, and every shipment is insured.</p>",
+    "faq_returns_answer": "<p>Changed your mind? You can start a return within 14 days of delivery. Items must be unused and in their original packaging with all tags attached. Return shipping is at your cost and a 20% restocking fee applies, which may vary with the item's condition. Items marked as non-returnable on the product page can't be returned.</p><p>Refunds are processed within 48 hours of us receiving your return, or you can choose an exchange or store credit instead.</p>",
+    "faq_faulty_answer": "<p>Let us know within 48 hours of delivery and we'll make it right. Contact us through live chat or our contact page with your order number. Under warranty we'll repair the item first, then replace it, or refund it if neither is possible.</p>",
+    "faq_warranty_answer": "<p>Yes. Every product we sell, new or refurbished, comes with a 12-month warranty. Keep your proof of purchase and contact us to make a claim. Most claims are resolved within 2–5 days. The warranty doesn't cover physical, water or electrical damage, or damage from improper use. It's in addition to your rights under the Australian Consumer Law.</p>",
+    "faq_refurbished_grades_answer": "<p>Every refurbished device is fully working and covered by the same 12-month warranty as a new product. The grade describes its cosmetic condition only.</p><p><strong>Pristine:</strong> looks like new, with no visible signs of use.<br/><strong>Excellent:</strong> very light signs of use that are hard to spot.<br/><strong>Good:</strong> light scratches or scuffs you can see up close.<br/><strong>Acceptable:</strong> clearly visible wear such as scratches or marks.</p>",
+    "faq_payment_answer": "<p>We accept Visa, Mastercard, American Express, UnionPay, PayPal, Apple Pay, Google Pay and Shop Pay. Payments are processed securely at checkout, and all prices include GST.</p>",
+    "product_faq_eyebrow": "<p>Product FAQ</p>",
+    "product_faq_heading": "<h2>Good to know before you buy</h2>",
+    "product_faq_intro": "<p>Quick answers about condition, delivery, warranty and returns. Still unsure? Ask us before you order.</p>",
+    "product_faq_condition_answer": "<p>The condition is shown in the product title and options. Refurbished items are graded Pristine, Excellent, Good or Acceptable based on how they look. Every item, new or refurbished, is fully working and covered by our 12-month warranty.</p>",
+    "product_faq_dispatch_answer": "<p>In-stock items are dispatched within 1–2 business days. Standard shipping is free anywhere in Australia and usually takes 3–7 business days, or choose Express at checkout for 2–3 business days.</p>",
+    "product_faq_in_the_box_answer": "<p>The full list of what's included is in the product description. If anything isn't clear, contact us before you order and we'll confirm it for you.</p>",
+    "product_faq_compatibility_answer": "<p>Key details like network bands, plug type and region are listed in the product description. Not sure it suits your carrier or setup? Send us a message and we'll check before you buy.</p>",
+    "product_faq_warranty_answer": "<p>Yes. It's covered by our 12-month warranty, whether it's new or refurbished, in addition to your rights under the Australian Consumer Law. If it arrives faulty, let us know within 48 hours of delivery.</p>",
+    "product_faq_returns_answer": "<p>Yes, within 14 days of delivery, as long as it's unused and in its original packaging. Return shipping is at your cost and a 20% restocking fee applies. Items marked as non-returnable can't be returned.</p>",
     "video_banner_label": "<p>New season</p>",
     "share_information_about_your": "<p>Teile Informationen über deine Marke mit deinen Kunden. Beschreibe ein Produkt, mache Ankündigungen oder heiße Kunden in deinem Shop willkommen.</p>",
     "bestseller_h2": "<h2>Bestseller</h2>",
@@ -1147,6 +1186,30 @@
     "featured_collection_h3": "<h3>Vorgestellte Kategorie</h3>"
   },
   "text_defaults": {
+    "condition_label": "Condition",
+    "condition_guide_heading": "Condition guide",
+    "condition_new_text": "Brand new and unused, in its original packaging.",
+    "condition_pristine_text": "Looks like new, with no visible signs of use.",
+    "condition_excellent_text": "Very light signs of use that are hard to spot.",
+    "condition_good_text": "Light scratches or scuffs you can see up close.",
+    "condition_acceptable_text": "Clearly visible wear, such as scratches or marks.",
+    "condition_guide_note": "All refurbished products are fully working and include our 12-month warranty.",
+    "faq_contact_button": "Contact us",
+    "faq_free_shipping": "Is shipping really free?",
+    "faq_delivery_time": "How long will my order take to arrive?",
+    "faq_tracking": "How do I track my order?",
+    "faq_returns": "What is your return policy?",
+    "faq_faulty": "What if my item arrives faulty or damaged?",
+    "faq_warranty": "Do your products come with a warranty?",
+    "faq_refurbished_grades": "What do the refurbished condition grades mean?",
+    "faq_payment": "What payment methods do you accept?",
+    "product_faq_button": "Ask a question",
+    "product_faq_condition": "Is this product new or refurbished?",
+    "product_faq_dispatch": "When will this item ship?",
+    "product_faq_in_the_box": "What's included in the box?",
+    "product_faq_compatibility": "Will it work with my network and devices?",
+    "product_faq_warranty": "Does it come with a warranty?",
+    "product_faq_returns": "Can I return it if I change my mind?",
     "menu_promo_heading": "New arrivals",
     "countdown_label": "Limited time only",
     "countdown_expired": "This deal has ended",
@@ -1189,6 +1252,8 @@
     "disclosures": "Pflichtangaben"
   },
   "info": {
+    "condition_override": "Leave empty to read the grade from the product title, for example \"Apple Pencil Pro - Excellent - Refurbished\". You can also connect a product metafield.",
+    "condition_guide": "Descriptions shown when customers tap the info icon. Leave one empty to hide that grade.",
     "menu_panel_products_collection": "Only used by the Products layout. Leave empty to use the menu item's own collection.",
     "menu_panel_products": "Shows product cards from the chosen collection. Leave it empty to use this menu item's own collection.",
     "menu_panel_promos": "Add Promotion blocks inside this panel. With Links + promotions, the menu item's sub-links show beside them.",

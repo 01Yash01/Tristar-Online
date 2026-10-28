@@ -9,6 +9,7 @@
  */
 {
   "accessibility": {
+    "condition_guide": "What does this condition mean?",
     "account": "اکاؤنٹ",
     "active_filters": "فعال فلٹر:",
     "cart": "کارٹ",
@@ -164,6 +165,13 @@
     }
   },
   "content": {
+    "condition_new": "Brand new",
+    "condition_refurbished": "Refurbished",
+    "condition_pristine": "Pristine",
+    "condition_excellent": "Excellent",
+    "condition_good": "Good",
+    "condition_acceptable": "Acceptable",
+    "condition_this_item": "This item",
     "mega_menu_products_hint": "Choose a collection for this menu panel in the theme editor sidebar.",
     "mega_menu_promos_hint": "Add Promotion blocks to this menu panel in the theme editor sidebar.",
     "mega_menu_view_all": "View all",

@@ -29,6 +29,7 @@
     "slider_label": "슬라이더"
   },
   "accessibility": {
+    "condition_guide": "What does this condition mean?",
     "play_model": "3D 모델 재생",
     "play_video": "동영상 재생",
     "unit_price": "단가",
@@ -131,6 +132,13 @@
     "zoom_media": "{{ index }} 미디어 확대/축소"
   },
   "content": {
+    "condition_new": "Brand new",
+    "condition_refurbished": "Refurbished",
+    "condition_pristine": "Pristine",
+    "condition_excellent": "Excellent",
+    "condition_good": "Good",
+    "condition_acceptable": "Acceptable",
+    "condition_this_item": "This item",
     "mega_menu_products_hint": "Choose a collection for this menu panel in the theme editor sidebar.",
     "mega_menu_promos_hint": "Add Promotion blocks to this menu panel in the theme editor sidebar.",
     "mega_menu_view_all": "View all",
