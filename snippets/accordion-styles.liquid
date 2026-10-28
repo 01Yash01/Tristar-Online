@@ -58,4 +58,105 @@
     height: auto;
     margin-inline-end: var(--margin-xs);
   }
+
+  .accordion:is(.accordion--cards, .accordion--numbered, .accordion--plus_circle) .details__header {
+    column-gap: var(--gap-md, 16px);
+  }
+
+  /* Cards: each row is a soft tile; the open row lifts onto the background */
+  .accordion--cards {
+    --accordion-card-padding: clamp(16px, 2.4vw, 24px);
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--accordion-card-gap, 12px);
+  }
+
+  .accordion--cards .details {
+    border: var(--style-border-width) solid transparent;
+    border-radius: var(--accordion-card-radius, 12px);
+    background-color: var(
+      --accordion-card-background,
+      rgb(var(--color-foreground-rgb) / var(--opacity-5))
+    );
+    transition: background-color var(--animation-speed) var(--animation-easing),
+      border-color var(--animation-speed) var(--animation-easing),
+      box-shadow var(--animation-speed) var(--animation-easing);
+  }
+
+  @media (hover: hover) {
+    .accordion--cards .details:not([open]):hover {
+      border-color: rgb(var(--color-foreground-rgb) / var(--opacity-10));
+    }
+  }
+
+  .accordion--cards .details[open] {
+    border-color: var(--color-border);
+    background-color: var(--color-background);
+    box-shadow: 0 16px 32px -24px rgb(var(--color-foreground-rgb) / var(--opacity-40));
+  }
+
+  .accordion--cards .details__header {
+    padding: var(--accordion-card-padding);
+    border-radius: inherit;
+  }
+
+  .accordion--cards .details-content {
+    padding-inline: var(--accordion-card-padding);
+    padding-block-end: var(--accordion-card-padding);
+  }
+
+  .accordion--numbered {
+    counter-reset: accordion-row;
+  }
+
+  .accordion--numbered accordion-custom {
+    counter-increment: accordion-row;
+  }
+
+  .accordion--numbered .details__header::before {
+    content: counter(accordion-row, decimal-leading-zero);
+    flex: 0 0 auto;
+    min-width: 2ch;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-50));
+    font-variant-numeric: tabular-nums;
+    transition: color var(--animation-speed) var(--animation-easing);
+  }
+
+  .accordion--numbered details[open] > .details__header::before {
+    color: var(--color-foreground);
+  }
+
+  /* Plus in circle: a soft disc that fills with the text color when the row opens */
+  .accordion--plus_circle .icon-caret {
+    display: none;
+  }
+
+  .accordion--plus_circle .details__header .icon-plus {
+    flex: 0 0 auto;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-8));
+    transition: background-color var(--animation-speed) var(--animation-easing),
+      color var(--animation-speed) var(--animation-easing);
+  }
+
+  .accordion--plus_circle .details__header .icon-plus > svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  .accordion--plus_circle details[open] > .details__header .icon-plus {
+    background-color: var(--color-foreground);
+    color: var(--color-background);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .accordion--cards .details,
+    .accordion--numbered .details__header::before,
+    .accordion--plus_circle .details__header .icon-plus {
+      transition: none;
+    }
+  }
 {% endstylesheet %}
