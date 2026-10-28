@@ -1,0 +1,655 @@
+{%- doc -%}
+  Renders the product's condition (Brand new or a refurbished grade) with an info button that opens
+  a condition guide. The grade is read from the Condition setting (which can be connected to a
+  product metafield), or from the product title, e.g. "Apple Pencil Pro - Excellent - Refurbished".
+  When the product sells conditions as a variant option (named "Condition" or "Grade"), the selected
+  variant's value is used and the block updates as the customer picks another condition.
+{%- enddoc -%}
+
+{%- liquid
+  assign block_settings = block.settings
+  assign product_resource = closest.product
+  assign selected_variant = product_resource.selected_or_first_available_variant
+
+  assign has_condition_option = false
+  assign condition_option_value = blank
+  for option in product_resource.options_with_values
+    assign option_name_lower = option.name | downcase
+    if option_name_lower contains 'condition' or option_name_lower == 'grade'
+      assign has_condition_option = true
+      assign condition_option_value = selected_variant.options[forloop.index0]
+    endif
+  endfor
+
+  assign condition_text = block_settings.condition_override | strip
+  if condition_text == blank and condition_option_value != blank
+    assign condition_text = condition_option_value
+  endif
+  if condition_text == blank
+    assign title_lower = product_resource.title | downcase
+    if title_lower contains 'refurb'
+      assign condition_text = product_resource.title
+    endif
+  endif
+  assign condition_lower = condition_text | downcase
+
+  # Grades are checked from most to least specific, so "Good" never wins over a stronger grade
+  assign grade = blank
+  if condition_lower contains 'pristine'
+    assign grade = 'pristine'
+  elsif condition_lower contains 'excellent'
+    assign grade = 'excellent'
+  elsif condition_lower contains 'acceptable'
+    assign grade = 'acceptable'
+  elsif condition_lower contains 'good'
+    assign grade = 'good'
+  elsif condition_lower contains 'refurb' or condition_lower contains 'renew'
+    assign grade = 'refurbished'
+  elsif condition_lower contains 'new'
+    assign grade = 'new'
+  endif
+
+  if grade == blank and has_condition_option == false and block_settings.fallback == 'new'
+    assign grade = 'new'
+  endif
+
+  case grade
+    when 'pristine'
+      assign grade_level = 4
+    when 'excellent'
+      assign grade_level = 3
+    when 'good'
+      assign grade_level = 2
+    when 'acceptable'
+      assign grade_level = 1
+    else
+      assign grade_level = 0
+  endcase
+
+  assign guide_grades = 'new,pristine,excellent,good,acceptable' | split: ','
+  assign has_guide = false
+  for guide_grade in guide_grades
+    assign description_key = 'condition_' | append: guide_grade | append: '_text'
+    if block_settings[description_key] != blank
+      assign has_guide = true
+    endif
+  endfor
+
+  assign show_block = false
+  if product_resource != blank
+    if grade != blank
+      assign show_block = true
+    elsif has_condition_option and has_guide
+      assign show_block = true
+    endif
+  endif
+
+  assign popover_id = 'ProductCondition-' | append: block.id | append: '-' | append: product_resource.id
+  assign anchor_name = '--product-condition-' | append: block.id
+-%}
+
+{%- if has_condition_option -%}
+  <script
+    src="{{ 'product-condition.js' | asset_url }}"
+    type="module"
+    fetchpriority="low"
+  ></script>
+  {%- # Variant changes replace this element's children, so it stays in place even while empty -%}
+  <product-condition-component
+    class="product-condition-variant"
+    data-block-id="{{ block.id }}"
+    data-product-id="{{ product_resource.id }}"
+    {{ block.shopify_attributes }}
+  >
+{%- endif -%}
+
+{%- if show_block -%}
+  {%- liquid
+    # The popover component requires its trigger and popover refs, so it only wraps a row that has a guide
+    assign wrapper_tag = 'div'
+    if has_guide
+      assign wrapper_tag = 'anchored-popover-component'
+    endif
+  -%}
+  <{{ wrapper_tag }}
+    class="product-condition spacing-style"
+    style="anchor-name: {{ anchor_name }}; {% render 'spacing-style', settings: block_settings %}"
+    {% if has_guide %}
+      data-close-on-resize="true"
+    {% endif %}
+    {% unless has_condition_option %}
+      {{ block.shopify_attributes }}
+    {% endunless %}
+  >
+    {%- if grade != blank -%}
+      {%- if block_settings.label != blank -%}
+        <span class="product-condition__label">{{ block_settings.label | escape }}:</span>
+      {%- endif -%}
+      <span class="product-condition__value">
+        {%- assign grade_name_key = 'content.condition_' | append: grade -%}
+        {{- grade_name_key | t -}}
+      </span>
+      {%- if grade_level > 0 -%}
+        <span
+          class="product-condition__meter"
+          aria-hidden="true"
+        >
+          {%- for step in (1..4) -%}
+            <span class="product-condition__meter-step{% if step <= grade_level %} product-condition__meter-step--filled{% endif %}"></span>
+          {%- endfor -%}
+        </span>
+        <span class="product-condition__pill">{{ 'content.condition_refurbished' | t }}</span>
+      {%- endif -%}
+    {%- endif -%}
+
+    {%- if has_guide -%}
+      <button
+        type="button"
+        class="product-condition__trigger button-unstyled{% if grade == blank %} product-condition__trigger--labelled{% endif %}"
+        popovertarget="{{ popover_id }}"
+        ref="trigger"
+        {% if grade != blank %}
+          aria-label="{{ 'accessibility.condition_guide' | t }}"
+        {% endif %}
+      >
+        <span class="svg-wrapper">{{- 'icon-info.svg' | inline_asset_content -}}</span>
+        {%- if grade == blank -%}
+          {{ block_settings.guide_heading | escape }}
+        {%- endif -%}
+      </button>
+
+      <div
+        id="{{ popover_id }}"
+        class="product-condition__popover color-custom-popover"
+        style="position-anchor: {{ anchor_name }};"
+        popover="auto"
+        role="dialog"
+        aria-labelledby="{{ popover_id }}-title"
+        ref="popover"
+      >
+        <div class="product-condition__header">
+          <p
+            id="{{ popover_id }}-title"
+            class="product-condition__title"
+          >
+            {{ block_settings.guide_heading | escape }}
+          </p>
+          <button
+            type="button"
+            class="product-condition__close button-unstyled"
+            popovertarget="{{ popover_id }}"
+            popovertargetaction="hide"
+            aria-label="{{ 'accessibility.close_dialog' | t }}"
+          >
+            <span class="svg-wrapper">{{- 'icon-close.svg' | inline_asset_content -}}</span>
+          </button>
+        </div>
+
+        <ul
+          class="product-condition__grades list-unstyled"
+          role="list"
+        >
+          {%- for guide_grade in guide_grades -%}
+            {%- liquid
+              assign description_key = 'condition_' | append: guide_grade | append: '_text'
+              assign description = block_settings[description_key]
+              assign guide_name_key = 'content.condition_' | append: guide_grade
+              assign guide_level = 6 | minus: forloop.index
+            -%}
+            {%- if description != blank -%}
+              <li
+                class="product-condition__grade{% if guide_grade == grade %} product-condition__grade--current{% endif %}"
+                {% if guide_grade == grade %}
+                  aria-current="true"
+                {% endif %}
+              >
+                <span class="product-condition__grade-head">
+                  <span class="product-condition__grade-name">{{ guide_name_key | t }}</span>
+                  {%- unless forloop.first -%}
+                    <span
+                      class="product-condition__meter"
+                      aria-hidden="true"
+                    >
+                      {%- for step in (1..4) -%}
+                        <span class="product-condition__meter-step{% if step <= guide_level %} product-condition__meter-step--filled{% endif %}"></span>
+                      {%- endfor -%}
+                    </span>
+                  {%- endunless -%}
+                  {%- if guide_grade == grade -%}
+                    <span class="product-condition__tag">{{ 'content.condition_this_item' | t }}</span>
+                  {%- endif -%}
+                </span>
+                <span class="product-condition__grade-text">{{ description | escape }}</span>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+
+        {%- if block_settings.guide_note != blank -%}
+          <p class="product-condition__note">{{ block_settings.guide_note | escape }}</p>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </{{ wrapper_tag }}>
+{%- elsif request.design_mode and has_condition_option == false -%}
+  <div
+    class="product-condition"
+    {{ block.shopify_attributes }}
+  ></div>
+{%- endif -%}
+
+{%- if has_condition_option -%}
+  </product-condition-component>
+{%- endif -%}
+
+{% stylesheet %}
+  .product-condition-variant {
+    display: block;
+    min-width: 0;
+  }
+
+  .product-condition {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 10px;
+    min-width: 0;
+    font-size: var(--font-size--sm);
+  }
+
+  .product-condition__label {
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+  }
+
+  .product-condition__value {
+    color: var(--color-foreground);
+    font-weight: 600;
+  }
+
+  .product-condition__pill {
+    padding: 2px 10px;
+    border-radius: 999px;
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-8));
+    color: var(--color-foreground);
+    font-size: var(--font-size--xs);
+    line-height: 1.5;
+  }
+
+  .product-condition__meter {
+    display: inline-flex;
+    gap: 3px;
+  }
+
+  .product-condition__meter-step {
+    width: 10px;
+    height: 4px;
+    border-radius: 2px;
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-15));
+  }
+
+  .product-condition__meter-step--filled {
+    background-color: var(--color-foreground);
+  }
+
+  .product-condition__trigger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 32px;
+    height: 32px;
+    margin-block: -6px;
+    margin-inline-start: -4px;
+    border-radius: 50%;
+    background-color: transparent;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+    cursor: pointer;
+    transition: color var(--animation-speed) var(--animation-easing),
+      background-color var(--animation-speed) var(--animation-easing);
+  }
+
+  .product-condition__trigger:hover,
+  .product-condition__trigger:has(+ .product-condition__popover:popover-open) {
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-8));
+    color: var(--color-foreground);
+  }
+
+  .product-condition__trigger .svg-wrapper {
+    width: 20px;
+    height: 20px;
+  }
+
+  .product-condition__trigger--labelled {
+    width: auto;
+    margin-inline-start: 0;
+    padding-inline: 6px 12px;
+    border-radius: 999px;
+    color: var(--color-foreground);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .product-condition__popover {
+    --product-condition-popover-width: 380px;
+    --product-condition-popover-spacing: 10px;
+    --product-condition-popover-margin: 16px;
+
+    inset: unset;
+    top: calc(anchor(bottom) + var(--product-condition-popover-spacing));
+    inset-inline-start: anchor(start);
+    inline-size: min(
+      var(--product-condition-popover-width),
+      calc(100vw - var(--product-condition-popover-margin) * 2)
+    );
+    max-block-size: min(560px, 80vh);
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    border: var(--style-border-popover);
+    border-radius: var(--style-border-radius-popover);
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    box-shadow: var(--shadow-popover);
+    font-size: var(--font-size--sm);
+    opacity: 0;
+    translate: 0 8px;
+    transition-property: display, overlay, opacity, translate;
+    transition-duration: 0.25s;
+    transition-timing-function: var(--ease-out-quad);
+    transition-behavior: allow-discrete;
+  }
+
+  @supports (position-try-fallbacks: flip-block) {
+    .product-condition__popover {
+      position-try-fallbacks: flip-block;
+    }
+  }
+
+  /* Browsers without anchor positioning use the trigger bounds set by anchored-popover.js */
+  @supports not (position-anchor: --product-condition) {
+    .product-condition__popover {
+      position: fixed;
+      top: calc((var(--anchor-top) + var(--anchor-height)) * 1px + var(--product-condition-popover-spacing));
+      inset-inline-start: max(
+        var(--product-condition-popover-margin),
+        min(
+          var(--anchor-inline-start) * 1px,
+          100vw - var(--product-condition-popover-width) - var(--product-condition-popover-margin)
+        )
+      );
+    }
+  }
+
+  .product-condition__popover:popover-open,
+  .product-condition__popover.\:popover-open {
+    opacity: 1;
+    translate: 0 0;
+  }
+
+  @starting-style {
+    .product-condition__popover:popover-open {
+      opacity: 0;
+      translate: 0 8px;
+    }
+  }
+
+  /* Phones: a bottom sheet is easier to read and dismiss than a small anchored panel */
+  @media screen and (max-width: 749px) {
+    .product-condition__popover {
+      position: fixed;
+      inset: auto 0 0;
+      inline-size: 100%;
+      max-block-size: 85dvh;
+      padding-block-end: env(safe-area-inset-bottom, 0px);
+      border-end-start-radius: 0;
+      border-end-end-radius: 0;
+      translate: 0 100%;
+      position-try-fallbacks: none;
+    }
+
+    @starting-style {
+      .product-condition__popover:popover-open {
+        translate: 0 100%;
+      }
+    }
+
+    .product-condition__popover::backdrop {
+      background-color: rgb(0 0 0 / var(--opacity-40));
+    }
+  }
+
+  .product-condition__header {
+    position: sticky;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 14px 12px 10px 20px;
+    background-color: var(--color-background);
+  }
+
+  .product-condition__title {
+    margin: 0;
+    font-weight: 600;
+    font-size: var(--font-size--md, 1rem);
+  }
+
+  .product-condition__close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: transparent;
+    color: var(--color-foreground);
+    cursor: pointer;
+  }
+
+  .product-condition__close:hover {
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-8));
+  }
+
+  .product-condition__close .svg-wrapper {
+    width: 14px;
+    height: 14px;
+  }
+
+  .product-condition__grades {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin: 0;
+    padding: 0 8px 8px;
+  }
+
+  .product-condition__grade {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 10px 12px;
+    border-radius: max(calc(var(--style-border-radius-popover) - 6px), 6px);
+  }
+
+  .product-condition__grade--current {
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-5));
+    box-shadow: inset 0 0 0 1px rgb(var(--color-foreground-rgb) / var(--opacity-15));
+  }
+
+  .product-condition__grade-head {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .product-condition__grade-name {
+    font-weight: 600;
+  }
+
+  .product-condition__grade-text {
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+    overflow-wrap: anywhere;
+  }
+
+  .product-condition__tag {
+    margin-inline-start: auto;
+    padding: 1px 8px;
+    border-radius: 999px;
+    background-color: var(--color-foreground);
+    color: var(--color-background);
+    font-size: var(--font-size--xs);
+    line-height: 1.5;
+  }
+
+  .product-condition__note {
+    margin: 0;
+    padding: 12px 20px 16px;
+    border-block-start: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-10));
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .product-condition__popover,
+    .product-condition__trigger {
+      transition: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.product_condition",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "label",
+      "label": "t:settings.label",
+      "default": "t:text_defaults.condition_label"
+    },
+    {
+      "type": "text",
+      "id": "condition_override",
+      "label": "t:settings.condition_override",
+      "info": "t:info.condition_override"
+    },
+    {
+      "type": "select",
+      "id": "fallback",
+      "label": "t:settings.condition_fallback",
+      "options": [
+        {
+          "value": "new",
+          "label": "t:options.condition_show_new"
+        },
+        {
+          "value": "hide",
+          "label": "t:options.condition_hide"
+        }
+      ],
+      "default": "new"
+    },
+    {
+      "type": "header",
+      "content": "t:content.condition_guide",
+      "info": "t:info.condition_guide"
+    },
+    {
+      "type": "text",
+      "id": "guide_heading",
+      "label": "t:settings.heading",
+      "default": "t:text_defaults.condition_guide_heading"
+    },
+    {
+      "type": "text",
+      "id": "condition_new_text",
+      "label": "t:settings.condition_new_text",
+      "default": "t:text_defaults.condition_new_text"
+    },
+    {
+      "type": "text",
+      "id": "condition_pristine_text",
+      "label": "t:settings.condition_pristine_text",
+      "default": "t:text_defaults.condition_pristine_text"
+    },
+    {
+      "type": "text",
+      "id": "condition_excellent_text",
+      "label": "t:settings.condition_excellent_text",
+      "default": "t:text_defaults.condition_excellent_text"
+    },
+    {
+      "type": "text",
+      "id": "condition_good_text",
+      "label": "t:settings.condition_good_text",
+      "default": "t:text_defaults.condition_good_text"
+    },
+    {
+      "type": "text",
+      "id": "condition_acceptable_text",
+      "label": "t:settings.condition_acceptable_text",
+      "default": "t:text_defaults.condition_acceptable_text"
+    },
+    {
+      "type": "text",
+      "id": "guide_note",
+      "label": "t:settings.condition_guide_note",
+      "default": "t:text_defaults.condition_guide_note"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.product_condition",
+      "category": "t:categories.product"
+    }
+  ]
+}
+{% endschema %}
