@@ -51,7 +51,7 @@
             "media_radius": 16,
             "extend_media": false,
             "zoom": true,
-            "hover_zoom": true,
+            "hover_zoom": false,
             "video_loop": false,
             "hide_variants": false,
             "padding-block-start": 0,

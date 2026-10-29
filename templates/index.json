@@ -875,7 +875,7 @@
               "settings": {
                 "icon": "none",
                 "image_upload": "shopify://shop_images/transport.png",
-                "width": 44,
+                "width": 36,
                 "link": "",
                 "open_in_new_tab": false,
                 "icon_color": ""
@@ -928,9 +928,9 @@
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "center",
-                    "type_preset": "h4",
-                    "font": "var(--font-body--family)",
-                    "font_size": "",
+                    "type_preset": "custom",
+                    "font": "var(--font-accent--family)",
+                    "font_size": "1.125rem",
                     "line_height": "normal",
                     "letter_spacing": "normal",
                     "case": "none",
@@ -953,9 +953,9 @@
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "center",
-                    "type_preset": "rte",
+                    "type_preset": "custom",
                     "font": "var(--font-body--family)",
-                    "font_size": "",
+                    "font_size": "0.75rem",
                     "line_height": "normal",
                     "letter_spacing": "normal",
                     "case": "none",
@@ -1027,7 +1027,7 @@
               "settings": {
                 "icon": "none",
                 "image_upload": "shopify://shop_images/save-money.png",
-                "width": 42,
+                "width": 36,
                 "link": "",
                 "open_in_new_tab": false,
                 "icon_color": ""
@@ -1080,9 +1080,9 @@
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "center",
-                    "type_preset": "h4",
-                    "font": "var(--font-body--family)",
-                    "font_size": "",
+                    "type_preset": "custom",
+                    "font": "var(--font-accent--family)",
+                    "font_size": "1.125rem",
                     "line_height": "normal",
                     "letter_spacing": "normal",
                     "case": "none",
@@ -1105,9 +1105,9 @@
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "center",
-                    "type_preset": "rte",
+                    "type_preset": "custom",
                     "font": "var(--font-body--family)",
-                    "font_size": "",
+                    "font_size": "0.75rem",
                     "line_height": "normal",
                     "letter_spacing": "normal",
                     "case": "none",
@@ -1179,7 +1179,7 @@
               "settings": {
                 "icon": "none",
                 "image_upload": "shopify://shop_images/credit-card.png",
-                "width": 42,
+                "width": 36,
                 "link": "",
                 "open_in_new_tab": false,
                 "icon_color": ""
@@ -1232,9 +1232,9 @@
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "center",
-                    "type_preset": "h4",
-                    "font": "var(--font-body--family)",
-                    "font_size": "",
+                    "type_preset": "custom",
+                    "font": "var(--font-accent--family)",
+                    "font_size": "1.125rem",
                     "line_height": "normal",
                     "letter_spacing": "normal",
                     "case": "none",
@@ -1253,15 +1253,15 @@
                 "text_FBxFKE": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>Secure and Multiple Payment Options</p>",
+                    "text": "<p>Secure and Multiple Options</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "center",
-                    "type_preset": "rte",
+                    "type_preset": "custom",
                     "font": "var(--font-body--family)",
-                    "font_size": "",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
+                    "font_size": "0.75rem",
+                    "line_height": "tight",
+                    "letter_spacing": "tight",
                     "case": "none",
                     "wrap": "pretty",
                     "text_color": "",
@@ -1331,7 +1331,7 @@
               "settings": {
                 "icon": "none",
                 "image_upload": "shopify://shop_images/online-chat.png",
-                "width": 42,
+                "width": 36,
                 "link": "",
                 "open_in_new_tab": false,
                 "icon_color": ""
@@ -1384,9 +1384,9 @@
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "center",
-                    "type_preset": "h4",
-                    "font": "var(--font-body--family)",
-                    "font_size": "",
+                    "type_preset": "custom",
+                    "font": "var(--font-accent--family)",
+                    "font_size": "1.125rem",
                     "line_height": "normal",
                     "letter_spacing": "normal",
                     "case": "none",
@@ -1405,15 +1405,15 @@
                 "text_A3XWUt": {
                   "type": "text",
                   "settings": {
-                    "text": "<p>We listen and solve Queries with Empathy.</p>",
+                    "text": "<p>We Solve Queries With Empathy.</p>",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "center",
-                    "type_preset": "rte",
+                    "type_preset": "custom",
                     "font": "var(--font-body--family)",
-                    "font_size": "",
-                    "line_height": "normal",
-                    "letter_spacing": "normal",
+                    "font_size": "0.75rem",
+                    "line_height": "tight",
+                    "letter_spacing": "tight",
                     "case": "none",
                     "wrap": "pretty",
                     "text_color": "",
@@ -1573,6 +1573,47 @@
     "product_list_fa6P9H": {
       "type": "product-list",
       "blocks": {
+        "banner-content": {
+          "type": "group",
+          "static": true,
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "background_media": "none",
+            "background_color": "",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
         "static-header": {
           "type": "_product-list-content",
           "name": "t:names.header",
@@ -1774,6 +1815,17 @@
         "horizontal_alignment": "center",
         "gap": 28,
         "background_color": "{{ settings.color_palette.background }}",
+        "banner_link": "",
+        "banner_position": "left",
+        "banner_width": 28,
+        "banner_mobile": true,
+        "banner_zoom": true,
+        "banner_fit": "cover",
+        "banner_padding": 0,
+        "banner_background": "",
+        "banner_radius": 12,
+        "banner_border": false,
+        "banner_border_color": "",
         "padding-block-start": 24,
         "padding-block-end": 48
       }
@@ -2049,6 +2101,47 @@
     "product_list_fgbhFT": {
       "type": "product-list",
       "blocks": {
+        "banner-content": {
+          "type": "group",
+          "static": true,
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "background_media": "none",
+            "background_color": "",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
         "static-header": {
           "type": "_product-list-content",
           "name": "t:names.header",
@@ -2238,7 +2331,7 @@
         "collection": "best-sellers-1",
         "layout_type": "grid",
         "carousel_on_mobile": true,
-        "max_products": 10,
+        "max_products": 5,
         "columns": 5,
         "mobile_columns": "2",
         "mobile_card_size": "60cqw",
@@ -2250,6 +2343,18 @@
         "horizontal_alignment": "center",
         "gap": 28,
         "background_color": "{{ settings.color_palette.background }}",
+        "banner_image": "shopify://shop_images/tristar-i2-smart-watch-fitness-tracker-white-pristine-refurbished.webp",
+        "banner_link": "",
+        "banner_position": "left",
+        "banner_width": 28,
+        "banner_mobile": true,
+        "banner_zoom": true,
+        "banner_fit": "cover",
+        "banner_padding": 0,
+        "banner_background": "{{ settings.color_palette.color2 }}",
+        "banner_radius": 12,
+        "banner_border": false,
+        "banner_border_color": "{{ settings.color_palette.color1 }}",
         "padding-block-start": 24,
         "padding-block-end": 48
       }
@@ -2311,7 +2416,7 @@
         "collection_list": [],
         "products_to_show": 4,
         "image_position": "right",
-        "alignment": "left",
+        "alignment": "center",
         "alignment_mobile": "left",
         "mobile_button_center": true,
         "section_width": "page-width",
@@ -2323,6 +2428,47 @@
     "product_list_nPjdfp": {
       "type": "product-list",
       "blocks": {
+        "banner-content": {
+          "type": "group",
+          "static": true,
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "center",
+            "gap": 12,
+            "width": "fill",
+            "custom_width": 100,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "background_media": "none",
+            "background_color": "",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
         "static-header": {
           "type": "_product-list-content",
           "name": "t:names.header",
@@ -2491,7 +2637,7 @@
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
-                "text_color": "#c75f3c",
+                "text_color": "#DC4714",
                 "padding-block-start": 4,
                 "padding-block-end": 6,
                 "padding-inline-start": 0,
@@ -2524,8 +2670,190 @@
         "horizontal_alignment": "center",
         "gap": 28,
         "background_color": "{{ settings.color_palette.background }}",
+        "banner_link": "",
+        "banner_position": "left",
+        "banner_width": 28,
+        "banner_mobile": true,
+        "banner_zoom": true,
+        "banner_fit": "cover",
+        "banner_padding": 0,
+        "banner_background": "",
+        "banner_radius": 12,
+        "banner_border": false,
+        "banner_border_color": "",
         "padding-block-start": 24,
         "padding-block-end": 48
+      }
+    },
+    "hero_J8a6Nx": {
+      "type": "hero",
+      "blocks": {
+        "group_Frg8Br": {
+          "type": "group",
+          "name": "t:names.group",
+          "settings": {
+            "content_direction": "column",
+            "vertical_on_mobile": true,
+            "horizontal_alignment": "flex-start",
+            "vertical_alignment": "center",
+            "align_baseline": false,
+            "horizontal_alignment_flex_direction_column": "flex-start",
+            "vertical_alignment_flex_direction_column": "flex-end",
+            "gap": 12,
+            "width": "custom",
+            "custom_width": 50,
+            "width_mobile": "fill",
+            "custom_width_mobile": 100,
+            "height": "fit",
+            "custom_height": 100,
+            "background_media": "none",
+            "background_color": "",
+            "video_position": "cover",
+            "background_image_position": "cover",
+            "toggle_overlay": false,
+            "overlay_color": "#00000026",
+            "overlay_style": "solid",
+            "gradient_direction": "to top",
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+            "border_color": "",
+            "border_radius": 0,
+            "link": "",
+            "open_in_new_tab": false,
+            "placeholder": "",
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {
+            "text_hF6dQm": {
+              "type": "text",
+              "settings": {
+                "text": "<p>New season</p>",
+                "width": "fit-content",
+                "max_width": "normal",
+                "alignment": "left",
+                "type_preset": "custom",
+                "font": "var(--font-body--family)",
+                "font_size": "0.75rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "uppercase",
+                "wrap": "pretty",
+                "text_color": "{{ settings.color_palette.color2 }}",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "text_jjCz3W": {
+              "type": "text",
+              "settings": {
+                "text": "<h2>New arrivals</h2>",
+                "width": "fit-content",
+                "max_width": "narrow",
+                "alignment": "left",
+                "type_preset": "h2",
+                "font": "var(--font-body--family)",
+                "font_size": "1rem",
+                "line_height": "normal",
+                "letter_spacing": "normal",
+                "case": "none",
+                "wrap": "pretty",
+                "text_color": "{{ settings.color_palette.color2 }}",
+                "background": false,
+                "background_color": "#00000026",
+                "corner_radius": 0,
+                "padding-block-start": 0,
+                "padding-block-end": 0,
+                "padding-inline-start": 0,
+                "padding-inline-end": 0
+              },
+              "blocks": {}
+            },
+            "button_pmfTYx": {
+              "type": "button",
+              "settings": {
+                "label": "Shop now",
+                "link": "shopify://collections/all",
+                "open_in_new_tab": false,
+                "style_class": "button",
+                "custom_button_background": "{{ settings.color_palette.foreground }}",
+                "custom_button_text": "{{ settings.color_palette.background }}",
+                "custom_button_border": "{{ settings.color_palette.background }}",
+                "link_text_color": "",
+                "width": "fit-content",
+                "custom_width": 100,
+                "width_mobile": "fit-content",
+                "custom_width_mobile": 100
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": [
+            "text_hF6dQm",
+            "text_jjCz3W",
+            "button_pmfTYx"
+          ]
+        },
+        "product_spotlight_8pbafk": {
+          "type": "product-spotlight",
+          "settings": {
+            "product": "ps5-dualsense-wireless-controller-white",
+            "label": "Featured",
+            "style": "glass",
+            "show_image": true,
+            "show_price": true
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "group_Frg8Br",
+        "product_spotlight_8pbafk"
+      ],
+      "name": "t:names.video_banner",
+      "settings": {
+        "media_type_1": "video",
+        "video_1": "shopify://files/videos/new 1.mp4",
+        "media_type_2": "image",
+        "stack_media_on_mobile": false,
+        "custom_mobile_media": false,
+        "media_type_1_mobile": "image",
+        "media_type_2_mobile": "image",
+        "link": "",
+        "open_in_new_tab": false,
+        "content_direction": "row",
+        "vertical_on_mobile": true,
+        "horizontal_alignment": "space-between",
+        "vertical_alignment": "flex-end",
+        "align_baseline": false,
+        "horizontal_alignment_flex_direction_column": "flex-start",
+        "vertical_alignment_flex_direction_column": "center",
+        "gap": 24,
+        "section_width": "page-width",
+        "section_height": "medium",
+        "section_height_custom": 50,
+        "media_width": "page",
+        "corner_radius": 16,
+        "background_color": "",
+        "toggle_overlay": true,
+        "overlay_color": "#00000026",
+        "overlay_style": "gradient",
+        "gradient_direction": "to top",
+        "blurred_reflection": false,
+        "reflection_opacity": 75,
+        "scroll_zoom": true,
+        "show_video_controls": true,
+        "padding-block-start": 24,
+        "padding-block-end": 24
       }
     },
     "carousel_wt97bm": {
@@ -2655,6 +2983,7 @@
                   "type": "image",
                   "name": "t:names.image",
                   "settings": {
+                    "image": "shopify://shop_images/super-mini-sn-02-home-entertainment-system.jpg",
                     "link": "",
                     "content_direction": "column",
                     "horizontal_alignment_flex_direction_column": "flex-start",
@@ -2775,6 +3104,7 @@
                   "type": "image",
                   "name": "t:names.image",
                   "settings": {
+                    "image": "shopify://shop_images/smart-home-video-doorbell-pristine-refurbished.jpg",
                     "link": "",
                     "content_direction": "column",
                     "horizontal_alignment_flex_direction_column": "flex-start",
@@ -2895,6 +3225,7 @@
                   "type": "image",
                   "name": "t:names.image",
                   "settings": {
+                    "image": "shopify://shop_images/telstra-smart-handset-cordless-phone-tsh-c-white-pristine-refurbished.jpg",
                     "link": "",
                     "content_direction": "column",
                     "horizontal_alignment_flex_direction_column": "flex-start",
@@ -3015,6 +3346,7 @@
                   "type": "image",
                   "name": "t:names.image",
                   "settings": {
+                    "image": "shopify://shop_images/y7-gaming-box-white-pristine-refurbished.jpg",
                     "link": "",
                     "content_direction": "column",
                     "horizontal_alignment_flex_direction_column": "flex-start",
@@ -3261,6 +3593,8 @@
         "section_width": "page-width",
         "section_height": "large",
         "section_height_custom": 50,
+        "media_width": "full",
+        "corner_radius": 0,
         "background_color": "rgba(0,0,0,0)",
         "toggle_overlay": true,
         "overlay_color": "#12121266",
@@ -3268,8 +3602,129 @@
         "gradient_direction": "to top",
         "blurred_reflection": false,
         "reflection_opacity": 75,
+        "scroll_zoom": false,
+        "show_video_controls": false,
         "padding-block-start": 100,
         "padding-block-end": 72
+      }
+    },
+    "quick_links_kqUJdd": {
+      "type": "quick-links",
+      "blocks": {
+        "quick_link_HNLYQw": {
+          "type": "_quick-link",
+          "settings": {
+            "collection": "apple-iphone",
+            "label": "",
+            "link": "",
+            "media": "image",
+            "icon": "apple"
+          },
+          "blocks": {}
+        },
+        "quick_link_dtgDGH": {
+          "type": "_quick-link",
+          "settings": {
+            "collection": "camera-and-lens",
+            "label": "",
+            "link": "",
+            "media": "image",
+            "icon": "apple"
+          },
+          "blocks": {}
+        },
+        "quick_link_dcEebK": {
+          "type": "_quick-link",
+          "settings": {
+            "collection": "appliances",
+            "label": "",
+            "link": "",
+            "media": "image",
+            "icon": "apple"
+          },
+          "blocks": {}
+        },
+        "quick_link_PT44wy": {
+          "type": "_quick-link",
+          "settings": {
+            "collection": "samsung",
+            "label": "",
+            "link": "",
+            "media": "image",
+            "icon": "apple"
+          },
+          "blocks": {}
+        },
+        "quick_link_APjjJr": {
+          "type": "_quick-link",
+          "settings": {
+            "collection": "sony",
+            "label": "",
+            "link": "",
+            "media": "image",
+            "icon": "apple"
+          },
+          "blocks": {}
+        },
+        "quick_link_8gqNRA": {
+          "type": "_quick-link",
+          "settings": {
+            "collection": "apple-watches",
+            "label": "",
+            "link": "",
+            "media": "image",
+            "icon": "apple"
+          },
+          "blocks": {}
+        },
+        "quick_link_dxTqqz": {
+          "type": "_quick-link",
+          "settings": {
+            "collection": "games-and-accessories",
+            "label": "",
+            "link": "",
+            "media": "image",
+            "icon": "apple"
+          },
+          "blocks": {}
+        },
+        "quick_link_XqB6c6": {
+          "type": "_quick-link",
+          "settings": {
+            "collection": "audio-amp-video",
+            "label": "",
+            "link": "",
+            "media": "image",
+            "icon": "apple"
+          },
+          "blocks": {}
+        }
+      },
+      "block_order": [
+        "quick_link_HNLYQw",
+        "quick_link_dtgDGH",
+        "quick_link_dcEebK",
+        "quick_link_PT44wy",
+        "quick_link_APjjJr",
+        "quick_link_8gqNRA",
+        "quick_link_dxTqqz",
+        "quick_link_XqB6c6"
+      ],
+      "name": "t:names.quick_links",
+      "settings": {
+        "alignment": "center",
+        "gap": 12,
+        "show_arrows": true,
+        "section_width": "page-width",
+        "style": "fill",
+        "hover_effect": "fill",
+        "hover_background_color": "",
+        "hover_text_color": "",
+        "show_arrow_icon": true,
+        "image_size": "40",
+        "background_color": "{{ settings.color_palette.color2 }}",
+        "padding-block-start": 16,
+        "padding-block-end": 16
       }
     },
     "section_ammktQ": {
@@ -3551,7 +4006,7 @@
         "section_height": "",
         "section_height_custom": 50,
         "background_media": "none",
-        "background_color": "",
+        "background_color": "{{ settings.color_palette.color1 }}",
         "video_position": "cover",
         "background_image_position": "cover",
         "toggle_overlay": false,
@@ -3578,8 +4033,10 @@
     "product_list_fgbhFT",
     "collection_links_z6VX8g",
     "product_list_nPjdfp",
+    "hero_J8a6Nx",
     "carousel_wt97bm",
     "hero_jVaWmY",
+    "quick_links_kqUJdd",
     "section_ammktQ"
   ]
 }

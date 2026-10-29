@@ -75,7 +75,7 @@
           "type": "_header-menu",
           "static": true,
           "settings": {
-            "menu": "test",
+            "menu": "mega1",
             "background_color": "{{ settings.color_palette.background }}",
             "text_color": "",
             "type_font_primary_size": "0.875rem",
@@ -93,7 +93,374 @@
             "drawer_accordion_expand_first": false,
             "drawer_dividers": false
           },
-          "blocks": {}
+          "blocks": {
+            "menu-panel-1": {
+              "type": "_mega-menu",
+              "static": true,
+              "settings": {
+                "layout": "tabs",
+                "tabs_columns": 4,
+                "tabs_show_images": true,
+                "tabs_image_ratio": "square",
+                "tabs_image_radius": 12,
+                "tabs_show_view_all": true,
+                "promos_position": "end",
+                "promos_columns": 3,
+                "promo_image_ratio": "landscape",
+                "promo_radius": 12,
+                "products_collection": "",
+                "products_count": 4,
+                "products_columns": 4,
+                "products_show_links": true,
+                "products_image_ratio": "square",
+                "products_image_radius": 8,
+                "products_view_all": true
+              },
+              "blocks": {}
+            },
+            "menu-panel-2": {
+              "type": "_mega-menu",
+              "static": true,
+              "settings": {
+                "layout": "links_promos",
+                "tabs_columns": 4,
+                "tabs_show_images": true,
+                "tabs_image_ratio": "landscape",
+                "tabs_image_radius": 8,
+                "tabs_show_view_all": true,
+                "promos_position": "end",
+                "promos_columns": 4,
+                "promo_image_ratio": "square",
+                "promo_radius": 12,
+                "products_collection": "",
+                "products_count": 4,
+                "products_columns": 4,
+                "products_show_links": true,
+                "products_image_ratio": "square",
+                "products_image_radius": 8,
+                "products_view_all": true
+              },
+              "blocks": {
+                "mega_menu_promo_Rgiqc8": {
+                  "type": "_mega-menu-promo",
+                  "name": "t:names.menu_promo",
+                  "settings": {
+                    "image": "shopify://shop_images/y7-gaming-box-white-excellent-refurbished.jpg",
+                    "link": "",
+                    "heading": "New arrivals",
+                    "text": "",
+                    "button_label": "Shop now",
+                    "content_position": "bottom",
+                    "alignment": "start",
+                    "text_color": "light",
+                    "overlay_opacity": 30
+                  },
+                  "blocks": {}
+                },
+                "mega_menu_promo_8UzwAi": {
+                  "type": "_mega-menu-promo",
+                  "name": "t:names.menu_promo",
+                  "settings": {
+                    "image": "shopify://shop_images/x51-handheld-game-console-portable-retro-gaming-system.jpg",
+                    "link": "",
+                    "heading": "New arrivals",
+                    "text": "",
+                    "button_label": "Shop now",
+                    "content_position": "bottom",
+                    "alignment": "start",
+                    "text_color": "light",
+                    "overlay_opacity": 40
+                  },
+                  "blocks": {}
+                },
+                "mega_menu_promo_B6kkxy": {
+                  "type": "_mega-menu-promo",
+                  "name": "t:names.menu_promo",
+                  "settings": {
+                    "image": "shopify://shop_images/sony-srs-xb100-wireless-bluetooth-speaker-blue-portable-extra-bass-speaker.jpg",
+                    "link": "",
+                    "heading": "New arrivals",
+                    "text": "",
+                    "button_label": "Shop now",
+                    "content_position": "bottom",
+                    "alignment": "start",
+                    "text_color": "light",
+                    "overlay_opacity": 40
+                  },
+                  "blocks": {}
+                },
+                "mega_menu_promo_PxExG6": {
+                  "type": "_mega-menu-promo",
+                  "name": "t:names.menu_promo",
+                  "settings": {
+                    "image": "shopify://shop_images/jabra-elite-3-true-wireless-earbuds-lilac-2_882530f5-7a9a-4329-b035-e6bc37fa5b23.jpg",
+                    "link": "",
+                    "heading": "New arrivals",
+                    "text": "",
+                    "button_label": "Shop now",
+                    "content_position": "bottom",
+                    "alignment": "start",
+                    "text_color": "light",
+                    "overlay_opacity": 40
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "mega_menu_promo_Rgiqc8",
+                "mega_menu_promo_8UzwAi",
+                "mega_menu_promo_B6kkxy",
+                "mega_menu_promo_PxExG6"
+              ]
+            },
+            "menu-panel-3": {
+              "type": "_mega-menu",
+              "static": true,
+              "settings": {
+                "layout": "default",
+                "tabs_columns": 4,
+                "tabs_show_images": true,
+                "tabs_image_ratio": "landscape",
+                "tabs_image_radius": 8,
+                "tabs_show_view_all": true,
+                "promos_position": "end",
+                "promos_columns": 3,
+                "promo_image_ratio": "landscape",
+                "promo_radius": 12,
+                "products_collection": "",
+                "products_count": 4,
+                "products_columns": 4,
+                "products_show_links": true,
+                "products_image_ratio": "square",
+                "products_image_radius": 8,
+                "products_view_all": true
+              },
+              "blocks": {}
+            },
+            "menu-panel-4": {
+              "type": "_mega-menu",
+              "static": true,
+              "settings": {
+                "layout": "promos",
+                "tabs_columns": 4,
+                "tabs_show_images": true,
+                "tabs_image_ratio": "landscape",
+                "tabs_image_radius": 8,
+                "tabs_show_view_all": true,
+                "promos_position": "end",
+                "promos_columns": 3,
+                "promo_image_ratio": "square",
+                "promo_radius": 12,
+                "products_collection": "",
+                "products_count": 4,
+                "products_columns": 4,
+                "products_show_links": true,
+                "products_image_ratio": "square",
+                "products_image_radius": 8,
+                "products_view_all": true
+              },
+              "blocks": {
+                "mega_menu_promo_bPL4Bx": {
+                  "type": "_mega-menu-promo",
+                  "name": "t:names.menu_promo",
+                  "settings": {
+                    "image": "shopify://shop_images/cy3756cymcc-cygnett-magcharge-1-2m-magnetic-wireless-charging-cable-2.avif",
+                    "link": "",
+                    "heading": "New arrivals",
+                    "text": "",
+                    "button_label": "Shop now",
+                    "content_position": "bottom",
+                    "alignment": "start",
+                    "text_color": "dark",
+                    "overlay_opacity": 40
+                  },
+                  "blocks": {}
+                },
+                "mega_menu_promo_AHrTRP": {
+                  "type": "_mega-menu-promo",
+                  "name": "t:names.menu_promo",
+                  "settings": {
+                    "image": "shopify://shop_images/jbl-wave-buds-tws-wireless-earbuds-mint-good-refurbished-2.jpg",
+                    "link": "",
+                    "heading": "New arrivals",
+                    "text": "",
+                    "button_label": "Shop now",
+                    "content_position": "bottom",
+                    "alignment": "start",
+                    "text_color": "dark",
+                    "overlay_opacity": 40
+                  },
+                  "blocks": {}
+                },
+                "mega_menu_promo_yLe4mG": {
+                  "type": "_mega-menu-promo",
+                  "name": "t:names.menu_promo",
+                  "settings": {
+                    "image": "shopify://shop_images/jbl-go-4-bluetooth-speaker-blue-red-pink-squad-camouflage-pristine-refurbished-3.png",
+                    "link": "",
+                    "heading": "New arrivals",
+                    "text": "",
+                    "button_label": "Shop now",
+                    "content_position": "bottom",
+                    "alignment": "start",
+                    "text_color": "dark",
+                    "overlay_opacity": 40
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "mega_menu_promo_bPL4Bx",
+                "mega_menu_promo_AHrTRP",
+                "mega_menu_promo_yLe4mG"
+              ]
+            },
+            "menu-panel-5": {
+              "type": "_mega-menu",
+              "static": true,
+              "settings": {
+                "layout": "promos",
+                "tabs_columns": 4,
+                "tabs_show_images": true,
+                "tabs_image_ratio": "landscape",
+                "tabs_image_radius": 8,
+                "tabs_show_view_all": true,
+                "promos_position": "end",
+                "promos_columns": 3,
+                "promo_image_ratio": "square",
+                "promo_radius": 12,
+                "products_collection": "",
+                "products_count": 4,
+                "products_columns": 4,
+                "products_show_links": true,
+                "products_image_ratio": "square",
+                "products_image_radius": 8,
+                "products_view_all": true
+              },
+              "blocks": {}
+            },
+            "menu-panel-6": {
+              "type": "_mega-menu",
+              "static": true,
+              "settings": {
+                "layout": "default",
+                "tabs_columns": 4,
+                "tabs_show_images": true,
+                "tabs_image_ratio": "landscape",
+                "tabs_image_radius": 8,
+                "tabs_show_view_all": true,
+                "promos_position": "end",
+                "promos_columns": 3,
+                "promo_image_ratio": "landscape",
+                "promo_radius": 12,
+                "products_collection": "",
+                "products_count": 4,
+                "products_columns": 4,
+                "products_show_links": true,
+                "products_image_ratio": "square",
+                "products_image_radius": 8,
+                "products_view_all": true
+              },
+              "blocks": {}
+            },
+            "menu-panel-7": {
+              "type": "_mega-menu",
+              "static": true,
+              "settings": {
+                "layout": "default",
+                "tabs_columns": 4,
+                "tabs_show_images": true,
+                "tabs_image_ratio": "landscape",
+                "tabs_image_radius": 8,
+                "tabs_show_view_all": true,
+                "promos_position": "end",
+                "promos_columns": 3,
+                "promo_image_ratio": "landscape",
+                "promo_radius": 12,
+                "products_collection": "",
+                "products_count": 4,
+                "products_columns": 4,
+                "products_show_links": true,
+                "products_image_ratio": "square",
+                "products_image_radius": 8,
+                "products_view_all": true
+              },
+              "blocks": {}
+            },
+            "menu-panel-8": {
+              "type": "_mega-menu",
+              "static": true,
+              "settings": {
+                "layout": "default",
+                "tabs_columns": 4,
+                "tabs_show_images": true,
+                "tabs_image_ratio": "landscape",
+                "tabs_image_radius": 8,
+                "tabs_show_view_all": true,
+                "promos_position": "end",
+                "promos_columns": 3,
+                "promo_image_ratio": "landscape",
+                "promo_radius": 12,
+                "products_collection": "",
+                "products_count": 4,
+                "products_columns": 4,
+                "products_show_links": true,
+                "products_image_ratio": "square",
+                "products_image_radius": 8,
+                "products_view_all": true
+              },
+              "blocks": {}
+            },
+            "menu-panel-9": {
+              "type": "_mega-menu",
+              "static": true,
+              "settings": {
+                "layout": "default",
+                "tabs_columns": 4,
+                "tabs_show_images": true,
+                "tabs_image_ratio": "landscape",
+                "tabs_image_radius": 8,
+                "tabs_show_view_all": true,
+                "promos_position": "end",
+                "promos_columns": 3,
+                "promo_image_ratio": "landscape",
+                "promo_radius": 12,
+                "products_collection": "",
+                "products_count": 4,
+                "products_columns": 4,
+                "products_show_links": true,
+                "products_image_ratio": "square",
+                "products_image_radius": 8,
+                "products_view_all": true
+              },
+              "blocks": {}
+            },
+            "menu-panel-10": {
+              "type": "_mega-menu",
+              "static": true,
+              "settings": {
+                "layout": "default",
+                "tabs_columns": 4,
+                "tabs_show_images": true,
+                "tabs_image_ratio": "landscape",
+                "tabs_image_radius": 8,
+                "tabs_show_view_all": true,
+                "promos_position": "end",
+                "promos_columns": 3,
+                "promo_image_ratio": "landscape",
+                "promo_radius": 12,
+                "products_collection": "",
+                "products_count": 4,
+                "products_columns": 4,
+                "products_show_links": true,
+                "products_image_ratio": "square",
+                "products_image_radius": 8,
+                "products_view_all": true
+              },
+              "blocks": {}
+            }
+          },
+          "block_order": []
         }
       },
       "settings": {
