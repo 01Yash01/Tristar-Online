@@ -154,6 +154,27 @@
                   },
                   "blocks": {}
                 },
+                "product_condition_9qgi3W": {
+                  "type": "product-condition",
+                  "name": "t:names.product_condition",
+                  "settings": {
+                    "label": "Condition",
+                    "condition_override": "",
+                    "fallback": "new",
+                    "guide_heading": "Condition guide",
+                    "condition_new_text": "Brand new and unused, in its original packaging.",
+                    "condition_pristine_text": "Looks like new, with no visible signs of use.",
+                    "condition_excellent_text": "Very light signs of use that are hard to spot.",
+                    "condition_good_text": "Light scratches or scuffs you can see up close.",
+                    "condition_acceptable_text": "Clearly visible wear, such as scratches or marks.",
+                    "guide_note": "All refurbished products are fully working and include our 12-month warranty.",
+                    "padding-block-start": 0,
+                    "padding-block-end": 0,
+                    "padding-inline-start": 0,
+                    "padding-inline-end": 0
+                  },
+                  "blocks": {}
+                },
                 "price_tVjtKg": {
                   "type": "price",
                   "settings": {
@@ -179,6 +200,7 @@
               },
               "block_order": [
                 "text_xrnftG",
+                "product_condition_9qgi3W",
                 "price_tVjtKg"
               ]
             },
