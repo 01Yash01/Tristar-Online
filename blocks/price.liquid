@@ -50,13 +50,17 @@
       --color-rgb: {{ block_settings.text_color.rgb }};
     {% endif %}
     --width: {{ block_settings.width }};
+    {% if block_settings.sale_price_color != blank %}
+      --price-sale-color: {{ block_settings.sale_price_color }};
+    {% endif %}
   "
   {{ block.shopify_attributes }}
 >
   {% render 'price',
     show_unit_price: true,
     product_resource: product_resource,
-    show_sale_price_first: block_settings.show_sale_price_first
+    show_sale_price_first: block_settings.show_sale_price_first,
+    show_savings: block_settings.show_savings
   %}
 
   {% if block_settings.show_tax_info %}
@@ -110,6 +114,18 @@
       "id": "show_sale_price_first",
       "label": "t:settings.show_sale_price_first",
       "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_savings",
+      "label": "t:settings.show_savings",
+      "info": "t:info.show_savings",
+      "default": false
+    },
+    {
+      "type": "color",
+      "id": "sale_price_color",
+      "label": "t:settings.sale_price_color"
     },
     {
       "type": "checkbox",

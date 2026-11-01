@@ -60,4 +60,32 @@
   .price-item__group {
     display: inline-block;
   }
+
+  /* Sale price colour from the price block; regular prices keep the text colour */
+  product-price .price-item__group.price {
+    color: var(--price-sale-color, inherit);
+  }
+
+  /* Next to a savings badge, the original price steps back */
+  product-price:has(.price__savings) .compare-at-price {
+    font-size: 0.7em;
+  }
+
+  .price__savings {
+    display: inline-block;
+    margin-inline-start: var(--margin-xs);
+    padding: 3px 10px;
+    border-radius: var(--badge-border-radius, 100px);
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--badge-font-family, var(--font-body--family));
+    font-size: var(--font-size--xs);
+    font-weight: var(--badge-font-weight, 600);
+    font-style: normal;
+    letter-spacing: normal;
+    line-height: 1.4;
+    text-transform: var(--badge-text-transform, none);
+    vertical-align: middle;
+    white-space: nowrap;
+  }
 {% endstylesheet %}
