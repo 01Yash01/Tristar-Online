@@ -76,7 +76,7 @@
           "static": true,
           "settings": {
             "menu": "mega1",
-            "background_color": "{{ settings.color_palette.background }}",
+            "background_color": "#DDD9D1",
             "text_color": "",
             "type_font_primary_size": "0.875rem",
             "menu_font_style": "inverse",
@@ -217,7 +217,7 @@
               "type": "_mega-menu",
               "static": true,
               "settings": {
-                "layout": "default",
+                "layout": "tabs",
                 "tabs_columns": 4,
                 "tabs_show_images": true,
                 "tabs_image_ratio": "landscape",
@@ -248,7 +248,7 @@
                 "tabs_image_radius": 8,
                 "tabs_show_view_all": true,
                 "promos_position": "end",
-                "promos_columns": 3,
+                "promos_columns": 4,
                 "promo_image_ratio": "square",
                 "promo_radius": 12,
                 "products_collection": "",
@@ -260,6 +260,22 @@
                 "products_view_all": true
               },
               "blocks": {
+                "mega_menu_promo_XfBA8N": {
+                  "type": "_mega-menu-promo",
+                  "name": "t:names.menu_promo",
+                  "settings": {
+                    "image": "shopify://shop_images/apple-airpods-max-1st-generation-2020-lightning-space-gray-silver-green-sky-blue-6.jpg",
+                    "link": "",
+                    "heading": "New arrivals",
+                    "text": "",
+                    "button_label": "Shop now",
+                    "content_position": "bottom",
+                    "alignment": "start",
+                    "text_color": "light",
+                    "overlay_opacity": 40
+                  },
+                  "blocks": {}
+                },
                 "mega_menu_promo_bPL4Bx": {
                   "type": "_mega-menu-promo",
                   "name": "t:names.menu_promo",
@@ -271,7 +287,7 @@
                     "button_label": "Shop now",
                     "content_position": "bottom",
                     "alignment": "start",
-                    "text_color": "dark",
+                    "text_color": "light",
                     "overlay_opacity": 40
                   },
                   "blocks": {}
@@ -287,7 +303,7 @@
                     "button_label": "Shop now",
                     "content_position": "bottom",
                     "alignment": "start",
-                    "text_color": "dark",
+                    "text_color": "light",
                     "overlay_opacity": 40
                   },
                   "blocks": {}
@@ -303,13 +319,14 @@
                     "button_label": "Shop now",
                     "content_position": "bottom",
                     "alignment": "start",
-                    "text_color": "dark",
+                    "text_color": "light",
                     "overlay_opacity": 40
                   },
                   "blocks": {}
                 }
               },
               "block_order": [
+                "mega_menu_promo_XfBA8N",
                 "mega_menu_promo_bPL4Bx",
                 "mega_menu_promo_AHrTRP",
                 "mega_menu_promo_yLe4mG"
@@ -319,7 +336,7 @@
               "type": "_mega-menu",
               "static": true,
               "settings": {
-                "layout": "promos",
+                "layout": "default",
                 "tabs_columns": 4,
                 "tabs_show_images": true,
                 "tabs_image_ratio": "landscape",
@@ -476,7 +493,7 @@
         "search_bar_corner_radius": 24,
         "search_bar_button": true,
         "search_bar_hints": "iPhone 17 Pro, Samsung Galaxy S26, AirPods Pro,  Gaming Consoles, Smart watches",
-        "search_bar_background_color": "#ffffff",
+        "search_bar_background_color": "{{ settings.color_palette.color2 }}",
         "show_country": true,
         "country_selector_style": true,
         "show_language": true,
@@ -496,7 +513,7 @@
         "actions_font_size": "0.875rem",
         "actions_font": "body",
         "actions_text_case": "none",
-        "background_color_top": "{{ settings.color_palette.background }}",
+        "background_color_top": "#EFEFEF",
         "text_color_top": "",
         "background_color_bottom": "{{ settings.color_palette.color1 }}",
         "text_color_bottom": "",
