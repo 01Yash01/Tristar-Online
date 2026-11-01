@@ -1,7 +1,18 @@
 
 
+{%- liquid
+  assign product_structured_data = closest.product | structured_data
+
+  # Refurbished stock carries the grade in its title, e.g. "Apple Pencil Pro - Excellent - Refurbished".
+  # Tell Google about it on every offer, so listings don't treat it as new.
+  assign product_title_lower = closest.product.title | downcase
+  if product_title_lower contains 'refurb' or product_title_lower contains 'renewed'
+    assign refurbished_offer = '"@type":"Offer","itemCondition":"https://schema.org/RefurbishedCondition"'
+    assign product_structured_data = product_structured_data | replace: '"@type":"Offer"', refurbished_offer
+  endif
+-%}
 <script type="application/ld+json">
-  {{ closest.product | structured_data }}
+  {{ product_structured_data }}
 </script>
 
 {% capture media_gallery %}
