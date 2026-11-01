@@ -302,6 +302,20 @@
     position: relative;
   }
 
+  /* A solid button, so the bar's main action stands out */
+  .sticky-add-to-cart__button.button {
+    --button-color: var(--color-background);
+    --button-background-color: var(--color-foreground);
+    --button-border-color: var(--color-foreground);
+    --button-focus-outline-color: var(--color-foreground);
+  }
+
+  .sticky-add-to-cart__button.button:hover:not([disabled]) {
+    --button-color: var(--color-background);
+    --button-background-color: rgb(var(--color-foreground-rgb) / var(--opacity-80));
+    --button-border-color: rgb(var(--color-foreground-rgb) / var(--opacity-80));
+  }
+
   /* Mobile adjustments */
   @media screen and (max-width: 749px) {
     .sticky-add-to-cart__bar {
@@ -319,28 +333,22 @@
       }
     }
 
-    .sticky-add-to-cart__bar .add-to-cart-text__content {
-      display: none;
-    }
-
     .sticky-add-to-cart__info[data-has-image='false'] {
       padding-inline-start: 0;
     }
 
+    /* The title is cut off at this width, so the bar shows the price and a labelled button instead */
     .sticky-add-to-cart__title {
-      font-size: var(--font-paragraph--size);
+      display: none;
     }
 
     .sticky-add-to-cart__button {
-      padding: var(--padding-lg);
+      width: auto;
+      padding-inline: var(--padding-xl);
     }
 
     .sticky-add-to-cart__price {
-      font-size: var(--font-paragraph-small--size);
-    }
-
-    .sticky-add-to-cart__button {
-      width: var(--height-buy-buttons);
+      font-size: var(--font-paragraph--size);
     }
 
     sticky-add-to-cart:not([data-variant-available='true']) .add-to-cart-text__content {
@@ -352,7 +360,7 @@
     }
   }
 
-  /* Small mobile - hide text content and compare price */
+  /* Small mobile - hide the compare price and truncate the variant */
   @media screen and (max-width: 389px) {
     .sticky-add-to-cart__bar {
       .compare-at-price {
@@ -360,22 +368,7 @@
       }
     }
 
-    .sticky-add-to-cart__title {
-      display: none;
-    }
-
-    /* For product with only default variant show title */
-    .sticky-add-to-cart__info[data-singleton='true'] .sticky-add-to-cart__title {
-      display: block;
-    }
-
-    /* For single variant show title and variant, truncate both. variant should be identifiable with truncation */
-    .sticky-add-to-cart__info[data-single-option='true'] .sticky-add-to-cart__title {
-      display: block;
-    }
-
-    .sticky-add-to-cart__info[data-single-option='true'] .sticky-add-to-cart__variant {
-      display: block;
+    .sticky-add-to-cart__variant {
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
