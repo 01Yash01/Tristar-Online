@@ -206,6 +206,13 @@
     }
   }
 
+  /* Rest on the footer's pinned logo band, clear of the links in the rows below it */
+  @media (prefers-reduced-motion: no-preference) {
+    body:has(footer[data-reveal-active][data-reveal-in-view]) .back-to-top[data-visible='true'] {
+      translate: 0 calc(-1 * var(--footer-reveal-rows, 0px));
+    }
+  }
+
   /* Fade only, without the slide and hover lift */
   @media (prefers-reduced-motion: reduce) {
     .back-to-top,

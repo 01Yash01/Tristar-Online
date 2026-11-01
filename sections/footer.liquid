@@ -6,6 +6,15 @@
   endif
 %}
 
+{% if section.settings.reveal_behind_footer %}
+  <script
+    src="{{ 'footer-reveal.js' | asset_url }}"
+    type="module"
+    fetchpriority="low"
+  ></script>
+  <footer-reveal-component class="footer-reveal" hidden></footer-reveal-component>
+{% endif %}
+
 <div
   class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
 ></div>
@@ -97,6 +106,26 @@
       grid-column: 1 / -1;
     }
   }
+
+  /* footer-reveal.js sets the attribute once the pinned sections are measured and fit the viewport. Shopify
+     owns the section wrappers, so the pinned ones are found from the element inside the first of them. */
+  @media (prefers-reduced-motion: no-preference) {
+    footer:has(.footer-reveal) .footer-content {
+      content-visibility: visible;
+    }
+
+    footer[data-reveal-active] > .shopify-section {
+      position: relative;
+      z-index: var(--layer-flat);
+    }
+
+    footer[data-reveal-active] > .shopify-section:has(.footer-reveal),
+    footer[data-reveal-active] > .shopify-section:has(.footer-reveal) ~ .shopify-section {
+      position: sticky;
+      inset-block-end: var(--footer-reveal-offset, 0px);
+      z-index: var(--layer-base);
+    }
+  }
 {% endstylesheet %}
 
 {% schema %}
@@ -185,6 +214,13 @@
       "id": "background_color",
       "label": "t:settings.background_color",
       "default": "{{ settings.color_palette.foreground }}"
+    },
+    {
+      "type": "checkbox",
+      "id": "reveal_behind_footer",
+      "label": "t:settings.reveal_on_scroll",
+      "info": "t:info.reveal_behind_footer",
+      "default": false
     },
     {
       "type": "header",
