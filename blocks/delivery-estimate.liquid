@@ -1,0 +1,249 @@
+{%- doc -%}
+  Renders an estimated delivery window, counted in business days (Monday to Friday) from today.
+  Liquid renders the dates and assets/delivery-estimate.js refreshes them in the browser, because a
+  cached page can be a day old. Public holidays are not taken into account.
+{%- enddoc -%}
+
+{%- liquid
+  assign block_settings = block.settings
+  assign product_resource = closest.product
+
+  assign min_days = block_settings.min_days
+  assign max_days = block_settings.max_days
+  if max_days < min_days
+    assign max_days = min_days
+  endif
+
+  assign show_block = true
+  if product_resource == blank or product_resource.available == false
+    assign show_block = false
+  endif
+
+  # Shoppers outside the listed countries have different delivery times
+  assign countries = block_settings.countries | upcase | remove: ' ' | split: ','
+  if countries.size > 0
+    unless countries contains localization.country.iso_code
+      assign show_block = false
+    endunless
+  endif
+
+  assign now_seconds = 'now' | date: '%s' | plus: 0
+  assign business_days = 0
+  assign start_seconds = now_seconds
+  assign end_seconds = now_seconds
+  for offset in (1..45)
+    assign day_seconds = offset | times: 86400 | plus: now_seconds
+    assign weekday = day_seconds | date: '%u' | plus: 0
+    if weekday < 6
+      assign business_days = business_days | plus: 1
+      if business_days == min_days
+        assign start_seconds = day_seconds
+      endif
+      if business_days == max_days
+        assign end_seconds = day_seconds
+        break
+      endif
+    endif
+  endfor
+-%}
+
+{%- if show_block -%}
+  <script
+    src="{{ 'delivery-estimate.js' | asset_url }}"
+    type="module"
+    fetchpriority="low"
+  ></script>
+  {%- capture start_html -%}
+    <time datetime="{{ start_seconds | date: '%Y-%m-%d' }}" data-delivery-start>
+      {{- start_seconds | date: '%a %-d %b' -}}
+    </time>
+  {%- endcapture -%}
+  {%- capture end_html -%}
+    <time datetime="{{ end_seconds | date: '%Y-%m-%d' }}" data-delivery-end>
+      {{- end_seconds | date: '%a %-d %b' -}}
+    </time>
+  {%- endcapture -%}
+  <delivery-estimate
+    class="delivery-estimate spacing-style"
+    style="{% render 'spacing-style', settings: block_settings %}"
+    data-min-days="{{ min_days }}"
+    data-max-days="{{ max_days }}"
+    data-locale="{{ request.locale.iso_code }}-{{ localization.country.iso_code }}"
+    {{ block.shopify_attributes }}
+  >
+    {%- if block_settings.icon != 'none' -%}
+      {% render 'icon-or-image', icon: block_settings.icon, width: 24, class_name: 'delivery-estimate__icon' %}
+    {%- endif -%}
+    <p class="delivery-estimate__text">
+      {%- if block_settings.label != blank -%}
+        <span class="delivery-estimate__label">{{ block_settings.label | escape }}</span>
+      {%- endif -%}
+      <span class="delivery-estimate__dates">
+        {{- 'content.delivery_estimate_html' | t: start: start_html, end: end_html -}}
+      </span>
+    </p>
+  </delivery-estimate>
+{%- elsif request.design_mode -%}
+  <div
+    class="delivery-estimate"
+    {{ block.shopify_attributes }}
+  ></div>
+{%- endif -%}
+
+{% stylesheet %}
+  .delivery-estimate {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .delivery-estimate__icon {
+    flex-shrink: 0;
+  }
+
+  .delivery-estimate__text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    margin: 0;
+  }
+
+  .delivery-estimate__label {
+    font-family: var(--font-accent--family);
+    font-size: var(--font-size--sm);
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .delivery-estimate__dates {
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+    font-size: var(--font-size--xs);
+    overflow-wrap: anywhere;
+  }
+
+  .delivery-estimate__dates time {
+    color: var(--color-foreground);
+    font-weight: 600;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.delivery_estimate",
+  "tag": null,
+  "settings": [
+    {
+      "type": "select",
+      "id": "icon",
+      "label": "t:settings.icon",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "box",
+          "label": "t:options.box"
+        },
+        {
+          "value": "truck",
+          "label": "t:options.truck"
+        },
+        {
+          "value": "plane",
+          "label": "t:options.plane"
+        },
+        {
+          "value": "stopwatch",
+          "label": "t:options.stopwatch"
+        }
+      ],
+      "default": "box"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "t:settings.label",
+      "default": "t:text_defaults.delivery_estimate_label"
+    },
+    {
+      "type": "range",
+      "id": "min_days",
+      "label": "t:settings.delivery_min_days",
+      "min": 1,
+      "max": 20,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "range",
+      "id": "max_days",
+      "label": "t:settings.delivery_max_days",
+      "min": 1,
+      "max": 30,
+      "step": 1,
+      "default": 9,
+      "info": "t:info.delivery_days"
+    },
+    {
+      "type": "text",
+      "id": "countries",
+      "label": "t:settings.delivery_countries",
+      "default": "AU",
+      "info": "t:info.delivery_countries"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.delivery_estimate",
+      "category": "t:categories.product"
+    }
+  ]
+}
+{% endschema %}
