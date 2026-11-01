@@ -516,7 +516,7 @@
         "background_color_top": "#EFEFEF",
         "text_color_top": "",
         "background_color_bottom": "{{ settings.color_palette.color1 }}",
-        "text_color_bottom": "",
+        "text_color_bottom": "#f2c879",
         "bubble_style": "custom",
         "bubble_background_color": "#00296b",
         "bubble_text_color": "",
