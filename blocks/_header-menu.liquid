@@ -133,6 +133,10 @@
           if link.links != blank or has_panel
             assign has_submenu = true
           endif
+          assign roll_link = false
+          if has_submenu == false and block_settings.link_hover_effect == 'roll'
+            assign roll_link = true
+          endif
         -%}
         <li
           class="menu-list__list-item"
@@ -146,13 +150,19 @@
           <a
             href="{{ link.url }}"
             data-skip-node-update="true"
-            class="menu-list__link{% if link.active %} menu-list__link--active{% endif %}"
+            class="menu-list__link{% if link.active %} menu-list__link--active{% endif %}{% if roll_link %} menu-list__link--roll{% endif %}"
             {% if link.current %}
               aria-current="page"
             {% endif %}
             ref="menuitem"
           >
-            <span class="menu-list__link-title">{{- link.title -}}</span>
+            <span class="menu-list__link-title">
+              {%- if roll_link -%}
+                <span class="menu-list__link-roll">{{- link.title -}}</span>
+              {%- else -%}
+                {{- link.title -}}
+              {%- endif -%}
+            </span>
           </a>
           {%- if has_submenu -%}
             <button
@@ -171,7 +181,7 @@
                 focusable="false"
                 viewBox="0 0 10 6"
               >
-                {%- render 'icon', icon: 'caret' -%}
+                <path d="M1 1l4 4 4-4" vector-effect="non-scaling-stroke" />
               </svg>
             </button>
             </span>
@@ -266,7 +276,7 @@
     >
       <div class="header-menu__inner">
         <nav
-          class="menu-list"
+          class="menu-list{% if block_settings.show_dropdown_arrows %} menu-list--dropdown-arrows{% endif %}"
           aria-label="{{ 'accessibility.header_navigation_label' | t }}"
           style="{% render 'menu-font-styles', settings: block_settings, menu_type: 'mega_menu' %}"
         >
@@ -458,7 +468,12 @@
     display: block;
     width: var(--font-size--3xs);
     aspect-ratio: 10 / 6;
-    fill: currentColor;
+    overflow: visible;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: var(--icon-stroke-width);
+    stroke-linecap: round;
+    stroke-linejoin: round;
     transition: transform var(--animation-speed) var(--animation-easing);
   }
 
@@ -471,6 +486,53 @@
   }
   [slot='overflow'] .menu-list__link-title {
     padding-inline: 0;
+  }
+
+  /* Dropdown arrows: the disclosure button stays visible on items that open a submenu. In the top
+     bar the link's end padding grows to hold it, so the arrow doesn't crowd the next item, and it
+     stays click-through, so a click on the arrow follows the link like a click on its title. */
+  .menu-list--dropdown-arrows {
+    --menu-arrow-gap: var(--gap-xs);
+
+    .menu-list__disclosure {
+      opacity: 1;
+    }
+
+    .menu-list__list-item:not([slot='overflow']) .menu-list__trigger .menu-list__link-title {
+      padding-inline-end: calc(var(--gap-sm) + var(--menu-arrow-gap) + var(--font-size--3xs));
+    }
+
+    .menu-list__list-item:not([slot='overflow']) .menu-list__disclosure {
+      inset-inline-start: auto;
+      inset-inline-end: calc(var(--gap-sm) - var(--padding-3xs));
+    }
+  }
+
+  /* Roll-up hover on links without a submenu: the title slides up and out while a copy drawn one
+     line below it with text-shadow slides into its place. A shadow, unlike a duplicate element,
+     keeps the title read once by assistive technology. The padding keeps descenders unclipped. */
+  .menu-list__list-item:not([slot='overflow']) > .menu-list__link--roll .menu-list__link-title {
+    --menu-roll-distance: calc(1lh + 0.3em);
+
+    padding-block: 0.15em;
+    overflow: hidden;
+  }
+
+  .menu-list__link-roll {
+    display: block;
+  }
+
+  @media (hover: hover) and (prefers-reduced-motion: no-preference) {
+    .menu-list__list-item:not([slot='overflow']) > .menu-list__link--roll .menu-list__link-roll {
+      text-shadow: 0 var(--menu-roll-distance) currentColor;
+      transition: translate calc(var(--animation-speed-slow) * 1.5) var(--animation-easing);
+    }
+
+    .menu-list__list-item:not([slot='overflow'])
+      > .menu-list__link--roll:is(:hover, :focus-visible)
+      .menu-list__link-roll {
+      translate: 0 calc(-1 * var(--menu-roll-distance));
+    }
   }
 
   .menu-list__list-item:not([slot='overflow']) {
@@ -494,14 +556,16 @@
   .menu-list:where(:has(.menu-list__list-item:hover)),
   .menu-list:where(:has(.menu-list__list-item:focus-within)),
   .menu-list:where(:has(.menu-list__list-item:not([aria-hidden='true']) .menu-list__link--active)) {
-    .menu-list__link {
+    .menu-list__link,
+    .menu-list__disclosure {
       color: rgb(var(--menu-top-level-font-color-rgb) / var(--opacity-subdued-text));
     }
   }
 
   /* stylelint-disable-next-line selector-max-specificity */
   .menu-list:not(:has(.menu-list__list-item:hover)) .menu-list__link--active,
-  .menu-list .menu-list__list-item:where(:hover, :focus-within) .menu-list__link,
+  .menu-list:not(:has(.menu-list__list-item:hover)) .menu-list__link--active + .menu-list__disclosure,
+  .menu-list .menu-list__list-item:where(:hover, :focus-within) :is(.menu-list__link, .menu-list__disclosure),
   .menu-list .menu-list__list-item:is([slot='more'], [slot='overflow']):has([aria-expanded='true']) .menu-list__link {
     color: var(--menu-top-level-font-color);
   }
@@ -1025,6 +1089,29 @@
         }
       ],
       "default": "none"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dropdown_arrows",
+      "label": "t:settings.show_dropdown_arrows",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "link_hover_effect",
+      "label": "t:settings.link_hover_effect",
+      "info": "t:info.link_hover_effect",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:options.none"
+        },
+        {
+          "value": "roll",
+          "label": "t:options.roll_up"
+        }
+      ],
+      "default": "roll"
     },
     {
       "type": "header",
