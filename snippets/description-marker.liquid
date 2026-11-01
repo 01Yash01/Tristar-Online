@@ -1,0 +1,59 @@
+{%- doc -%}
+  Outputs the position of the first `word` that ends an element's text and is followed by a block
+  element, such as "Specifications" in `<h3>Specifications</h3><ul>`. Outputs -1 when there is
+  none. Matching ignores case and allows a trailing "s" and ":".
+
+  @param {string} html - The HTML to search
+  @param {string} word - The lowercase word to find, e.g. 'specification'
+  @param {string} tags - Comma-separated tags that may follow the marker element, e.g. 'ul,table,p'
+
+  @example
+  {% capture spec_at %}{% render 'description-marker', html: product.description, word: 'specification', tags: 'ul,ol,table' %}{% endcapture %}
+{%- enddoc -%}
+
+{%- liquid
+  assign allowed_tags = tags | split: ','
+  assign lower = html | downcase
+  assign pieces = lower | split: word
+  assign marker_at = -1
+  assign position = 0
+
+  for piece in pieces
+    if forloop.first
+      assign position = piece.size
+      continue
+    endif
+
+    # The word must end the element's text: only "s", ":" or spaces may come before the closing tag
+    assign head = piece | slice: 0, 8 | remove: 's' | remove: ':' | remove: ' ' | slice: 0, 2
+    if head == '</'
+      assign following = html | slice: position, html.size | split: '<'
+      assign next_tag = ''
+      for chunk in following
+        if forloop.first
+          continue
+        endif
+        assign first_character = chunk | slice: 0
+        if first_character == '/'
+          # Text after a closing tag means the word was mentioned inside a sentence
+          assign trailing_text = '<' | append: chunk | strip_html | strip
+          if trailing_text != ''
+            break
+          endif
+          continue
+        endif
+        assign next_tag = chunk | split: '>' | first | split: ' ' | first | strip | downcase
+        break
+      endfor
+
+      if next_tag != '' and allowed_tags contains next_tag
+        assign marker_at = position
+        break
+      endif
+    endif
+
+    assign position = position | plus: word.size | plus: piece.size
+  endfor
+
+  echo marker_at
+-%}

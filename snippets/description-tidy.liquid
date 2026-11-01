@@ -1,0 +1,57 @@
+{%- doc -%}
+  Tidies a slice of description HTML so it stays inside its card: removes layout wrappers such as
+  `div` and `section`, and closes formatting and table tags that the cut left open.
+
+  @param {string} html - The HTML to tidy
+
+  @example
+  {% capture overview %}{% render 'description-tidy', html: overview %}{% endcapture %}
+{%- enddoc -%}
+
+{%- liquid
+  assign tidy = html
+  assign wrapper_tags = 'div,section,header,footer,main,aside,article' | split: ','
+  for tag in wrapper_tags
+    assign closing_tag = '</' | append: tag | append: '>'
+    assign tidy = tidy | remove: closing_tag
+    assign opening_tag = '<' | append: tag
+    assign pieces = tidy | split: opening_tag
+    assign rebuilt = ''
+    for piece in pieces
+      if forloop.first
+        assign rebuilt = piece
+        continue
+      endif
+      # Drop the rest of the opening tag. split would also drop a trailing '>', so use remove_first.
+      assign attributes = piece | split: '>' | first
+      assign rest = piece
+      if attributes.size > 0
+        assign rest = rest | remove_first: attributes
+      endif
+      assign rest = rest | remove_first: '>'
+      assign rebuilt = rebuilt | append: rest
+    endfor
+    assign tidy = rebuilt
+  endfor
+
+  # Close what is still open: formatting first, then table parts from the innermost cell outwards
+  assign lower = tidy | downcase | append: ' '
+  assign close_order = 'a,strong,b,em,i,u,s,td,th,tr,tbody,thead,table' | split: ','
+  assign suffix = ''
+  for tag in close_order
+    assign plain_opening = '<' | append: tag | append: '>'
+    assign opening_with_attributes = '<' | append: tag | append: ' '
+    assign closing_tag = '</' | append: tag | append: '>'
+    assign opened = lower | split: plain_opening | size | minus: 1
+    assign opened_with_attributes = lower | split: opening_with_attributes | size | minus: 1
+    assign closed = lower | split: closing_tag | size | minus: 1
+    assign missing = opened | plus: opened_with_attributes | minus: closed
+    if missing > 0
+      for i in (1..missing)
+        assign suffix = suffix | append: closing_tag
+      endfor
+    endif
+  endfor
+
+  echo tidy | append: suffix
+-%}

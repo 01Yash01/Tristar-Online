@@ -1,0 +1,485 @@
+{%- doc -%}
+  Shows the product description as cards: an overview, the specifications and a "good to know" note.
+  The specifications start at the first "Specifications" heading that is followed by a list, table or
+  paragraph; a list becomes label and value rows. A first heading that repeats the product title and
+  a "Product description" label are left out. Descriptions without a specifications heading are shown
+  whole in the overview. Cards stay open on desktop and collapse on mobile.
+{%- enddoc -%}
+
+{%- liquid
+  assign block_settings = block.settings
+  assign product_resource = closest.product
+  assign description = product_resource.description | default: ''
+
+  assign overview_html = description
+  assign specs_html = ''
+  assign spec_rows = ''
+  assign note_html = ''
+
+  capture spec_at
+    render 'description-marker', html: description, word: 'specification', tags: 'ul,ol,table,p,div'
+  endcapture
+  assign spec_at = spec_at | strip | plus: 0
+
+  if spec_at >= 0
+    capture overview_html
+      render 'description-cut', html: description, at: spec_at, part: 'before'
+    endcapture
+    capture spec_and_note
+      render 'description-cut', html: description, at: spec_at, part: 'after'
+    endcapture
+
+    assign spec_tag = spec_and_note | slice: 1, 10 | split: '>' | first | split: ' ' | first | downcase
+    case spec_tag
+      when 'ul', 'ol'
+        assign list_end = '</' | append: spec_tag | append: '>'
+        assign list_html = spec_and_note | split: list_end | first
+        assign note_html = spec_and_note | remove_first: list_html | remove_first: list_end
+        assign list_items = list_html | split: '<li'
+        capture spec_rows
+          for list_item in list_items
+            if forloop.first
+              continue
+            endif
+            assign item_text = '<li' | append: list_item | strip_html | strip
+            if item_text == ''
+              continue
+            endif
+            assign spec_label = ''
+            assign spec_value = item_text
+            if item_text contains ':'
+              assign spec_label = item_text | split: ':' | first
+              assign spec_value = item_text | remove_first: spec_label | remove_first: ':' | strip
+              assign spec_label = spec_label | strip
+            endif
+            if spec_label == ''
+              echo '<div class="description-specs__row description-specs__row--value-only"><dd>'
+              echo spec_value
+              echo '</dd></div>'
+            else
+              echo '<div class="description-specs__row"><dt>'
+              echo spec_label
+              echo '</dt><dd>'
+              echo spec_value
+              echo '</dd></div>'
+            endif
+          endfor
+        endcapture
+      when 'table'
+        assign table_html = spec_and_note | split: '</table>' | first
+        assign specs_html = table_html | append: '</table>'
+        assign note_html = spec_and_note | remove_first: table_html | remove_first: '</table>'
+      else
+        assign specs_html = spec_and_note
+    endcase
+  endif
+
+  # Leave out a first heading that repeats the product title
+  assign overview_html = overview_html | strip
+  assign overview_start = overview_html | slice: 0, 2
+  if overview_start == '<h'
+    assign heading_parts = overview_html | split: '</h'
+    if heading_parts.size > 1
+      assign heading_level = heading_parts[1] | slice: 0, 2
+      assign heading_html = heading_parts.first | append: '</h' | append: heading_level
+      assign heading_text = heading_html | strip_html | strip | downcase | replace: '&amp;', '&'
+      assign title_text = product_resource.title | downcase | strip
+      assign repeats_title = false
+      if heading_text == title_text
+        assign repeats_title = true
+      elsif heading_text.size > 10
+        if title_text contains heading_text or heading_text contains title_text
+          assign repeats_title = true
+        endif
+      endif
+      if repeats_title
+        assign overview_html = overview_html | remove_first: heading_html
+      endif
+    endif
+  endif
+
+  # Leave out a "Product description" or "Description" label
+  capture label_at
+    render 'description-marker', html: overview_html, word: 'description', tags: 'ul,ol,table,p,div,h1,h2,h3,h4,h5,h6'
+  endcapture
+  assign label_at = label_at | strip | plus: 0
+  if label_at >= 0
+    capture before_label
+      render 'description-cut', html: overview_html, at: label_at, part: 'before'
+    endcapture
+    assign label_length = label_at | minus: before_label.size
+    assign label_prefix = overview_html | slice: before_label.size, label_length | strip_html | strip | downcase
+    if label_prefix == '' or label_prefix == 'product'
+      capture after_label
+        render 'description-cut', html: overview_html, at: label_at, part: 'after'
+      endcapture
+      assign overview_html = before_label | append: after_label
+    endif
+  endif
+
+  capture overview_html
+    render 'description-tidy', html: overview_html
+  endcapture
+  if specs_html != ''
+    capture specs_html
+      render 'description-tidy', html: specs_html
+    endcapture
+  endif
+  assign note_text = note_html | strip_html | strip
+  if note_text == ''
+    assign note_html = ''
+  else
+    capture note_html
+      render 'description-tidy', html: note_html
+    endcapture
+  endif
+
+  assign has_aside = false
+  if spec_rows != '' or specs_html != '' or note_html != ''
+    assign has_aside = true
+  endif
+-%}
+
+{%- if description != blank -%}
+  {%- capture summary_icon -%}
+    <span class="svg-wrapper icon-plus description-specs__icon">
+      {{- 'icon-plus.svg' | inline_asset_content -}}
+    </span>
+  {%- endcapture -%}
+
+  <div
+    class="description-specs spacing-style{% unless has_aside %} description-specs--single{% endunless %}"
+    style="{% render 'spacing-style', settings: block_settings %}{% if block_settings.card_background != blank %} --description-specs-card-background: {{ block_settings.card_background }};{% endif %}"
+    {{ block.shopify_attributes }}
+  >
+    <div class="description-specs__column">
+      {%- capture overview_card -%}
+        <details
+          class="description-specs__card"
+          {% if block_settings.open_overview %}
+            open
+          {% endif %}
+        >
+          <summary class="description-specs__header">
+            {{ block_settings.overview_heading | escape }}
+            {{ summary_icon }}
+          </summary>
+          <div class="details-content">
+            <div class="description-specs__overview rte">{{ overview_html }}</div>
+          </div>
+        </details>
+      {%- endcapture -%}
+      {% render 'accordion-custom-component',
+        children: overview_card,
+        open_by_default_on_desktop: true,
+        open_by_default_on_mobile: block_settings.open_overview,
+        disable_on_desktop: true
+      %}
+    </div>
+
+    {%- if has_aside -%}
+      <div class="description-specs__column">
+        {%- if spec_rows != '' or specs_html != '' -%}
+          {%- capture specs_card -%}
+            <details class="description-specs__card">
+              <summary class="description-specs__header">
+                {{ block_settings.specs_heading | escape }}
+                {{ summary_icon }}
+              </summary>
+              <div class="details-content">
+                {%- if spec_rows != '' -%}
+                  <dl class="description-specs__list">{{ spec_rows }}</dl>
+                {%- else -%}
+                  <div class="description-specs__table rte">{{ specs_html }}</div>
+                {%- endif -%}
+              </div>
+            </details>
+          {%- endcapture -%}
+          {% render 'accordion-custom-component',
+            children: specs_card,
+            open_by_default_on_desktop: true,
+            disable_on_desktop: true
+          %}
+        {%- endif -%}
+
+        {%- if note_html != '' -%}
+          {%- capture note_card -%}
+            <details class="description-specs__card">
+              <summary class="description-specs__header">
+                {{ block_settings.note_heading | escape }}
+                {{ summary_icon }}
+              </summary>
+              <div class="details-content">
+                <div class="description-specs__note rte">{{ note_html }}</div>
+              </div>
+            </details>
+          {%- endcapture -%}
+          {% render 'accordion-custom-component',
+            children: note_card,
+            open_by_default_on_desktop: true,
+            disable_on_desktop: true
+          %}
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  </div>
+{%- elsif request.design_mode -%}
+  <div
+    class="description-specs"
+    {{ block.shopify_attributes }}
+  ></div>
+{%- endif -%}
+
+{% stylesheet %}
+  .description-specs {
+    --description-specs-radius: 14px;
+    --description-specs-padding: clamp(16px, 2.2vw, 24px);
+
+    display: grid;
+    gap: 12px;
+    min-width: 0;
+  }
+
+  @media screen and (min-width: 990px) {
+    .description-specs {
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .description-specs--single {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  .description-specs__column {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-width: 0;
+  }
+
+  .description-specs__card {
+    border-radius: var(--description-specs-radius);
+    background-color: var(--description-specs-card-background, var(--color-background));
+  }
+
+  .description-specs__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: var(--description-specs-padding);
+    border-radius: inherit;
+    font-family: var(--font-heading--family);
+    font-size: var(--font-size--lg);
+    font-weight: var(--font-heading--weight);
+    line-height: 1.25;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  .description-specs__header::-webkit-details-marker {
+    display: none;
+  }
+
+  .description-specs__card .details-content {
+    padding-inline: var(--description-specs-padding);
+    padding-block-end: var(--description-specs-padding);
+  }
+
+  .description-specs__icon {
+    flex: 0 0 auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-8));
+  }
+
+  .description-specs__icon svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  /* On desktop the cards are always open, so the toggle is hidden */
+  @media screen and (min-width: 750px) {
+    .description-specs__header {
+      cursor: default;
+    }
+
+    .description-specs__icon {
+      display: none;
+    }
+  }
+
+  .description-specs__overview {
+    max-inline-size: 75ch;
+    overflow-wrap: anywhere;
+  }
+
+  .description-specs__overview > :first-child {
+    margin-block-start: 0;
+  }
+
+  .description-specs .description-specs__overview :is(h1, h2, h3, h4, h5, h6) {
+    margin-block: 1.4em 0.5em;
+    font-family: var(--font-heading--family);
+    font-size: var(--font-size--md);
+    font-weight: var(--font-heading--weight);
+    line-height: 1.3;
+    letter-spacing: normal;
+    text-transform: none;
+  }
+
+  .description-specs :is(.description-specs__overview, .description-specs__note, .description-specs__table) img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+
+  .description-specs__list {
+    display: grid;
+    margin: 0;
+  }
+
+  .description-specs__row {
+    display: grid;
+    grid-template-columns: minmax(6.5rem, 2fr) 3fr;
+    gap: 12px;
+    padding-block: 10px;
+    border-block-end: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-10));
+    font-size: var(--font-size--sm);
+  }
+
+  .description-specs__row:last-child {
+    border-block-end: 0;
+  }
+
+  .description-specs__row dt {
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+  }
+
+  .description-specs__row dd {
+    margin: 0;
+    color: var(--color-foreground);
+    overflow-wrap: anywhere;
+  }
+
+  .description-specs__row--value-only dd {
+    grid-column: 1 / -1;
+  }
+
+  .description-specs__table {
+    overflow-x: auto;
+  }
+
+  .description-specs__table table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--font-size--sm);
+  }
+
+  .description-specs__table :is(td, th) {
+    padding: 8px 10px;
+    border-block-end: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-10));
+    text-align: start;
+    vertical-align: top;
+  }
+
+  .description-specs__note {
+    font-size: var(--font-size--sm);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.description_specs",
+  "tag": null,
+  "settings": [
+    {
+      "type": "text",
+      "id": "overview_heading",
+      "label": "t:settings.description_overview_heading",
+      "default": "t:text_defaults.description_overview_heading"
+    },
+    {
+      "type": "text",
+      "id": "specs_heading",
+      "label": "t:settings.description_specs_heading",
+      "default": "t:text_defaults.description_specs_heading"
+    },
+    {
+      "type": "text",
+      "id": "note_heading",
+      "label": "t:settings.description_note_heading",
+      "default": "t:text_defaults.description_note_heading",
+      "info": "t:info.description_note_heading"
+    },
+    {
+      "type": "checkbox",
+      "id": "open_overview",
+      "label": "t:settings.description_open_overview",
+      "default": true
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "t:settings.card_background",
+      "default": "#FFFFFF"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.description_specs",
+      "category": "t:categories.product"
+    }
+  ]
+}
+{% endschema %}

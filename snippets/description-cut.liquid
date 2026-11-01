@@ -1,0 +1,48 @@
+{%- doc -%}
+  Outputs the HTML before or after the element that holds a marker found by `description-marker`,
+  leaving out that element's own tags and text.
+
+  @param {string} html - The HTML that was searched
+  @param {number} at - The marker position from `description-marker`
+  @param {string} part - 'before' or 'after'
+
+  @example
+  {% capture overview %}{% render 'description-cut', html: product.description, at: spec_at, part: 'before' %}{% endcapture %}
+{%- enddoc -%}
+
+{%- liquid
+  if part == 'before'
+    # Drop the opening tags that wrap the marker, e.g. '<h3><strong>' before "Specifications"
+    assign chunks = html | slice: 0, at | split: '<'
+    assign dropped = 0
+    for chunk in chunks reversed
+      if forloop.last or dropped >= 4
+        break
+      endif
+      assign first_character = chunk | slice: 0
+      if first_character == '/'
+        break
+      endif
+      assign dropped = dropped | plus: 1
+    endfor
+    assign kept = chunks.size | minus: dropped
+    echo chunks | slice: 0, kept | join: '<'
+  else
+    # Skip the marker text and its closing tags, then keep everything from the next element
+    assign chunks = html | slice: at, html.size | split: '<'
+    assign started = false
+    for chunk in chunks
+      if forloop.first
+        continue
+      endif
+      if started == false
+        assign first_character = chunk | slice: 0
+        if first_character == '/'
+          continue
+        endif
+        assign started = true
+      endif
+      echo '<' | append: chunk
+    endfor
+  endif
+-%}
