@@ -48,7 +48,12 @@
       {% endif %}
       {{ block.shopify_attributes }}
     >
-      <summary class="menu__heading{% if heading == blank and menu.title == blank %} menu__heading--empty{% endif %} {{ block_settings.heading_preset }}">
+      <summary
+        class="menu__heading{% if heading == blank and menu.title == blank %} menu__heading--empty{% endif %} {{ block_settings.heading_preset }}"
+        {% if block_settings.heading_text_color != blank %}
+          style="--color: {{ block_settings.heading_text_color }}; --color-rgb: {{ block_settings.heading_text_color.rgb }};"
+        {% endif %}
+      >
         <span class="menu__heading__default">{{ heading | default: menu.title }}</span>
         <span class="menu__heading__accordion">
           {{ heading | default: menu.title }}
@@ -109,6 +114,10 @@
 
   .menu .menu__heading--empty {
     display: none;
+  }
+
+  .menu__heading {
+    color: var(--color, inherit);
   }
 
   .menu__heading__default {
@@ -221,6 +230,12 @@
       "type": "color",
       "id": "text_color",
       "label": "t:settings.text_color",
+      "placeholder": "t:settings.default"
+    },
+    {
+      "type": "color",
+      "id": "heading_text_color",
+      "label": "t:settings.heading_color",
       "placeholder": "t:settings.default"
     },
     {
