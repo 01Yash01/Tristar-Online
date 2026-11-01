@@ -1184,6 +1184,70 @@
     ]
   },
   {
+    "name": "t:names.back_to_top",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "back_to_top_enabled",
+        "label": "t:settings.show_back_to_top",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "back_to_top_style",
+        "label": "t:settings.style",
+        "info": "t:info.back_to_top_style",
+        "options": [
+          {
+            "value": "pill",
+            "label": "t:options.pill"
+          },
+          {
+            "value": "circle",
+            "label": "t:options.circle"
+          }
+        ],
+        "default": "pill",
+        "visible_if": "{{ settings.back_to_top_enabled }}"
+      },
+      {
+        "type": "select",
+        "id": "back_to_top_position",
+        "label": "t:settings.position",
+        "options": [
+          {
+            "value": "bottom-start",
+            "label": "t:options.bottom_left"
+          },
+          {
+            "value": "bottom-end",
+            "label": "t:options.bottom_right"
+          }
+        ],
+        "default": "bottom-end",
+        "visible_if": "{{ settings.back_to_top_enabled }}"
+      },
+      {
+        "type": "header",
+        "content": "t:settings.colors",
+        "visible_if": "{{ settings.back_to_top_enabled }}"
+      },
+      {
+        "type": "color",
+        "id": "back_to_top_background_color",
+        "label": "t:settings.background_color",
+        "default": "{{ settings.color_palette.foreground }}",
+        "visible_if": "{{ settings.back_to_top_enabled }}"
+      },
+      {
+        "type": "color",
+        "id": "back_to_top_text_color",
+        "label": "t:settings.text_color",
+        "visible_if": "{{ settings.back_to_top_enabled }}"
+      }
+    ]
+  },
+  {
     "name": "t:names.badges",
     "settings": [
       {

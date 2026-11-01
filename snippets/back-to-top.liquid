@@ -1,0 +1,217 @@
+{%- doc -%}
+  Renders the floating back-to-top button configured under Theme settings > Back to top. It stays
+  hidden until the shopper scrolls a screen down, then returns them to the top of the page.
+
+  @example
+  {% if settings.back_to_top_enabled %}
+    {% render 'back-to-top' %}
+  {% endif %}
+{%- enddoc -%}
+
+{%- liquid
+  assign style = settings.back_to_top_style | default: 'pill'
+  assign position = settings.back_to_top_position | default: 'bottom-end'
+-%}
+
+{% render 'contrast-override',
+  background_color: settings.back_to_top_background_color,
+  text_color: settings.back_to_top_text_color,
+  section_id: 'back-to-top',
+  preset: 'ui'
+%}
+
+<back-to-top-component
+  class="back-to-top back-to-top--{{ style }} back-to-top--{{ position }}"
+  data-visible="false"
+>
+  <button
+    type="button"
+    class="back-to-top__button color-custom-back-to-top"
+    aria-label="{{ 'accessibility.back_to_top' | t }}"
+    ref="button"
+    on:click="/scrollToTop"
+  >
+    {%- if style == 'circle' -%}
+      <svg
+        class="back-to-top__ring"
+        viewBox="0 0 48 48"
+        aria-hidden="true"
+        focusable="false"
+        ref="ring"
+      >
+        <circle class="back-to-top__ring-track" cx="24" cy="24" r="22" pathLength="100" />
+        <circle class="back-to-top__ring-progress" cx="24" cy="24" r="22" pathLength="100" />
+      </svg>
+    {%- endif -%}
+    <svg
+      class="back-to-top__icon"
+      viewBox="0 0 20 20"
+      fill="none"
+      aria-hidden="true"
+      focusable="false"
+    >
+      <path
+        stroke="currentColor"
+        stroke-width="var(--icon-stroke-width)"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        vector-effect="non-scaling-stroke"
+        d="M5.92 4.71A7.5 7.5 0 1 0 14.08 4.71M10 2l3.25 10.25L10 10l-3.25 2.25Z"
+      />
+    </svg>
+    {%- if style == 'pill' -%}
+      <span class="back-to-top__label">{{ 'content.back_to_top_label' | t }}</span>
+    {%- endif -%}
+  </button>
+</back-to-top-component>
+
+{% stylesheet %}
+  .back-to-top {
+    --back-to-top-inset: var(--padding-xl);
+    --back-to-top-offset: var(--padding-4xl);
+    --back-to-top-shadow: 0 10px 28px -10px rgb(0 0 0 / 0.45), 0 2px 6px rgb(0 0 0 / 0.12);
+    /* The page's text color, read before the button's own colors apply, so the focus ring
+       contrasts with the page rather than with the button */
+    --back-to-top-focus-color: var(--color-foreground);
+
+    position: fixed;
+    inset-block-end: calc(var(--back-to-top-offset) + var(--safe-area-inset-bottom));
+    z-index: var(--layer-sticky);
+    visibility: hidden;
+    opacity: 0;
+    translate: 0 0.75rem;
+    transition: opacity var(--animation-speed-slow) var(--animation-timing-default),
+      translate var(--animation-speed-slow) var(--animation-timing-default),
+      visibility 0s linear var(--animation-speed-slow);
+  }
+
+  .back-to-top[data-visible='true'] {
+    visibility: visible;
+    opacity: 1;
+    translate: 0 0;
+    transition: opacity var(--animation-speed-slow) var(--animation-timing-default),
+      translate var(--animation-speed-slow) var(--animation-timing-default), visibility 0s;
+  }
+
+  .back-to-top--bottom-end {
+    inset-inline-end: var(--back-to-top-inset);
+  }
+
+  .back-to-top--bottom-start {
+    inset-inline-start: var(--back-to-top-inset);
+  }
+
+  .back-to-top__button {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--gap-xs);
+    margin: 0;
+    padding: 0;
+    border: 0;
+    color: var(--color-foreground);
+    background-color: var(--color-background);
+    box-shadow: var(--back-to-top-shadow);
+    cursor: pointer;
+    transition: translate var(--animation-speed-medium) var(--animation-timing-hover),
+      box-shadow var(--animation-speed-medium) var(--animation-timing-hover);
+  }
+
+  .back-to-top__button:focus-visible {
+    outline: var(--focus-outline-width) solid var(--back-to-top-focus-color);
+    outline-offset: var(--focus-outline-offset);
+  }
+
+  /* The section the button sends focus to is only a starting point for the next Tab, not a control */
+  #header-group > .shopify-section[tabindex='-1']:focus-visible {
+    outline: none;
+  }
+
+  .back-to-top__icon {
+    flex: 0 0 auto;
+    width: 1.375rem;
+    height: 1.375rem;
+    transition: translate var(--animation-speed-medium) var(--animation-timing-hover);
+  }
+
+  /* Pill: icon over a vertical label */
+  .back-to-top--pill .back-to-top__button {
+    inline-size: 2.75rem;
+    padding-block: 0.75rem 0.875rem;
+    border-radius: min(var(--style-border-radius-buttons-primary), 1.375rem);
+  }
+
+  .back-to-top__label {
+    writing-mode: vertical-rl;
+    font-family: var(--font-body--family);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    /* Letter spacing trails the last letter, so pull it back to keep the label centered */
+    margin-inline-end: -0.16em;
+  }
+
+  /* Circle: icon inside a ring that fills as the shopper scrolls */
+  .back-to-top--circle .back-to-top__button {
+    inline-size: 3rem;
+    block-size: 3rem;
+    border-radius: 50%;
+  }
+
+  .back-to-top__ring {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    rotate: -90deg;
+    fill: none;
+    stroke-width: 1.5;
+  }
+
+  .back-to-top__ring-track {
+    stroke: rgb(var(--color-foreground-rgb) / var(--opacity-25));
+  }
+
+  .back-to-top__ring-progress {
+    stroke: var(--color-foreground);
+    stroke-dasharray: 100;
+    stroke-dashoffset: calc(100 - 100 * var(--back-to-top-progress, 0));
+    transition: stroke-dashoffset var(--animation-speed-fast) linear;
+  }
+
+  @media (hover: hover) {
+    .back-to-top__button:hover {
+      translate: 0 -2px;
+      box-shadow: 0 14px 32px -10px rgb(0 0 0 / 0.5), 0 3px 8px rgb(0 0 0 / 0.14);
+    }
+
+    .back-to-top__button:hover .back-to-top__icon {
+      translate: 0 -2px;
+    }
+  }
+
+  @media screen and (max-width: 749px) {
+    .back-to-top {
+      --back-to-top-inset: var(--padding-lg);
+      --back-to-top-offset: var(--padding-2xl);
+    }
+
+    /* Clear the full-width sticky add-to-cart bar on product pages */
+    body:has(.sticky-add-to-cart__bar[data-stuck='true']) .back-to-top {
+      --back-to-top-offset: calc(var(--padding-2xl) + 4.5rem);
+    }
+  }
+
+  /* Fade only, without the slide and hover lift */
+  @media (prefers-reduced-motion: reduce) {
+    .back-to-top,
+    .back-to-top__button:hover,
+    .back-to-top__button:hover .back-to-top__icon {
+      translate: none;
+    }
+  }
+{% endstylesheet %}
