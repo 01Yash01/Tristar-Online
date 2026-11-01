@@ -560,7 +560,7 @@
                     on:pointerenter="/handleThumbnailPointerEnter/{{ forloop.index0 }}"
                     style="--aspect-ratio: {{ aspect_ratio }}; --gallery-aspect-ratio: {{ aspect_ratio }};"
                     {% if forloop.first %}
-                      aria-selected="true"
+                      aria-current="true"
                     {% endif %}
                   >
                     {% liquid
@@ -742,7 +742,7 @@
       aspect-ratio: var(--aspect-ratio);
     }
 
-    &:is([aria-selected='true']) {
+    &:is([aria-current='true']) {
       outline: var(--focus-outline-width) solid currentcolor;
       outline-offset: calc(var(--focus-outline-offset) / 2);
       border: var(--style-border-width) solid var(--active-thumbnail-border-color);
@@ -750,7 +750,7 @@
   }
 
   @supports (anchor-name: --test) {
-    .dialog-thumbnails-list:has(.dialog-thumbnails-list__thumbnail:is([aria-selected='true']))::after {
+    .dialog-thumbnails-list:has(.dialog-thumbnails-list__thumbnail:is([aria-current='true']))::after {
       --inset-offset: calc(var(--focus-outline-offset) / 2);
 
       content: '';
@@ -765,14 +765,14 @@
     }
 
     @media (prefers-reduced-motion: no-preference) {
-      .dialog-thumbnails-list:has(.dialog-thumbnails-list__thumbnail:is([aria-selected='true']))::after {
+      .dialog-thumbnails-list:has(.dialog-thumbnails-list__thumbnail:is([aria-current='true']))::after {
         transition-property: inset;
         transition-duration: var(--spring-d180-b0-duration);
         transition-timing-function: var(--spring-d180-b0-easing);
       }
     }
 
-    .dialog-thumbnails-list__thumbnail:is([aria-selected='true']) {
+    .dialog-thumbnails-list__thumbnail:is([aria-current='true']) {
       outline: none;
       border: none;
       anchor-name: --selected-thumbnail;
@@ -1107,7 +1107,7 @@
     transition: opacity var(--animation-speed) var(--animation-easing);
   }
 
-  .media-gallery--carousel .slideshow-controls__thumbnail:is(:hover, :focus-visible, [aria-selected='true']) {
+  .media-gallery--carousel .slideshow-controls__thumbnail:is(:hover, :focus-visible, [aria-current='true']) {
     opacity: 1;
   }
 
