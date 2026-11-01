@@ -1,0 +1,234 @@
+{%- doc -%}
+  Renders breadcrumbs for the product (Home, a collection, the product) with matching structured
+  data. The collection is the one the shopper came from, otherwise the product's most specific
+  collection (the one with the fewest products) that isn't in the skip list.
+{%- enddoc -%}
+
+{%- liquid
+  assign block_settings = block.settings
+  assign product_resource = closest.product
+  assign crumb_collection = nil
+
+  if block_settings.show_collection
+    assign crumb_collection = collection
+    if crumb_collection == blank
+      assign skipped_handles = block_settings.skip_collections | downcase | remove: ' ' | split: ','
+      assign candidates = product_resource.collections | sort: 'products_count'
+      for candidate in candidates
+        if skipped_handles contains candidate.handle
+          continue
+        endif
+        assign crumb_collection = candidate
+        break
+      endfor
+    endif
+  endif
+
+  assign home_label = 'content.breadcrumb_home' | t
+-%}
+
+{%- if product_resource != blank -%}
+  <nav
+    class="breadcrumbs spacing-style"
+    aria-label="{{ 'accessibility.breadcrumbs' | t }}"
+    style="{% render 'spacing-style', settings: block_settings %}"
+    {{ block.shopify_attributes }}
+  >
+    <ol class="breadcrumbs__list">
+      <li class="breadcrumbs__item">
+        <a
+          class="breadcrumbs__link"
+          href="{{ routes.root_url }}"
+        >
+          {{- home_label -}}
+        </a>
+      </li>
+      {%- if crumb_collection != blank -%}
+        <li class="breadcrumbs__item">
+          <a
+            class="breadcrumbs__link"
+            href="{{ crumb_collection.url }}"
+          >
+            {{- crumb_collection.title | escape -}}
+          </a>
+        </li>
+      {%- endif -%}
+      <li class="breadcrumbs__item">
+        <span
+          class="breadcrumbs__current"
+          aria-current="page"
+        >
+          {{- product_resource.title | escape -}}
+        </span>
+      </li>
+    </ol>
+  </nav>
+
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": {{ home_label | json }},
+          "item": {{ shop.url | append: routes.root_url | json }}
+        },
+        {%- if crumb_collection != blank -%}
+          {
+            "@type": "ListItem",
+            "position": 2,
+            "name": {{ crumb_collection.title | json }},
+            "item": {{ shop.url | append: crumb_collection.url | json }}
+          },
+        {%- endif -%}
+        {
+          "@type": "ListItem",
+          "position": {% if crumb_collection != blank %}3{% else %}2{% endif %},
+          "name": {{ product_resource.title | json }},
+          "item": {{ shop.url | append: product_resource.url | json }}
+        }
+      ]
+    }
+  </script>
+{%- endif -%}
+
+{% stylesheet %}
+  .breadcrumbs {
+    min-width: 0;
+    font-size: var(--font-size--xs);
+  }
+
+  .breadcrumbs__list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .breadcrumbs__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-subdued-text));
+  }
+
+  /* Chevron separator drawn with borders, so screen readers don't read it */
+  .breadcrumbs__item + .breadcrumbs__item::before {
+    content: '';
+    flex: 0 0 auto;
+    width: 5px;
+    height: 5px;
+    border-block-start: 1px solid currentColor;
+    border-inline-end: 1px solid currentColor;
+    transform: rotate(45deg);
+  }
+
+  [dir='rtl'] .breadcrumbs__item + .breadcrumbs__item::before {
+    transform: rotate(-45deg);
+  }
+
+  .breadcrumbs__link {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .breadcrumbs__link:hover {
+    color: var(--color-foreground);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* On mobile the product title follows straight after, so the trail stops at the collection */
+  @media screen and (max-width: 749px) {
+    .breadcrumbs__item:has(.breadcrumbs__current):not(:first-child) {
+      display: none;
+    }
+  }
+
+  .breadcrumbs__current {
+    max-inline-size: 32ch;
+    overflow: hidden;
+    color: var(--color-foreground);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.breadcrumbs",
+  "tag": null,
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_collection",
+      "label": "t:settings.breadcrumbs_show_collection",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "skip_collections",
+      "label": "t:settings.breadcrumbs_skip_collections",
+      "default": "all, frontpage, sale, best-sellers, new-arrivals",
+      "info": "t:info.breadcrumbs_skip_collections",
+      "visible_if": "{{ block.settings.show_collection }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-start",
+      "label": "t:settings.left",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    },
+    {
+      "type": "range",
+      "id": "padding-inline-end",
+      "label": "t:settings.right",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.breadcrumbs",
+      "category": "t:categories.product"
+    }
+  ]
+}
+{% endschema %}
