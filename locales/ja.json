@@ -29,6 +29,8 @@
     "slider_label": "スライダー"
   },
   "accessibility": {
+    "back_to_top": "トップへ戻る",
+    "breadcrumbs": "Breadcrumbs",
     "condition_guide": "What does this condition mean?",
     "play_model": "3Dモデルを再生",
     "play_video": "ビデオを再生",
@@ -132,6 +134,10 @@
     "back_to_main_menu": "メインメニューに戻る"
   },
   "content": {
+    "back_to_top_label": "トップ",
+    "breadcrumb_home": "Home",
+    "delivery_estimate_html": "Arrives {{ start }} – {{ end }}",
+    "price_savings": "Save {{ amount }} ({{ percent }}%)",
     "condition_new": "Brand new",
     "condition_refurbished": "Refurbished",
     "condition_pristine": "Pristine",

@@ -29,6 +29,8 @@
     "slider_label": "Glidefelt"
   },
   "accessibility": {
+    "back_to_top": "Tilbake til toppen",
+    "breadcrumbs": "Breadcrumbs",
     "condition_guide": "What does this condition mean?",
     "play_model": "Spill av 3D-modell",
     "play_video": "Spill av video",
@@ -132,6 +134,10 @@
     "zoom_media": "Zoom medier {{ index }}"
   },
   "content": {
+    "back_to_top_label": "Topp",
+    "breadcrumb_home": "Home",
+    "delivery_estimate_html": "Arrives {{ start }} – {{ end }}",
+    "price_savings": "Save {{ amount }} ({{ percent }}%)",
     "condition_new": "Brand new",
     "condition_refurbished": "Refurbished",
     "condition_pristine": "Pristine",

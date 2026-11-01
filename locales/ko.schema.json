@@ -9,6 +9,10 @@
  */
 {
   "names": {
+    "back_to_top": "맨 위로",
+    "breadcrumbs": "Breadcrumbs",
+    "delivery_estimate": "Delivery estimate",
+    "description_specs": "Description & specs",
     "product_condition": "Product condition",
     "product_faq": "Product FAQ",
     "menu_promo": "Promotion",
@@ -186,6 +190,20 @@
     "disclosures": "고지 사항"
   },
   "settings": {
+    "link_hover_effect": "링크 호버 효과",
+    "show_dropdown_arrows": "드롭다운 화살표 표시",
+    "show_back_to_top": "맨 위로 버튼 표시",
+    "breadcrumbs_show_collection": "Show collection",
+    "breadcrumbs_skip_collections": "Collections to skip",
+    "delivery_countries": "Show for countries",
+    "delivery_max_days": "Latest delivery (business days)",
+    "delivery_min_days": "Earliest delivery (business days)",
+    "description_note_heading": "Note heading",
+    "description_open_overview": "Open overview on mobile",
+    "description_overview_heading": "Overview heading",
+    "description_specs_heading": "Specifications heading",
+    "sale_price_color": "Sale price color",
+    "show_savings": "Show savings",
     "condition_override": "Condition",
     "condition_fallback": "Products without a grade",
     "condition_new_text": "Brand new",
@@ -397,6 +415,7 @@
     "font": "글꼴",
     "full_width_first_image": "첫 번째 이미지 전체 너비",
     "full_width_on_mobile": "모바일에서 전체 너비",
+    "heading_color": "제목 색상",
     "heading_preset": "제목 사전 설정",
     "hide_unselected_variant_media": "선택되지 않은 이형 상품 미디어 숨기기",
     "horizontal_gap": "가로 간격",
@@ -669,6 +688,7 @@
     "customer_account_menu": "고객 계정 메뉴"
   },
   "options": {
+    "roll_up": "롤업",
     "condition_show_new": "Show as brand new",
     "condition_hide": "Hide",
     "lines": "Lines",
@@ -901,6 +921,7 @@
     "secondary_style": "보조 스타일",
     "semibold": "세미볼드",
     "shaded": "음영",
+    "shield": "Shield",
     "show_second_image": "두 번째 이미지 표시",
     "single": "단일",
     "slide_left": "왼쪽으로 슬라이드",
@@ -1186,6 +1207,10 @@
     "featured_collection_h3": "<h3>추천 컬렉션</h3>"
   },
   "text_defaults": {
+    "delivery_estimate_label": "Estimated delivery",
+    "description_note_heading": "Good to know",
+    "description_overview_heading": "Overview",
+    "description_specs_heading": "Specifications",
     "condition_label": "Condition",
     "condition_guide_heading": "Condition guide",
     "condition_new_text": "Brand new and unused, in its original packaging.",
@@ -1252,6 +1277,13 @@
     "disclosures": "고지 사항"
   },
   "info": {
+    "link_hover_effect": "드롭다운 메뉴가 없는 링크에 적용됩니다.",
+    "back_to_top_style": "고객이 페이지를 아래로 스크롤하면 원형 링이 채워집니다.",
+    "breadcrumbs_skip_collections": "Comma-separated collection handles that are too broad to show, for example all, sale.",
+    "delivery_countries": "Comma-separated country codes, for example AU, NZ. Leave empty to show it to everyone.",
+    "delivery_days": "Counted from today, Monday to Friday, including dispatch and shipping time. Public holidays aren't skipped.",
+    "description_note_heading": "For text that follows the specifications, such as what's in the box.",
+    "show_savings": "Shows how much a sale price saves, for example \"Save $120 (40%)\".",
     "condition_override": "Leave empty to read the grade from the product title, for example \"Apple Pencil Pro - Excellent - Refurbished\". You can also connect a product metafield.",
     "condition_guide": "Descriptions shown when customers tap the info icon. Leave one empty to hide that grade.",
     "menu_panel_products_collection": "Only used by the Products layout. Leave empty to use the menu item's own collection.",
@@ -1295,6 +1327,7 @@
     "hover_effects": "제품 및 컬렉션 카드에 적용됩니다",
     "pills_usage": "적용된 필터, 할인 코드, 검색 제안에 사용됩니다",
     "search_bar_hints": "Comma-separated terms shown as rotating hints, for example: iPhone 16, Gaming laptops, AirPods",
+    "reveal_behind_footer": "위쪽 섹션이 스크롤되는 동안 이 섹션과 그 아래 섹션을 고정합니다.",
     "reveal_on_scroll": "Image banners, hero text, and quick links animate in as they appear. Turned off automatically for shoppers who prefer reduced motion.",
     "search_popular_collections": "Shown before shoppers type. Pick your most important collections.",
     "search_trending_terms": "Comma-separated terms shown as quick links, for example: iPhone 17 Pro, AirPods Pro",

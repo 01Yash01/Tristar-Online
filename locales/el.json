@@ -29,6 +29,8 @@
     "slider_label": "Ρυθμιστικό"
   },
   "accessibility": {
+    "back_to_top": "Επιστροφή στην κορυφή",
+    "breadcrumbs": "Breadcrumbs",
     "condition_guide": "What does this condition mean?",
     "play_model": "Αναπαραγωγή μοντέλου 3D",
     "play_video": "Αναπαραγωγή βίντεο",
@@ -132,6 +134,10 @@
     "back_to_main_menu": "Επιστροφή στο κύριο μενού"
   },
   "content": {
+    "back_to_top_label": "Κορυφή",
+    "breadcrumb_home": "Home",
+    "delivery_estimate_html": "Arrives {{ start }} – {{ end }}",
+    "price_savings": "Save {{ amount }} ({{ percent }}%)",
     "condition_new": "Brand new",
     "condition_refurbished": "Refurbished",
     "condition_pristine": "Pristine",

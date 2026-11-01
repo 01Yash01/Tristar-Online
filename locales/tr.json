@@ -29,6 +29,8 @@
     "slider_label": "Kaydırıcı"
   },
   "accessibility": {
+    "back_to_top": "Yukarı çık",
+    "breadcrumbs": "Breadcrumbs",
     "condition_guide": "What does this condition mean?",
     "play_model": "3B modeli oynat",
     "play_video": "Videoyu oynat",
@@ -132,6 +134,10 @@
     "zoom_media": "Medyayı yakınlaştır: {{ index }}"
   },
   "content": {
+    "back_to_top_label": "Yukarı",
+    "breadcrumb_home": "Home",
+    "delivery_estimate_html": "Arrives {{ start }} – {{ end }}",
+    "price_savings": "Save {{ amount }} ({{ percent }}%)",
     "condition_new": "Brand new",
     "condition_refurbished": "Refurbished",
     "condition_pristine": "Pristine",

@@ -29,6 +29,8 @@
     "slider_label": "Suwak"
   },
   "accessibility": {
+    "back_to_top": "Wróć na górę",
+    "breadcrumbs": "Breadcrumbs",
     "condition_guide": "What does this condition mean?",
     "play_model": "Odtwórz model 3D",
     "play_video": "Odtwórz film",
@@ -136,6 +138,10 @@
     "back_to_main_menu": "Wróć do menu głównego"
   },
   "content": {
+    "back_to_top_label": "Na górę",
+    "breadcrumb_home": "Home",
+    "delivery_estimate_html": "Arrives {{ start }} – {{ end }}",
+    "price_savings": "Save {{ amount }} ({{ percent }}%)",
     "condition_new": "Brand new",
     "condition_refurbished": "Refurbished",
     "condition_pristine": "Pristine",

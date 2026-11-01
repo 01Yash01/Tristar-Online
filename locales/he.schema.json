@@ -242,6 +242,13 @@
     "work_quickly_to_ship": "<p>נעבוד מהר כדי לשלוח את ההזמנה שלך בהקדם האפשרי. לאחר שההזמנה שלך תישלח, תקבל דוא&quot;ל עם מידע נוסף. זמני האספקה משתנים בהתאם למיקומך.</p>"
   },
   "info": {
+    "link_hover_effect": "חל על קישורים ללא תפריט נפתח.",
+    "back_to_top_style": "הטבעת של העיגול מתמלאת ככל שהלקוחות גוללים למטה בדף.",
+    "breadcrumbs_skip_collections": "Comma-separated collection handles that are too broad to show, for example all, sale.",
+    "delivery_countries": "Comma-separated country codes, for example AU, NZ. Leave empty to show it to everyone.",
+    "delivery_days": "Counted from today, Monday to Friday, including dispatch and shipping time. Public holidays aren't skipped.",
+    "description_note_heading": "For text that follows the specifications, such as what's in the box.",
+    "show_savings": "Shows how much a sale price saves, for example \"Save $120 (40%)\".",
     "condition_override": "Leave empty to read the grade from the product title, for example \"Apple Pencil Pro - Excellent - Refurbished\". You can also connect a product metafield.",
     "condition_guide": "Descriptions shown when customers tap the info icon. Leave one empty to hide that grade.",
     "menu_panel_products_collection": "Only used by the Products layout. Leave empty to use the menu item's own collection.",
@@ -291,12 +298,17 @@
     "video_external": "השתמש בכתובת URL של YouTube או Vimeo",
     "pills_usage": "משמש למסננים שהוחלו, קודי הנחה והצעות חיפוש",
     "search_bar_hints": "Comma-separated terms shown as rotating hints, for example: iPhone 16, Gaming laptops, AirPods",
+    "reveal_behind_footer": "משאיר את המקטע הזה ואת המקטעים שמתחתיו במקומם בזמן שהמקטעים שמעליהם נגללים.",
     "reveal_on_scroll": "Image banners, hero text, and quick links animate in as they appear. Turned off automatically for shoppers who prefer reduced motion.",
     "search_popular_collections": "Shown before shoppers type. Pick your most important collections.",
     "search_trending_terms": "Comma-separated terms shown as quick links, for example: iPhone 17 Pro, AirPods Pro",
     "media_type_info": "התכונות מאוכלסות מקישורי התפריט שלך"
   },
   "names": {
+    "back_to_top": "חזרה למעלה",
+    "breadcrumbs": "Breadcrumbs",
+    "delivery_estimate": "Delivery estimate",
+    "description_specs": "Description & specs",
     "product_condition": "Product condition",
     "product_faq": "Product FAQ",
     "menu_promo": "Promotion",
@@ -474,6 +486,7 @@
     "comparison_slider": "מחוון השוואה"
   },
   "options": {
+    "roll_up": "גלילה למעלה",
     "condition_show_new": "Show as brand new",
     "condition_hide": "Hide",
     "lines": "Lines",
@@ -705,6 +718,7 @@
     "sentence": "משפט",
     "serving_dish": "קערת הגשה",
     "shaded": "מוצלל",
+    "shield": "Shield",
     "shirt": "חולצה",
     "shoe": "נעל",
     "show_second_image": "הצג תמונה שנייה",
@@ -779,6 +793,20 @@
     "direction_top_start": "למעלה, התחלה"
   },
   "settings": {
+    "link_hover_effect": "אפקט ריחוף על קישורים",
+    "show_dropdown_arrows": "הצגת חיצים לתפריטים נפתחים",
+    "show_back_to_top": "הצגת כפתור חזרה למעלה",
+    "breadcrumbs_show_collection": "Show collection",
+    "breadcrumbs_skip_collections": "Collections to skip",
+    "delivery_countries": "Show for countries",
+    "delivery_max_days": "Latest delivery (business days)",
+    "delivery_min_days": "Earliest delivery (business days)",
+    "description_note_heading": "Note heading",
+    "description_open_overview": "Open overview on mobile",
+    "description_overview_heading": "Overview heading",
+    "description_specs_heading": "Specifications heading",
+    "sale_price_color": "Sale price color",
+    "show_savings": "Show savings",
     "condition_override": "Condition",
     "condition_fallback": "Products without a grade",
     "condition_new_text": "Brand new",
@@ -972,6 +1000,7 @@
     "gift_card_form": "טופס כרטיס מתנה",
     "gradient_direction": "כיוון מעבר צבעים",
     "heading": "כותרת",
+    "heading_color": "צבע כותרת",
     "heading_preset": "קביעה מראש של כותרת",
     "headings": "כותרות",
     "height": "גובה",
@@ -1262,6 +1291,10 @@
     "customer_account_menu": "תפריט חשבון לקוח"
   },
   "text_defaults": {
+    "delivery_estimate_label": "Estimated delivery",
+    "description_note_heading": "Good to know",
+    "description_overview_heading": "Overview",
+    "description_specs_heading": "Specifications",
     "condition_label": "Condition",
     "condition_guide_heading": "Condition guide",
     "condition_new_text": "Brand new and unused, in its original packaging.",

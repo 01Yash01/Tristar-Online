@@ -29,6 +29,8 @@
     "slider_label": "Kliznik"
   },
   "accessibility": {
+    "back_to_top": "Natrag na vrh",
+    "breadcrumbs": "Breadcrumbs",
     "condition_guide": "What does this condition mean?",
     "play_model": "Reproduciraj 3D model",
     "play_video": "Reproduciraj videozapis",
@@ -134,6 +136,10 @@
     "back_to_main_menu": "Natrag na glavni izbornik"
   },
   "content": {
+    "back_to_top_label": "Vrh",
+    "breadcrumb_home": "Home",
+    "delivery_estimate_html": "Arrives {{ start }} – {{ end }}",
+    "price_savings": "Save {{ amount }} ({{ percent }}%)",
     "condition_new": "Brand new",
     "condition_refurbished": "Refurbished",
     "condition_pristine": "Pristine",

@@ -29,6 +29,8 @@
     "slider_label": "Schuifregelaar"
   },
   "accessibility": {
+    "back_to_top": "Terug naar boven",
+    "breadcrumbs": "Breadcrumbs",
     "condition_guide": "What does this condition mean?",
     "play_model": "3D-model afspelen",
     "play_video": "Video afspelen",
@@ -132,6 +134,10 @@
     "back_to_main_menu": "Terug naar hoofdmenu"
   },
   "content": {
+    "back_to_top_label": "Boven",
+    "breadcrumb_home": "Home",
+    "delivery_estimate_html": "Arrives {{ start }} – {{ end }}",
+    "price_savings": "Save {{ amount }} ({{ percent }}%)",
     "condition_new": "Brand new",
     "condition_refurbished": "Refurbished",
     "condition_pristine": "Pristine",

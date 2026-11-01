@@ -9,6 +9,10 @@
  */
 {
   "names": {
+    "back_to_top": "Tilbake til toppen",
+    "breadcrumbs": "Breadcrumbs",
+    "delivery_estimate": "Delivery estimate",
+    "description_specs": "Description & specs",
     "product_condition": "Product condition",
     "product_faq": "Product FAQ",
     "menu_promo": "Promotion",
@@ -186,6 +190,20 @@
     "disclosures": "Opplysninger"
   },
   "settings": {
+    "link_hover_effect": "Hover-effekt for lenker",
+    "show_dropdown_arrows": "Vis piler for rullegardinmenyer",
+    "show_back_to_top": "Vis knappen Tilbake til toppen",
+    "breadcrumbs_show_collection": "Show collection",
+    "breadcrumbs_skip_collections": "Collections to skip",
+    "delivery_countries": "Show for countries",
+    "delivery_max_days": "Latest delivery (business days)",
+    "delivery_min_days": "Earliest delivery (business days)",
+    "description_note_heading": "Note heading",
+    "description_open_overview": "Open overview on mobile",
+    "description_overview_heading": "Overview heading",
+    "description_specs_heading": "Specifications heading",
+    "sale_price_color": "Sale price color",
+    "show_savings": "Show savings",
     "condition_override": "Condition",
     "condition_fallback": "Products without a grade",
     "condition_new_text": "Brand new",
@@ -404,6 +422,7 @@
     "font": "Skrifttype",
     "full_width_first_image": "Første bilde i full bredde",
     "full_width_on_mobile": "Full bredde på mobil",
+    "heading_color": "Overskriftsfarge",
     "heading_preset": "Forhåndsinnstilling for overskrift",
     "hide_padding": "Skjul utfylling",
     "hide_unselected_variant_media": "Skjul medier for varianter som ikke er valgt",
@@ -669,6 +688,7 @@
     "customer_account_menu": "Kundekontomeny"
   },
   "options": {
+    "roll_up": "Rull opp",
     "condition_show_new": "Show as brand new",
     "condition_hide": "Hide",
     "lines": "Lines",
@@ -907,6 +927,7 @@
     "secondary_style": "Sekundær stil",
     "semibold": "Halvfet",
     "shaded": "Skyggelagt",
+    "shield": "Shield",
     "show_second_image": "Vis det andre bildet",
     "single": "Enkel",
     "slide_left": "Skyv til venstre",
@@ -1186,6 +1207,10 @@
     "featured_collection_h3": "<h3>Utvalgt samling</h3>"
   },
   "text_defaults": {
+    "delivery_estimate_label": "Estimated delivery",
+    "description_note_heading": "Good to know",
+    "description_overview_heading": "Overview",
+    "description_specs_heading": "Specifications",
     "condition_label": "Condition",
     "condition_guide_heading": "Condition guide",
     "condition_new_text": "Brand new and unused, in its original packaging.",
@@ -1252,6 +1277,13 @@
     "disclosures": "Opplysninger"
   },
   "info": {
+    "link_hover_effect": "Gjelder lenker uten rullegardinmeny.",
+    "back_to_top_style": "Ringen rundt sirkelen fylles etter hvert som kundene blar nedover siden.",
+    "breadcrumbs_skip_collections": "Comma-separated collection handles that are too broad to show, for example all, sale.",
+    "delivery_countries": "Comma-separated country codes, for example AU, NZ. Leave empty to show it to everyone.",
+    "delivery_days": "Counted from today, Monday to Friday, including dispatch and shipping time. Public holidays aren't skipped.",
+    "description_note_heading": "For text that follows the specifications, such as what's in the box.",
+    "show_savings": "Shows how much a sale price saves, for example \"Save $120 (40%)\".",
     "condition_override": "Leave empty to read the grade from the product title, for example \"Apple Pencil Pro - Excellent - Refurbished\". You can also connect a product metafield.",
     "condition_guide": "Descriptions shown when customers tap the info icon. Leave one empty to hide that grade.",
     "menu_panel_products_collection": "Only used by the Products layout. Leave empty to use the menu item's own collection.",
@@ -1293,6 +1325,7 @@
     "custom_liquid": "Legg til kodeutdrag fra apper eller annen kode for å lage avanserte tilpasninger. [Finn ut mer](https://shopify.dev/docs/api/liquid)",
     "pills_usage": "Brukes for anvendte filtre, rabattkoder og søkeforslag",
     "search_bar_hints": "Comma-separated terms shown as rotating hints, for example: iPhone 16, Gaming laptops, AirPods",
+    "reveal_behind_footer": "Holder denne seksjonen og seksjonene under den i ro mens seksjonene over rulles bort.",
     "reveal_on_scroll": "Image banners, hero text, and quick links animate in as they appear. Turned off automatically for shoppers who prefer reduced motion.",
     "search_popular_collections": "Shown before shoppers type. Pick your most important collections.",
     "search_trending_terms": "Comma-separated terms shown as quick links, for example: iPhone 17 Pro, AirPods Pro",

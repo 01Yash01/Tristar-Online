@@ -29,6 +29,8 @@
     "slider_label": "Slankiklis"
   },
   "accessibility": {
+    "back_to_top": "Grįžti į viršų",
+    "breadcrumbs": "Breadcrumbs",
     "condition_guide": "What does this condition mean?",
     "play_model": "Paleisti 3D modelį",
     "play_video": "Paleisti vaizdo įrašą",
@@ -136,6 +138,10 @@
     "back_to_main_menu": "Atgal į pagrindinį meniu"
   },
   "content": {
+    "back_to_top_label": "Į viršų",
+    "breadcrumb_home": "Home",
+    "delivery_estimate_html": "Arrives {{ start }} – {{ end }}",
+    "price_savings": "Save {{ amount }} ({{ percent }}%)",
     "condition_new": "Brand new",
     "condition_refurbished": "Refurbished",
     "condition_pristine": "Pristine",

@@ -29,6 +29,8 @@
     "slider_label": "Jazdec"
   },
   "accessibility": {
+    "back_to_top": "Späť hore",
+    "breadcrumbs": "Breadcrumbs",
     "condition_guide": "What does this condition mean?",
     "play_model": "Prehrať 3D model",
     "play_video": "Prehrať video",
@@ -136,6 +138,10 @@
     "back_to_main_menu": "Späť do hlavnej ponuky"
   },
   "content": {
+    "back_to_top_label": "Hore",
+    "breadcrumb_home": "Home",
+    "delivery_estimate_html": "Arrives {{ start }} – {{ end }}",
+    "price_savings": "Save {{ amount }} ({{ percent }}%)",
     "condition_new": "Brand new",
     "condition_refurbished": "Refurbished",
     "condition_pristine": "Pristine",

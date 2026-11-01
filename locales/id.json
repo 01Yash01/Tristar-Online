@@ -29,6 +29,8 @@
     "slider_label": "Slider"
   },
   "accessibility": {
+    "back_to_top": "Kembali ke atas",
+    "breadcrumbs": "Breadcrumbs",
     "condition_guide": "What does this condition mean?",
     "play_model": "Putar model 3D",
     "play_video": "Putar video",
@@ -132,6 +134,10 @@
     "zoom_media": "Perbesar media {{ index }}"
   },
   "content": {
+    "back_to_top_label": "Atas",
+    "breadcrumb_home": "Home",
+    "delivery_estimate_html": "Arrives {{ start }} – {{ end }}",
+    "price_savings": "Save {{ amount }} ({{ percent }}%)",
     "condition_new": "Brand new",
     "condition_refurbished": "Refurbished",
     "condition_pristine": "Pristine",

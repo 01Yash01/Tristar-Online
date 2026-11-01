@@ -29,6 +29,8 @@
     "slider_label": "Slider"
   },
   "accessibility": {
+    "back_to_top": "Zurück nach oben",
+    "breadcrumbs": "Breadcrumbs",
     "condition_guide": "What does this condition mean?",
     "play_model": "3D-Modell abspielen",
     "play_video": "Video abspielen",
@@ -132,6 +134,10 @@
     "back_to_main_menu": "Zurück zum Hauptmenü"
   },
   "content": {
+    "back_to_top_label": "Oben",
+    "breadcrumb_home": "Home",
+    "delivery_estimate_html": "Arrives {{ start }} – {{ end }}",
+    "price_savings": "Save {{ amount }} ({{ percent }}%)",
     "condition_new": "Brand new",
     "condition_refurbished": "Refurbished",
     "condition_pristine": "Pristine",

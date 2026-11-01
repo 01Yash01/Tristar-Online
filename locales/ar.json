@@ -9,6 +9,8 @@
  */
 {
   "accessibility": {
+    "back_to_top": "العودة إلى الأعلى",
+    "breadcrumbs": "Breadcrumbs",
     "condition_guide": "What does this condition mean?",
     "account": "الحساب",
     "active_filters": "عوامل التصفية النشطة:",
@@ -177,6 +179,10 @@
     }
   },
   "content": {
+    "back_to_top_label": "أعلى",
+    "breadcrumb_home": "Home",
+    "delivery_estimate_html": "Arrives {{ start }} – {{ end }}",
+    "price_savings": "Save {{ amount }} ({{ percent }}%)",
     "condition_new": "Brand new",
     "condition_refurbished": "Refurbished",
     "condition_pristine": "Pristine",

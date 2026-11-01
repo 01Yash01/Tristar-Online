@@ -9,6 +9,8 @@
  */
 {
   "accessibility": {
+    "back_to_top": "اوپر واپس جائیں",
+    "breadcrumbs": "Breadcrumbs",
     "condition_guide": "What does this condition mean?",
     "account": "اکاؤنٹ",
     "active_filters": "فعال فلٹر:",
@@ -165,6 +167,10 @@
     }
   },
   "content": {
+    "back_to_top_label": "اوپر",
+    "breadcrumb_home": "Home",
+    "delivery_estimate_html": "Arrives {{ start }} – {{ end }}",
+    "price_savings": "Save {{ amount }} ({{ percent }}%)",
     "condition_new": "Brand new",
     "condition_refurbished": "Refurbished",
     "condition_pristine": "Pristine",

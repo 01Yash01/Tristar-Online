@@ -9,6 +9,10 @@
  */
 {
   "names": {
+    "back_to_top": "トップへ戻る",
+    "breadcrumbs": "Breadcrumbs",
+    "delivery_estimate": "Delivery estimate",
+    "description_specs": "Description & specs",
     "product_condition": "Product condition",
     "product_faq": "Product FAQ",
     "menu_promo": "Promotion",
@@ -186,6 +190,20 @@
     "disclosures": "開示情報"
   },
   "settings": {
+    "link_hover_effect": "リンクのホバー効果",
+    "show_dropdown_arrows": "ドロップダウンの矢印を表示",
+    "show_back_to_top": "「トップへ戻る」ボタンを表示",
+    "breadcrumbs_show_collection": "Show collection",
+    "breadcrumbs_skip_collections": "Collections to skip",
+    "delivery_countries": "Show for countries",
+    "delivery_max_days": "Latest delivery (business days)",
+    "delivery_min_days": "Earliest delivery (business days)",
+    "description_note_heading": "Note heading",
+    "description_open_overview": "Open overview on mobile",
+    "description_overview_heading": "Overview heading",
+    "description_specs_heading": "Specifications heading",
+    "sale_price_color": "Sale price color",
+    "show_savings": "Show savings",
     "condition_override": "Condition",
     "condition_fallback": "Products without a grade",
     "condition_new_text": "Brand new",
@@ -414,6 +432,7 @@
     "font": "フォント",
     "full_width_first_image": "最初の画像を全幅表示",
     "full_width_on_mobile": "モバイルで全幅表示",
+    "heading_color": "見出しの配色",
     "heading_preset": "見出しのプリセット",
     "hide_unselected_variant_media": "選択されていないバリエーションのメディアを非表示にする",
     "horizontal_gap": "水平方向の間隔",
@@ -669,6 +688,7 @@
     "customer_account_menu": "お客様アカウントメニュー"
   },
   "options": {
+    "roll_up": "ロールアップ",
     "condition_show_new": "Show as brand new",
     "condition_hide": "Hide",
     "lines": "Lines",
@@ -913,6 +933,7 @@
     "secondary_style": "セカンダリースタイル",
     "semibold": "中太字",
     "shaded": "シェード",
+    "shield": "Shield",
     "show_second_image": "2番目の画像を表示",
     "single": "単一",
     "slide_left": "左にスライド",
@@ -1186,6 +1207,10 @@
     "introducing_p": "<p><em>新登場</em></p>"
   },
   "text_defaults": {
+    "delivery_estimate_label": "Estimated delivery",
+    "description_note_heading": "Good to know",
+    "description_overview_heading": "Overview",
+    "description_specs_heading": "Specifications",
     "condition_label": "Condition",
     "condition_guide_heading": "Condition guide",
     "condition_new_text": "Brand new and unused, in its original packaging.",
@@ -1252,6 +1277,13 @@
     "disclosures": "開示情報"
   },
   "info": {
+    "link_hover_effect": "ドロップダウンメニューのないリンクに適用されます。",
+    "back_to_top_style": "円形のリングは、ページを下にスクロールするにつれて満たされます。",
+    "breadcrumbs_skip_collections": "Comma-separated collection handles that are too broad to show, for example all, sale.",
+    "delivery_countries": "Comma-separated country codes, for example AU, NZ. Leave empty to show it to everyone.",
+    "delivery_days": "Counted from today, Monday to Friday, including dispatch and shipping time. Public holidays aren't skipped.",
+    "description_note_heading": "For text that follows the specifications, such as what's in the box.",
+    "show_savings": "Shows how much a sale price saves, for example \"Save $120 (40%)\".",
     "condition_override": "Leave empty to read the grade from the product title, for example \"Apple Pencil Pro - Excellent - Refurbished\". You can also connect a product metafield.",
     "condition_guide": "Descriptions shown when customers tap the info icon. Leave one empty to hide that grade.",
     "menu_panel_products_collection": "Only used by the Products layout. Leave empty to use the menu item's own collection.",
@@ -1295,6 +1327,7 @@
     "hover_effects": "商品カードとコレクションカードに適用されます",
     "pills_usage": "適用された絞り込み、ディスカウントコード、検索候補に使用されます",
     "search_bar_hints": "Comma-separated terms shown as rotating hints, for example: iPhone 16, Gaming laptops, AirPods",
+    "reveal_behind_footer": "上のセクションがスクロールされる間、このセクションとその下のセクションを固定します。",
     "reveal_on_scroll": "Image banners, hero text, and quick links animate in as they appear. Turned off automatically for shoppers who prefer reduced motion.",
     "search_popular_collections": "Shown before shoppers type. Pick your most important collections.",
     "search_trending_terms": "Comma-separated terms shown as quick links, for example: iPhone 17 Pro, AirPods Pro",

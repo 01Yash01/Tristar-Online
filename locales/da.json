@@ -29,6 +29,8 @@
     "slider_label": "Billedkarrusel"
   },
   "accessibility": {
+    "back_to_top": "Tilbage til toppen",
+    "breadcrumbs": "Breadcrumbs",
     "condition_guide": "What does this condition mean?",
     "play_model": "Afspil 3D-model",
     "play_video": "Afspil video",
@@ -132,6 +134,10 @@
     "back_to_main_menu": "Tilbage til hovedmenu"
   },
   "content": {
+    "back_to_top_label": "Top",
+    "breadcrumb_home": "Home",
+    "delivery_estimate_html": "Arrives {{ start }} – {{ end }}",
+    "price_savings": "Save {{ amount }} ({{ percent }}%)",
     "condition_new": "Brand new",
     "condition_refurbished": "Refurbished",
     "condition_pristine": "Pristine",

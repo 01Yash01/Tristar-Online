@@ -29,6 +29,8 @@
     "slider_label": "投影播放器"
   },
   "accessibility": {
+    "back_to_top": "回到頂端",
+    "breadcrumbs": "Breadcrumbs",
     "condition_guide": "What does this condition mean?",
     "play_model": "播放 3D 模型",
     "play_video": "播放影片",
@@ -132,6 +134,10 @@
     "back_to_main_menu": "返回主選單"
   },
   "content": {
+    "back_to_top_label": "頂端",
+    "breadcrumb_home": "Home",
+    "delivery_estimate_html": "Arrives {{ start }} – {{ end }}",
+    "price_savings": "Save {{ amount }} ({{ percent }}%)",
     "condition_new": "Brand new",
     "condition_refurbished": "Refurbished",
     "condition_pristine": "Pristine",

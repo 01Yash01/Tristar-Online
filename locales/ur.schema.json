@@ -242,6 +242,13 @@
     "work_quickly_to_ship": "<p>ہم جلد از جلد آپ کا آرڈر شپ کرنے کے لیے تیزی سے کام کریں گے۔ آپ کا آرڈر شپ ہونے کے بعد، آپ کو مزید معلومات کے ساتھ ایک ای میل موصول ہوگی۔ آپ کے مقام کے لحاظ سے ترسیل کے اوقات مختلف ہو سکتے ہیں۔</p>"
   },
   "info": {
+    "link_hover_effect": "ان لنکس پر لاگو ہوتا ہے جن کا ڈراپ ڈاؤن مینو نہیں ہے۔",
+    "back_to_top_style": "جیسے جیسے خریدار صفحہ نیچے اسکرول کرتے ہیں، دائرے کا حلقہ بھرتا جاتا ہے۔",
+    "breadcrumbs_skip_collections": "Comma-separated collection handles that are too broad to show, for example all, sale.",
+    "delivery_countries": "Comma-separated country codes, for example AU, NZ. Leave empty to show it to everyone.",
+    "delivery_days": "Counted from today, Monday to Friday, including dispatch and shipping time. Public holidays aren't skipped.",
+    "description_note_heading": "For text that follows the specifications, such as what's in the box.",
+    "show_savings": "Shows how much a sale price saves, for example \"Save $120 (40%)\".",
     "condition_override": "Leave empty to read the grade from the product title, for example \"Apple Pencil Pro - Excellent - Refurbished\". You can also connect a product metafield.",
     "condition_guide": "Descriptions shown when customers tap the info icon. Leave one empty to hide that grade.",
     "menu_panel_products_collection": "Only used by the Products layout. Leave empty to use the menu item's own collection.",
@@ -291,12 +298,17 @@
     "video_external": "کوئی YouTube یا Vimeo کا URL استعمال کریں",
     "pills_usage": "لاگو کردہ فلٹر، ڈسکاؤنٹ کوڈ، اور تلاش کی تجاویز کے لیے استعمال ہوتا ہے",
     "search_bar_hints": "Comma-separated terms shown as rotating hints, for example: iPhone 16, Gaming laptops, AirPods",
+    "reveal_behind_footer": "اوپر والے سیکشنز کے اسکرول ہونے کے دوران اس سیکشن اور اس کے نیچے والے سیکشنز کو ساکن رکھتا ہے۔",
     "reveal_on_scroll": "Image banners, hero text, and quick links animate in as they appear. Turned off automatically for shoppers who prefer reduced motion.",
     "search_popular_collections": "Shown before shoppers type. Pick your most important collections.",
     "search_trending_terms": "Comma-separated terms shown as quick links, for example: iPhone 17 Pro, AirPods Pro",
     "media_type_info": "خصوصیات آپ کے مینو کے لنک سے پُر کی گئی ہیں"
   },
   "names": {
+    "back_to_top": "اوپر واپس جائیں",
+    "breadcrumbs": "Breadcrumbs",
+    "delivery_estimate": "Delivery estimate",
+    "description_specs": "Description & specs",
     "product_condition": "Product condition",
     "product_faq": "Product FAQ",
     "menu_promo": "Promotion",
@@ -474,6 +486,7 @@
     "comparison_slider": "موازنہ کرنے والا سلائیڈر"
   },
   "options": {
+    "roll_up": "اوپر رول کریں",
     "condition_show_new": "Show as brand new",
     "condition_hide": "Hide",
     "lines": "Lines",
@@ -711,6 +724,7 @@
     "sentence": "جملہ",
     "serving_dish": "پیش کرنے والی ڈش",
     "shaded": "سایہ دار",
+    "shield": "Shield",
     "shirt": "شرٹ",
     "shoe": "جوتا",
     "show_second_image": "دوسری تصویر دکھائیں",
@@ -779,6 +793,20 @@
     "below_media": "میڈیا کے نیچے"
   },
   "settings": {
+    "link_hover_effect": "لنک ہوور اثر",
+    "show_dropdown_arrows": "ڈراپ ڈاؤن تیر دکھائیں",
+    "show_back_to_top": "اوپر واپس جائیں بٹن دکھائیں",
+    "breadcrumbs_show_collection": "Show collection",
+    "breadcrumbs_skip_collections": "Collections to skip",
+    "delivery_countries": "Show for countries",
+    "delivery_max_days": "Latest delivery (business days)",
+    "delivery_min_days": "Earliest delivery (business days)",
+    "description_note_heading": "Note heading",
+    "description_open_overview": "Open overview on mobile",
+    "description_overview_heading": "Overview heading",
+    "description_specs_heading": "Specifications heading",
+    "sale_price_color": "Sale price color",
+    "show_savings": "Show savings",
     "condition_override": "Condition",
     "condition_fallback": "Products without a grade",
     "condition_new_text": "Brand new",
@@ -972,6 +1000,7 @@
     "gift_card_form": "گفٹ کارڈ کا فارم",
     "gradient_direction": "گریڈینٹ کی سمت",
     "heading": "سرخی",
+    "heading_color": "سرخی کا رنگ",
     "heading_preset": "سرخی کا پری سیٹ",
     "headings": "سرخیاں",
     "height": "اونچائی",
@@ -1262,6 +1291,10 @@
     "customer_account_menu": "کسٹمر اکاؤنٹ مینو"
   },
   "text_defaults": {
+    "delivery_estimate_label": "Estimated delivery",
+    "description_note_heading": "Good to know",
+    "description_overview_heading": "Overview",
+    "description_specs_heading": "Specifications",
     "condition_label": "Condition",
     "condition_guide_heading": "Condition guide",
     "condition_new_text": "Brand new and unused, in its original packaging.",

@@ -29,6 +29,8 @@
     "slider_label": "滑块"
   },
   "accessibility": {
+    "back_to_top": "返回顶部",
+    "breadcrumbs": "Breadcrumbs",
     "condition_guide": "What does this condition mean?",
     "play_model": "演示 3D 模型",
     "play_video": "播放视频",
@@ -132,6 +134,10 @@
     "back_to_main_menu": "返回主菜单"
   },
   "content": {
+    "back_to_top_label": "顶部",
+    "breadcrumb_home": "Home",
+    "delivery_estimate_html": "Arrives {{ start }} – {{ end }}",
+    "price_savings": "Save {{ amount }} ({{ percent }}%)",
     "condition_new": "Brand new",
     "condition_refurbished": "Refurbished",
     "condition_pristine": "Pristine",

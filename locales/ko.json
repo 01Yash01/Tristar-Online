@@ -29,6 +29,8 @@
     "slider_label": "슬라이더"
   },
   "accessibility": {
+    "back_to_top": "맨 위로 이동",
+    "breadcrumbs": "Breadcrumbs",
     "condition_guide": "What does this condition mean?",
     "play_model": "3D 모델 재생",
     "play_video": "동영상 재생",
@@ -132,6 +134,10 @@
     "zoom_media": "{{ index }} 미디어 확대/축소"
   },
   "content": {
+    "back_to_top_label": "위로",
+    "breadcrumb_home": "Home",
+    "delivery_estimate_html": "Arrives {{ start }} – {{ end }}",
+    "price_savings": "Save {{ amount }} ({{ percent }}%)",
     "condition_new": "Brand new",
     "condition_refurbished": "Refurbished",
     "condition_pristine": "Pristine",

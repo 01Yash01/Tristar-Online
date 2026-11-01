@@ -29,6 +29,8 @@
     "slider_label": "Drsnik"
   },
   "accessibility": {
+    "back_to_top": "Nazaj na vrh",
+    "breadcrumbs": "Breadcrumbs",
     "condition_guide": "What does this condition mean?",
     "play_model": "Predvajaj 3D-model",
     "play_video": "Predvajaj videoposnetek",
@@ -136,6 +138,10 @@
     "back_to_main_menu": "Nazaj na glavni meni"
   },
   "content": {
+    "back_to_top_label": "Vrh",
+    "breadcrumb_home": "Home",
+    "delivery_estimate_html": "Arrives {{ start }} – {{ end }}",
+    "price_savings": "Save {{ amount }} ({{ percent }}%)",
     "condition_new": "Brand new",
     "condition_refurbished": "Refurbished",
     "condition_pristine": "Pristine",
