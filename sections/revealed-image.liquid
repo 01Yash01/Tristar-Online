@@ -1,0 +1,887 @@
+{% comment %}
+  Section contract.
+  "Revealed image on scroll": a full-screen stage pins while the section scrolls past. The image (or
+  video) starts as a small window in the middle and grows to fill the screen, easing in, while on
+  desktop it also settles from a 1.4x zoom. The subheading and heading fade in at the start; they are
+  drawn twice, dark over the background and light clipped to the media, so letters turn light as the
+  media passes behind them. Optional buttons fade in once the media has nearly filled the screen.
+  Scroll-driven CSS animations run the reveal where supported; assets/revealed-image.js feeds the same
+  progress elsewhere and plays the video only while it is on screen. Reduced motion shows the finished
+  state, and so does any browser without either path.
+  @example
+  <!-- Add section > Revealed image on scroll, then pick a desktop and a mobile image -->
+{% endcomment %}
+
+{% liquid
+  assign image = section.settings.image
+  assign mobile_image = section.settings.mobile_image
+  if image == blank and mobile_image != blank
+    assign image = mobile_image
+    assign mobile_image = nil
+  endif
+
+  assign has_video = false
+  if section.settings.media_type == 'video' and section.settings.video != blank
+    assign has_video = true
+  endif
+
+  assign loading = 'lazy'
+  assign fetch_priority = 'auto'
+  if section.index == 1
+    assign loading = 'eager'
+    assign fetch_priority = 'high'
+  endif
+
+  assign subheading = section.settings.subheading | strip
+  assign heading = section.settings.title | strip
+
+  capture buttons
+    content_for 'blocks'
+  endcapture
+  assign buttons = buttons | strip
+
+  # The light copy of the text needs the same layout as the real one, buttons included, but must not
+  # look like a second set of theme editor blocks
+  assign buttons_spacer = buttons | replace: 'data-shopify-editor-block', 'data-revealed-image-spacer'
+
+  assign shade = section.settings.overlay_opacity | divided_by: 100.0
+  assign length = section.settings.scroll_length | default: 'normal'
+%}
+
+{%- capture text -%}
+  {%- if subheading != blank -%}
+    <p class="revealed-image__subheading">{{ subheading | escape }}</p>
+  {%- endif -%}
+  {%- if heading != blank -%}
+    <h2 class="revealed-image__heading">{{ heading | escape }}</h2>
+  {%- endif -%}
+{%- endcapture -%}
+
+<script
+  src="{{ 'revealed-image.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
+
+<revealed-image
+  class="revealed-image revealed-image--{{ length }} revealed-image--text-{{ section.settings.content_position | default: 'center' }}{% if section.settings.cover_next_section %} revealed-image--cover{% endif %}"
+  style="
+    {%- if section.settings.background_color != blank -%}--revealed-image-background: {{ section.settings.background_color }};{%- endif -%}
+    --revealed-image-text-outside: {{ section.settings.text_color_outside | default: '#000000' }};
+    --revealed-image-text-inside: {{ section.settings.text_color_inside | default: '#ffffff' }};
+    --revealed-image-radius: {{ section.settings.start_corner_radius | default: 0 }}px;
+    --revealed-image-shade: {{ shade }};
+  "
+  {% if has_video %}
+    data-video
+  {% endif %}
+>
+  <div
+    class="revealed-image__stage"
+    ref="stage"
+  >
+    <div class="revealed-image__media">
+      <div class="revealed-image__media-inner">
+        {%- if image != blank -%}
+          <picture class="revealed-image__picture">
+            {%- if mobile_image != blank -%}
+              {%- capture mobile_srcset -%}
+                {%- for width in (1..8) -%}
+                  {%- assign w = width | times: 250 -%}
+                  {%- if w < mobile_image.width -%}
+                    {{ mobile_image | image_url: width: w }} {{ w }}w,
+                  {%- endif -%}
+                {%- endfor -%}
+                {{ mobile_image | image_url: width: mobile_image.width }} {{ mobile_image.width }}w
+              {%- endcapture -%}
+              <source
+                media="(max-width: 749px)"
+                srcset="{{ mobile_srcset | strip_newlines }}"
+                sizes="100vw"
+                width="{{ mobile_image.width }}"
+                height="{{ mobile_image.height }}"
+              >
+            {%- endif -%}
+            {{
+              image
+              | image_url: width: 3200
+              | image_tag:
+                widths: '640, 960, 1280, 1600, 1920, 2400, 2880, 3200',
+                sizes: '100vw',
+                loading: loading,
+                fetchpriority: fetch_priority,
+                alt: image.alt,
+                class: 'revealed-image__img'
+            }}
+          </picture>
+        {%- elsif has_video == false -%}
+          {{
+            'lifestyle-1'
+            | placeholder_svg_tag: 'revealed-image__img revealed-image__placeholder'
+            | replace: '<svg', '<svg preserveAspectRatio="xMidYMid slice"'
+          }}
+        {%- endif -%}
+
+        {%- if has_video -%}
+          {%- assign mobile_video = section.settings.mobile_video -%}
+          <div
+            class="revealed-image__video{% if mobile_video != blank %} revealed-image__video--desktop{% endif %}"
+            data-video-pending
+          >
+            {%- if image == blank and section.settings.video.preview_image -%}
+              {{
+                section.settings.video.preview_image
+                | image_url: width: 1920
+                | image_tag: widths: '640, 960, 1280, 1920', sizes: '100vw', loading: loading, alt: '', class: 'revealed-image__img'
+              }}
+            {%- endif -%}
+            {{
+              section.settings.video
+              | video_tag:
+                poster: nil,
+                autoplay: false,
+                loop: true,
+                controls: false,
+                muted: true,
+                playsinline: true,
+                preload: 'metadata',
+                class: 'revealed-image__img revealed-image__video-element'
+            }}
+          </div>
+          {%- if mobile_video != blank -%}
+            <div
+              class="revealed-image__video revealed-image__video--mobile"
+              data-video-pending
+            >
+              {%- if image == blank and mobile_video.preview_image -%}
+                {{
+                  mobile_video.preview_image
+                  | image_url: width: 1080
+                  | image_tag: widths: '480, 750, 1080', sizes: '100vw', loading: loading, alt: '', class: 'revealed-image__img'
+                }}
+              {%- endif -%}
+              {{
+                mobile_video
+                | video_tag:
+                  poster: nil,
+                  autoplay: false,
+                  loop: true,
+                  controls: false,
+                  muted: true,
+                  playsinline: true,
+                  preload: 'metadata',
+                  class: 'revealed-image__img revealed-image__video-element'
+              }}
+            </div>
+          {%- endif -%}
+        {%- endif -%}
+      </div>
+
+      {%- if shade > 0 -%}
+        <span
+          class="revealed-image__shade"
+          aria-hidden="true"
+        ></span>
+      {%- endif -%}
+    </div>
+
+    {%- if text != blank or buttons != blank or has_video -%}
+      <div class="revealed-image__content revealed-image__content--outside">
+        <div class="revealed-image__text">
+          {{ text }}
+          {%- if buttons != blank or has_video -%}
+            <div class="revealed-image__actions">
+              {{ buttons }}
+              {%- if has_video -%}
+                {%- comment -%}
+                  Sits with the buttons rather than in a corner, where floating chat and back-to-top
+                  buttons or the sticky header would cover it
+                {%- endcomment -%}
+                <button
+                  type="button"
+                  class="revealed-image__toggle"
+                  ref="toggle"
+                  on:click="/toggleVideo"
+                  aria-label="{{ 'accessibility.pause_video' | t }}"
+                  data-label-play="{{ 'accessibility.play_video' | t }}"
+                  data-label-pause="{{ 'accessibility.pause_video' | t }}"
+                >
+                  <span
+                    class="svg-wrapper revealed-image__toggle-icon revealed-image__toggle-icon--pause"
+                    aria-hidden="true"
+                  >
+                    {{- 'icon-pause.svg' | inline_asset_content -}}
+                  </span>
+                  <span
+                    class="svg-wrapper revealed-image__toggle-icon revealed-image__toggle-icon--play"
+                    aria-hidden="true"
+                  >
+                    {{- 'icon-play.svg' | inline_asset_content -}}
+                  </span>
+                </button>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+
+      <div
+        class="revealed-image__content revealed-image__content--inside"
+        aria-hidden="true"
+      >
+        <div class="revealed-image__text">
+          {{ text | replace: '<h2', '<p' | replace: '</h2>', '</p>' }}
+          {%- if buttons != blank or has_video -%}
+            <div
+              class="revealed-image__actions revealed-image__actions--spacer"
+              inert
+            >
+              {{ buttons_spacer }}
+              {%- if has_video -%}
+                <span class="revealed-image__toggle"></span>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</revealed-image>
+
+{% stylesheet %}
+  /*
+   * Geometry of the reveal, shared by the scroll-driven animations and the scripted fallback:
+   * the media starts as a window inset 37% from the top and sides and 41% from the bottom, and on
+   * desktop starts zoomed 1.4x. Progress eases in (slow start, fast finish) over the first
+   * --revealed-image-reveal of pinned scroll; with the slide-over, one more screen stays pinned after it.
+   */
+  .revealed-image {
+    --revealed-image-start-top: 37%;
+    --revealed-image-start-side: 37%;
+    --revealed-image-start-bottom: 41%;
+    --revealed-image-zoom: 1;
+    --revealed-image-length: 1.8;
+    --revealed-image-reveal: calc((var(--revealed-image-length) - 1) * 100svh);
+
+    position: relative;
+    display: block;
+    height: calc(100vh * var(--revealed-image-length));
+    height: calc(100svh * var(--revealed-image-length));
+  }
+
+  .revealed-image--short {
+    --revealed-image-length: 1.5;
+  }
+
+  .revealed-image--long {
+    --revealed-image-length: 2.4;
+  }
+
+  @media screen and (min-width: 750px) {
+    .revealed-image {
+      --revealed-image-zoom: 1.4;
+    }
+  }
+
+  .revealed-image__stage {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100svh;
+    overflow: hidden;
+    background-color: var(--revealed-image-background, var(--color-background));
+  }
+
+  /*
+   * Next section slides over: the stage stays pinned one more screen, and the section below is pulled up
+   * by that screen so it scrolls up over the finished image. Sections below get their own layer and a
+   * solid background, so the pinned image never shows through them. Off for the last section on a page.
+   */
+  .revealed-image-section:has(+ .shopify-section) .revealed-image--cover {
+    height: calc(100vh * (var(--revealed-image-length) + 1));
+    height: calc(100svh * (var(--revealed-image-length) + 1));
+  }
+
+  .revealed-image-section:has(+ .shopify-section):has(.revealed-image--cover) {
+    margin-block-end: -100vh;
+    margin-block-end: -100svh;
+  }
+
+  .revealed-image-section:has(.revealed-image--cover) ~ .shopify-section {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .revealed-image-section:has(.revealed-image--cover) ~ .shopify-section:not(:has(.section-background)) {
+    background-color: var(--color-background);
+  }
+
+  .revealed-image__media,
+  .revealed-image__media-inner,
+  .revealed-image__video,
+  .revealed-image__content {
+    position: absolute;
+    inset: 0;
+  }
+
+  .revealed-image__media {
+    overflow: hidden;
+  }
+
+  .revealed-image__media-inner {
+    transform-origin: center;
+  }
+
+  .revealed-image__picture {
+    display: contents;
+  }
+
+  .revealed-image__img {
+    position: absolute;
+    inset: 0;
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .revealed-image__placeholder {
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-8));
+  }
+
+  .revealed-image__video-element {
+    transition: opacity 0.6s var(--ease-out-cubic);
+  }
+
+  .revealed-image__video[data-video-pending] .revealed-image__video-element {
+    opacity: 0;
+  }
+
+  .revealed-image__video--mobile {
+    display: none;
+  }
+
+  @media screen and (max-width: 749px) {
+    .revealed-image__video--desktop {
+      display: none;
+    }
+
+    .revealed-image__video--mobile {
+      display: block;
+    }
+  }
+
+  .revealed-image__shade {
+    position: absolute;
+    inset: 0;
+    background-color: rgb(0 0 0);
+    opacity: var(--revealed-image-shade);
+    pointer-events: none;
+  }
+
+  .revealed-image__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding-block: var(--padding-6xl);
+    padding-inline: var(--page-margin);
+    color: var(--revealed-image-text-outside);
+    text-align: center;
+  }
+
+  /* The light copy sits on top, clipped to the media; clicks pass through to the real buttons */
+  .revealed-image__content--inside {
+    color: var(--revealed-image-text-inside);
+    pointer-events: none;
+  }
+
+  .revealed-image--text-bottom_left .revealed-image__content {
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding-block-end: clamp(var(--padding-4xl), 9vh, var(--padding-6xl));
+    text-align: start;
+  }
+
+  .revealed-image__text {
+    display: flex;
+    flex-direction: column;
+    align-items: inherit;
+    gap: var(--gap-xl);
+    max-width: min(100%, 56rem);
+    min-width: 0;
+  }
+
+  .revealed-image__subheading {
+    margin: 0;
+    font-family: var(--font-subheading--family);
+    font-style: var(--font-subheading--style);
+    font-weight: var(--font-subheading--weight);
+    font-size: var(--font-size--sm);
+    line-height: var(--line-height--body-tight);
+  }
+
+  /* The light copy turns the h2 into a p but keeps this class */
+  .revealed-image__heading {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-style: var(--font-heading--style);
+    font-weight: var(--font-heading--weight);
+    font-size: clamp(3rem, 1.75rem + 3.5vw, 5rem);
+    line-height: var(--line-height--display-tight);
+    letter-spacing: var(--letter-spacing--display-tight);
+    text-wrap: balance;
+    overflow-wrap: break-word;
+  }
+
+  @media screen and (min-width: 750px) {
+    .revealed-image__subheading {
+      font-size: var(--font-size--md);
+    }
+  }
+
+  .revealed-image__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap-sm);
+    margin-block-start: var(--margin-xs);
+  }
+
+  .revealed-image--text-center .revealed-image__actions {
+    justify-content: center;
+  }
+
+  .revealed-image__actions--spacer {
+    visibility: hidden;
+  }
+
+  .revealed-image__toggle {
+    display: inline-flex;
+    flex: none;
+    align-self: center;
+    align-items: center;
+    justify-content: center;
+    width: var(--minimum-touch-target);
+    height: var(--minimum-touch-target);
+    padding: 0;
+    border: 1px solid rgb(255 255 255 / 0.3);
+    border-radius: 50%;
+    background-color: rgb(0 0 0 / 0.28);
+    color: rgb(255 255 255);
+    cursor: pointer;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    transition: background-color var(--animation-speed) var(--animation-easing);
+  }
+
+  revealed-image:not(:defined) .revealed-image__toggle {
+    display: none;
+  }
+
+  .revealed-image__toggle:hover {
+    background-color: rgb(0 0 0 / 0.45);
+  }
+
+  .revealed-image__toggle:focus-visible {
+    outline: 2px solid rgb(255 255 255);
+    outline-offset: 2px;
+  }
+
+  .revealed-image__toggle-icon {
+    display: flex;
+    width: 18px;
+    height: 18px;
+  }
+
+  .revealed-image__toggle-icon--play,
+  .revealed-image__toggle[data-paused] .revealed-image__toggle-icon--pause {
+    display: none;
+  }
+
+  .revealed-image__toggle[data-paused] .revealed-image__toggle-icon--play {
+    display: flex;
+  }
+
+  /*
+   * Scripted fallback (browsers without scroll-driven animations). assets/revealed-image.js sets
+   * --revealed-image-progress (eased), --revealed-image-text and --revealed-image-actions from 0 to 1.
+   * Until it runs they stay at 1, so the finished state shows rather than a stuck small window.
+   */
+  .revealed-image__media,
+  .revealed-image__content--inside {
+    clip-path: inset(
+      calc(var(--revealed-image-start-top) * (1 - var(--revealed-image-progress, 1)))
+        calc(var(--revealed-image-start-side) * (1 - var(--revealed-image-progress, 1)))
+        calc(var(--revealed-image-start-bottom) * (1 - var(--revealed-image-progress, 1)))
+        round calc(var(--revealed-image-radius) * (1 - var(--revealed-image-progress, 1)))
+    );
+  }
+
+  .revealed-image__media-inner {
+    transform: scale(calc(1 + (var(--revealed-image-zoom) - 1) * (1 - var(--revealed-image-progress, 1))));
+  }
+
+  .revealed-image__shade {
+    opacity: calc(var(--revealed-image-shade) * var(--revealed-image-progress, 1));
+  }
+
+  .revealed-image__content {
+    opacity: var(--revealed-image-text, 1);
+  }
+
+  .revealed-image__actions {
+    opacity: var(--revealed-image-actions, 1);
+    translate: 0 calc((1 - var(--revealed-image-actions, 1)) * 0.75rem);
+  }
+
+  /*
+   * Scroll-driven path: the browser runs the reveal off the section's own scroll position. Ranges are
+   * measured in scroll distance from the moment the section pins, so the reveal ends at the same point
+   * whether or not the next section slides over afterwards.
+   */
+  @supports (animation-timeline: view()) {
+    .revealed-image {
+      view-timeline: --revealed-image block;
+    }
+
+    .revealed-image__media {
+      animation: revealed-image-window ease-in both;
+      animation-timeline: --revealed-image;
+      animation-range: contain 0% contain var(--revealed-image-reveal);
+    }
+
+    .revealed-image__media-inner {
+      animation: revealed-image-zoom ease-in both;
+      animation-timeline: --revealed-image;
+      animation-range: contain 0% contain var(--revealed-image-reveal);
+    }
+
+    .revealed-image__shade {
+      animation: revealed-image-shade ease-in both;
+      animation-timeline: --revealed-image;
+      animation-range: contain 0% contain var(--revealed-image-reveal);
+    }
+
+    .revealed-image__content {
+      animation: revealed-image-fade linear both;
+      animation-timeline: --revealed-image;
+      animation-range: contain 0% contain calc(var(--revealed-image-reveal) * 0.17);
+    }
+
+    /* The light copy both fades in and stays clipped to the media */
+    .revealed-image__content--inside {
+      animation: revealed-image-fade linear both, revealed-image-window ease-in both;
+      animation-timeline: --revealed-image, --revealed-image;
+      animation-range:
+        contain 0% contain calc(var(--revealed-image-reveal) * 0.17),
+        contain 0% contain var(--revealed-image-reveal);
+    }
+
+    .revealed-image__actions {
+      animation: revealed-image-rise ease-out both;
+      animation-timeline: --revealed-image;
+      animation-range: contain calc(var(--revealed-image-reveal) * 0.75) contain var(--revealed-image-reveal);
+    }
+  }
+
+  @keyframes revealed-image-window {
+    from {
+      clip-path: inset(
+        var(--revealed-image-start-top) var(--revealed-image-start-side) var(--revealed-image-start-bottom)
+          round var(--revealed-image-radius)
+      );
+    }
+
+    to {
+      clip-path: inset(0 0 0 round 0);
+    }
+  }
+
+  @keyframes revealed-image-zoom {
+    from {
+      transform: scale(var(--revealed-image-zoom));
+    }
+
+    to {
+      transform: none;
+    }
+  }
+
+  @keyframes revealed-image-shade {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: var(--revealed-image-shade);
+    }
+  }
+
+  @keyframes revealed-image-fade {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes revealed-image-rise {
+    from {
+      opacity: 0;
+      translate: 0 0.75rem;
+    }
+
+    to {
+      opacity: 1;
+      translate: 0 0;
+    }
+  }
+
+  /* Keyboard focus on a button or the video toggle shows the finished state so focus is never hidden */
+  .revealed-image:has(.revealed-image__actions :focus-visible)
+    :is(.revealed-image__media, .revealed-image__content--inside) {
+    animation: none;
+    clip-path: none;
+  }
+
+  .revealed-image:has(.revealed-image__actions :focus-visible)
+    :is(.revealed-image__media-inner, .revealed-image__shade, .revealed-image__content, .revealed-image__actions) {
+    animation: none;
+  }
+
+  .revealed-image:has(.revealed-image__actions :focus-visible) .revealed-image__media-inner {
+    transform: none;
+  }
+
+  .revealed-image:has(.revealed-image__actions :focus-visible) .revealed-image__shade {
+    opacity: var(--revealed-image-shade);
+  }
+
+  .revealed-image:has(.revealed-image__actions :focus-visible)
+    :is(.revealed-image__content, .revealed-image__actions) {
+    opacity: 1;
+    translate: none;
+  }
+
+  /* Reduced motion: a still, full-screen banner in its finished state */
+  @media (prefers-reduced-motion: reduce) {
+    .revealed-image,
+    .revealed-image-section:has(+ .shopify-section) .revealed-image--cover {
+      height: auto;
+    }
+
+    .revealed-image-section:has(+ .shopify-section):has(.revealed-image--cover) {
+      margin-block-end: 0;
+    }
+
+    .revealed-image__stage {
+      position: relative;
+    }
+
+    .revealed-image__media,
+    .revealed-image__content--inside {
+      animation: none;
+      clip-path: none;
+    }
+
+    .revealed-image__media-inner,
+    .revealed-image__shade,
+    .revealed-image__content,
+    .revealed-image__actions {
+      animation: none;
+    }
+
+    .revealed-image__media-inner {
+      transform: none;
+    }
+
+    .revealed-image__shade {
+      opacity: var(--revealed-image-shade);
+    }
+
+    .revealed-image__content,
+    .revealed-image__actions {
+      opacity: 1;
+      translate: none;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.revealed_image",
+  "tag": "section",
+  "class": "revealed-image-section",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "blocks": [
+    {
+      "type": "button"
+    }
+  ],
+  "max_blocks": 2,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.media"
+    },
+    {
+      "type": "select",
+      "id": "media_type",
+      "label": "t:settings.media_type",
+      "options": [
+        {
+          "value": "image",
+          "label": "t:options.image"
+        },
+        {
+          "value": "video",
+          "label": "t:options.video"
+        }
+      ],
+      "default": "image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "t:settings.image_desktop",
+      "info": "t:info.revealed_image_desktop"
+    },
+    {
+      "type": "image_picker",
+      "id": "mobile_image",
+      "label": "t:settings.image_mobile",
+      "info": "t:info.revealed_image_mobile"
+    },
+    {
+      "type": "video",
+      "id": "video",
+      "label": "t:settings.video_desktop",
+      "info": "t:info.revealed_image_video",
+      "visible_if": "{{ section.settings.media_type == 'video' }}"
+    },
+    {
+      "type": "video",
+      "id": "mobile_video",
+      "label": "t:settings.video_mobile",
+      "info": "t:info.revealed_image_mobile_video",
+      "visible_if": "{{ section.settings.media_type == 'video' }}"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "t:settings.darken_image",
+      "info": "t:info.darken_image",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "t:content.text"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "t:settings.subheading"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:settings.heading",
+      "default": "t:text_defaults.revealed_image_heading"
+    },
+    {
+      "type": "select",
+      "id": "content_position",
+      "label": "t:settings.content_position",
+      "options": [
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "bottom_left",
+          "label": "t:options.bottom_left"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "t:content.colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "placeholder": "t:settings.default"
+    },
+    {
+      "type": "color",
+      "id": "text_color_inside",
+      "label": "t:settings.text_on_image",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "text_color_outside",
+      "label": "t:settings.text_on_background",
+      "default": "#000000"
+    },
+    {
+      "type": "header",
+      "content": "t:settings.animation"
+    },
+    {
+      "type": "select",
+      "id": "scroll_length",
+      "label": "t:settings.scroll_length",
+      "options": [
+        {
+          "value": "short",
+          "label": "t:options.short"
+        },
+        {
+          "value": "normal",
+          "label": "t:options.normal"
+        },
+        {
+          "value": "long",
+          "label": "t:options.long"
+        }
+      ],
+      "default": "normal"
+    },
+    {
+      "type": "checkbox",
+      "id": "cover_next_section",
+      "label": "t:settings.cover_next_section",
+      "info": "t:info.cover_next_section",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "start_corner_radius",
+      "label": "t:settings.start_corner_radius",
+      "info": "t:info.start_corner_radius",
+      "min": 0,
+      "max": 40,
+      "step": 2,
+      "unit": "px",
+      "default": 0
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.revealed_image",
+      "category": "t:categories.banners"
+    }
+  ]
+}
+{% endschema %}
