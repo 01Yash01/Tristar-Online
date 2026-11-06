@@ -55,6 +55,12 @@
   if is_expired and block_settings.after_end == 'hide'
     assign hide_now = true
   endif
+
+  # Segmented puts short unit letters beside the digits (09h 43m) and drops the day while it is zero
+  assign is_segmented = false
+  if block_settings.style == 'segmented'
+    assign is_segmented = true
+  endif
 -%}
 
 {%- if is_valid == false -%}
@@ -77,6 +83,9 @@
     style="--countdown-align: {{ block_settings.alignment }};"
     data-end="{{ end_epoch }}"
     data-after-end="{{ block_settings.after_end }}"
+    {% if is_segmented %}
+      data-trim-days data-animate
+    {% endif %}
     role="timer"
     aria-label="{{ 'content.countdown_label' | t: date: end_text }}"
     {{ block.shopify_attributes }}
@@ -93,16 +102,30 @@
         hidden
       {% endif %}
     >
-      <span class="countdown__unit">
+      <span
+        class="countdown__unit"
+        ref="dayUnit"
+        {% if is_segmented and days == 0 %}
+          hidden
+        {% endif %}
+      >
         <span
           class="countdown__value"
           ref="days"
         >
           {%- if days < 10 -%}0{%- endif -%}{{- days -}}
         </span>
-        <span class="countdown__name">{{ 'content.countdown_days' | t }}</span>
+        <span class="countdown__name">
+          {%- if is_segmented -%}
+            {{- 'content.countdown_days_short' | t -}}
+          {%- else -%}
+            {{- 'content.countdown_days' | t -}}
+          {%- endif -%}
+        </span>
       </span>
-      <span class="countdown__separator">:</span>
+      {%- unless is_segmented -%}
+        <span class="countdown__separator">:</span>
+      {%- endunless -%}
       <span class="countdown__unit">
         <span
           class="countdown__value"
@@ -110,9 +133,17 @@
         >
           {%- if hours < 10 -%}0{%- endif -%}{{- hours -}}
         </span>
-        <span class="countdown__name">{{ 'content.countdown_hours' | t }}</span>
+        <span class="countdown__name">
+          {%- if is_segmented -%}
+            {{- 'content.countdown_hours_short' | t -}}
+          {%- else -%}
+            {{- 'content.countdown_hours' | t -}}
+          {%- endif -%}
+        </span>
       </span>
-      <span class="countdown__separator">:</span>
+      {%- unless is_segmented -%}
+        <span class="countdown__separator">:</span>
+      {%- endunless -%}
       <span class="countdown__unit">
         <span
           class="countdown__value"
@@ -120,10 +151,18 @@
         >
           {%- if minutes < 10 -%}0{%- endif -%}{{- minutes -}}
         </span>
-        <span class="countdown__name">{{ 'content.countdown_minutes' | t }}</span>
+        <span class="countdown__name">
+          {%- if is_segmented -%}
+            {{- 'content.countdown_minutes_short' | t -}}
+          {%- else -%}
+            {{- 'content.countdown_minutes' | t -}}
+          {%- endif -%}
+        </span>
       </span>
       {%- if block_settings.show_seconds -%}
-        <span class="countdown__separator">:</span>
+        {%- unless is_segmented -%}
+          <span class="countdown__separator">:</span>
+        {%- endunless -%}
         <span class="countdown__unit">
           <span
             class="countdown__value"
@@ -131,7 +170,13 @@
           >
             {%- if seconds < 10 -%}0{%- endif -%}{{- seconds -}}
           </span>
-          <span class="countdown__name">{{ 'content.countdown_seconds' | t }}</span>
+          <span class="countdown__name">
+            {%- if is_segmented -%}
+              {{- 'content.countdown_seconds_short' | t -}}
+            {%- else -%}
+              {{- 'content.countdown_seconds' | t -}}
+            {%- endif -%}
+          </span>
         </span>
       {%- endif -%}
     </span>
@@ -185,6 +230,7 @@
 
   .countdown[hidden],
   .countdown__units[hidden],
+  .countdown__unit[hidden],
   .countdown__expired[hidden] {
     display: none;
   }
@@ -228,6 +274,67 @@
 
   .countdown--boxed .countdown__separator {
     align-self: center;
+  }
+
+  /* Segmented: one joined strip, a short unit letter beside each number (09h | 43m | 04s).
+     Containers can tighten the segments with --countdown-segment-padding-inline. */
+  .countdown--segmented {
+    --countdown-value-size: 1rem;
+  }
+
+  .countdown--segmented.countdown--small {
+    --countdown-value-size: 0.875rem;
+  }
+
+  .countdown--segmented.countdown--large {
+    --countdown-value-size: 1.25rem;
+  }
+
+  .countdown--segmented .countdown__units {
+    gap: 0;
+    border-radius: var(--style-border-radius-sm);
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-8));
+    box-shadow: inset 0 0 0 1px rgb(var(--color-foreground-rgb) / var(--opacity-10));
+  }
+
+  .countdown--segmented .countdown__unit {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 0.1em;
+    min-width: 0;
+    padding-block: var(--padding-xs);
+    padding-inline: var(--countdown-segment-padding-inline, var(--padding-sm));
+    overflow: clip;
+    font-size: var(--countdown-value-size);
+  }
+
+  .countdown--segmented .countdown__unit:not([hidden]) ~ .countdown__unit {
+    border-inline-start: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-10));
+  }
+
+  .countdown--segmented .countdown__value {
+    font-size: 1em;
+    font-weight: 600;
+    line-height: var(--line-height--body-tight);
+  }
+
+  .countdown--segmented .countdown__name {
+    font-size: 0.8em;
+    opacity: var(--opacity-60);
+  }
+
+  /* A changed number settles into place; it never fully fades, so the timer doesn't flicker each second */
+  @media (prefers-reduced-motion: no-preference) {
+    .countdown__value--tick {
+      animation: countdown-tick var(--animation-speed-slow) var(--animation-timing-fade-in);
+    }
+  }
+
+  @keyframes countdown-tick {
+    from {
+      opacity: 0.4;
+      transform: translateY(-0.25em);
+    }
   }
 
   .countdown__expired {
@@ -310,6 +417,10 @@
         {
           "value": "minimal",
           "label": "t:options.countdown_minimal"
+        },
+        {
+          "value": "segmented",
+          "label": "t:options.countdown_segmented"
         }
       ],
       "default": "boxed"

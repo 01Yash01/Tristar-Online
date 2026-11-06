@@ -1,0 +1,596 @@
+{% comment %}
+  Section contract.
+  A slim promotional banner: an icon, heading and text beside a live countdown, an optional
+  copyable discount code, buttons and an optional close button. Narrow banners move the actions
+  under the text and pin the close button to the corner.
+  The icon, heading, text and countdown are static blocks; buttons are blocks the merchant adds.
+  Outside the theme editor the banner leaves the page once its countdown is gone (ended, or no
+  valid end date), unless the Countdown block shows an ended message instead.
+  A closed banner stays hidden for the rest of the browser session; new heading text or a new end
+  date shows it again.
+  @example
+  <!-- Add section > Countdown banner, then set the end date in its Countdown block -->
+{% endcomment %}
+
+{% liquid
+  assign background_color = section.settings.background_color
+  assign has_background = false
+  if background_color != blank and background_color.alpha != 0
+    assign has_background = true
+    render 'contrast-override', background_color: background_color, text_color: section.settings.text_color, section_id: section.id
+  endif
+
+  # The soft light from the icon side only reads on dark backgrounds
+  assign is_dark = false
+  if has_background
+    assign background_brightness = background_color | color_brightness
+    if background_brightness < 128
+      assign is_dark = true
+    endif
+  endif
+
+  assign discount_code = section.settings.discount_code | strip
+
+  assign hides_on_end = false
+  if section.settings.show_countdown and request.design_mode == false
+    assign hides_on_end = true
+  endif
+
+  capture buttons
+    content_for 'blocks'
+  endcapture
+  assign buttons = buttons | strip
+%}
+
+<script
+  src="{{ 'countdown-banner.js' | asset_url }}"
+  type="module"
+  fetchpriority="low"
+></script>
+
+<countdown-banner
+  class="
+    section
+    section--{{ section.settings.section_width }}
+    spacing-style
+    {% if hides_on_end %}countdown-banner-section--ends{% endif %}
+  "
+  style="{% render 'spacing-style', settings: section.settings %}"
+  data-section-id="{{ section.id }}"
+  {% if settings.reveal_on_scroll %}
+    data-reveal
+  {% endif %}
+>
+  <div
+    class="
+      countdown-banner
+      countdown-banner--{{ section.settings.section_width }}
+      {% if has_background %}color-custom-{{ section.id }}{% endif %}
+      {% if is_dark %}countdown-banner--dark{% endif %}
+      {% if section.settings.show_close_button %}countdown-banner--closable{% endif %}
+    "
+    style="--countdown-banner-radius: {{ section.settings.corner_radius }}px;"
+  >
+    <div class="countdown-banner__inner">
+      <div class="countdown-banner__content">
+        <div class="countdown-banner__icon">
+          {% content_for 'block', type: 'icon', id: 'icon' %}
+        </div>
+        <div class="countdown-banner__text">
+          {% content_for 'block', type: 'text', id: 'heading' %}
+          {% content_for 'block', type: 'text', id: 'text' %}
+        </div>
+      </div>
+
+      {%- if section.settings.show_countdown or discount_code != blank or buttons != blank -%}
+        <div class="countdown-banner__actions">
+          {%- if section.settings.show_countdown -%}
+            <div class="countdown-banner__timer">
+              {% content_for 'block', type: 'countdown', id: 'countdown' %}
+            </div>
+          {%- endif -%}
+
+          {%- if discount_code != blank -%}
+            <button
+              type="button"
+              class="countdown-banner__code"
+              data-code="{{ discount_code | escape }}"
+              on:click="/copyCode"
+              ref="codeButton"
+            >
+              <span
+                class="svg-wrapper countdown-banner__code-icon"
+                aria-hidden="true"
+              >
+                {{- 'icon-discount.svg' | inline_asset_content -}}
+              </span>
+              <span
+                class="svg-wrapper countdown-banner__code-icon countdown-banner__code-icon--done"
+                aria-hidden="true"
+              >
+                {{- 'icon-checkmark.svg' | inline_asset_content -}}
+              </span>
+              <span class="visually-hidden">{{ 'content.discount_code' | t }}</span>
+              <span class="countdown-banner__code-value">{{ discount_code | escape }}</span>
+              <span
+                class="countdown-banner__code-action"
+                ref="codeAction"
+                data-copy-label="{{ 'actions.copy' | t | escape }}"
+                data-copied-label="{{ 'content.code_copied' | t | escape }}"
+              >
+                {{- 'actions.copy' | t -}}
+              </span>
+            </button>
+          {%- endif -%}
+
+          {%- if buttons != blank -%}
+            <div class="countdown-banner__buttons">
+              {{ buttons }}
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.show_close_button -%}
+        <button
+          type="button"
+          class="countdown-banner__close"
+          aria-label="{{ 'actions.close' | t | escape }}"
+          on:click="/dismiss"
+        >
+          <span
+            class="svg-wrapper"
+            aria-hidden="true"
+          >
+            {{- 'icon-close.svg' | inline_asset_content -}}
+          </span>
+        </button>
+      {%- endif -%}
+    </div>
+
+    {%- if discount_code != blank -%}
+      <span
+        class="visually-hidden"
+        role="status"
+        ref="status"
+        data-message="{{ 'accessibility.discount_code_copied' | t | escape }}"
+      ></span>
+    {%- endif -%}
+  </div>
+</countdown-banner>
+
+{%- if section.settings.show_close_button and request.design_mode == false -%}
+  {%- comment -%}
+    Runs before first paint so a banner closed earlier this session never flashes. The campaign
+    key (end time and text) lets a new campaign show again; assets/countdown-banner.js stores it.
+  {%- endcomment -%}
+  <script>
+    (() => {
+      const banner = document.currentScript.previousElementSibling;
+      if (!(banner instanceof HTMLElement)) return;
+      const end = banner.querySelector('countdown-timer')?.getAttribute('data-end') ?? '';
+      const text = banner.querySelector('.countdown-banner__text')?.textContent.replace(/\s+/g, ' ').trim() ?? '';
+      banner.dataset.campaign = `${end}|${text}`;
+      try {
+        if (sessionStorage.getItem(`countdown-banner:${banner.dataset.sectionId}`) === banner.dataset.campaign) {
+          banner.hidden = true;
+        }
+      } catch {}
+    })();
+  </script>
+{%- endif -%}
+
+{% stylesheet %}
+  countdown-banner[hidden] {
+    display: none;
+  }
+
+  /* Once the countdown has gone (ended, or no valid end date) the banner goes too */
+  .countdown-banner-section--ends:not(:has(countdown-timer:not([hidden]))) {
+    display: none;
+  }
+
+  .countdown-banner {
+    --countdown-banner-line: rgb(var(--color-foreground-rgb) / var(--opacity-10));
+    --countdown-banner-light-x: 0%;
+
+    container-type: inline-size;
+    position: relative;
+    border-radius: var(--countdown-banner-radius, 16px);
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    box-shadow: inset 0 0 0 1px var(--countdown-banner-line);
+  }
+
+  .countdown-banner:dir(rtl) {
+    --countdown-banner-light-x: 100%;
+  }
+
+  .countdown-banner--full-width {
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .countdown-banner--dark {
+    background-image: radial-gradient(
+      120% 180% at var(--countdown-banner-light-x) 0%,
+      rgb(var(--color-foreground-rgb) / var(--opacity-10)),
+      transparent 60%
+    );
+  }
+
+  .countdown-banner__inner {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--gap-lg) var(--gap-xl);
+    padding-block: var(--padding-lg);
+    padding-inline: var(--padding-xl) var(--padding-lg);
+  }
+
+  .countdown-banner--full-width .countdown-banner__inner {
+    padding-inline: var(--util-page-margin-offset);
+  }
+
+  .countdown-banner__content {
+    display: flex;
+    flex: 1 1 18rem;
+    align-items: center;
+    gap: var(--gap-md);
+    min-width: 0;
+  }
+
+  .countdown-banner__icon {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 2.75rem;
+    aspect-ratio: 1;
+    border-radius: var(--style-border-radius-50);
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-8));
+    box-shadow: inset 0 0 0 1px var(--countdown-banner-line);
+  }
+
+  .countdown-banner__icon:not(:has(svg, img)) {
+    display: none;
+  }
+
+  .countdown-banner__text {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-3xs);
+    min-width: 0;
+    overflow-wrap: break-word;
+  }
+
+  /* Text after the heading is quieter, unless the block sets its own color (inline, so it still wins).
+     Outranks the color override's `.color-custom-<id> .text-block` rule. */
+  .countdown-banner__text > .text-block + .text-block {
+    --color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
+  }
+
+  .countdown-banner__actions {
+    display: flex;
+    flex: none;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--gap-sm);
+    min-width: 0;
+  }
+
+  .countdown-banner__buttons {
+    --button-padding-block: var(--padding-xs);
+    --button-padding-inline: var(--padding-2xl);
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap-xs);
+  }
+
+  .countdown-banner__code {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--gap-2xs);
+    padding-block: var(--padding-xs);
+    padding-inline: var(--padding-sm);
+    border: 1px dashed rgb(var(--color-foreground-rgb) / var(--opacity-40));
+    border-radius: var(--style-border-radius-sm);
+    background-color: transparent;
+    color: inherit;
+    font: inherit;
+    font-size: var(--font-size--sm);
+    line-height: var(--line-height--body-tight);
+    cursor: pointer;
+    transition: background-color var(--animation-values), border-color var(--animation-values);
+  }
+
+  .countdown-banner__code:hover {
+    border-color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-8));
+  }
+
+  .countdown-banner__code .svg-wrapper {
+    width: var(--icon-size-sm);
+    height: var(--icon-size-sm);
+  }
+
+  .countdown-banner__code-icon--done,
+  .countdown-banner__code[data-copied] .countdown-banner__code-icon {
+    display: none;
+  }
+
+  .countdown-banner__code[data-copied] .countdown-banner__code-icon--done {
+    display: inline-flex;
+  }
+
+  .countdown-banner__code-value {
+    font-weight: 600;
+    letter-spacing: var(--letter-spacing-sm);
+  }
+
+  .countdown-banner__code-action {
+    padding-inline-start: var(--padding-2xs);
+    border-inline-start: 1px solid var(--countdown-banner-line);
+    font-size: var(--font-size--2xs);
+    opacity: var(--opacity-70);
+  }
+
+  .countdown-banner__code[data-copied] .countdown-banner__code-action {
+    opacity: 1;
+  }
+
+  .countdown-banner__close {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: var(--minimum-touch-target);
+    height: var(--minimum-touch-target);
+    margin-inline: calc(var(--gap-xl) * -0.5) calc(var(--padding-lg) * -0.5);
+    padding: 0;
+    border: 0;
+    border-radius: var(--style-border-radius-50);
+    background-color: transparent;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
+    cursor: pointer;
+    transition: color var(--animation-values), background-color var(--animation-values);
+  }
+
+  .countdown-banner__close:hover {
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-10));
+    color: var(--color-foreground);
+  }
+
+  /* Narrow banners: the actions move under the text and the close button pins to the corner */
+  @container (width < 56rem) {
+    .countdown-banner__actions {
+      flex: 1 1 100%;
+    }
+
+    .countdown-banner__buttons {
+      margin-inline-start: auto;
+    }
+
+    .countdown-banner--closable .countdown-banner__content {
+      padding-inline-end: var(--padding-4xl);
+    }
+
+    .countdown-banner__close {
+      position: absolute;
+      inset-block-start: var(--padding-2xs);
+      inset-inline-end: var(--padding-2xs);
+      margin: 0;
+    }
+  }
+
+  /* Phones: tighter spacing so the timer and button share a row; the button takes the rest of it */
+  @container (width < 30rem) {
+    .countdown-banner__inner {
+      gap: var(--gap-md);
+      padding-inline: var(--padding-lg);
+    }
+
+    .countdown-banner__icon {
+      width: 2.5rem;
+    }
+
+    .countdown-banner__actions {
+      --countdown-segment-padding-inline: calc(var(--padding-xs) * 0.75);
+
+      gap: var(--gap-xs);
+    }
+
+    /* The button grows to fill the row, so its own side padding can stay small */
+    .countdown-banner__buttons {
+      --button-padding-inline: var(--padding-xs);
+
+      flex: 1 1 auto;
+    }
+
+    .countdown-banner__buttons > * {
+      flex: 1 1 auto;
+    }
+  }
+
+  /* Scroll reveal: the banner fades up as it comes into view */
+  .reveal-ready [data-reveal]:not([data-revealed]) > .countdown-banner {
+    opacity: 0;
+  }
+
+  .reveal-ready [data-reveal][data-revealed] > .countdown-banner {
+    animation: reveal-fade-up var(--reveal-duration) var(--reveal-ease) backwards;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.countdown_banner",
+  "disabled_on": {
+    "groups": ["header", "footer"]
+  },
+  "blocks": [
+    {
+      "type": "button"
+    }
+  ],
+  "max_blocks": 2,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.layout"
+    },
+    {
+      "type": "select",
+      "id": "section_width",
+      "label": "t:settings.width",
+      "options": [
+        {
+          "value": "page-width",
+          "label": "t:options.page"
+        },
+        {
+          "value": "full-width",
+          "label": "t:options.full"
+        }
+      ],
+      "default": "page-width"
+    },
+    {
+      "type": "range",
+      "id": "corner_radius",
+      "label": "t:settings.corner_radius",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 16,
+      "visible_if": "{{ section.settings.section_width == 'page-width' }}"
+    },
+    {
+      "type": "header",
+      "content": "t:content.colors"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "t:settings.background_color",
+      "default": "{{ settings.color_palette.foreground }}"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "t:settings.text_color",
+      "placeholder": "t:settings.default"
+    },
+    {
+      "type": "header",
+      "content": "t:names.countdown"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_countdown",
+      "label": "t:settings.show_countdown",
+      "info": "t:info.countdown_banner_countdown",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "discount_code",
+      "label": "t:settings.discount_code",
+      "info": "t:info.countdown_banner_code"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_close_button",
+      "label": "t:settings.show_close_button",
+      "info": "t:info.countdown_banner_close",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.countdown_banner",
+      "category": "t:categories.banners",
+      "blocks": {
+        "icon": {
+          "type": "icon",
+          "name": "t:names.icon",
+          "static": true,
+          "settings": {
+            "icon": "lightning_bolt",
+            "width": 20
+          }
+        },
+        "heading": {
+          "type": "text",
+          "name": "t:names.heading",
+          "static": true,
+          "settings": {
+            "text": "t:html_defaults.countdown_banner_heading",
+            "type_preset": "custom",
+            "font": "var(--font-heading--family)",
+            "font_size": "1.125rem",
+            "font_size_mobile": "1rem",
+            "line_height": "tight",
+            "wrap": "pretty"
+          }
+        },
+        "text": {
+          "type": "text",
+          "name": "t:names.text",
+          "static": true,
+          "settings": {
+            "text": "t:html_defaults.countdown_banner_text",
+            "type_preset": "custom",
+            "font": "var(--font-body--family)",
+            "font_size": "0.875rem",
+            "line_height": "normal",
+            "wrap": "pretty"
+          }
+        },
+        "countdown": {
+          "type": "countdown",
+          "name": "t:names.countdown",
+          "static": true,
+          "settings": {
+            "label": "",
+            "style": "segmented",
+            "size": "medium"
+          }
+        },
+        "button_1": {
+          "type": "button",
+          "settings": {
+            "label": "t:text_defaults.shop_now_button_label",
+            "link": "shopify://collections/all"
+          }
+        }
+      },
+      "block_order": ["button_1"]
+    }
+  ]
+}
+{% endschema %}
