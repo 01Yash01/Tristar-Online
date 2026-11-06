@@ -178,7 +178,13 @@
   }
 
   .blog-page__title {
+    --font-h2--size: var(--font-size--3xl);
+
     margin: 0;
+
+    @media screen and (min-width: 750px) {
+      --font-h2--size: var(--font-size--4xl);
+    }
   }
 
   .blog-page__tag-list {

@@ -104,7 +104,7 @@
       </a>
     {%- endif -%}
 
-    <{{ heading_tag }} class="blog-card__title {% if variant == 'featured' %}h2{% else %}h4{% endif %}">
+    <{{ heading_tag }} class="blog-card__title {% if variant == 'featured' %}h3{% else %}h4{% endif %}">
       <a href="{{ article.url }}">{{ article.title | escape }}</a>
     </{{ heading_tag }}>
 

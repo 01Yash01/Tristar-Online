@@ -1,7 +1,8 @@
 {% comment %}
   Section contract.
-  Article page: merchant-ordered blocks (category, title, details, image, content) in a centered
-  reading column, followed by tags and share links, previous/next posts, comments, and related posts.
+  Article page: merchant-ordered blocks (category, title, details, image) and the fixed article
+  content, in a centered reading column or, on desktop, in two columns with the blocks held in view
+  beside the text. Followed by tags and share links, previous/next posts, comments, and related posts.
   @example
   <!-- Rendered by templates/article.json for /blogs/<blog>/<article> -->
 {% endcomment %}
@@ -20,8 +21,18 @@
       assign article_width = '880px'
   endcase
 
+  assign two_columns = false
+  if section.settings.layout == 'two_columns'
+    assign two_columns = true
+    assign article_width = '100%'
+  endif
+
   assign article_url = request.origin | append: article.url
 %}
+
+{% capture intro_blocks %}
+  {% content_for 'blocks' %}
+{% endcapture %}
 
 <div
   class="section-background{% if section.settings.background_color != blank %} color-custom-{{ section.id }}{% endif %}"
@@ -38,6 +49,7 @@
     <div
       class="
         blog-article__column
+        {% if two_columns %}blog-article__column--two-columns{% endif %}
         layout-panel-flex
         layout-panel-flex--column
         section-content-wrapper
@@ -45,7 +57,14 @@
       "
       style="{% render 'layout-panel-style', settings: section.settings %}"
     >
-      {% content_for 'blocks' %}
+      {%- if two_columns -%}
+        <div class="blog-article__intro layout-panel-flex layout-panel-flex--column">
+          {{ intro_blocks }}
+        </div>
+      {%- else -%}
+        {{ intro_blocks }}
+      {%- endif -%}
+      {% content_for 'block', type: '_blog-post-content', id: 'blog-post-content' %}
     </div>
 
     {%- if section.settings.show_tags_share -%}
@@ -195,7 +214,7 @@
     {%- endif -%}
 
     {% if blog.comments_enabled? %}
-      <div class="blog-article__column blog-post-comments-container">
+      <div class="blog-article__column blog-post-comments-container{% if two_columns %} blog-post-comments-container--two-columns{% endif %}">
         <h2 class="h3">{{- 'blogs.article.comments_heading' | t: count: article.comments_count -}}</h2>
 
         <div class="blog-post-comments">
@@ -290,6 +309,9 @@
 
 {% stylesheet %}
   .blog-article {
+    --blog-article-columns: minmax(0, 5fr) minmax(0, 7fr);
+    --blog-article-column-gap: clamp(40px, 5vw, 80px);
+
     display: flex;
     flex-direction: column;
     gap: clamp(32px, 4vw, 48px);
@@ -299,6 +321,33 @@
     width: 100%;
     max-width: var(--blog-article-width, 880px);
     margin-inline: auto;
+  }
+
+  .blog-article__column--two-columns {
+    --blog-post-content-width: none;
+  }
+
+  .blog-article__intro {
+    height: auto;
+  }
+
+  /* The blocks stay in view beside the text, so a long article doesn't leave that side empty */
+  @media screen and (min-width: 1200px) {
+    .blog-article__column.blog-article__column--two-columns {
+      display: grid;
+      grid-template-columns: var(--blog-article-columns);
+      align-items: start;
+      column-gap: var(--blog-article-column-gap);
+    }
+
+    .blog-article__intro {
+      position: sticky;
+      top: calc(var(--sticky-header-offset, 0px) + var(--padding-2xl));
+    }
+
+    #header-group:has(> .header-section > #header-component[data-sticky-state='active']) ~ * .blog-article__intro {
+      --sticky-header-offset: var(--header-height);
+    }
   }
 
   /* Tags and share */
@@ -473,6 +522,29 @@
     max-width: var(--normal-content-width);
   }
 
+  .blog-post-comments-container--two-columns {
+    max-width: none;
+
+    .blog-post-comments__form-container {
+      max-width: none;
+    }
+
+    @media screen and (min-width: 1200px) {
+      display: grid;
+      grid-template-columns: var(--blog-article-columns);
+      align-items: start;
+      column-gap: var(--blog-article-column-gap);
+
+      > form {
+        grid-area: 1 / 2 / span 2;
+      }
+
+      .blog-post-comments__form-container {
+        margin-block-start: 0;
+      }
+    }
+  }
+
   .blog-post-comments {
     display: flex;
     flex-direction: column;
@@ -554,6 +626,22 @@
     },
     {
       "type": "select",
+      "id": "layout",
+      "label": "t:settings.layout",
+      "options": [
+        {
+          "value": "center",
+          "label": "t:options.center"
+        },
+        {
+          "value": "two_columns",
+          "label": "t:options.two_columns"
+        }
+      ],
+      "default": "center"
+    },
+    {
+      "type": "select",
       "id": "content_width",
       "label": "t:settings.content_width",
       "options": [
@@ -570,7 +658,8 @@
           "label": "t:options.wide"
         }
       ],
-      "default": "normal"
+      "default": "normal",
+      "visible_if": "{{ section.settings.layout == 'center' }}"
     },
     {
       "type": "range",

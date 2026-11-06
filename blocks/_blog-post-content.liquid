@@ -15,10 +15,24 @@
 </div>
 
 {% stylesheet %}
+  /* Articles are often pasted in with large heading tags, so they're sized below the article title */
   .blog-post-content {
-    max-width: var(--normal-content-width);
+    --font-heading--spacing: 0.5em;
+    --font-h1--size: var(--font-size--2xl);
+    --font-h2--size: var(--font-size--2xl);
+    --font-h3--size: var(--font-size--xl);
+    --font-h4--size: var(--font-size--lg);
+    --font-h5--size: var(--font-size--md);
+    --font-h6--size: var(--font-size--md);
+    --font-h1--line-height: var(--line-height--heading-normal);
+    --font-h2--line-height: var(--line-height--heading-normal);
+    --font-h3--line-height: var(--line-height--heading-normal);
+
+    max-width: var(--blog-post-content-width, var(--normal-content-width));
     margin: 0 auto;
     color: var(--color, inherit);
+    font-size: var(--font-size--md);
+    line-height: var(--line-height--body-loose);
   }
 
   .blog-post-content a {
