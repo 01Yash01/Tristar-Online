@@ -1,6 +1,14 @@
 
 
-{% assign block_settings = block.settings %}
+{% liquid
+  assign block_settings = block.settings
+
+  # Off only when the merchant unticks it, so videos saved before the setting existed keep their controls
+  assign disable_controls = false
+  if block_settings.show_video_controls == false
+    assign disable_controls = true
+  endif
+%}
 
 {% capture video_style %}
   {%  render 'spacing-style', settings: block_settings %}
@@ -15,6 +23,7 @@
     video_class: 'spacing-style size-style border-style',
     video_loop: block_settings.video_loop,
     video_style: video_style,
+    disable_controls: disable_controls,
     video_preview_image: block_settings.video.preview_image,
     additional_attributes: block.shopify_attributes
   %}
@@ -34,6 +43,11 @@
 {% stylesheet %}
   .placeholder-video {
     aspect-ratio: 5 / 3;
+  }
+
+  /* Without controls, an autoplaying video's pause button also shows on keyboard focus, not only on hover */
+  deferred-media[autoplay] > .video-interaction-hint:focus-visible {
+    opacity: 1;
   }
 {% endstylesheet %}
 
@@ -84,6 +98,14 @@
       "id": "video_loop",
       "label": "t:settings.video_loop",
       "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_video_controls",
+      "label": "t:settings.show_video_controls",
+      "info": "t:info.show_video_controls",
+      "default": true,
+      "visible_if": "{{ block.settings.source == 'uploaded' }}"
     },
     {
       "type": "image_picker",

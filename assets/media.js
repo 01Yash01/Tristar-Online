@@ -35,6 +35,21 @@ class DeferredMedia extends Component {
     // itself, so on a slow connection the dialog can already be open by the time this upgrade runs
     // and the listener above would wait for an event that has been and gone.
     if (dialogComponent && this.closest('dialog')?.open) this.#playOnDialogOpen();
+
+    // An autoplaying video without native controls starts on its own, so no click has revealed its play/pause
+    // button. Follow the video's own state: the first click then pauses it, and a blocked autoplay shows play.
+    const autoplayVideo = this.hasAttribute('autoplay') && this.refs.toggleMediaButton ? this.#presentedVideo() : null;
+
+    if (autoplayVideo) {
+      const syncPlayPauseHint = () => {
+        this.isPlaying = !autoplayVideo.paused;
+        this.updatePlayPauseHint(this.isPlaying);
+      };
+
+      autoplayVideo.addEventListener('play', syncPlayPauseHint, { signal });
+      autoplayVideo.addEventListener('pause', syncPlayPauseHint, { signal });
+      syncPlayPauseHint();
+    }
   }
 
   disconnectedCallback() {
