@@ -1,0 +1,174 @@
+{%- doc -%}
+  Renders the current collection's own image for a collection page banner. Product images are never used
+  as a fallback. Small images, such as brand logos, keep their natural size on a white card so they stay
+  sharp. When the collection has no image nothing renders, so the banner's text can use the row.
+
+  @example
+  {% content_for 'block', type: 'collection-banner-image', id: 'collection-banner-image' %}
+{%- enddoc -%}
+
+{%- liquid
+  assign block_settings = block.settings
+  assign banner_image = closest.collection.image
+
+  # Below this width an image is treated as a logo: shown at its own size instead of being stretched
+  assign logo_max_width = 600
+  assign is_logo = false
+  if banner_image != blank and banner_image.width < logo_max_width
+    assign is_logo = true
+  endif
+
+  # The banner usually opens the page, so its image is the first thing shoppers see
+  assign image_loading = 'lazy'
+  assign image_priority = 'auto'
+  if section.index == 1
+    assign image_loading = 'eager'
+    assign image_priority = 'high'
+  endif
+
+  if banner_image != blank
+    assign display_width = block_settings.max_height | times: banner_image.aspect_ratio | ceil
+    assign image_sizes = '(min-width: 750px) min(45vw, ' | append: display_width | append: 'px), 100vw'
+  endif
+-%}
+
+{%- if banner_image != blank -%}
+  <div
+    class="collection-banner-image{% if is_logo %} collection-banner-image--logo{% endif %}"
+    style="--collection-banner-image-height: {{ block_settings.max_height }}px; --collection-banner-image-radius: {{ block_settings.border_radius }}px;"
+    {{ block.shopify_attributes }}
+  >
+    {%- if is_logo -%}
+      {{
+        banner_image
+        | image_url: width: banner_image.width
+        | image_tag:
+          width: banner_image.width,
+          height: banner_image.height,
+          loading: image_loading,
+          fetchpriority: image_priority,
+          alt: banner_image.alt,
+          class: 'collection-banner-image__img'
+      }}
+    {%- else -%}
+      {{
+        banner_image
+        | image_url: width: 1600
+        | image_tag:
+          widths: '400, 600, 800, 1000, 1200, 1600',
+          sizes: image_sizes,
+          loading: image_loading,
+          fetchpriority: image_priority,
+          alt: banner_image.alt,
+          class: 'collection-banner-image__img'
+      }}
+    {%- endif -%}
+  </div>
+{%- elsif request.design_mode -%}
+  <div
+    class="collection-banner-image collection-banner-image--empty"
+    style="--collection-banner-image-height: {{ block_settings.max_height }}px; --collection-banner-image-radius: {{ block_settings.border_radius }}px;"
+    {{ block.shopify_attributes }}
+  >
+    {{ 'collection-1' | placeholder_svg_tag: 'collection-banner-image__placeholder' }}
+  </div>
+{%- endif -%}
+
+{% stylesheet %}
+  .collection-banner-image {
+    display: flex;
+    flex: 0 1 auto;
+    justify-content: center;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .collection-banner-image__img {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    height: auto;
+    max-height: var(--collection-banner-image-height);
+    border-radius: var(--collection-banner-image-radius);
+  }
+
+  /* Logos sit on a white card, at their own size or smaller */
+  .collection-banner-image--logo {
+    padding: var(--padding-xl);
+    border-radius: var(--collection-banner-image-radius);
+    background-color: var(--color-white);
+  }
+
+  .collection-banner-image--logo .collection-banner-image__img {
+    max-height: calc(var(--collection-banner-image-height) - 2 * var(--padding-xl));
+    border-radius: 0;
+  }
+
+  /* Phones: a smaller image, so the products start sooner */
+  @media screen and (max-width: 749px) {
+    .collection-banner-image__img {
+      max-height: min(var(--collection-banner-image-height), 160px);
+    }
+
+    .collection-banner-image--logo {
+      padding: var(--padding-lg);
+    }
+
+    .collection-banner-image--logo .collection-banner-image__img {
+      max-height: calc(min(var(--collection-banner-image-height), 160px) - 2 * var(--padding-lg));
+    }
+  }
+
+  /* Theme editor only: a collection without an image */
+  .collection-banner-image--empty {
+    width: min(100%, 20rem);
+    height: var(--collection-banner-image-height);
+    overflow: hidden;
+    border-radius: var(--collection-banner-image-radius);
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-5));
+  }
+
+  .collection-banner-image__placeholder {
+    width: 100%;
+    height: 100%;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.collection_image",
+  "tag": null,
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "t:content.collection_banner_image"
+    },
+    {
+      "type": "range",
+      "id": "max_height",
+      "label": "t:settings.height",
+      "min": 120,
+      "max": 480,
+      "step": 10,
+      "unit": "px",
+      "default": 280
+    },
+    {
+      "type": "range",
+      "id": "border_radius",
+      "label": "t:settings.corner_radius",
+      "min": 0,
+      "max": 40,
+      "step": 1,
+      "unit": "px",
+      "default": 16
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.collection_image",
+      "category": "t:categories.collection"
+    }
+  ]
+}
+{% endschema %}
