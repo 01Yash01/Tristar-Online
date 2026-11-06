@@ -1,0 +1,52 @@
+{%- doc -%}
+  Renders the account link in the menu drawer, as the row above the menu's last link. Phones reach
+  the account here, in place of the header icon.
+
+  @param {object} linklist - The linklist the drawer is rendering
+  @param {boolean} is_last - Whether the current link is the last one in the menu
+  @param {object} [block] - The block that provides the drawer settings
+
+  @example
+  {% render 'header-drawer-account', linklist: linklist, is_last: forloop.last, block: block %}
+{%- enddoc -%}
+
+{%- if is_last and shop.customer_accounts_enabled -%}
+  {%- liquid
+    assign item_class = 'menu-drawer__list-item'
+    if linklist.levels < 3
+      assign item_class = 'menu-drawer__list-item--flat'
+      if block.settings.drawer_accordion
+        assign item_class = 'menu-drawer__list-item--deep'
+      endif
+      if block.settings.drawer_dividers
+        assign item_class = item_class | append: ' menu-drawer__list-item--divider'
+      endif
+    endif
+  -%}
+  <li
+    class="menu-drawer__list-item--account {{ item_class }}"
+    style="--menu-drawer-animation-index: {{ linklist.links.size }};"
+  >
+    <a
+      href="{{ routes.account_url }}"
+      class="menu-drawer__menu-item menu-drawer__menu-item--mainlist menu-drawer__animated-element"
+    >
+      <span class="menu-drawer__menu-item-text wrap-text">{{ 'content.account_title' | t }}</span>
+    </a>
+  </li>
+{%- endif -%}
+
+{% stylesheet %}
+  /* The header icon only steps aside when this row exists, so phones never lose the way to the account */
+  @media screen and (max-width: 749px) {
+    #header-component:has(.menu-drawer__list-item--account) .account-button {
+      display: none;
+    }
+  }
+
+  @media screen and (min-width: 750px) {
+    .menu-drawer__menu > li.menu-drawer__list-item--account {
+      display: none;
+    }
+  }
+{% endstylesheet %}
