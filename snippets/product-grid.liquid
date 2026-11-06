@@ -34,20 +34,20 @@
         {% assign row_cycle = 3 %}
         {% assign product_cycle = row_cycle | times: 2 %}
         {% assign right_large_start_col = 3 %}
-        .product-grid--{{ section.id }}:not([product-grid-view='zoom-out']):is(.product-grid--organic) .product-grid__item:nth-of-type({{ product_cycle }}n + 1) {
+        .product-grid--{{ section.id }}:not([product-grid-view='zoom-out'], [product-grid-view='list']):is(.product-grid--organic) .product-grid__item:nth-of-type({{ product_cycle }}n + 1) {
           grid-column: 1 / span {{ large_span }};
         }
 
-        .product-grid--{{ section.id }}:not([product-grid-view='zoom-out']):is(.product-grid--organic) .product-grid__item:nth-of-type({{ product_cycle }}n + 2),
-        .product-grid--{{ section.id }}:not([product-grid-view='zoom-out']):is(.product-grid--organic) .product-grid__item:nth-of-type({{ product_cycle }}n + 5) {
+        .product-grid--{{ section.id }}:not([product-grid-view='zoom-out'], [product-grid-view='list']):is(.product-grid--organic) .product-grid__item:nth-of-type({{ product_cycle }}n + 2),
+        .product-grid--{{ section.id }}:not([product-grid-view='zoom-out'], [product-grid-view='list']):is(.product-grid--organic) .product-grid__item:nth-of-type({{ product_cycle }}n + 5) {
           align-self: end;
         }
 
-        .product-grid--{{ section.id }}:not([product-grid-view='zoom-out']):is(.product-grid--organic) .product-grid__item:nth-of-type({{ product_cycle }}n + {{ product_cycle }}) {
+        .product-grid--{{ section.id }}:not([product-grid-view='zoom-out'], [product-grid-view='list']):is(.product-grid--organic) .product-grid__item:nth-of-type({{ product_cycle }}n + {{ product_cycle }}) {
           grid-column: {{ right_large_start_col }} / span {{ large_span }};
         }
 
-        .product-grid--{{ section.id }}:not([product-grid-view='zoom-out']):is(.product-grid--organic) {
+        .product-grid--{{ section.id }}:not([product-grid-view='zoom-out'], [product-grid-view='list']):is(.product-grid--organic) {
           --product-grid-columns-desktop: repeat(4, 1fr);
         }
     {% endcase %}
@@ -72,6 +72,11 @@
       padding-inline-end: var(--zoom-out-padding-inline-end, 0);
       padding-block-start: var(--zoom-out-padding-block-start, 0);
       padding-block-end: var(--zoom-out-padding-block-end, 0);
+    }
+
+    /* List view: one product per row */
+    .product-grid--{{ section.id }}[product-grid-view='list'] {
+      --product-grid-columns-desktop: minmax(0, 1fr);
     }
   }
 {% endstyle %}
@@ -166,6 +171,26 @@
         {{ children }}
       </ul>
       {% if enable_infinite_scroll != false %}
+        {%- if paginate.next -%}
+          {%- comment -%}
+            Placeholder cards hold the space under the grid while more pages remain, so the footer never shows
+            and then jumps away. paginated-list.js removes them once the last page is in.
+          {%- endcomment -%}
+          <div
+            class="product-grid-loading product-grid--{{ section.id }} product-grid--{{ section.settings.layout_type }}"
+            ref="loadingRow"
+            aria-hidden="true"
+            style="--product-grid-loading-offset-mobile: {{ section.settings.columns_gap_vertical | at_most: 12 }}px; --product-grid-loading-offset-desktop: {{ section.settings.columns_gap_vertical }}px;"
+          >
+            {%- for i in (1..8) -%}
+              <div class="product-grid-loading__card">
+                <div class="product-grid-loading__media"></div>
+                <div class="product-grid-loading__line"></div>
+                <div class="product-grid-loading__line product-grid-loading__line--short"></div>
+              </div>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
         <span ref="viewMoreNext"></span>
       {% else %}
         {% render 'pagination-controls', paginate: paginate %}
@@ -186,7 +211,8 @@
     }
   }
 
-  [product-grid-view='default'] {
+  [product-grid-view='default'],
+  [product-grid-view='list'] {
     --product-grid-gap: 16px;
     --padding-block-start: 24px;
     --padding-block-end: 24px;
@@ -217,12 +243,112 @@
     margin: 0;
   }
 
+  /* Placeholder cards under the grid while more pages load. They use the grid's own columns, and only the
+     first row shows: further rows collapse to nothing, whatever the number of columns. */
+  .product-grid-loading {
+    --product-grid-gap: var(--product-grid-gap-mobile);
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    grid-auto-rows: 0;
+    gap: var(--product-grid-gap);
+    row-gap: 0;
+    overflow: hidden;
+    padding-block-start: var(--product-grid-loading-offset-mobile);
+
+    @media screen and (min-width: 750px) {
+      --product-grid-gap: var(--product-grid-gap-desktop);
+
+      grid-template-columns: var(--product-grid-columns-desktop);
+      padding-block-start: var(--product-grid-loading-offset-desktop);
+    }
+  }
+
+  /* Only the standard view has a card shape to stand in for */
+  .product-grid:not([product-grid-view='default']) ~ .product-grid-loading {
+    display: none;
+  }
+
+  @media screen and (max-width: 749px) {
+    .product-grid-mobile--large ~ .product-grid-loading {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .product-grid-loading__card {
+    display: grid;
+    align-content: start;
+    gap: var(--padding-sm);
+    animation: product-grid-loading-pulse 1.4s ease-in-out infinite alternate;
+  }
+
+  .product-grid-loading__media {
+    aspect-ratio: 1;
+    border-radius: var(--product-corner-radius);
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-5));
+  }
+
+  .product-grid-loading__line {
+    width: 80%;
+    height: 0.75em;
+    border-radius: var(--style-border-radius-xs, 4px);
+    background-color: rgb(var(--color-foreground-rgb) / var(--opacity-10));
+  }
+
+  .product-grid-loading__line--short {
+    width: 45%;
+  }
+
+  @keyframes product-grid-loading-pulse {
+    to {
+      opacity: 0.45;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .product-grid-loading__card {
+      animation: none;
+    }
+  }
+
   .product-grid__item {
     border: var(--product-card-border-width) solid rgb(var(--color-border-rgb) / var(--product-card-border-opacity));
   }
 
-  [product-grid-view='default'] .product-grid__item {
+  :is([product-grid-view='default'], [product-grid-view='list']) .product-grid__item {
     padding-block: 0;
+  }
+
+  /* List view: one product per row. The image area becomes the row's white card, so the row keeps the image's
+     corner radius, while the image itself keeps a column of its own and the card's other blocks stack beside it.
+     The size comes from the grid's width, so the column and the row agree. */
+  @media screen and (min-width: 750px) {
+    [product-grid-view='list'] .product-card__content.product-grid__card {
+      --list-media-size: clamp(9rem, 16cqi, 15rem);
+
+      justify-content: center;
+      min-height: var(--list-media-size);
+      padding-inline: calc(var(--list-media-size) + var(--gap-2xl)) var(--padding-6xl);
+      isolation: isolate;
+    }
+
+    /* Behind the card's other blocks, inside the card's own layer */
+    [product-grid-view='list'] .product-card__content.product-grid__card > .card-gallery {
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background-color: var(--color-white);
+    }
+
+    [product-grid-view='list'] .product-grid__card .card-gallery :is(slideshow-component, .card-gallery__hover-media) {
+      width: var(--list-media-size);
+    }
+
+    [product-grid-view='list'] .product-grid__card .card-gallery__hover-media {
+      inset-inline-end: auto;
+    }
+  }
   }
 
   .product-grid--organic[product-grid-view='default'] .product-grid__item {

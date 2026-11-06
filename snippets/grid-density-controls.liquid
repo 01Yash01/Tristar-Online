@@ -66,14 +66,14 @@
         <input
           type="radio"
           name="grid"
-          value="zoom-out"
+          value="list"
           class="column-options__option-input"
-          aria-label="{{ 'content.grid_view.zoom_out' | t }}"
+          aria-label="{{ 'content.grid_view.list_view' | t }}"
           on:change="results-list/updateLayout"
           data-skip-node-update
         >
-        <span class="column-picker column-picker--zoom-out">
-          {{- 'icon-grid-dense.svg' | inline_asset_content -}}
+        <span class="column-picker column-picker--list">
+          {{- 'icon-grid-list.svg' | inline_asset_content -}}
         </span>
       </label>
     {% endif %}

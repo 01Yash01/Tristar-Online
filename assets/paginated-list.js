@@ -3,7 +3,7 @@ import { sectionRenderer } from '@theme/section-renderer';
 import { requestIdleCallback, viewTransition, yieldToMainThread } from '@theme/utilities';
 import { PaginatedListAspectRatioHelper } from '@theme/paginated-list-aspect-ratio';
 import { StandardEvents } from '@shopify/events';
-import { getScrollTop, scrollTo } from '@theme/scroll-container';
+import { getScrollTop, scrollTo, getIntersectionRoot, scrollContainerMediaQuery } from '@theme/scroll-container';
 
 /**
  * A custom element that renders a paginated list of items.
@@ -13,6 +13,7 @@ import { getScrollTop, scrollTo } from '@theme/scroll-container';
  * @property {HTMLSpanElement} [viewMorePrevious] - The view more previous button.
  * @property {HTMLSpanElement} [viewMoreNext] - The view more next button.
  * @property {HTMLElement[]} [cards] - The cards elements.
+ * @property {HTMLElement} [loadingRow] - Placeholder cards shown under the grid while more pages remain.
  *
  * @extends Component<Refs>
  */
@@ -24,6 +25,12 @@ export default class PaginatedList extends Component {
 
   /** @type {IntersectionObserver | undefined} */
   infinityScrollObserver;
+
+  /** @type {AbortController | undefined} */
+  #abortController;
+
+  /** Set while the next page is being added, so overlapping triggers can't add the same page twice. */
+  #isRenderingNext = false;
 
   /** @type {((value: void) => void) | null} */
   #resolveNextPagePromise = null;
@@ -52,12 +59,20 @@ export default class PaginatedList extends Component {
     // Listen for filter updates to clear cached pages
     document.addEventListener(StandardEvents.searchUpdate, this.#handleFilterUpdate);
     document.addEventListener(StandardEvents.collectionUpdate, this.#handleFilterUpdate);
+
+    // The page's scroll container changes at the desktop breakpoint; the observer's root has to follow it
+    this.#abortController = new AbortController();
+    scrollContainerMediaQuery.addEventListener('change', this.#handleScrollContainerChange, {
+      signal: this.#abortController.signal,
+    });
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
+    this.#abortController?.abort();
     if (this.infinityScrollObserver) {
       this.infinityScrollObserver.disconnect();
+      this.infinityScrollObserver = undefined;
     }
     // Remove the filter update listeners
     document.removeEventListener(StandardEvents.searchUpdate, this.#handleFilterUpdate);
@@ -91,7 +106,11 @@ export default class PaginatedList extends Component {
           }
         },
         {
-          rootMargin: '100px',
+          // On desktop the page scrolls inside .page-wrapper, so it must be the root for the margin to apply.
+          // The bottom margin adds the next page about a screen and a half before the grid ends, so new
+          // products are in place before the footer can come into view.
+          root: getIntersectionRoot(),
+          rootMargin: '100px 0px 150% 0px',
         }
       );
     }
@@ -168,13 +187,32 @@ export default class PaginatedList extends Component {
   }
 
   async #renderNextPage() {
+    if (this.#isRenderingNext) return;
+
+    this.#isRenderingNext = true;
+    let appended = false;
+
+    try {
+      appended = await this.#appendNextPage();
+    } finally {
+      this.#isRenderingNext = false;
+    }
+
+    if (appended) this.#recheckViewMoreNext();
+  }
+
+  /**
+   * Adds the next page's cards to the grid.
+   * @returns {Promise<boolean>} Whether a page was added
+   */
+  async #appendNextPage() {
     const { grid } = this.refs;
 
-    if (!grid) return;
+    if (!grid) return false;
 
     const nextPage = this.#getPage('next');
 
-    if (!nextPage || !this.#shouldUsePage(nextPage)) return;
+    if (!nextPage || !this.#shouldUsePage(nextPage)) return false;
     let nextPageItemElements = this.#getGridForPage(nextPage.page);
 
     if (!nextPageItemElements) {
@@ -187,12 +225,17 @@ export default class PaginatedList extends Component {
 
       await promise;
       nextPageItemElements = this.#getGridForPage(nextPage.page);
-      if (!nextPageItemElements) return;
+      if (!nextPageItemElements) return false;
     }
 
     grid.append(...nextPageItemElements);
 
     this.#aspectRatioHelper.processNewElements();
+
+    // Once the last page is in there is nothing left to load, so the placeholder row goes
+    if (nextPage.page >= Number(grid.dataset.lastPage)) {
+      this.refs.loadingRow?.remove();
+    }
 
     await yieldToMainThread();
 
@@ -201,7 +244,30 @@ export default class PaginatedList extends Component {
     requestIdleCallback(() => {
       this.#fetchPage('next');
     });
+
+    return true;
   }
+
+  /**
+   * Looks at the end marker again after a page was added. A short page can leave the marker inside the
+   * observer's margin, where the observer won't report it again on its own and the next page would never load.
+   */
+  #recheckViewMoreNext() {
+    const { viewMoreNext } = this.refs;
+    if (!viewMoreNext || !this.infinityScrollObserver) return;
+
+    this.infinityScrollObserver.unobserve(viewMoreNext);
+    this.infinityScrollObserver.observe(viewMoreNext);
+  }
+
+  /**
+   * Rebuilds the observer when the page's scroll container changes at the desktop breakpoint.
+   */
+  #handleScrollContainerChange = () => {
+    this.infinityScrollObserver?.disconnect();
+    this.infinityScrollObserver = undefined;
+    this.#observeViewMore();
+  };
 
   async #renderPreviousPage() {
     const { grid } = this.refs;
