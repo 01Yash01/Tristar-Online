@@ -152,11 +152,344 @@
     color: var(--color-background);
   }
 
+  /* Tabs only belong to the Card drawer style */
+  .details__tab {
+    display: none;
+  }
+
+  /* Card drawer: each question is typed on an index card filed in a drawer, its subject on a staggered tab.
+     Opening a card lifts it out of the drawer to show the answer on ruled lines; only one card is out at a
+     time (the rows share a native details group). Paper, ink and metal are the drawer's own materials, so
+     the cards stay readable whatever the section colors are. */
+  .accordion--drawer {
+    --faq-drawer-font: ui-monospace, 'SF Mono', 'Cascadia Mono', 'JetBrains Mono', Consolas, 'Liberation Mono', Menlo,
+      monospace;
+    --faq-drawer-ink: #2a2925;
+    --faq-drawer-ink-muted: #6f6b62;
+    --faq-drawer-paper: #f3f0e8;
+    --faq-drawer-paper-edge: #e6e1d5;
+    --faq-drawer-rule: rgb(42 41 37 / 0.14);
+    --faq-drawer-metal-top: #f5f5f3;
+    --faq-drawer-metal-bottom: #e2e2de;
+    --faq-drawer-well-top: #c3c2bd;
+    --faq-drawer-well-bottom: #d4d3cf;
+    --faq-drawer-edge: rgb(0 0 0 / 0.1);
+    --faq-drawer-shine: rgb(255 255 255 / 0.7);
+    --faq-drawer-line: 26px;
+    --faq-drawer-gutter: clamp(14px, 2.2vw, 20px);
+    --faq-drawer-number: 4.5ch;
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-xl, 24px);
+    counter-reset: faq-card;
+  }
+
+  .accordion--drawer-graphite {
+    --faq-drawer-metal-top: #3a3c41;
+    --faq-drawer-metal-bottom: #26282c;
+    --faq-drawer-well-top: #15171a;
+    --faq-drawer-well-bottom: #202226;
+    --faq-drawer-edge: rgb(0 0 0 / 0.45);
+    --faq-drawer-shine: rgb(255 255 255 / 0.12);
+  }
+
+  .faq-drawer {
+    padding: 10px 10px 0;
+    border: 1px solid var(--faq-drawer-edge);
+    border-radius: 18px;
+    background: linear-gradient(180deg, var(--faq-drawer-metal-top), var(--faq-drawer-metal-bottom));
+    box-shadow: inset 0 1px 0 var(--faq-drawer-shine), 0 32px 48px -36px rgb(0 0 0 / 0.5);
+  }
+
+  .faq-drawer__well {
+    display: flex;
+    flex-direction: column;
+    padding: 30px var(--faq-drawer-gutter) 20px;
+    border-radius: 12px 12px 0 0;
+    background: linear-gradient(180deg, var(--faq-drawer-well-top), var(--faq-drawer-well-bottom));
+    box-shadow: inset 0 3px 9px rgb(0 0 0 / 0.24), inset 0 -1px 0 rgb(255 255 255 / 0.25);
+  }
+
+  /* Cards sit close together; each card's tab rises over the card in front of it */
+  .accordion--drawer accordion-custom {
+    display: block;
+    position: relative;
+    counter-increment: faq-card;
+  }
+
+  .accordion--drawer accordion-custom + accordion-custom {
+    margin-block-start: 8px;
+  }
+
+  .accordion--drawer .details {
+    position: relative;
+    border-radius: 4px;
+    background: linear-gradient(180deg, var(--faq-drawer-paper), var(--faq-drawer-paper-edge));
+    color: var(--faq-drawer-ink);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.85), 0 1px 1px rgb(0 0 0 / 0.1), 0 12px 18px -14px rgb(0 0 0 / 0.55);
+    transition: transform 320ms var(--ease-out-cubic, ease-out), box-shadow 320ms var(--ease-out-cubic, ease-out);
+  }
+
+  @media (hover: hover) {
+    .accordion--drawer .details:not([open]):hover {
+      transform: translateY(-3px);
+    }
+  }
+
+  /* The card being read is lifted out of the drawer, over its neighbours */
+  .accordion--drawer .details[open] {
+    z-index: 2;
+    transform: translateY(-8px);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.85), 0 2px 3px rgb(0 0 0 / 0.1), 0 28px 34px -22px rgb(0 0 0 / 0.6);
+  }
+
+  .accordion--drawer .details__tab {
+    display: block;
+    position: absolute;
+    inset-block-end: 100%;
+    inset-inline-start: var(--faq-drawer-tab-start, 4%);
+    max-width: 40%;
+    padding: 3px 10px 2px;
+    overflow: hidden;
+    border-radius: 4px 4px 0 0;
+    background: linear-gradient(180deg, #faf8f3, var(--faq-drawer-paper));
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.9), 0 -1px 2px rgb(0 0 0 / 0.1);
+    color: var(--faq-drawer-ink-muted);
+    font-family: var(--faq-drawer-font);
+    font-size: 10.5px;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .accordion--drawer accordion-custom:nth-child(3n + 2) {
+    --faq-drawer-tab-start: 38%;
+  }
+
+  .accordion--drawer accordion-custom:nth-child(3n + 3) {
+    --faq-drawer-tab-start: 70%;
+  }
+
+  .accordion--drawer .details__header {
+    column-gap: 18px;
+    min-height: 56px;
+    padding: 14px var(--faq-drawer-gutter);
+    border-radius: 4px;
+    color: var(--faq-drawer-ink);
+    font-family: var(--faq-drawer-font);
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.45;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+
+  .accordion--drawer .details__header::before {
+    content: 'Q.' counter(faq-card, decimal-leading-zero);
+    flex: 0 0 var(--faq-drawer-number);
+    color: var(--faq-drawer-ink-muted);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .accordion--drawer .details__header:focus-visible {
+    outline: 2px solid var(--faq-drawer-ink);
+    outline-offset: -4px;
+  }
+
+  /* A thin typewriter plus that turns into a minus when the card is out */
+  .accordion--drawer .details__header .icon-caret {
+    display: none;
+  }
+
+  .accordion--drawer .details__header .icon-plus,
+  .accordion--drawer details[open] > .details__header .icon-plus {
+    display: inline-flex;
+    flex: 0 0 auto;
+    width: 16px;
+    height: 16px;
+    margin-inline-start: auto;
+    border-radius: 0;
+    background: none;
+    color: var(--faq-drawer-ink);
+  }
+
+  .accordion--drawer .details__header .icon-plus > svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  /* The answer sits under a double rule, typed on ruled lines in line with the question */
+  .accordion--drawer .details-content {
+    margin-inline: var(--faq-drawer-gutter);
+    padding-block: 12px 14px;
+    padding-inline-start: calc(var(--faq-drawer-number) + 18px);
+    border-block-start: 3px double var(--faq-drawer-rule);
+    color: var(--faq-drawer-ink);
+    font-family: var(--faq-drawer-font);
+  }
+
+  .accordion--drawer .details-content .text-block {
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0,
+      transparent calc(var(--faq-drawer-line) - 1px),
+      var(--faq-drawer-rule) calc(var(--faq-drawer-line) - 1px),
+      var(--faq-drawer-rule) var(--faq-drawer-line)
+    );
+  }
+
+  .accordion--drawer .details-content .text-block > * {
+    margin-block: 0;
+    color: var(--faq-drawer-ink);
+    font-family: var(--faq-drawer-font);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: var(--faq-drawer-line);
+    letter-spacing: 0;
+  }
+
+  .accordion--drawer .details-content[data-filed]::after {
+    content: attr(data-filed) ' \00B7  Q.' counter(faq-card, decimal-leading-zero);
+    display: block;
+    margin-block-start: 6px;
+    color: var(--faq-drawer-ink-muted);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    text-align: end;
+  }
+
+  /* The drawer front: a label plate and a scooped handle */
+  .faq-drawer__front {
+    display: grid;
+    justify-items: center;
+    gap: 10px;
+    margin-inline: -10px;
+    padding: 16px 16px 18px;
+    border-block-start: 1px solid var(--faq-drawer-edge);
+    border-radius: 0 0 17px 17px;
+    background: linear-gradient(180deg, var(--faq-drawer-metal-top), var(--faq-drawer-metal-bottom));
+    box-shadow: inset 0 1px 0 var(--faq-drawer-shine);
+  }
+
+  .faq-drawer__label {
+    max-width: 100%;
+    padding: 5px 28px;
+    overflow: hidden;
+    border: 1px solid rgb(0 0 0 / 0.3);
+    border-radius: 3px;
+    background: var(--faq-drawer-paper);
+    box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.2), 0 1px 0 var(--faq-drawer-shine);
+    color: var(--faq-drawer-ink);
+    font-family: var(--faq-drawer-font);
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 1.4;
+    letter-spacing: 0.14em;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  .faq-drawer__handle {
+    width: 108px;
+    height: 22px;
+    border-radius: 0 0 54px 54px / 0 0 22px 22px;
+    background: linear-gradient(180deg, rgb(0 0 0 / 0.16), rgb(0 0 0 / 0.04));
+    box-shadow: inset 0 4px 6px rgb(0 0 0 / 0.28), 0 1px 0 var(--faq-drawer-shine);
+  }
+
+  .faq-drawer__footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 24px;
+    padding-inline: 4px;
+  }
+
+  .faq-drawer__note {
+    min-width: 0;
+    margin: 0;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
+  }
+
+  .faq-drawer__ask {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding-inline: 22px;
+    border-radius: 8px;
+    background-color: var(--color-foreground);
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.18), 0 2px 0 rgb(0 0 0 / 0.6), 0 10px 18px -10px rgb(0 0 0 / 0.6);
+    color: var(--color-background);
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 160ms var(--ease-out-cubic, ease-out);
+  }
+
+  .faq-drawer__ask:hover {
+    transform: translateY(-1px);
+  }
+
+  .faq-drawer__ask:active {
+    transform: translateY(1px);
+  }
+
+  /* Card font "Site fonts": questions in the theme's Subheading font, everything else in its Body font */
+  .accordion--drawer-font-site {
+    --faq-drawer-font: var(--font-body--family);
+  }
+
+  .accordion--drawer-font-site .details__header {
+    font-family: var(--font-subheading--family);
+    font-style: var(--font-subheading--style);
+    font-weight: var(--font-subheading--weight);
+  }
+
+  @media screen and (max-width: 749px) {
+    .accordion--drawer {
+      --faq-drawer-number: 4ch;
+    }
+
+    .faq-drawer__well {
+      padding-block-start: 26px;
+    }
+
+    .accordion--drawer .details__header {
+      column-gap: 12px;
+      font-size: 14px;
+    }
+
+    .accordion--drawer .details__tab {
+      max-width: 46%;
+      font-size: 9.5px;
+    }
+
+    /* On narrow cards the answer uses the card's full width */
+    .accordion--drawer .details-content {
+      padding-inline-start: 0;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .accordion--cards .details,
     .accordion--numbered .details__header::before,
-    .accordion--plus_circle .details__header .icon-plus {
+    .accordion--plus_circle .details__header .icon-plus,
+    .accordion--drawer .details,
+    .faq-drawer__ask {
       transition: none;
+    }
+
+    .accordion--drawer .details:not([open]):hover,
+    .accordion--drawer .details[open] {
+      transform: none;
     }
   }
 {% endstylesheet %}

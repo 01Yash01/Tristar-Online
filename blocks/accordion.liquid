@@ -10,8 +10,20 @@
 
 {%- assign row_style = block_settings.row_style | default: 'lines' -%}
 
+{%- capture accordion_rows -%}
+  {% content_for 'blocks' %}
+{%- endcapture -%}
+
+{%- if row_style == 'drawer' -%}
+  {%- liquid
+    # Only one card out of the drawer at a time: the rows share a native details group
+    assign details_group = '<details name="accordion-' | append: block.id | append: '"'
+    assign accordion_rows = accordion_rows | replace: '<details', details_group
+  -%}
+{%- endif -%}
+
 <div
-  class="accordion accordion--{{ block.id }} accordion--{{ block_settings.icon }} accordion--{{ row_style }} border-style spacing-style{% if block_settings.background_color != blank or block_settings.text_color != blank %} color-custom-{{ block.id }}{% endif %}{% if block_settings.background_color != blank %} accordion--custom-background{% endif %}{% if block_settings.dividers and row_style == 'lines' %} accordion--dividers{% endif %}{% if block_settings.show_numbers %} accordion--numbered{% endif %}"
+  class="accordion accordion--{{ block.id }} accordion--{{ block_settings.icon }} accordion--{{ row_style }}{% if row_style == 'drawer' %} accordion--drawer-{{ block_settings.drawer_finish | default: 'aluminium' }}{% if block_settings.drawer_font == 'site' %} accordion--drawer-font-site{% endif %}{% endif %} border-style spacing-style{% if block_settings.background_color != blank or block_settings.text_color != blank %} color-custom-{{ block.id }}{% endif %}{% if block_settings.background_color != blank %} accordion--custom-background{% endif %}{% if block_settings.dividers and row_style == 'lines' %} accordion--dividers{% endif %}{% if block_settings.show_numbers %} accordion--numbered{% endif %}"
   style="
     --summary-font-family: var(--font-{{ block_settings.type_preset }}--family);
      --summary-font-style: var(--font-{{ block_settings.type_preset }}--style);
@@ -30,7 +42,39 @@
   "
   {{ block.shopify_attributes }}
 >
-  {% content_for 'blocks' %}
+  {%- if row_style == 'drawer' -%}
+    <div class="faq-drawer">
+      <div class="faq-drawer__well">
+        {{ accordion_rows }}
+      </div>
+      <div class="faq-drawer__front">
+        {%- if block_settings.drawer_label != blank -%}
+          <span class="faq-drawer__label">{{ block_settings.drawer_label | escape }}</span>
+        {%- endif -%}
+        <span
+          class="faq-drawer__handle"
+          aria-hidden="true"
+        ></span>
+      </div>
+    </div>
+    {%- if block_settings.drawer_note != blank or block_settings.drawer_button_label != blank -%}
+      <div class="faq-drawer__footer">
+        {%- if block_settings.drawer_note != blank -%}
+          <p class="faq-drawer__note">{{ block_settings.drawer_note | escape }}</p>
+        {%- endif -%}
+        {%- if block_settings.drawer_button_label != blank and block_settings.drawer_button_link != blank -%}
+          <a
+            class="faq-drawer__ask"
+            href="{{ block_settings.drawer_button_link }}"
+          >
+            {{- block_settings.drawer_button_label | escape -}}
+          </a>
+        {%- endif -%}
+      </div>
+    {%- endif -%}
+  {%- else -%}
+    {{ accordion_rows }}
+  {%- endif -%}
 </div>
 
 {% render 'accordion-styles' %}
@@ -58,6 +102,10 @@
         {
           "value": "cards",
           "label": "t:options.cards"
+        },
+        {
+          "value": "drawer",
+          "label": "t:options.card_drawer"
         }
       ],
       "default": "lines"
@@ -66,6 +114,7 @@
       "type": "select",
       "id": "icon",
       "label": "t:settings.icon",
+      "visible_if": "{{ block.settings.row_style != 'drawer' }}",
       "options": [
         {
           "value": "caret",
@@ -86,21 +135,22 @@
       "type": "checkbox",
       "id": "show_numbers",
       "label": "t:settings.show_numbers",
-      "default": false
+      "default": false,
+      "visible_if": "{{ block.settings.row_style != 'drawer' }}"
     },
     {
       "type": "checkbox",
       "id": "dividers",
       "label": "t:settings.dividers",
       "default": true,
-      "visible_if": "{{ block.settings.row_style != 'cards' }}"
+      "visible_if": "{{ block.settings.row_style == 'lines' }}"
     },
     {
       "type": "color",
       "id": "divider_color",
       "label": "t:settings.divider_color",
       "placeholder": "t:settings.default",
-      "visible_if": "{{ block.settings.dividers and block.settings.row_style != 'cards' }}"
+      "visible_if": "{{ block.settings.dividers and block.settings.row_style == 'lines' }}"
     },
     {
       "type": "color",
@@ -133,8 +183,68 @@
     },
     {
       "type": "select",
+      "id": "drawer_finish",
+      "label": "t:settings.drawer_finish",
+      "options": [
+        {
+          "value": "aluminium",
+          "label": "t:options.aluminium"
+        },
+        {
+          "value": "graphite",
+          "label": "t:options.graphite"
+        }
+      ],
+      "default": "aluminium",
+      "visible_if": "{{ block.settings.row_style == 'drawer' }}"
+    },
+    {
+      "type": "select",
+      "id": "drawer_font",
+      "label": "t:settings.drawer_font",
+      "info": "t:info.drawer_font",
+      "options": [
+        {
+          "value": "typewriter",
+          "label": "t:options.drawer_font_typewriter"
+        },
+        {
+          "value": "site",
+          "label": "t:options.drawer_font_site"
+        }
+      ],
+      "default": "typewriter",
+      "visible_if": "{{ block.settings.row_style == 'drawer' }}"
+    },
+    {
+      "type": "text",
+      "id": "drawer_label",
+      "label": "t:settings.drawer_label",
+      "visible_if": "{{ block.settings.row_style == 'drawer' }}"
+    },
+    {
+      "type": "text",
+      "id": "drawer_note",
+      "label": "t:settings.drawer_note",
+      "visible_if": "{{ block.settings.row_style == 'drawer' }}"
+    },
+    {
+      "type": "text",
+      "id": "drawer_button_label",
+      "label": "t:settings.drawer_button_label",
+      "visible_if": "{{ block.settings.row_style == 'drawer' }}"
+    },
+    {
+      "type": "url",
+      "id": "drawer_button_link",
+      "label": "t:settings.link",
+      "visible_if": "{{ block.settings.row_style == 'drawer' }}"
+    },
+    {
+      "type": "select",
       "id": "type_preset",
       "label": "t:settings.heading_preset",
+      "visible_if": "{{ block.settings.row_style != 'drawer' }}",
       "options": [
         {
           "value": "",

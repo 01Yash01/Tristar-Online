@@ -11,6 +11,9 @@
     {{ block.shopify_attributes }}
   >
     <summary class="details__header">
+      {%- if block_settings.tab_label != blank -%}
+        <span class="details__tab">{{ block_settings.tab_label | escape }}</span>
+      {%- endif -%}
       {% render 'icon-or-image',
         icon: block_settings.icon,
         image_upload: block_settings.image_upload,
@@ -26,7 +29,12 @@
       </span>
     </summary>
 
-    <div class="details-content">
+    <div
+      class="details-content"
+      {% if block_settings.tab_label != blank %}
+        data-filed="{{ 'content.faq_filed_under' | t: label: block_settings.tab_label | escape }}"
+      {% endif %}
+    >
       {% content_for 'blocks' %}
     </div>
   </details>
@@ -55,6 +63,12 @@
       "id": "heading",
       "label": "t:settings.heading",
       "default": "t:text_defaults.accordion_heading"
+    },
+    {
+      "type": "text",
+      "id": "tab_label",
+      "label": "t:settings.tab_label",
+      "info": "t:info.tab_label"
     },
     {
       "type": "checkbox",
