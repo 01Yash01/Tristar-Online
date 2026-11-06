@@ -1180,6 +1180,63 @@
         ],
         "default": "lift",
         "info": "t:info.hover_effects"
+      },
+      {
+        "type": "header",
+        "content": "t:content.click_animation"
+      },
+      {
+        "type": "checkbox",
+        "id": "click_effect_enabled",
+        "label": "t:settings.click_effect_enabled",
+        "info": "t:info.click_effect",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "click_effect_style",
+        "label": "t:settings.style",
+        "options": [
+          {
+            "value": "pixels",
+            "label": "t:options.click_effect_pixels"
+          },
+          {
+            "value": "binary",
+            "label": "t:options.click_effect_binary"
+          },
+          {
+            "value": "glyphs",
+            "label": "t:options.click_effect_glyphs"
+          }
+        ],
+        "default": "pixels",
+        "visible_if": "{{ settings.click_effect_enabled }}"
+      },
+      {
+        "type": "color",
+        "id": "click_effect_dot_color",
+        "label": "t:settings.click_effect_accent_color",
+        "default": "#E9C46A",
+        "visible_if": "{{ settings.click_effect_enabled }}"
+      },
+      {
+        "type": "color",
+        "id": "click_effect_color",
+        "label": "t:settings.click_effect_wave_color",
+        "info": "t:info.click_effect_wave_color",
+        "visible_if": "{{ settings.click_effect_enabled }}"
+      },
+      {
+        "type": "range",
+        "id": "click_effect_size",
+        "label": "t:settings.size",
+        "min": 80,
+        "max": 320,
+        "step": 10,
+        "unit": "px",
+        "default": 150,
+        "visible_if": "{{ settings.click_effect_enabled }}"
       }
     ]
   },

@@ -1,0 +1,65 @@
+{%- doc -%}
+  Styles and settings for the click animation configured under Theme settings > Animations: a wave of small
+  characters, binary digits or pixels (the Style setting) that spreads from each click or tap behind a dot under
+  the pointer. assets/click-effect.js draws each wave on a canvas inside the layer styled here. With no wave color
+  set, the cells take the text color of the section that shoppers click in; the accent color marks the dot and the
+  wave front.
+
+  @example
+  {% if settings.click_effect_enabled %}
+    {% render 'click-effect' %}
+  {% endif %}
+{%- enddoc -%}
+
+{% style %}
+  :root {
+    {%- if settings.click_effect_color != blank %}
+      --click-effect-wave-color: {{ settings.click_effect_color }};
+    {%- endif %}
+    --click-effect-accent-color: {{ settings.click_effect_dot_color | default: '#E9C46A' }};
+    --click-effect-size: {{ settings.click_effect_size | default: 150 }}px;
+    --click-effect-style: {{ settings.click_effect_style | default: 'pixels' }};
+  }
+{% endstyle %}
+
+{% stylesheet %}
+  /* A zero-size layer fixed to the viewport. While a dialog or popover is open it becomes a manual popover to reach
+     the top layer, so the browser's popover styles are reset here too */
+  .click-effect {
+    position: fixed;
+    inset: auto;
+    inset-block-start: 0;
+    left: 0; /* stylelint-disable-line csstools/use-logical -- pointer clientX is a physical coordinate */
+    z-index: var(--layer-temporary);
+    width: 0;
+    height: 0;
+    margin: 0;
+    padding: 0;
+    overflow: visible;
+    border: 0;
+    background: transparent;
+    pointer-events: none;
+  }
+
+  .click-effect::backdrop {
+    background: transparent;
+    pointer-events: none;
+  }
+
+  /* Each wave's canvas, moved under the pointer with a transform. Outranks the global canvas max-width, which
+     would squeeze it to the zero-width layer */
+  .click-effect__canvas {
+    position: absolute;
+    inset-block-start: 0;
+    left: 0; /* stylelint-disable-line csstools/use-logical -- placed by physical pointer coordinates */
+    display: block;
+    max-width: none;
+    pointer-events: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .click-effect {
+      display: none;
+    }
+  }
+{% endstylesheet %}
