@@ -1,0 +1,43 @@
+{%- doc -%}
+  Renders one slide of an inline slideshow. A slide can't know its own position, so it leaves markers
+  that the slideshow block replaces in page order.
+
+  @example
+  {% content_for 'blocks' %}
+{%- enddoc -%}
+
+<slideshow-slide
+  ref="slides[]"
+  aria-hidden="inline-slide-hidden"
+  slide-id="{{ block.id }}"
+  style="--slideshow-timeline: --inline-slide-index;"
+  {{ block.shopify_attributes }}
+>
+  {% content_for 'blocks' %}
+</slideshow-slide>
+
+{% schema %}
+{
+  "name": "t:names.slide",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "@theme"
+    },
+    {
+      "type": "@app"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.slide",
+      "blocks": {
+        "image": {
+          "type": "image"
+        }
+      },
+      "block_order": ["image"]
+    }
+  ]
+}
+{% endschema %}

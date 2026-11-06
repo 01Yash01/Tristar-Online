@@ -1,0 +1,134 @@
+{%- doc -%}
+  Renders its slides as a slideshow that fits inside a group, with dots, a pause button and optional
+  auto-rotation. Each slide is an `_inline-slide` block holding the slide's content, usually an Image
+  block with its text. A slide can't know its own position, so each one leaves markers that this block
+  replaces in page order. A slideshow nested in a slide has already replaced its own markers.
+{%- enddoc -%}
+
+{% capture slides %}
+  {% content_for 'blocks' %}
+{% endcapture %}
+
+{%- liquid
+  assign block_settings = block.settings
+
+  # Hidden slides aren't rendered, so the slides are counted from the output
+  assign slide_count = slides | split: '--inline-slide-index;' | size | minus: 1
+  if slide_count > 0
+    assign last_index = slide_count | minus: 1
+    for index in (0..last_index)
+      assign timeline = '--slide-' | append: index | append: ';'
+      assign slides = slides | replace_first: '--inline-slide-index;', timeline
+    endfor
+    assign slides = slides | replace_first: 'aria-hidden="inline-slide-hidden"', 'aria-hidden="false"'
+    assign slides = slides | replace: 'aria-hidden="inline-slide-hidden"', 'aria-hidden="true"'
+  endif
+
+  assign autoplay = false
+  if block_settings.autoplay and slide_count > 1
+    assign autoplay = true
+  endif
+-%}
+
+{%- if slide_count > 1 -%}
+  {%- capture controls -%}
+    {%- render 'slideshow-controls',
+      style: 'dots',
+      autoplay: autoplay,
+      item_count: slide_count,
+      show_arrows: false,
+      arrows_on_media: true,
+      controls_on_media: true,
+      pagination_position: 'center'
+    -%}
+  {%- endcapture -%}
+{%- endif -%}
+
+<div
+  class="inline-slideshow"
+  {{ block.shopify_attributes }}
+>
+  {% render 'slideshow',
+    class: 'inline-slideshow__slideshow',
+    slides: slides,
+    slide_count: slide_count,
+    controls: controls,
+    autoplay: autoplay,
+    autoplay_speed: block_settings.autoplay_speed,
+    show_arrows: false
+  %}
+</div>
+
+{% stylesheet %}
+  .inline-slideshow {
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* On the image the controls stay white, with a soft shadow so they show on light slides too */
+  .inline-slideshow slideshow-controls[controls-on-media] {
+    --color-foreground: var(--color-white);
+    --color-foreground-rgb: var(--color-white-rgb);
+
+    color: var(--color-foreground);
+    filter: drop-shadow(0 1px 2px rgb(0 0 0 / var(--opacity-40)));
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.slideshow",
+  "tag": null,
+  "blocks": [
+    {
+      "type": "_inline-slide"
+    }
+  ],
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "t:settings.auto_rotate_slides",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_speed",
+      "label": "t:settings.speed",
+      "min": 3,
+      "max": 7,
+      "step": 1,
+      "unit": "s",
+      "default": 5,
+      "visible_if": "{{ block.settings.autoplay }}"
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.slideshow",
+      "category": "t:categories.layout",
+      "blocks": {
+        "slide_1": {
+          "type": "_inline-slide",
+          "blocks": {
+            "image": {
+              "type": "image"
+            }
+          },
+          "block_order": ["image"]
+        },
+        "slide_2": {
+          "type": "_inline-slide",
+          "blocks": {
+            "image": {
+              "type": "image"
+            }
+          },
+          "block_order": ["image"]
+        }
+      },
+      "block_order": ["slide_1", "slide_2"]
+    }
+  ]
+}
+{% endschema %}
