@@ -5,7 +5,14 @@
   {% assign collection_title = '<p>' | append: text | append: '</p>' %}
   {% render 'text', fallback_text: collection_title, block: block %}
 {% elsif closest.collection != blank %}
-  {% assign collection_title = '<p>' | append: closest.collection.title | append: '</p>' %}
+  {% liquid
+    # On its own collection page the title is the page's main heading; in cards and lists it stays a paragraph
+    assign title_tag = 'p'
+    if template.name == 'collection' and closest.collection.id == collection.id
+      assign title_tag = 'h1'
+    endif
+    assign collection_title = '<' | append: title_tag | append: '>' | append: closest.collection.title | append: '</' | append: title_tag | append: '>'
+  %}
   {% render 'text', fallback_text: collection_title, block: block %}
 {% endif %}
 
