@@ -1,10 +1,24 @@
 
 
-{% assign product = closest.product %}
+{% liquid
+  assign product = closest.product
+
+  # New for the chosen number of days after publishing, so the badge retires itself
+  assign show_new_badge = false
+  if settings.badge_new_enabled and product.available
+    assign now_seconds = 'now' | date: '%s' | plus: 0
+    assign published_seconds = product.published_at | date: '%s' | plus: 0
+    assign listed_seconds = now_seconds | minus: published_seconds
+    assign new_seconds = settings.badge_new_days | times: 86400
+    if listed_seconds < new_seconds
+      assign show_new_badge = true
+    endif
+  endif
+%}
 
 {% capture children %}
   {% unless product == blank %}
-    {%- if product.available == false or product.compare_at_price > product.price -%}
+    {%- if product.available == false or product.compare_at_price > product.price or show_new_badge -%}
       <div
         class="product-badges product-badges--{{ settings.badge_position }}"
         style="
@@ -12,6 +26,7 @@
             --badge-font-family: var(--font-{{ settings.badge_font_family }}--family); --badge-font-weight: var(--font-{{ settings.badge_font_family }}--weight); --badge-text-transform: {{ settings.badge_text_transform }};
         "
       >
+        {%- if product.available == false or product.compare_at_price > product.price -%}
         <div
           class="
             product-badges__badge product-badges__badge--rectangle
@@ -49,6 +64,12 @@
             -%}
           {%- endif -%}
         </div>
+        {%- endif -%}
+        {%- if show_new_badge -%}
+          <div class="product-badges__badge product-badges__badge--rectangle color-custom-badge-new">
+            {{- 'content.product_badge_new' | t -}}
+          </div>
+        {%- endif -%}
       </div>
     {%- endif -%}
     {% if product.available and settings.quick_add or settings.mobile_quick_add %}

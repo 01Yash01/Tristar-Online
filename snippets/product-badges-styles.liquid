@@ -11,6 +11,10 @@
 
     position: absolute;
     z-index: var(--layer-flat);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--gap-2xs);
   }
 
   .product-badges--bottom-left {
@@ -24,6 +28,7 @@
   }
 
   .product-badges--top-right {
+    align-items: flex-end;
     top: calc(var(--badge-inset) + var(--padding-block-start));
     inset-inline-end: calc(var(--badge-inset) + var(--padding-inline-end));
   }

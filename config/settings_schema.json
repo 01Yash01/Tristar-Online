@@ -1302,6 +1302,23 @@
         "default": "text"
       },
       {
+        "type": "checkbox",
+        "id": "badge_new_enabled",
+        "label": "t:settings.badge_new_enabled",
+        "default": true
+      },
+      {
+        "type": "range",
+        "id": "badge_new_days",
+        "min": 1,
+        "max": 60,
+        "step": 1,
+        "label": "t:settings.badge_new_days",
+        "info": "t:info.badge_new_days",
+        "default": 15,
+        "visible_if": "{{ settings.badge_new_enabled }}"
+      },
+      {
         "type": "header",
         "content": "t:settings.colors"
       },
@@ -1327,6 +1344,20 @@
         "id": "badge_sold_out_text_color",
         "label": "t:settings.badge_sold_out_text_color",
         "default": "{{ settings.color_palette.foreground }}"
+      },
+      {
+        "type": "color",
+        "id": "badge_new_background_color",
+        "label": "t:settings.badge_new_background_color",
+        "default": "#27923b",
+        "visible_if": "{{ settings.badge_new_enabled }}"
+      },
+      {
+        "type": "color",
+        "id": "badge_new_text_color",
+        "label": "t:settings.badge_new_text_color",
+        "default": "#ffffff",
+        "visible_if": "{{ settings.badge_new_enabled }}"
       },
       {
         "type": "header",
