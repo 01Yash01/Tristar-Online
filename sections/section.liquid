@@ -58,6 +58,13 @@
       "visible_if": "{{ section.settings.content_direction == 'row' }}"
     },
     {
+      "type": "checkbox",
+      "id": "one_row_on_mobile",
+      "label": "t:settings.one_row_on_mobile",
+      "default": false,
+      "visible_if": "{{ section.settings.content_direction == 'row' and section.settings.vertical_on_mobile == false }}"
+    },
+    {
       "type": "select",
       "id": "horizontal_alignment",
       "label": "t:settings.alignment",

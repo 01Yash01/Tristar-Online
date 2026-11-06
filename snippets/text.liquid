@@ -47,6 +47,9 @@
     if block_settings.background
       echo ' text-block--background '
     endif
+    if block_settings.show_on_mobile == false
+      echo ' text-block--hidden-mobile '
+    endif
     if is_rte
       echo ' rte '
     endif

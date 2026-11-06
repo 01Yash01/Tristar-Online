@@ -114,4 +114,11 @@
   .text-block.text-block > *:first-child:empty + * {
     margin-block-start: 0;
   }
+
+  /* "Show on mobile" turned off. The second class beats the text snippet's flex display without relying on source order. */
+  @media screen and (max-width: 749px) {
+    .text-block.text-block--hidden-mobile {
+      display: none;
+    }
+  }
 {% endstylesheet %}
