@@ -333,6 +333,33 @@
       }
     }
 
+    /* The labelled button leaves little room beside the price, so the variant takes its own line above it */
+    .sticky-add-to-cart__bar {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      grid-template-areas:
+        'image variant button'
+        'image price button';
+      align-items: center;
+      row-gap: var(--gap-3xs);
+    }
+
+    .sticky-add-to-cart__bar:not(:has(.sticky-add-to-cart__image)) {
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-areas:
+        'variant button'
+        'price button';
+    }
+
+    .sticky-add-to-cart__image {
+      grid-area: image;
+    }
+
+    .sticky-add-to-cart__info {
+      grid-area: variant;
+      align-self: end;
+    }
+
     .sticky-add-to-cart__info[data-has-image='false'] {
       padding-inline-start: 0;
     }
@@ -342,13 +369,25 @@
       display: none;
     }
 
+    .sticky-add-to-cart__variant {
+      margin-top: 0;
+      overflow: hidden;
+      line-height: var(--line-height--body-tight);
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
     .sticky-add-to-cart__button {
+      grid-area: button;
       width: auto;
       padding-inline: var(--padding-xl);
     }
 
     .sticky-add-to-cart__price {
+      grid-area: price;
+      align-self: start;
       font-size: var(--font-paragraph--size);
+      line-height: var(--line-height--body-tight);
     }
 
     sticky-add-to-cart:not([data-variant-available='true']) .add-to-cart-text__content {
@@ -360,18 +399,12 @@
     }
   }
 
-  /* Small mobile - hide the compare price and truncate the variant */
+  /* Small mobile - hide the compare price */
   @media screen and (max-width: 389px) {
     .sticky-add-to-cart__bar {
       .compare-at-price {
         display: none;
       }
-    }
-
-    .sticky-add-to-cart__variant {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
     }
   }
 {% endstylesheet %}
