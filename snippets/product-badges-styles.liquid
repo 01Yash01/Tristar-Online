@@ -33,8 +33,9 @@
     inset-inline-end: calc(var(--badge-inset) + var(--padding-inline-end));
   }
 
+  /* A compact, semibold label. The chosen badge font keeps its own weight when that is heavier */
   .product-badges__badge {
-    --badge-font-size: var(--font-size--xs);
+    --badge-font-size: var(--font-size--2xs);
 
     display: flex;
     align-items: center;
@@ -44,7 +45,8 @@
     background: var(--color-background);
     font-size: var(--badge-font-size);
     font-family: var(--badge-font-family);
-    font-weight: var(--badge-font-weight);
+    font-weight: max(var(--badge-font-weight, 400), 600);
+    letter-spacing: 0.01em;
     text-transform: var(--badge-text-transform);
     border-radius: var(--badge-border-radius);
   }

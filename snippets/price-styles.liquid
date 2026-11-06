@@ -66,6 +66,14 @@
     color: var(--price-sale-color, inherit);
   }
 
+  /* On product cards the original price steps back so the sale price leads: smaller, lighter, with a thin line */
+  .product-card .compare-at-price {
+    font-size: max(0.85em, var(--font-size--2xs));
+    color: rgb(var(--color-rgb, var(--color-foreground-rgb)) / var(--opacity-60));
+    text-decoration-thickness: 1px;
+    text-decoration-color: currentcolor;
+  }
+
   /* Next to a savings badge, the original price steps back */
   product-price:has(.price__savings) .compare-at-price {
     font-size: 0.7em;

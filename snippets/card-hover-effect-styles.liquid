@@ -18,6 +18,7 @@
   {% style %}
     :root {
       --hover-lift-amount: 4px;
+      --hover-lift-shadow: 0 18px 30px -16px rgb(0 0 0 / var(--opacity-25)), 0 2px 6px rgb(0 0 0 / var(--opacity-5));
       --hover-scale-amount: 1.03;
       --hover-subtle-zoom-amount: 1.015;
     }
@@ -28,6 +29,18 @@
         .card-hover-effect-lift .collection-card:hover,
         .card-hover-effect-lift .predictive-search-results__card:hover {
           transform: translateY(calc(-1 * var(--hover-lift-amount)));
+        }
+
+        /* A lifted product card casts a soft shadow from its own surface, or from its photo when the card has no
+           background or border */
+        .card-hover-effect-lift .product-card__content--surface,
+        .card-hover-effect-lift .product-card__content:not(.product-card__content--surface) .card-gallery {
+          transition: box-shadow var(--hover-transition-duration) var(--hover-transition-timing);
+        }
+
+        .card-hover-effect-lift .product-card:hover .product-card__content--surface,
+        .card-hover-effect-lift .product-card:hover .product-card__content:not(.product-card__content--surface) .card-gallery {
+          box-shadow: var(--hover-lift-shadow);
         }
       {% endif %}
 

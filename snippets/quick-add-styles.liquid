@@ -112,6 +112,18 @@
     }
   }
 
+  /* Phones always show the button over the photo, so it is lighter there: a hairline ring and a soft shadow. The
+     icon fills the slimmer ring so the collapsed button keeps its hidden label out of view */
+  @media screen and (max-width: 749px) {
+    button.quick-add__button {
+      --quick-add-icon-width: calc(var(--button-size-md) - 2px);
+
+      border-width: 1px;
+      border-color: rgb(0 0 0 / var(--opacity-8));
+      box-shadow: 0 2px 8px rgb(0 0 0 / var(--opacity-15));
+    }
+  }
+
   .quick-add__button.add-to-cart-button {
     height: var(--button-size-md);
   }

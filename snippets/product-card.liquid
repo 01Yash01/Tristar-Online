@@ -97,6 +97,7 @@
       border-style
       gap-style
       {% if block_settings.background_color != blank %} color-custom-{{ block.id }}{% endif %}
+      {% if block_settings.background_color != blank or block_settings.border == 'solid' %} product-card__content--surface{% endif %}
     "
     style="
       {% render 'border-override', settings: block_settings %}
