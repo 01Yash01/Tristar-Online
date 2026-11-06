@@ -1,0 +1,86 @@
+{%- doc -%}
+  Renders one Quick links pill: a round image or icon, a label, an optional hover arrow, and a link.
+  Shared by the Quick link block and the Quick links section's related-collections mode.
+
+  @param {string} label - Visible label
+  @param {string} [url] - Link destination
+  @param {object} [image] - Image for the round media
+  @param {string} [media] - 'image' (default), 'icon' or 'none'
+  @param {string} [icon] - Icon name, used when media is 'icon'
+  @param {boolean} [is_active] - Marks the pill as the page being viewed
+  @param {boolean} [show_arrow_icon] - Show the arrow that slides in on hover
+  @param {number} [media_size] - Media size in pixels, used for the image sizes attribute
+  @param {string} [image_loading] - 'lazy' (default) or 'eager'
+  @param {boolean} [show_placeholder] - Show a placeholder when there is no image (theme editor)
+  @param {string} [attributes] - Extra attributes for the list item, such as the block's editor attributes
+
+  @example
+  {% render 'quick-link-pill', label: link.title, url: link.url, image: link.object.featured_image, show_arrow_icon: true %}
+{%- enddoc -%}
+
+{%- liquid
+  assign media = media | default: 'image'
+  assign media_size = media_size | default: 48
+  assign image_sizes = media_size | append: 'px'
+  assign image_loading = image_loading | default: 'lazy'
+-%}
+
+<li
+  class="quick-links__item"
+  {{ attributes }}
+>
+  <a
+    {% if url != blank %}
+      href="{{ url }}"
+    {% endif %}
+    class="quick-link{% if is_active %} quick-link--active{% endif %}"
+    {% if is_active %}
+      aria-current="page"
+    {% endif %}
+  >
+    {%- case media -%}
+      {%- when 'image' -%}
+        {%- if image != blank -%}
+          <span class="quick-link__media">
+            {{
+              image
+              | image_url: width: 192
+              | image_tag:
+                widths: '64, 96, 128, 192',
+                sizes: image_sizes,
+                loading: image_loading,
+                alt: '',
+                class: 'quick-link__image'
+            }}
+          </span>
+        {%- elsif show_placeholder -%}
+          <span class="quick-link__media">
+            {{ 'collection-1' | placeholder_svg_tag: 'quick-link__image' }}
+          </span>
+        {%- endif -%}
+      {%- when 'icon' -%}
+        <span class="quick-link__media quick-link__media--icon">
+          <svg
+            class="quick-link__icon"
+            aria-hidden="true"
+            focusable="false"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            {%- render 'icon', icon: icon -%}
+          </svg>
+        </span>
+    {%- endcase -%}
+
+    <span class="quick-link__label">{{ label | escape }}</span>
+
+    {%- if show_arrow_icon -%}
+      <span
+        class="svg-wrapper quick-link__arrow"
+        aria-hidden="true"
+      >
+        {{- 'icon-arrow.svg' | inline_asset_content -}}
+      </span>
+    {%- endif -%}
+  </a>
+</li>

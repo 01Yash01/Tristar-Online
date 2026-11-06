@@ -3,6 +3,8 @@
   A row of pill links (round image or icon, label) for jumping to key collections or pages.
   Pills are centered when they fit and scroll sideways when they do not; desktop adds arrows.
   Without JavaScript the row is still a plain, scrollable list of links.
+  With Links set to related collections, a collection page shows the collections around the
+  current one in the chosen menu instead of the blocks, and the section hides when there are none.
   @example
   <!-- Add section > Quick links, then pick a collection for each pill -->
 {% endcomment %}
@@ -11,8 +13,110 @@
   if section.settings.background_color != blank
     render 'contrast-override', background_color: section.settings.background_color, section_id: section.id
   endif
+
+  # Related mode: a menu item for this collection that has sub-items gives those sub-items;
+  # otherwise the collections beside it under the same parent are used
+  assign show_related = false
+  assign related_parent = nil
+  assign related_count = 0
+
+  if section.settings.link_source == 'related'
+    assign show_related = true
+    assign related_menu = section.settings.related_menu
+
+    if collection != blank and related_menu != blank
+      for l1 in related_menu.links
+        if l1.type == 'collection_link' and l1.object.id == collection.id and l1.links.size > 0
+          assign related_parent = l1
+          break
+        endif
+        for l2 in l1.links
+          if l2.type == 'collection_link' and l2.object.id == collection.id and l2.links.size > 0
+            assign related_parent = l2
+            break
+          endif
+        endfor
+        if related_parent != nil
+          break
+        endif
+      endfor
+
+      if related_parent == nil
+        for l1 in related_menu.links
+          for l2 in l1.links
+            if l2.type == 'collection_link' and l2.object.id == collection.id
+              assign related_parent = l1
+              break
+            endif
+            for l3 in l2.links
+              if l3.type == 'collection_link' and l3.object.id == collection.id
+                assign related_parent = l2
+                break
+              endif
+            endfor
+            if related_parent != nil
+              break
+            endif
+          endfor
+          if related_parent != nil
+            break
+          endif
+        endfor
+      endif
+
+      if related_parent != nil
+        for link in related_parent.links
+          if link.type == 'collection_link' and link.object.id != collection.id
+            assign related_count = related_count | plus: 1
+          endif
+        endfor
+      endif
+    endif
+  endif
+
+  assign media_size = section.settings.image_size | default: 48
+  assign image_loading = 'lazy'
+  if section.index <= 2
+    assign image_loading = 'eager'
+  endif
+
+  # Shiny edge: the glint's brightest point, the resting rim, the shadow and the picture backdrop
+  # follow the pill's brightness, so light and dark pills both keep a visible glint and outline
+  assign is_shiny = false
+  if section.settings.style == 'shiny'
+    assign is_shiny = true
+    assign shiny_fill = section.settings.shiny_pill_color | default: '#ffffff'
+    assign shiny_label = section.settings.shiny_label_color | default: '#0b1f44'
+    assign shiny_glint = section.settings.shiny_glint_color | default: '#d4a73c'
+    assign shiny_glint_soft = shiny_glint | color_lighten: 12
+    assign shiny_fill_brightness = shiny_fill | color_brightness
+    if shiny_fill_brightness > 160
+      assign shiny_shine = shiny_glint | color_darken: 15
+      assign shiny_ink = shiny_label
+      assign shiny_edge = shiny_label | color_modify: 'alpha', 0.14
+      assign shiny_shadow = shiny_label | color_modify: 'alpha', 0.08
+      assign shiny_shadow_far = shiny_label | color_modify: 'alpha', 0.4
+      assign shiny_media = shiny_fill | color_darken: 4
+      assign shiny_sheen_rest = 0
+      assign shiny_sheen_hover = 0.22
+      assign shiny_glow = 0.55
+    else
+      assign shiny_shine = shiny_glint | color_mix: '#ffffff', 25
+      assign shiny_ink = shiny_fill
+      assign shiny_edge = shiny_fill
+      assign shiny_shadow = shiny_fill | color_modify: 'alpha', 0.18
+      assign shiny_shadow_far = shiny_fill | color_modify: 'alpha', 0.6
+      assign shiny_media = '#ffffff'
+      assign shiny_sheen_rest = 0.16
+      assign shiny_sheen_hover = 0.5
+      assign shiny_glow = 1
+    endif
+  endif
 %}
 
+{%- if show_related and related_count == 0 -%}
+  {%- comment -%} Nothing related to this collection in the menu, so the section stays out of the page {%- endcomment -%}
+{%- else -%}
 <script
   src="{{ 'quick-links.js' | asset_url }}"
   type="module"
@@ -31,12 +135,27 @@
   style="{% render 'spacing-style', settings: section.settings %}"
 >
   <quick-links
-    class="quick-links quick-links--{{ section.settings.style }} quick-links--align-{{ section.settings.alignment }} quick-links--hover-{{ section.settings.hover_effect | default: 'fill' }}"
+    class="quick-links quick-links--{{ section.settings.style }} quick-links--align-{{ section.settings.alignment }}{% if is_shiny %} quick-links--glint-{{ section.settings.shiny_glint_motion | default: 'always' }}{% else %} quick-links--hover-{{ section.settings.hover_effect | default: 'fill' }}{% endif %}"
     style="
       --quick-links-gap: {{ section.settings.gap }}px;
       --quick-link-media-size: {{ section.settings.image_size }}px;
       --quick-link-hover-background: {{ section.settings.hover_background_color | default: 'var(--color-foreground)' }};
       --quick-link-hover-text: {{ section.settings.hover_text_color | default: 'var(--color-background)' }};
+      {%- if is_shiny %}
+        --quick-link-shiny-fill: {{ shiny_fill }};
+        --quick-link-shiny-label: {{ shiny_label }};
+        --quick-link-shiny-glint: {{ shiny_glint }};
+        --quick-link-shiny-glint-soft: {{ shiny_glint_soft }};
+        --quick-link-shiny-shine: {{ shiny_shine }};
+        --quick-link-shiny-ink: {{ shiny_ink }};
+        --quick-link-shiny-edge: {{ shiny_edge }};
+        --quick-link-shiny-shadow: {{ shiny_shadow }};
+        --quick-link-shiny-shadow-far: {{ shiny_shadow_far }};
+        --quick-link-shiny-media: {{ shiny_media }};
+        --quick-link-shiny-sheen-rest: {{ shiny_sheen_rest }};
+        --quick-link-shiny-sheen-hover: {{ shiny_sheen_hover }};
+        --quick-link-shiny-glow: {{ shiny_glow }};
+      {%- endif %}
     "
     {% if settings.reveal_on_scroll %}
       data-reveal
@@ -51,7 +170,35 @@
           class="quick-links__list"
           role="list"
         >
-          {% content_for 'blocks' %}
+          {%- if show_related -%}
+            {%- assign related_rendered = 0 -%}
+            {%- for link in related_parent.links -%}
+              {%- if link.type != 'collection_link' or link.object.id == collection.id -%}
+                {%- continue -%}
+              {%- endif -%}
+              {%- liquid
+                assign related_image = link.object.featured_image
+                if related_image == blank
+                  assign related_image = link.object.products.first.featured_image
+                endif
+              -%}
+              {%- render 'quick-link-pill',
+                label: link.title,
+                url: link.url,
+                image: related_image,
+                is_active: link.current,
+                show_arrow_icon: section.settings.show_arrow_icon,
+                media_size: media_size,
+                image_loading: image_loading
+              -%}
+              {%- assign related_rendered = related_rendered | plus: 1 -%}
+              {%- if related_rendered >= 12 -%}
+                {%- break -%}
+              {%- endif -%}
+            {%- endfor -%}
+          {%- else -%}
+            {% content_for 'blocks' %}
+          {%- endif -%}
         </ul>
       </scroll-hint>
     </nav>
@@ -90,6 +237,7 @@
     {%- endif -%}
   </quick-links>
 </div>
+{%- endif -%}
 
 {% stylesheet %}
   .quick-links {
@@ -331,12 +479,207 @@
     }
   }
 
+  /* Shiny edge: a glint travels round each pill's rim, starting at a different point on each pill.
+     Hover or focus widens and softens it, adds a sheen and a glow from below, and slows it down.
+     Colors come from the section settings, through the custom properties set on quick-links. */
+  @property --quick-link-glint-angle {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+
+  @property --quick-link-glint-offset {
+    syntax: '<angle>';
+    initial-value: 0deg;
+    inherits: false;
+  }
+
+  @property --quick-link-glint-arc {
+    syntax: '<percentage>';
+    initial-value: 5%;
+    inherits: false;
+  }
+
+  @property --quick-link-glint-shine {
+    syntax: '<color>';
+    initial-value: #fff;
+    inherits: false;
+  }
+
+  .quick-links--shiny {
+    --quick-link-glint-speed: 4s;
+    --quick-link-shiny-border: 1px;
+  }
+
+  .quick-links--shiny .quick-links__item:nth-child(3n + 2) {
+    --quick-link-glint-delay: -1.4s;
+  }
+
+  .quick-links--shiny .quick-links__item:nth-child(3n + 3) {
+    --quick-link-glint-delay: -2.7s;
+  }
+
+  /* The rim is a transparent border showing a turning conic gradient over a faint resting edge;
+     the padding gives back the border's width so the pill keeps its size */
+  .quick-links--shiny .quick-link {
+    --quick-link-glint-shine: var(--quick-link-shiny-shine);
+
+    padding-block: calc(8px - var(--quick-link-shiny-border));
+    padding-inline: calc(8px - var(--quick-link-shiny-border)) calc(20px - var(--quick-link-shiny-border));
+    border: var(--quick-link-shiny-border) solid transparent;
+    background:
+      linear-gradient(var(--quick-link-shiny-fill), var(--quick-link-shiny-fill)) padding-box,
+      conic-gradient(
+          from calc(var(--quick-link-glint-angle) - var(--quick-link-glint-offset)),
+          transparent,
+          var(--quick-link-shiny-glint) var(--quick-link-glint-arc),
+          var(--quick-link-glint-shine) calc(var(--quick-link-glint-arc) * 2),
+          var(--quick-link-shiny-glint) calc(var(--quick-link-glint-arc) * 3),
+          transparent calc(var(--quick-link-glint-arc) * 4)
+        )
+        border-box,
+      linear-gradient(var(--quick-link-shiny-edge), var(--quick-link-shiny-edge)) border-box;
+    box-shadow: 0 1px 1px var(--quick-link-shiny-shadow), 0 10px 20px -14px var(--quick-link-shiny-shadow-far);
+    color: var(--quick-link-shiny-label);
+    transition: --quick-link-glint-arc 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+      --quick-link-glint-offset 0.8s cubic-bezier(0.25, 1, 0.5, 1),
+      --quick-link-glint-shine 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    animation: quick-link-glint var(--quick-link-glint-speed) linear infinite,
+      quick-link-glint calc(var(--quick-link-glint-speed) / 0.4) linear infinite reverse paused;
+    animation-composition: add;
+    animation-delay: var(--quick-link-glint-delay, 0s), var(--quick-link-glint-delay, 0s);
+  }
+
+  .quick-links--shiny .quick-link:has(.quick-link__arrow) {
+    padding-inline-end: calc(8px - var(--quick-link-shiny-border));
+  }
+
+  .quick-links--shiny .quick-link:not(:has(.quick-link__media)) {
+    padding-inline-start: calc(20px - var(--quick-link-shiny-border));
+  }
+
+  /* This style has no fill sweep */
+  .quick-links--shiny .quick-link::before {
+    display: none;
+  }
+
+  /* Sheen: a soft band of the glint color turning slowly inside the pill */
+  .quick-links--shiny .quick-link::after {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: 50%;
+    z-index: -1;
+    aspect-ratio: 1;
+    background: linear-gradient(-50deg, transparent, var(--quick-link-shiny-glint), transparent);
+    opacity: var(--quick-link-shiny-sheen-rest);
+    pointer-events: none;
+    translate: 0 -50%;
+    mask-image: radial-gradient(circle at bottom, transparent 40%, #000);
+    transition: opacity 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    animation: quick-link-sheen var(--quick-link-glint-speed) linear infinite,
+      quick-link-sheen calc(var(--quick-link-glint-speed) / 0.4) linear infinite reverse paused;
+    animation-composition: add;
+    animation-delay: var(--quick-link-glint-delay, 0s), var(--quick-link-glint-delay, 0s);
+  }
+
+  /* Glow: rises from the bottom of the pill on hover (the label is unpositioned, so this fills the pill) */
+  .quick-links--shiny .quick-link__label::before {
+    content: '';
+    position: absolute;
+    inset: -0.5rem;
+    z-index: -1;
+    box-shadow: inset 0 -1ex 2rem 4px var(--quick-link-shiny-glint);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    animation: quick-link-breathe calc(var(--quick-link-glint-speed) * 1.5) linear infinite paused;
+  }
+
+  .quick-links--shiny .quick-link__media {
+    background-color: var(--quick-link-shiny-media);
+  }
+
+  .quick-links--shiny .quick-link:is(:hover, :focus-visible) {
+    --quick-link-glint-arc: 20%;
+    --quick-link-glint-offset: 95deg;
+    --quick-link-glint-shine: var(--quick-link-shiny-glint-soft);
+
+    box-shadow: 0 1px 1px var(--quick-link-shiny-shadow), 0 10px 20px -14px var(--quick-link-shiny-shadow-far);
+  }
+
+  .quick-links--shiny .quick-link:is(:hover, :focus-visible),
+  .quick-links--shiny .quick-link:is(:hover, :focus-visible)::after {
+    animation-play-state: running, running;
+  }
+
+  .quick-links--shiny .quick-link:is(:hover, :focus-visible)::after {
+    opacity: var(--quick-link-shiny-sheen-hover);
+  }
+
+  .quick-links--shiny .quick-link:is(:hover, :focus-visible) .quick-link__label::before {
+    opacity: var(--quick-link-shiny-glow);
+    animation-play-state: running;
+  }
+
+  .quick-links--shiny .quick-link:focus-visible {
+    outline-color: var(--quick-link-shiny-ink);
+  }
+
+  /* Only on hover: each glint rests where it is until its pill is pointed at or focused.
+     data-offscreen (set by assets/quick-links.js) rests every glint while the row is out of view. */
+  .quick-links--glint-hover .quick-link:not(:hover, :focus-visible),
+  .quick-links--glint-hover .quick-link:not(:hover, :focus-visible)::after,
+  .quick-links--shiny[data-offscreen] .quick-link,
+  .quick-links--shiny[data-offscreen] .quick-link::after {
+    animation-play-state: paused, paused;
+  }
+
+  /* The pill for the page being viewed keeps a steady rim in the glint color */
+  .quick-links--shiny .quick-link--active {
+    background:
+      linear-gradient(var(--quick-link-shiny-fill), var(--quick-link-shiny-fill)) padding-box,
+      linear-gradient(var(--quick-link-shiny-glint), var(--quick-link-shiny-glint)) border-box;
+    color: var(--quick-link-shiny-label);
+    animation: none;
+  }
+
+  @keyframes quick-link-glint {
+    to {
+      --quick-link-glint-angle: 360deg;
+    }
+  }
+
+  @keyframes quick-link-sheen {
+    to {
+      rotate: 360deg;
+    }
+  }
+
+  @keyframes quick-link-breathe {
+    0%,
+    100% {
+      scale: 1;
+    }
+
+    50% {
+      scale: 1.2;
+    }
+  }
+
   @media (prefers-reduced-motion: reduce) {
     .quick-link,
     .quick-link::before,
     .quick-link__image,
     .quick-link__arrow {
       transition: none;
+    }
+
+    .quick-links--shiny .quick-link,
+    .quick-links--shiny .quick-link::after,
+    .quick-links--shiny .quick-link__label::before {
+      transition: none;
+      animation: none;
     }
   }
 {% endstylesheet %}
@@ -355,6 +698,30 @@
     "groups": ["header", "footer"]
   },
   "settings": [
+    {
+      "type": "select",
+      "id": "link_source",
+      "label": "t:settings.links",
+      "info": "t:info.quick_links_source",
+      "options": [
+        {
+          "value": "blocks",
+          "label": "t:options.quick_links_source_blocks"
+        },
+        {
+          "value": "related",
+          "label": "t:options.quick_links_source_related"
+        }
+      ],
+      "default": "blocks"
+    },
+    {
+      "type": "link_list",
+      "id": "related_menu",
+      "label": "t:settings.menu",
+      "default": "main-menu",
+      "visible_if": "{{ section.settings.link_source == 'related' }}"
+    },
     {
       "type": "header",
       "content": "t:content.layout"
@@ -424,14 +791,57 @@
         {
           "value": "fill",
           "label": "t:options.fill"
+        },
+        {
+          "value": "shiny",
+          "label": "t:options.quick_links_shiny"
         }
       ],
       "default": "outline"
     },
     {
+      "type": "color",
+      "id": "shiny_pill_color",
+      "label": "t:settings.quick_links_pill_color",
+      "default": "#ffffff",
+      "visible_if": "{{ section.settings.style == 'shiny' }}"
+    },
+    {
+      "type": "color",
+      "id": "shiny_label_color",
+      "label": "t:settings.quick_links_label_color",
+      "default": "#0b1f44",
+      "visible_if": "{{ section.settings.style == 'shiny' }}"
+    },
+    {
+      "type": "color",
+      "id": "shiny_glint_color",
+      "label": "t:settings.quick_links_glint_color",
+      "default": "#d4a73c",
+      "visible_if": "{{ section.settings.style == 'shiny' }}"
+    },
+    {
+      "type": "select",
+      "id": "shiny_glint_motion",
+      "label": "t:settings.quick_links_glint_motion",
+      "options": [
+        {
+          "value": "always",
+          "label": "t:options.quick_links_glint_always"
+        },
+        {
+          "value": "hover",
+          "label": "t:options.quick_links_glint_hover"
+        }
+      ],
+      "default": "always",
+      "visible_if": "{{ section.settings.style == 'shiny' }}"
+    },
+    {
       "type": "select",
       "id": "hover_effect",
       "label": "t:settings.quick_links_hover_effect",
+      "visible_if": "{{ section.settings.style != 'shiny' }}",
       "options": [
         {
           "value": "fill",
@@ -449,13 +859,15 @@
       "id": "hover_background_color",
       "label": "t:settings.quick_links_hover_background",
       "info": "t:info.quick_links_hover_colors",
-      "placeholder": "t:settings.default"
+      "placeholder": "t:settings.default",
+      "visible_if": "{{ section.settings.style != 'shiny' }}"
     },
     {
       "type": "color",
       "id": "hover_text_color",
       "label": "t:settings.quick_links_hover_text",
-      "placeholder": "t:settings.default"
+      "placeholder": "t:settings.default",
+      "visible_if": "{{ section.settings.style != 'shiny' }}"
     },
     {
       "type": "checkbox",

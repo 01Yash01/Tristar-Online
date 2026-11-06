@@ -29,7 +29,6 @@
   endif
 
   assign media_size = section.settings.image_size | default: 48
-  assign image_sizes = media_size | append: 'px'
   assign image_loading = 'lazy'
   if section.index <= 2
     assign image_loading = 'eager'
@@ -37,65 +36,19 @@
 -%}
 
 {%- if label != blank -%}
-  <li
-    class="quick-links__item"
-    {{ block.shopify_attributes }}
-  >
-    <a
-      {% if url != blank %}
-        href="{{ url }}"
-      {% endif %}
-      class="quick-link{% if is_active %} quick-link--active{% endif %}"
-      {% if is_active %}
-        aria-current="page"
-      {% endif %}
-    >
-      {%- case block_settings.media -%}
-        {%- when 'image' -%}
-          {%- if image != blank -%}
-            <span class="quick-link__media">
-              {{
-                image
-                | image_url: width: 192
-                | image_tag:
-                  widths: '64, 96, 128, 192',
-                  sizes: image_sizes,
-                  loading: image_loading,
-                  alt: '',
-                  class: 'quick-link__image'
-              }}
-            </span>
-          {%- elsif request.design_mode -%}
-            <span class="quick-link__media">
-              {{ 'collection-1' | placeholder_svg_tag: 'quick-link__image' }}
-            </span>
-          {%- endif -%}
-        {%- when 'icon' -%}
-          <span class="quick-link__media quick-link__media--icon">
-            <svg
-              class="quick-link__icon"
-              aria-hidden="true"
-              focusable="false"
-              viewBox="0 0 20 20"
-              fill="currentColor"
-            >
-              {%- render 'icon', icon: block_settings.icon -%}
-            </svg>
-          </span>
-      {%- endcase -%}
-
-      <span class="quick-link__label">{{ label | escape }}</span>
-
-      {%- if section.settings.show_arrow_icon -%}
-        <span
-          class="svg-wrapper quick-link__arrow"
-          aria-hidden="true"
-        >
-          {{- 'icon-arrow.svg' | inline_asset_content -}}
-        </span>
-      {%- endif -%}
-    </a>
-  </li>
+  {%- render 'quick-link-pill',
+    label: label,
+    url: url,
+    image: image,
+    media: block_settings.media,
+    icon: block_settings.icon,
+    is_active: is_active,
+    show_arrow_icon: section.settings.show_arrow_icon,
+    media_size: media_size,
+    image_loading: image_loading,
+    show_placeholder: request.design_mode,
+    attributes: block.shopify_attributes
+  -%}
 {%- endif -%}
 
 {% schema %}

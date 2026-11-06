@@ -7,6 +7,7 @@ import '@theme/scrolling';
  *
  * Flags the row as overflowing so the desktop arrows appear only when there is somewhere to
  * scroll, keeps each arrow disabled at its end, and scrolls by most of a view per click.
+ * With the Shiny edge style it also flags the row as off screen, which rests the glint animation.
  * Without JavaScript the row is still a plain, scrollable list of links.
  *
  * @typedef {object} Refs
@@ -26,19 +27,26 @@ class QuickLinks extends Component {
 
   #resizeObserver = new ResizeObserver(() => this.#update());
 
+  /** @type {IntersectionObserver | null} */
+  #visibilityObserver = null;
+
   connectedCallback() {
     super.connectedCallback();
     this.#bindScroller();
+    this.#syncVisibilityObserver();
   }
 
   updatedCallback() {
     super.updatedCallback();
     this.#bindScroller();
+    this.#syncVisibilityObserver();
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
     this.#unbindScroller();
+    this.#visibilityObserver?.disconnect();
+    this.#visibilityObserver = null;
     if (this.#frame) cancelAnimationFrame(this.#frame);
     this.#frame = 0;
   }
@@ -69,6 +77,25 @@ class QuickLinks extends Component {
     this.#scroller?.removeEventListener('scroll', this.#handleScroll);
     this.#resizeObserver.disconnect();
     this.#scroller = null;
+  }
+
+  /** Watches whether a Shiny edge row is on screen; other styles have no animation to rest. */
+  #syncVisibilityObserver() {
+    const isShiny = this.classList.contains('quick-links--shiny');
+
+    if (!isShiny) {
+      this.#visibilityObserver?.disconnect();
+      this.#visibilityObserver = null;
+      this.removeAttribute('data-offscreen');
+      return;
+    }
+
+    if (this.#visibilityObserver) return;
+
+    this.#visibilityObserver = new IntersectionObserver(([entry]) => {
+      if (entry) this.toggleAttribute('data-offscreen', !entry.isIntersecting);
+    });
+    this.#visibilityObserver.observe(this);
   }
 
   /** @param {number} direction - 1 for forward, -1 for back */
