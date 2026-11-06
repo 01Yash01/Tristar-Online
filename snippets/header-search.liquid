@@ -59,7 +59,7 @@
     class="header-search__form"
   >
     <div
-      class="header-search__field"
+      class="header-search__field{% if hint_terms.size > 0 %} header-search__field--hint{% endif %}"
       ref="field"
     >
       <label
@@ -139,10 +139,10 @@
 
 {% stylesheet %}
   .header-search {
-    --header-search-height: 48px;
+    --header-search-height: 43px;
     --header-search-inset: 6px;
     --header-search-icon-inset: var(--padding-lg);
-    --header-search-max-width: 46rem;
+    --header-search-max-width: min(41.4rem, 90%);
     --header-search-ring: rgb(var(--color-foreground-rgb) / var(--opacity-10));
     --header-search-background: rgb(var(--color-foreground-rgb) / var(--opacity-5));
     --header-search-text-start: calc(var(--header-search-icon-inset) + var(--icon-size-md) + var(--padding-sm));
@@ -274,8 +274,9 @@
     appearance: none;
   }
 
-  /* Rotating hint replaces the placeholder while the field is empty */
-  .header-search__field:has(.header-search__hint) .header-search__input::placeholder {
+  /* Rotating hint replaces the placeholder while the field is empty. A class rather than :has(): with
+     ::placeholder after it, :has() made Chrome restyle the whole page on every small DOM change. */
+  .header-search__field--hint .header-search__input::placeholder {
     color: transparent;
   }
 

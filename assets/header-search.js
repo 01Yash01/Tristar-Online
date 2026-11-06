@@ -266,7 +266,11 @@ class HeaderSearchComponent extends Component {
       );
       await exit.finished;
 
-      hintTerm.textContent = hints[this.#hintIndex] ?? '';
+      // Edit the existing text rather than replacing the node, which would make the browser recheck :has() rules
+      const hint = hints[this.#hintIndex] ?? '';
+      const node = hintTerm.firstChild;
+      if (node instanceof Text && node === hintTerm.lastChild) node.data = hint;
+      else hintTerm.textContent = hint;
 
       const enter = hintTerm.animate(
         [
