@@ -125,6 +125,16 @@
       inset-block-end: var(--footer-reveal-offset, 0px);
       z-index: var(--layer-base);
     }
+
+    /* The browser draws each pinned section on its own, so their edges can land a pixel apart. The background
+       runs on under the next section, which keeps the page from showing through between them. */
+    footer[data-reveal-active] > .shopify-section:has(.footer-reveal):not(:last-child) .section-background,
+    footer[data-reveal-active]
+      > .shopify-section:has(.footer-reveal)
+      ~ .shopify-section:not(:last-child)
+      .section-background {
+      inset-block-end: -1px;
+    }
   }
 {% endstylesheet %}
 

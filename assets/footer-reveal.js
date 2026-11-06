@@ -70,7 +70,8 @@ class FooterRevealComponent extends Component {
     const sections = /** @type {HTMLElement[]} */ ([...this.#footer.children]);
     const firstPinned = sections.findIndex((section) => section.contains(this));
     const pinned = sections.slice(firstPinned);
-    const heights = pinned.map((section) => section.offsetHeight);
+    // Exact heights: a rounded one leaves a hairline of the page background between two pinned sections
+    const heights = pinned.map((section) => section.getBoundingClientRect().height);
     const pinnedHeight = heights.reduce((total, height) => total + height, 0);
 
     let offset = pinnedHeight;

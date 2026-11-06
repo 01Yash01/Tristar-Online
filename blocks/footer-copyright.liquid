@@ -13,8 +13,12 @@
   {{ block.shopify_attributes }}
 >
   <span class="footer-utilities__text">
-    &copy; {{ 'now' | date: '%Y' }}
-    {{ shop.name | link_to: routes.root_url -}}
+    &copy; {{ 'now' | date: '%Y' -}}
+    {%- if block_settings.copyright_text != blank -%}
+      , {{ block_settings.copyright_text | escape }}
+    {%- else %}
+      {{ shop.name | link_to: routes.root_url -}}
+    {%- endif -%}
     {%- if block_settings.show_powered_by -%}
       , {{ powered_by_link }}
     {%- endif -%}
@@ -24,6 +28,13 @@
 {% stylesheet %}
   .footer-utilities__group-copyright {
     color: var(--color-utilities, var(--color-foreground-muted));
+    text-wrap: balance;
+
+    /* One line beside the payment icons, unless it would take more than half of the row */
+    @media screen and (min-width: 750px) {
+      width: max-content;
+      max-width: 50vw;
+    }
   }
 {% endstylesheet %}
 
@@ -32,6 +43,12 @@
   "name": "t:names.copyright",
   "tag": null,
   "settings": [
+    {
+      "type": "text",
+      "id": "copyright_text",
+      "label": "t:settings.copyright_text",
+      "info": "t:info.copyright_text"
+    },
     {
       "type": "checkbox",
       "id": "show_powered_by",
