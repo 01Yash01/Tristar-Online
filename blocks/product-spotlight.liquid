@@ -33,7 +33,7 @@
             | image_url: width: 240
             | image_tag:
               widths: '80, 120, 160, 240',
-              sizes: '72px',
+              sizes: '(max-width: 749px) 52px, 72px',
               loading: 'lazy',
               alt: '',
               class: 'product-spotlight__image'
@@ -63,13 +63,6 @@
           {%- endif -%}
         </span>
       {%- endif -%}
-    </span>
-
-    <span
-      class="svg-wrapper product-spotlight__arrow"
-      aria-hidden="true"
-    >
-      {{- 'icon-arrow.svg' | inline_asset_content -}}
     </span>
   </{{ tag }}>
 {%- endif -%}
@@ -171,29 +164,42 @@
     opacity: 0.65;
   }
 
-  .product-spotlight__arrow {
-    display: flex;
-    flex: 0 0 auto;
-    width: 16px;
-    height: 16px;
-    transition: transform 0.3s var(--ease-out-cubic);
-  }
+  /* Phones: a shorter card leaves more of the hero media in view */
+  @media screen and (max-width: 749px) {
+    .product-spotlight {
+      --product-spotlight-radius: 14px;
 
-  .product-spotlight:is(a):hover .product-spotlight__arrow {
-    transform: translateX(3px);
-  }
+      gap: var(--gap-sm);
+      padding-block: var(--padding-xs);
+      padding-inline: var(--padding-xs) var(--padding-md);
+    }
 
-  [dir='rtl'] .product-spotlight__arrow {
-    transform: scaleX(-1);
-  }
+    .product-spotlight__media {
+      flex-basis: 52px;
+      width: 52px;
+      height: 52px;
+    }
 
-  [dir='rtl'] .product-spotlight:is(a):hover .product-spotlight__arrow {
-    transform: scaleX(-1) translateX(3px);
+    .product-spotlight__info {
+      line-height: var(--line-height--body-tight);
+    }
+
+    .product-spotlight__label {
+      font-size: var(--font-size--2xs);
+    }
+
+    .product-spotlight__title {
+      font-size: var(--font-size--sm);
+      line-height: var(--line-height--body-tight);
+    }
+
+    .product-spotlight__price {
+      font-size: var(--font-size--xs);
+    }
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .product-spotlight,
-    .product-spotlight__arrow {
+    .product-spotlight {
       transition: none;
     }
 
