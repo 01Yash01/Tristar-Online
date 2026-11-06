@@ -14,20 +14,6 @@
     "header_announcements_9jGBFp": {
       "type": "header-announcements",
       "blocks": {
-        "announcement_BxgCk9": {
-          "type": "_announcement",
-          "settings": {
-            "text": "✌🏼 Free Shipping on all orders in Australia&nbsp;",
-            "link": "",
-            "font": "var(--font-accent--family)",
-            "font_size": "0.875rem",
-            "weight": "500",
-            "letter_spacing": "normal",
-            "case": "none",
-            "text_color": "{{ settings.color_palette.background }}"
-          },
-          "blocks": {}
-        },
         "announcement_W7dnCG": {
           "type": "_announcement",
           "settings": {
@@ -38,20 +24,19 @@
             "weight": "",
             "letter_spacing": "normal",
             "case": "none",
-            "text_color": "{{ settings.color_palette.background }}"
+            "text_color": "#ffffff"
           },
           "blocks": {}
         }
       },
       "block_order": [
-        "announcement_BxgCk9",
         "announcement_W7dnCG"
       ],
       "name": "t:names.announcement_bar",
       "settings": {
         "speed": 5,
         "section_width": "full-width",
-        "background_color": "{{ settings.color_palette.color1 }}",
+        "background_color": "#0b1f44",
         "divider_width": 1,
         "divider_color": "#ffffff",
         "padding-block-start": 6,
@@ -76,22 +61,24 @@
           "static": true,
           "settings": {
             "menu": "mega1",
-            "background_color": "#DDD9D1",
-            "text_color": "",
+            "background_color": "#DCDADB",
+            "text_color": "{{ settings.color_palette.foreground }}",
             "type_font_primary_size": "0.875rem",
             "menu_font_style": "inverse",
             "type_font_primary_link": "accent",
             "type_case_primary_link": "none",
-            "menu_style": "collection_images",
+            "show_dropdown_arrows": true,
+            "link_hover_effect": "roll",
+            "menu_style": "text",
             "featured_products_aspect_ratio": "4 / 5",
             "featured_collections_aspect_ratio": "16 / 9",
             "image_border_radius": 0,
             "navigation_bar": false,
             "background_color_navigation_bar": "{{ settings.color_palette.background }}",
             "text_color_navigation_bar": "",
-            "drawer_accordion": false,
-            "drawer_accordion_expand_first": false,
-            "drawer_dividers": false
+            "drawer_accordion": true,
+            "drawer_accordion_expand_first": true,
+            "drawer_dividers": true
           },
           "blocks": {
             "menu-panel-1": {
@@ -493,7 +480,7 @@
         "search_bar_corner_radius": 24,
         "search_bar_button": true,
         "search_bar_hints": "iPhone 17 Pro, Samsung Galaxy S26, AirPods Pro,  Gaming Consoles, Smart watches",
-        "search_bar_background_color": "{{ settings.color_palette.color2 }}",
+        "search_bar_background_color": "#f2f2f0",
         "show_country": true,
         "country_selector_style": true,
         "show_language": true,
@@ -513,12 +500,12 @@
         "actions_font_size": "0.875rem",
         "actions_font": "body",
         "actions_text_case": "none",
-        "background_color_top": "#EFEFEF",
-        "text_color_top": "",
-        "background_color_bottom": "{{ settings.color_palette.color1 }}",
-        "text_color_bottom": "#f2c879",
+        "background_color_top": "#ffffff",
+        "text_color_top": "#0b1f44",
+        "background_color_bottom": "#c8202f",
+        "text_color_bottom": "#ffffff",
         "bubble_style": "custom",
-        "bubble_background_color": "#00296b",
+        "bubble_background_color": "#0b1f44",
         "bubble_text_color": "",
         "enable_transparent_header_home": false,
         "home_inverse_logo": false,
