@@ -1383,8 +1383,50 @@ summary:hover {
   }
 }
 
-.shopify-policy__container {
-  padding-block: var(--padding-xl);
+/* Policy pages: Shopify owns this markup and loads its own narrow styles after this file, so these selectors carry an
+   extra class. Policies are often pasted in with h1 and h2 tags, so headings in the text are sized below the page title. */
+.content-for-layout .shopify-policy__container {
+  width: 100%;
+  max-width: var(--page-width);
+  padding-block: var(--padding-5xl) var(--padding-6xl);
+  padding-inline: var(--page-margin);
+}
+
+.content-for-layout .shopify-policy__title {
+  --font-h1--size: var(--font-size--3xl);
+  --font-h1--line-height: var(--line-height--heading-tight);
+
+  margin-block-end: var(--margin-4xl);
+  padding-block-end: var(--padding-lg);
+  border-block-end: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-15));
+  text-align: start;
+
+  @media screen and (min-width: 750px) {
+    --font-h1--size: var(--font-size--4xl);
+  }
+}
+
+.shopify-policy__body {
+  --font-heading--spacing: 0.5em;
+  --font-h1--size: var(--font-size--2xl);
+  --font-h2--size: var(--font-size--xl);
+  --font-h3--size: var(--font-size--lg);
+  --font-h4--size: var(--font-size--md);
+  --font-h5--size: var(--font-size--md);
+  --font-h6--size: var(--font-size--md);
+  --font-h1--line-height: var(--line-height--heading-normal);
+  --font-h2--line-height: var(--line-height--heading-normal);
+  --font-h3--line-height: var(--line-height--heading-normal);
+
+  font-size: var(--font-size--md);
+  line-height: var(--line-height--body-loose);
+  overflow-wrap: anywhere;
+}
+
+/* Terms of service text has no heading tags, only bold lines between line breaks */
+.shopify-policy__body .rte > strong {
+  font-family: var(--font-heading--family);
+  font-size: var(--font-size--lg);
 }
 
 /* Radio buttons and checkboxes - shared base styles */
