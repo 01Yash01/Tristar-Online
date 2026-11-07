@@ -1681,17 +1681,17 @@
           "name": "t:names.product_card",
           "static": true,
           "settings": {
-            "product_card_gap": 8,
+            "product_card_gap": 6,
             "background_color": "{{ settings.color_palette.color2 }}",
             "border": "none",
             "border_width": 1,
             "border_opacity": 100,
             "border_color": "",
-            "border_radius": 0,
-            "padding-block-start": 0,
+            "border_radius": 12,
+            "padding-block-start": 2,
             "padding-block-end": 8,
-            "padding-inline-start": 0,
-            "padding-inline-end": 0
+            "padding-inline-start": 2,
+            "padding-inline-end": 2
           },
           "blocks": {
             "product_card_gallery_DNizbJ": {
@@ -1715,12 +1715,13 @@
               "type": "product-title",
               "name": "t:names.product_title",
               "settings": {
+                "title_style": "name_details",
                 "width": "100%",
                 "max_width": "normal",
-                "alignment": "left",
+                "alignment": "center",
                 "type_preset": "custom",
-                "font": "var(--font-body--family)",
-                "font_size": "0.75rem",
+                "font": "var(--font-heading--family)",
+                "font_size": "0.875rem",
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
@@ -1729,10 +1730,10 @@
                 "background": false,
                 "background_color": "#00000026",
                 "corner_radius": 0,
-                "padding-block-start": 4,
+                "padding-block-start": 2,
                 "padding-block-end": 0,
-                "padding-inline-start": 8,
-                "padding-inline-end": 0
+                "padding-inline-start": 2,
+                "padding-inline-end": 2
               },
               "blocks": {}
             },
@@ -1754,7 +1755,7 @@
                 "case": "none",
                 "text_color": "",
                 "padding-block-start": 0,
-                "padding-block-end": 0,
+                "padding-block-end": 4,
                 "padding-inline-start": 0,
                 "padding-inline-end": 0
               },
