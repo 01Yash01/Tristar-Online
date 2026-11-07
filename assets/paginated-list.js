@@ -228,7 +228,7 @@ export default class PaginatedList extends Component {
       if (!nextPageItemElements) return false;
     }
 
-    grid.append(...nextPageItemElements);
+    this.#insertPage(nextPageItemElements, 'next');
 
     this.#aspectRatioHelper.processNewElements();
 
@@ -297,7 +297,7 @@ export default class PaginatedList extends Component {
     const oldHeight = firstElement ? firstElement.getBoundingClientRect().top + currentScrollTop : 0;
 
     // Prepend the new elements
-    grid.prepend(...previousPageItemElements);
+    this.#insertPage(previousPageItemElements, 'previous');
 
     this.#aspectRatioHelper.processNewElements();
 
@@ -321,6 +321,36 @@ export default class PaginatedList extends Component {
   }
 
   /**
+   * Adds a page's cards to the grid. Cards that can be bought join the others in page order, and sold out cards
+   * stay together after all of them, also in page order, as the section renders each page.
+   * @param {NodeListOf<Element>} items
+   * @param {"previous" | "next"} type
+   */
+  #insertPage(items, type) {
+    const { grid } = this.refs;
+    if (!grid) return;
+
+    /** @type {Element[]} */
+    const available = [];
+    /** @type {Element[]} */
+    const soldOut = [];
+    for (const item of items) (item.hasAttribute('data-sold-out') ? soldOut : available).push(item);
+
+    const firstSoldOut = grid.querySelector(':scope > [data-sold-out]');
+
+    if (type === 'previous') {
+      grid.prepend(...available);
+      if (firstSoldOut) firstSoldOut.before(...soldOut);
+      else grid.append(...soldOut);
+      return;
+    }
+
+    if (firstSoldOut) firstSoldOut.before(...available);
+    else grid.append(...available);
+    grid.append(...soldOut);
+  }
+
+  /**
    * @param {"previous" | "next"} type
    * @returns {{ page: number, url: URL } | undefined}
    */
@@ -330,11 +360,13 @@ export default class PaginatedList extends Component {
 
     if (!Array.isArray(cards)) return;
 
-    const targetCard = cards[isPrevious ? 0 : cards.length - 1];
+    // Sold out cards sit after every page's other cards, so the loaded pages come from the cards' page numbers
+    // rather than from the first and last card in the grid
+    const loadedPages = cards.map((card) => Number(card.dataset.page)).filter((page) => !Number.isNaN(page));
 
-    if (!targetCard) return;
+    if (!loadedPages.length) return;
 
-    const currentCardPage = Number(targetCard.dataset.page);
+    const currentCardPage = isPrevious ? Math.min(...loadedPages) : Math.max(...loadedPages);
     const page = isPrevious ? currentCardPage - 1 : currentCardPage + 1;
 
     const url = new URL(window.location.href);

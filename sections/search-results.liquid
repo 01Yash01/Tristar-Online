@@ -46,13 +46,23 @@
         {% assign products = collection.products %}
       {% endif %}
 
+      {%- liquid
+        # Sold out products follow the ones shoppers can buy, each group in the results' own order.
+        # paginated-list.js keeps that order as more pages load.
+        assign available_products = products | where: 'available'
+        assign sold_out_products = products | reject: 'available'
+        assign ordered_products = available_products | concat: sold_out_products
+      -%}
       {% capture children %}
-        {% for product in products %}
+        {% for product in ordered_products %}
           <li
             id="{{ section.id }}-{{ product.id }}"
             class="product-grid__item product-grid__item--{{ forloop.index0 }}"
             data-page="{{ paginate.current_page }}"
             data-product-id="{{ product.id }}"
+            {% unless product.available %}
+              data-sold-out
+            {% endunless %}
             ref="cards[]"
           >
             {% content_for 'block',
