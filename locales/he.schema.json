@@ -246,6 +246,8 @@
     "work_quickly_to_ship": "<p>נעבוד מהר כדי לשלוח את ההזמנה שלך בהקדם האפשרי. לאחר שההזמנה שלך תישלח, תקבל דוא&quot;ל עם מידע נוסף. זמני האספקה משתנים בהתאם למיקומך.</p>"
   },
   "info": {
+    "title_style": "מציג את הטקסט שלפני ה-“ - ” הראשון כשם הדגם, ואת המצב, האחסון ופרטים נוספים בשורה מתחתיו. כותרות ללא “ - ” מוצגות במלואן.",
+    "show_color_dots": "שמות הצבעים בכותרת מוצגים כנקודות בקבוצות הצבעים הסטנדרטיות של Shopify, והשם מופיע במעבר עם העכבר. אם בכותרת יש שם צבע שהערכה לא מכירה, הצבעים נשארים כטקסט.",
     "link_hover_effect": "חל על קישורים ללא תפריט נפתח.",
     "back_to_top_style": "הטבעת של העיגול מתמלאת ככל שהלקוחות גוללים למטה בדף.",
     "breadcrumbs_skip_collections": "Comma-separated collection handles that are too broad to show, for example all, sale.",
@@ -806,6 +808,8 @@
     "thumbnails": "תמונות ממוזערות",
     "tight": "צפוף",
     "tiktok": "TikTok",
+    "title_style_full": "כותרת מלאה",
+    "title_style_name_details": "שם הדגם ופרטים",
     "top": "עליון",
     "top_left": "למעלה משמאל",
     "top_right": "למעלה מימין",
@@ -1303,6 +1307,8 @@
     "thickness": "עובי",
     "title": "כותרת",
     "title_preset": "קביעה מראש של כותרת",
+    "title_style": "סגנון כותרת",
+    "show_color_dots": "הצגת צבעים כנקודות",
     "top": "למעלה",
     "top_level_size": "גודל רמה עליונה",
     "top_padding": "ריפוד עליון",

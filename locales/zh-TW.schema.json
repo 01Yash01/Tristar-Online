@@ -722,6 +722,8 @@
     "selected_button_style": "已選取按鈕樣式",
     "open_by_default": "預設為開啟",
     "title_preset": "標題預設設定",
+    "title_style": "標題樣式",
+    "show_color_dots": "以圓點顯示顏色",
     "customer_account_menu": "顧客帳號選單"
   },
   "options": {
@@ -845,6 +847,8 @@
     "start": "起始",
     "stopwatch": "秒錶",
     "tiktok": "TikTok",
+    "title_style_full": "完整標題",
+    "title_style_name_details": "型號名稱和詳細資料",
     "truck": "貨車",
     "tumblr": "Tumblr",
     "twitter": "X（Twitter）",
@@ -1338,6 +1342,8 @@
     "disclosures": "資訊揭露"
   },
   "info": {
+    "title_style": "將第一個「 - 」之前的文字顯示為型號名稱，並在下方一行顯示狀況、儲存容量和其他詳細資料。不含「 - 」的標題會完整顯示。",
+    "show_color_dots": "標題中的顏色名稱會以 Shopify 標準顏色系列的圓點顯示，游標移上時顯示名稱。如果標題包含佈景主題無法辨識的顏色名稱，這些顏色仍以文字顯示。",
     "link_hover_effect": "適用於沒有下拉選單的連結。",
     "back_to_top_style": "圓形樣式的圓環會隨顧客向下捲動頁面而逐漸填滿。",
     "breadcrumbs_skip_collections": "Comma-separated collection handles that are too broad to show, for example all, sale.",

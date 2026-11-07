@@ -722,6 +722,8 @@
     "selected_button_style": "Vald knappstil",
     "open_by_default": "Öppen som standard",
     "title_preset": "Förinställning för rubrik",
+    "title_style": "Titelstil",
+    "show_color_dots": "Visa färger som prickar",
     "customer_account_menu": "Kundkontomeny"
   },
   "options": {
@@ -845,6 +847,8 @@
     "start": "Start",
     "stopwatch": "Stoppur",
     "tiktok": "TikTok",
+    "title_style_full": "Hela titeln",
+    "title_style_name_details": "Modellnamn och detaljer",
     "truck": "Lastbil",
     "tumblr": "Tumblr",
     "twitter": "X (Twitter)",
@@ -1338,6 +1342,8 @@
     "disclosures": "Upplysningar"
   },
   "info": {
+    "title_style": "Visar texten före det första ” - ” som modellnamn, med skick, lagring och andra detaljer på en rad under. Titlar utan ” - ” visas i sin helhet.",
+    "show_color_dots": "Färgnamn i titeln visas som prickar i Shopifys standardfärgfamiljer, med namnet när du håller pekaren över. Om en titel har ett färgnamn som temat inte känner till förblir färgerna text.",
     "link_hover_effect": "Gäller länkar utan rullgardinsmeny.",
     "back_to_top_style": "Cirkelns ring fylls i takt med att kunderna skrollar nedåt på sidan.",
     "breadcrumbs_skip_collections": "Comma-separated collection handles that are too broad to show, for example all, sale.",

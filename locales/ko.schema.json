@@ -722,6 +722,8 @@
     "selected_button_style": "선택한 버튼 스타일",
     "open_by_default": "기본으로 열기",
     "title_preset": "제목 사전 설정",
+    "title_style": "제목 스타일",
+    "show_color_dots": "색상을 점으로 표시",
     "customer_account_menu": "고객 계정 메뉴"
   },
   "options": {
@@ -823,6 +825,8 @@
     "start": "시작",
     "stopwatch": "스톱워치",
     "tiktok": "TikTok",
+    "title_style_full": "전체 제목",
+    "title_style_name_details": "모델명과 세부 정보",
     "truck": "트럭",
     "tumblr": "Tumblr",
     "twitter": "X(Twitter)",
@@ -1338,6 +1342,8 @@
     "disclosures": "고지 사항"
   },
   "info": {
+    "title_style": "첫 번째 “ - ” 앞의 텍스트를 모델명으로 표시하고 상태, 저장 용량 및 기타 세부 정보를 그 아래 줄에 표시합니다. “ - ”가 없는 제목은 전체가 표시됩니다.",
+    "show_color_dots": "제목의 색상 이름을 Shopify 표준 색상 계열의 점으로 표시하며, 마우스를 올리면 이름이 나타납니다. 테마가 알지 못하는 색상 이름이 제목에 있으면 해당 색상은 텍스트로 유지됩니다.",
     "link_hover_effect": "드롭다운 메뉴가 없는 링크에 적용됩니다.",
     "back_to_top_style": "고객이 페이지를 아래로 스크롤하면 원형 링이 채워집니다.",
     "breadcrumbs_skip_collections": "Comma-separated collection handles that are too broad to show, for example all, sale.",

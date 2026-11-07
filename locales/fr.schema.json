@@ -722,6 +722,8 @@
     "selected_button_style": "Style de bouton sélectionné",
     "open_by_default": "Ouvert par défaut",
     "title_preset": "Préréglage du titre",
+    "title_style": "Style du titre",
+    "show_color_dots": "Afficher les couleurs en pastilles",
     "customer_account_menu": "Menu du compte client"
   },
   "options": {
@@ -829,6 +831,8 @@
     "start": "Début",
     "stopwatch": "Chronomètre",
     "tiktok": "TikTok",
+    "title_style_full": "Titre complet",
+    "title_style_name_details": "Nom du modèle et détails",
     "truck": "Camion",
     "tumblr": "Tumblr",
     "twitter": "X (Twitter)",
@@ -1338,6 +1342,8 @@
     "disclosures": "Divulgations"
   },
   "info": {
+    "title_style": "Affiche le texte avant le premier « - » comme nom du modèle, avec l’état, le stockage et les autres détails sur une ligne en dessous. Les titres sans « - » restent complets.",
+    "show_color_dots": "Les noms de couleur du titre s’affichent en pastilles dans les familles de couleurs standard de Shopify, avec le nom au survol. Si un titre contient une couleur que le thème ne connaît pas, ses couleurs restent en texte.",
     "link_hover_effect": "S’applique aux liens sans menu déroulant.",
     "back_to_top_style": "L’anneau du cercle se remplit à mesure que les clients font défiler la page.",
     "breadcrumbs_skip_collections": "Comma-separated collection handles that are too broad to show, for example all, sale.",

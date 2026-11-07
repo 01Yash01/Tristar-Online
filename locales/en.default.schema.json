@@ -254,6 +254,8 @@
     "work_quickly_to_ship": "<p>We will work quickly to ship your order as soon as possible. Once your order has shipped, you will receive an email with further information. Delivery times vary depending on your location.</p>"
   },
   "info": {
+    "title_style": "Shows the text before the first “ - ” as the model name, with the condition, storage and other details on a line below. Titles without “ - ” stay in full.",
+    "show_color_dots": "Color names in the title show as dots in Shopify’s standard color families, with the name on hover. If a title has a color name the theme doesn’t know, its colors stay as text.",
     "link_hover_effect": "Applies to links without a dropdown menu.",
     "back_to_top_style": "Circle fills its ring as shoppers scroll down the page.",
     "breadcrumbs_skip_collections": "Comma-separated collection handles that are too broad to show, for example all, sale.",
@@ -868,6 +870,8 @@
     // Typography spacing option for line height and letter spacing
     "tight": "Tight",
     "tiktok": "TikTok",
+    "title_style_full": "Full title",
+    "title_style_name_details": "Model name and details",
     "top": "Top",
     "top_left": "Top left",
     "top_right": "Top right",
@@ -1396,6 +1400,8 @@
     "thickness": "Thickness",
     "title": "Title",
     "title_preset": "Title preset",
+    "title_style": "Title style",
+    "show_color_dots": "Show colors as dots",
     // Label for range input controlling top spacing/margin
     "top": "Top",
     "top_level_size": "Top level size",

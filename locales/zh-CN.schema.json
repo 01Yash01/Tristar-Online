@@ -722,6 +722,8 @@
     "selected_button_style": "所选按钮样式",
     "open_by_default": "默认展开",
     "title_preset": "标题预设",
+    "title_style": "标题样式",
+    "show_color_dots": "以圆点显示颜色",
     "customer_account_menu": "客户账户菜单"
   },
   "options": {
@@ -845,6 +847,8 @@
     "start": "开头",
     "stopwatch": "秒表",
     "tiktok": "TikTok",
+    "title_style_full": "完整标题",
+    "title_style_name_details": "型号名称和详情",
     "truck": "卡车",
     "tumblr": "Tumblr",
     "twitter": "X (Twitter)",
@@ -1338,6 +1342,8 @@
     "disclosures": "披露信息"
   },
   "info": {
+    "title_style": "将第一个“ - ”之前的文字显示为型号名称，并在下方一行显示成色、存储容量和其他详情。不含“ - ”的标题会完整显示。",
+    "show_color_dots": "标题中的颜色名称会以 Shopify 标准颜色系列的圆点显示，悬停时显示名称。如果标题包含主题无法识别的颜色名称，这些颜色仍以文字显示。",
     "link_hover_effect": "适用于没有下拉菜单的链接。",
     "back_to_top_style": "圆形样式的圆环会随顾客向下滚动页面而逐渐填满。",
     "breadcrumbs_skip_collections": "Comma-separated collection handles that are too broad to show, for example all, sale.",

@@ -722,6 +722,8 @@
     "selected_button_style": "Valgt knappestil",
     "open_by_default": "Åpen som standard",
     "title_preset": "Forhåndsinnstilling for tittel",
+    "title_style": "Tittelstil",
+    "show_color_dots": "Vis farger som prikker",
     "customer_account_menu": "Kundekontomeny"
   },
   "options": {
@@ -845,6 +847,8 @@
     "start": "Start",
     "stopwatch": "Stoppeklokke",
     "tiktok": "TikTok",
+    "title_style_full": "Hele tittelen",
+    "title_style_name_details": "Modellnavn og detaljer",
     "truck": "Lastebil",
     "tumblr": "Tumblr",
     "twitter": "X (Twitter)",
@@ -1338,6 +1342,8 @@
     "disclosures": "Opplysninger"
   },
   "info": {
+    "title_style": "Viser teksten før den første « - » som modellnavn, med tilstand, lagring og andre detaljer på en linje under. Titler uten « - » vises i sin helhet.",
+    "show_color_dots": "Fargenavn i tittelen vises som prikker i Shopifys standard fargefamilier, med navnet når du holder pekeren over. Hvis en tittel har et fargenavn temaet ikke kjenner, forblir fargene tekst.",
     "link_hover_effect": "Gjelder lenker uten rullegardinmeny.",
     "back_to_top_style": "Ringen rundt sirkelen fylles etter hvert som kundene blar nedover siden.",
     "breadcrumbs_skip_collections": "Comma-separated collection handles that are too broad to show, for example all, sale.",

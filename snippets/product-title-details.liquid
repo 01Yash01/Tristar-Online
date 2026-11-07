@@ -1,0 +1,497 @@
+{%- doc -%}
+  Renders a product title as a model name with a details line, for the Product title block's
+  "Model name and details" style. The text before the first " - " is the model name, and a one-word
+  brand before it joins the next part. The rest follows on one line: the condition first (a grade
+  before "Refurbished", "Open Never Used", "Box Damaged"), then storage sizes, then every other part
+  in title order. Battery health ("80% Battery") is left off the card. With show_colors, a part listing colors
+  becomes a row of dots in Shopify's standard color families, but only when every color in it is a
+  known color name; any other part stays text. A title without " - " renders in full, as with the
+  Full title style. Display only: the product title itself never changes.
+
+  @param {string} title - The product title
+  @param {boolean} [show_colors] - Show a part listing colors as dots instead of text
+
+  @example
+  {% render 'product-title-details', title: closest.product.title %}
+{%- enddoc -%}
+
+{%- liquid
+  assign delimiter = '|§|'
+  assign grades = 'Pristine,Excellent,Very Good,Good,Acceptable,Fair' | split: ','
+
+  # Color names to Shopify's standard color families. A color item may also hold modifier words
+  # ("Sky Blue", "Phantom Black"); an item with any other word is not a color, so its part stays text
+  assign color_base = ',black:black,white:white,blue:blue,navy:navy,green:green,red:red,pink:pink,purple:purple,yellow:yellow,orange:orange,gold:gold,silver:silver,gray:gray,grey:gray,beige:beige,brown:brown,bronze:bronze,clear:clear,transparent:clear,multicolor:multicolor,multicolour:multicolor,'
+  assign color_shades = ',midnight:navy,starlight:beige,graphite:gray,charcoal:gray,slate:gray,fog:gray,moonstone:gray,ash:gray,obsidian:black,onyx:black,porcelain:white,snow:white,chalk:white,pearl:white,ivory:beige,cream:beige,sand:beige,desert:beige,champagne:gold,platinum:silver,lavender:purple,lilac:purple,violet:purple,iris:purple,plum:purple,mauve:purple,orchid:purple,mint:green,sage:green,jade:green,aloe:green,wintergreen:green,olive:green,emerald:green,lime:green,hazel:green,teal:blue,turquoise:blue,aqua:blue,cyan:blue,ultramarine:blue,bay:blue,cobalt:blue,sapphire:blue,azure:blue,sea:blue,coral:orange,peach:orange,amber:orange,peony:pink,rose:pink,blush:pink,berry:pink,fuchsia:pink,magenta:pink,burgundy:red,wine:red,crimson:red,maroon:red,ruby:red,lemon:yellow,lemongrass:yellow,mustard:yellow,copper:bronze,'
+  assign color_modifiers = ',space,deep,dark,light,pale,bright,matte,glossy,metallic,phantom,cosmic,jet,sky,mist,misty,sierra,pacific,alpine,ice,icy,polished,satin,starry,awesome,crafted,natural,mystic,ocean,arctic,shadow,cloud,frost,frosted,smoky,soft,electric,royal,hot,baby,powder,dusty,pastel,neon,classic,pure,stone,marble,carbon,infinite,lake,forest,product,'
+  assign color_names = ''
+  assign color_families = ''
+
+  # Spaced en and em dashes count as " - ", runs of spaces collapse, and a grade written against
+  # "Refurbished" ("Excellent- Refurbished", "Pristine Refurbished") becomes a part of its own
+  assign text = title | split: ' ' | join: ' ' | replace: ' – ', ' - ' | replace: ' — ', ' - ' | replace: 'Refurbished.', 'Refurbished'
+  for grade in grades
+    assign spaced = grade | append: ' - Refurbished'
+    assign joined = grade | append: '- Refurbished'
+    assign text = text | replace: joined, spaced
+    assign joined = grade | append: ' -Refurbished'
+    assign text = text | replace: joined, spaced
+    assign joined = grade | append: '-Refurbished'
+    assign text = text | replace: joined, spaced
+    assign joined = grade | append: ' Refurbished'
+    assign text = text | replace: joined, spaced
+  endfor
+
+  assign part_list = ''
+  assign raw_parts = text | split: ' - '
+  for raw_part in raw_parts
+    assign part = raw_part | strip
+    if part != blank
+      assign part_list = part_list | append: part | append: delimiter
+    endif
+  endfor
+  assign parts = part_list | split: delimiter
+
+  assign show_details = false
+  if parts.size > 1
+    assign show_details = true
+  endif
+
+  if show_details
+    assign name = parts.first
+    assign first_detail = 1
+    assign name_words = name | split: ' '
+    if name_words.size == 1
+      assign name = name | append: ' ' | append: parts[1]
+      assign first_detail = 2
+    endif
+    assign last_index = parts.size | minus: 1
+
+    assign conditions = ''
+    assign sizes = ''
+    assign others = ''
+    assign skip_index = -1
+
+    if first_detail <= last_index
+      for index in (first_detail..last_index)
+        if index == skip_index
+          continue
+        endif
+
+        assign part = parts[index]
+        assign next_index = index | plus: 1
+        assign next_part = parts[next_index] | default: ''
+        assign next_head = next_part | slice: 0, 11
+
+        # A grade, alone or at the end of this part, followed by a part that starts with "Refurbished"
+        assign found_grade = ''
+        if next_head == 'Refurbished'
+          for grade in grades
+            if part == grade
+              assign found_grade = grade
+              assign part = ''
+              break
+            endif
+            assign ending = ' ' | append: grade
+            assign ending_start = 0 | minus: ending.size
+            assign part_ending = part | slice: ending_start, ending.size
+            if part_ending == ending
+              assign found_grade = grade
+              assign kept_size = part.size | minus: ending.size
+              assign part = part | slice: 0, kept_size
+              break
+            endif
+          endfor
+        endif
+
+        if found_grade != ''
+          assign conditions = conditions | append: next_head | append: delimiter | append: found_grade | append: delimiter
+          assign skip_index = next_index
+          assign after_refurbished = next_part | slice: 11, next_part.size
+          assign part = part | append: ' ' | append: after_refurbished
+        else
+          assign part_head = part | slice: 0, 11
+          if part_head == 'Refurbished'
+            assign conditions = conditions | append: part_head | append: delimiter
+            assign part = part | slice: 11, part.size
+          endif
+        endif
+
+        if part contains 'Open Never Used'
+          assign conditions = conditions | append: 'Open Never Used' | append: delimiter
+          assign part = part | remove_first: 'Open Never Used'
+        endif
+
+        if part contains 'Box Damaged'
+          assign conditions = conditions | append: 'Box Damaged' | append: delimiter
+          assign part = part | remove_first: 'Box Damaged'
+        endif
+
+        # Battery health, written as "80% Battery", is left off the card; the product page title still shows it
+        if part contains '%'
+          assign words = part | split: ' '
+          assign kept_words = ''
+          assign battery = ''
+          assign skip_word = -1
+          for word in words
+            if forloop.index0 == skip_word
+              continue
+            endif
+            assign following = words[forloop.index] | default: '' | downcase
+            assign word_ending = word | slice: -1, 1
+            if battery == '' and word_ending == '%' and following == 'battery'
+              assign battery = word | append: ' ' | append: words[forloop.index]
+              assign skip_word = forloop.index
+              continue
+            endif
+            assign kept_words = kept_words | append: word | append: ' '
+          endfor
+          if battery != ''
+            assign part = kept_words
+          endif
+        endif
+
+        # Tidy what is left: spaces, a dangling "with", empty or wrapping brackets, edge commas
+        assign part = part | split: ' ' | join: ' '
+        assign part_ending = part | slice: -5, 5
+        if part_ending == ' with'
+          assign kept_size = part.size | minus: 5
+          assign part = part | slice: 0, kept_size
+        endif
+        assign part_head = part | slice: 0, 5
+        if part_head == 'with '
+          assign part = part | slice: 5, part.size
+        endif
+        assign part = part | strip
+        if part == '()' or part == '( )'
+          assign part = ''
+        endif
+        assign part_head = part | slice: 0, 1
+        assign part_ending = part | slice: -1, 1
+        assign inner_size = part.size | minus: 2
+        if part_head == '(' and part_ending == ')' and inner_size > 0
+          assign inner = part | slice: 1, inner_size
+          unless inner contains '(' or inner contains ')'
+            assign part = inner | strip
+          endunless
+        endif
+        assign part_head = part | slice: 0, 1
+        if part_head == ','
+          assign part = part | slice: 1, part.size | strip
+        endif
+        assign part_ending = part | slice: -1, 1
+        if part_ending == ','
+          assign kept_size = part.size | minus: 1
+          assign part = part | slice: 0, kept_size | strip
+        endif
+
+        if part != blank
+          # Storage sizes: every word is a size such as 128GB or 1TB, or a joining word such as RAM or Storage
+          assign probe = part | replace: ',', ' ' | replace: '/', ' ' | replace: '&', ' ' | replace: '+', ' ' | replace: '(', ' ' | replace: ')', ' ' | replace: '|', ' '
+          assign probe_words = probe | split: ' '
+          assign size_words = 0
+          assign other_words = 0
+          for word in probe_words
+            assign upper = word | upcase
+            if upper == 'GB' or upper == 'TB'
+              assign size_words = size_words | plus: 1
+              continue
+            endif
+            if upper == 'RAM' or upper == 'STORAGE' or upper == 'ROM' or upper == 'OR' or upper == 'AND'
+              continue
+            endif
+            assign number = upper | remove: 'GB' | remove: 'TB'
+            assign leftover = number | remove: '0' | remove: '1' | remove: '2' | remove: '3' | remove: '4' | remove: '5' | remove: '6' | remove: '7' | remove: '8' | remove: '9' | remove: '.'
+            if leftover == '' and number != ''
+              if number != upper
+                assign size_words = size_words | plus: 1
+              endif
+            else
+              assign other_words = other_words | plus: 1
+            endif
+          endfor
+
+          if size_words > 0 and other_words == 0
+            assign sizes = sizes | append: part | append: delimiter
+            continue
+          endif
+
+          # Colors: every item of the part is a color name, possibly with modifier words
+          assign part_names = ''
+          assign part_families = ''
+          if show_colors
+            assign color_items = part | replace: '/', ',' | replace: '&', ',' | replace: '+', ',' | replace: ' and ', ',' | replace: ' or ', ',' | split: ','
+            for color_item in color_items
+              assign item = color_item | strip
+              if item == blank
+                continue
+              endif
+              assign item_family = ''
+              assign item_text = item | downcase | replace: '(product)red', 'product red' | replace: '(', ' ' | replace: ')', ' ' | split: ' ' | join: ' '
+              if item_text contains 'rose gold' or item_text contains 'pink gold'
+                assign item_family = 'rose-gold'
+                assign rest_words = item_text | remove: 'rose gold' | remove: 'pink gold' | split: ' '
+                for word in rest_words
+                  assign probe_word = ',' | append: word | append: ','
+                  unless color_modifiers contains probe_word
+                    assign item_family = ''
+                  endunless
+                endfor
+              else
+                assign base_family = ''
+                assign shade_family = ''
+                assign has_titanium = false
+                assign all_known = true
+                assign item_words = item_text | split: ' '
+                for word in item_words
+                  assign probe_word = ',' | append: word | append: ':'
+                  assign hit = color_base | split: probe_word
+                  if hit.size > 1
+                    assign base_family = hit[1] | split: ',' | first
+                    continue
+                  endif
+                  if word == 'titanium'
+                    assign has_titanium = true
+                    continue
+                  endif
+                  assign hit = color_shades | split: probe_word
+                  if hit.size > 1
+                    assign shade_family = hit[1] | split: ',' | first
+                    continue
+                  endif
+                  assign probe_word = ',' | append: word | append: ','
+                  unless color_modifiers contains probe_word
+                    assign all_known = false
+                  endunless
+                endfor
+                if all_known
+                  if base_family != ''
+                    assign item_family = base_family
+                  elsif shade_family != ''
+                    assign item_family = shade_family
+                  elsif has_titanium
+                    assign item_family = 'gray'
+                  endif
+                endif
+              endif
+
+              if item_family == ''
+                assign part_names = ''
+                break
+              endif
+              assign part_names = part_names | append: item | append: delimiter
+              assign part_families = part_families | append: item_family | append: delimiter
+            endfor
+          endif
+
+          if part_names != ''
+            assign color_names = color_names | append: part_names
+            assign color_families = color_families | append: part_families
+          else
+            assign others = others | append: part | append: delimiter
+          endif
+        endif
+      endfor
+    endif
+
+    assign details = conditions | append: sizes | append: others | split: delimiter
+  endif
+-%}
+
+{%- if show_details -%}
+  <p
+    role="heading"
+    aria-level="3"
+    class="product-title-details"
+  >
+    <span class="product-title-details__name">{{ name | escape }}</span>
+    {%- if details.size > 0 -%}
+      <span class="product-title-details__details">
+        {%- for detail in details -%}
+          {%- comment -%} Shoppers see a dot between details; screen readers hear a comma {%- endcomment -%}
+          {%- unless forloop.first -%}<span class="visually-hidden">, </span><span aria-hidden="true"> · </span>{%- endunless -%}
+          {{- detail | escape -}}
+        {%- endfor -%}
+      </span>
+    {%- endif -%}
+    {%- if color_names != '' -%}
+      {%- liquid
+        assign color_name_list = color_names | split: delimiter
+        assign color_family_list = color_families | split: delimiter
+        assign more_colors = color_name_list.size | minus: 6
+      -%}
+      {%- comment -%} Screen readers hear the color names; shoppers see the dots, with the name on hover {%- endcomment -%}
+      <span class="product-title-details__colors">
+        <span class="visually-hidden">, {{ color_name_list | join: ', ' | escape }}</span>
+        {%- for color_name in color_name_list limit: 6 -%}
+          <span
+            class="product-title-details__dot product-title-details__dot--{{ color_family_list[forloop.index0] }}"
+            title="{{ color_name | escape }}"
+            aria-hidden="true"
+          ></span>
+        {%- endfor -%}
+        {%- if more_colors > 0 -%}
+          <span
+            class="product-title-details__more"
+            aria-hidden="true"
+          >
+            +{{ more_colors }}
+          </span>
+        {%- endif -%}
+      </span>
+    {%- endif -%}
+  </p>
+{%- else -%}
+  <p
+    role="heading"
+    aria-level="3"
+    class="line-clamp-2"
+  >
+    {{- title | escape -}}
+  </p>
+{%- endif -%}
+
+{% stylesheet %}
+  .product-title-details {
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-3xs);
+    min-width: 0;
+    margin: 0;
+  }
+
+  .product-title-details__name,
+  .product-title-details__details {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+  }
+
+  .product-title-details__name {
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
+
+  /* Secondary to the model name: smaller, lighter and on one line, in the body font so it stays regular weight
+     whatever the title font */
+  .product-title-details__details {
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    font-family: var(--font-body--family);
+    font-style: var(--font-body--style);
+    font-weight: var(--font-body--weight);
+    font-size: 0.92em;
+    letter-spacing: normal;
+    text-transform: none;
+    color: rgb(var(--color-rgb, var(--color-foreground-rgb)) / var(--opacity-60));
+  }
+
+  /* Colors as dots in Shopify's standard color families, shaped like the theme's swatches and lined up with
+     the title text */
+  .product-title-details__colors {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: var(--text-align, var(--text-align-default));
+    gap: var(--gap-2xs);
+    padding-block-start: var(--gap-3xs);
+  }
+
+  .product-title-details__dot {
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: var(--variant-picker-swatch-radius, 50%);
+    background: var(--dot-color);
+    box-shadow: inset 0 0 0 1px rgb(var(--color-foreground-rgb) / var(--style-border-swatch-opacity, 15%));
+  }
+
+  .product-title-details__more {
+    font-family: var(--font-body--family);
+    font-weight: var(--font-body--weight);
+    font-size: 0.85em;
+    line-height: 1;
+    color: rgb(var(--color-rgb, var(--color-foreground-rgb)) / var(--opacity-60));
+  }
+
+  .product-title-details__dot--black {
+    --dot-color: #1c1c1e;
+  }
+
+  .product-title-details__dot--white {
+    --dot-color: #f7f7f5;
+  }
+
+  .product-title-details__dot--gray {
+    --dot-color: #8e8e93;
+  }
+
+  .product-title-details__dot--silver {
+    --dot-color: #c9cbce;
+  }
+
+  .product-title-details__dot--gold {
+    --dot-color: #dcbf7a;
+  }
+
+  .product-title-details__dot--rose-gold {
+    --dot-color: #e6b8a7;
+  }
+
+  .product-title-details__dot--beige {
+    --dot-color: #e9dcc4;
+  }
+
+  .product-title-details__dot--brown {
+    --dot-color: #7a5135;
+  }
+
+  .product-title-details__dot--bronze {
+    --dot-color: #a8733f;
+  }
+
+  .product-title-details__dot--navy {
+    --dot-color: #22304f;
+  }
+
+  .product-title-details__dot--blue {
+    --dot-color: #3f72b8;
+  }
+
+  .product-title-details__dot--green {
+    --dot-color: #6f9f7a;
+  }
+
+  .product-title-details__dot--yellow {
+    --dot-color: #f1d55e;
+  }
+
+  .product-title-details__dot--orange {
+    --dot-color: #e8843c;
+  }
+
+  .product-title-details__dot--red {
+    --dot-color: #c8202f;
+  }
+
+  .product-title-details__dot--pink {
+    --dot-color: #f2b9c7;
+  }
+
+  .product-title-details__dot--purple {
+    --dot-color: #8f6fc2;
+  }
+
+  .product-title-details__dot--clear {
+    --dot-color: transparent;
+  }
+
+  .product-title-details__dot--multicolor {
+    --dot-color: conic-gradient(#e8843c, #f1d55e, #6f9f7a, #3f72b8, #8f6fc2, #c8202f, #e8843c);
+  }
+
+  /* Names can take one line or two, so the price keeps to the bottom of the card and lines up across a row */
+  .product-title-details-link ~ product-price {
+    margin-block-start: auto;
+  }
+{% endstylesheet %}

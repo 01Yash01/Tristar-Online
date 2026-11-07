@@ -722,6 +722,8 @@
     "selected_button_style": "Ausgewählter Button-Stil",
     "open_by_default": "Standardmäßig geöffnet",
     "title_preset": "Titelvoreinstellung",
+    "title_style": "Titelstil",
+    "show_color_dots": "Farben als Punkte anzeigen",
     "customer_account_menu": "Kundenkontomenü"
   },
   "options": {
@@ -823,6 +825,8 @@
     "start": "Anfang",
     "stopwatch": "Stoppuhr",
     "tiktok": "TikTok",
+    "title_style_full": "Vollständiger Titel",
+    "title_style_name_details": "Modellname und Details",
     "truck": "LKW",
     "tumblr": "Tumblr",
     "twitter": "X (Twitter)",
@@ -1338,6 +1342,8 @@
     "disclosures": "Pflichtangaben"
   },
   "info": {
+    "title_style": "Zeigt den Text vor dem ersten „ - “ als Modellnamen und Zustand, Speicher und weitere Details in einer Zeile darunter. Titel ohne „ - “ bleiben vollständig.",
+    "show_color_dots": "Farbnamen im Titel erscheinen als Punkte in den Standard-Farbfamilien von Shopify, mit dem Namen beim Darüberfahren. Enthält ein Titel einen Farbnamen, den das Theme nicht kennt, bleiben seine Farben Text.",
     "link_hover_effect": "Gilt für Links ohne Dropdown-Menü.",
     "back_to_top_style": "Der Ring des Kreises füllt sich, während Kunden auf der Seite nach unten scrollen.",
     "breadcrumbs_skip_collections": "Comma-separated collection handles that are too broad to show, for example all, sale.",

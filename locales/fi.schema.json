@@ -722,6 +722,8 @@
     "selected_button_style": "Valitun painikkeen tyyli",
     "open_by_default": "Avoinna oletuksena",
     "title_preset": "Otsikon esiasetus",
+    "title_style": "Otsikon tyyli",
+    "show_color_dots": "Näytä värit pisteinä",
     "customer_account_menu": "Asiakastilin valikko"
   },
   "options": {
@@ -845,6 +847,8 @@
     "start": "Alku",
     "stopwatch": "Sekuntikello",
     "tiktok": "TikTok",
+    "title_style_full": "Koko otsikko",
+    "title_style_name_details": "Mallin nimi ja tiedot",
     "truck": "Kuorma-auto",
     "tumblr": "Tumblr",
     "twitter": "X (Twitter)",
@@ -1338,6 +1342,8 @@
     "disclosures": "Ilmoitukset"
   },
   "info": {
+    "title_style": "Näyttää ensimmäistä ” - ” -merkkiä edeltävän tekstin mallin nimenä ja kunnon, tallennustilan ja muut tiedot sen alla olevalla rivillä. Otsikot ilman ” - ” -merkkiä näytetään kokonaan.",
+    "show_color_dots": "Otsikon värinimet näytetään pisteinä Shopifyn vakioväriperheiden väreissä, ja nimi näkyy, kun osoitin viedään pisteen päälle. Jos otsikossa on väri, jota teema ei tunne, sen värit jäävät tekstiksi.",
     "link_hover_effect": "Koskee linkkejä, joilla ei ole pudotusvalikkoa.",
     "back_to_top_style": "Ympyrän rengas täyttyy, kun asiakkaat vierittävät sivua alaspäin.",
     "breadcrumbs_skip_collections": "Comma-separated collection handles that are too broad to show, for example all, sale.",

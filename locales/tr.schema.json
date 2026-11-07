@@ -722,6 +722,8 @@
     "selected_button_style": "Seçili düğme stili",
     "open_by_default": "Varsayılan olarak açık",
     "title_preset": "Başlık ön ayarı",
+    "title_style": "Başlık stili",
+    "show_color_dots": "Renkleri nokta olarak göster",
     "customer_account_menu": "Müşteri hesabı menüsü"
   },
   "options": {
@@ -829,6 +831,8 @@
     "start": "Başlangıç",
     "stopwatch": "Kronometre",
     "tiktok": "TikTok",
+    "title_style_full": "Tam başlık",
+    "title_style_name_details": "Model adı ve ayrıntılar",
     "truck": "Kamyon",
     "tumblr": "Tumblr",
     "twitter": "X (Twitter)",
@@ -1338,6 +1342,8 @@
     "disclosures": "Bildirimler"
   },
   "info": {
+    "title_style": "İlk “ - ” işaretinden önceki metni model adı olarak, durum, depolama ve diğer ayrıntıları ise altındaki satırda gösterir. “ - ” içermeyen başlıklar tam olarak görünür.",
+    "show_color_dots": "Başlıktaki renk adları Shopify’ın standart renk ailelerinde nokta olarak görünür ve üzerine gelindiğinde ad gösterilir. Başlıkta temanın tanımadığı bir renk adı varsa renkler metin olarak kalır.",
     "link_hover_effect": "Açılır menüsü olmayan bağlantılar için geçerlidir.",
     "back_to_top_style": "Müşteriler sayfayı aşağı kaydırdıkça dairenin halkası dolar.",
     "breadcrumbs_skip_collections": "Comma-separated collection handles that are too broad to show, for example all, sale.",

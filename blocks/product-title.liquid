@@ -4,9 +4,20 @@
   {% assign product_title = '<p role="heading" aria-level="3" class="line-clamp-2">' | append: text | append: '</p>' %}
   {% render 'text', fallback_text: product_title, block: block %}
 {% else %}
-  {% assign product_title = '<p role="heading" aria-level="3" class="line-clamp-2">' | append: closest.product.title | append: '</p>' %}
+  {% liquid
+    # "Model name and details" reads the title on the page only; the product title itself never changes
+    assign title_details = false
+    if block.settings.title_style == 'name_details'
+      assign title_details = true
+    endif
+  %}
+  {% if title_details %}
+    {% capture product_title %}{% render 'product-title-details', title: closest.product.title, show_colors: block.settings.show_color_dots %}{% endcapture %}
+  {% else %}
+    {% assign product_title = '<p role="heading" aria-level="3" class="line-clamp-2">' | append: closest.product.title | append: '</p>' %}
+  {% endif %}
   <a
-    class="contents user-select-text"
+    class="contents user-select-text{% if title_details %} product-title-details-link{% endif %}"
     ref="productTitleLink"
     href="{{ closest.product.url }}"
   >
@@ -22,6 +33,31 @@
     {
       "type": "paragraph",
       "content": "t:content.resource_reference_product_title"
+    },
+    {
+      "type": "select",
+      "id": "title_style",
+      "label": "t:settings.title_style",
+      "info": "t:info.title_style",
+      "options": [
+        {
+          "value": "full",
+          "label": "t:options.title_style_full"
+        },
+        {
+          "value": "name_details",
+          "label": "t:options.title_style_name_details"
+        }
+      ],
+      "default": "full"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_color_dots",
+      "label": "t:settings.show_color_dots",
+      "info": "t:info.show_color_dots",
+      "default": true,
+      "visible_if": "{{ block.settings.title_style == 'name_details' }}"
     },
     {
       "type": "header",

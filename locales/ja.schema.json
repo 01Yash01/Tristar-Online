@@ -722,6 +722,8 @@
     "selected_button_style": "選択されたボタンのスタイル",
     "open_by_default": "デフォルトで開く",
     "title_preset": "タイトルプリセット",
+    "title_style": "タイトルのスタイル",
+    "show_color_dots": "カラーをドットで表示",
     "customer_account_menu": "お客様アカウントメニュー"
   },
   "options": {
@@ -851,6 +853,8 @@
     "start": "開始",
     "stopwatch": "ストップウォッチ",
     "tiktok": "TikTok",
+    "title_style_full": "タイトル全体",
+    "title_style_name_details": "モデル名と詳細",
     "truck": "トラック",
     "tumblr": "Tumblr",
     "twitter": "X (Twitter)",
@@ -1338,6 +1342,8 @@
     "disclosures": "開示情報"
   },
   "info": {
+    "title_style": "最初の「 - 」より前のテキストをモデル名として表示し、状態、容量、その他の詳細をその下の行に表示します。「 - 」を含まないタイトルはそのまま表示されます。",
+    "show_color_dots": "タイトル内のカラー名を Shopify の標準カラーファミリーのドットで表示し、カーソルを合わせると名前が表示されます。テーマが認識できないカラー名を含むタイトルでは、カラーはテキストのまま表示されます。",
     "link_hover_effect": "ドロップダウンメニューのないリンクに適用されます。",
     "back_to_top_style": "円形のリングは、ページを下にスクロールするにつれて満たされます。",
     "breadcrumbs_skip_collections": "Comma-separated collection handles that are too broad to show, for example all, sale.",

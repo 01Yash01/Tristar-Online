@@ -722,6 +722,8 @@
     "selected_button_style": "Styl wybranego przycisku",
     "open_by_default": "Domyślnie otwarte",
     "title_preset": "Gotowe ustawienie tytułu",
+    "title_style": "Styl tytułu",
+    "show_color_dots": "Pokaż kolory jako kropki",
     "customer_account_menu": "Menu konta klienta"
   },
   "options": {
@@ -823,6 +825,8 @@
     "start": "Początek",
     "stopwatch": "Stoper",
     "tiktok": "TikTok",
+    "title_style_full": "Pełny tytuł",
+    "title_style_name_details": "Nazwa modelu i szczegóły",
     "truck": "Ciężarówka",
     "tumblr": "Tumblr",
     "twitter": "X (Twitter)",
@@ -1338,6 +1342,8 @@
     "disclosures": "Informacje prawne"
   },
   "info": {
+    "title_style": "Wyświetla tekst przed pierwszym „ - ” jako nazwę modelu, a stan, pamięć i inne szczegóły w wierszu poniżej. Tytuły bez „ - ” są wyświetlane w całości.",
+    "show_color_dots": "Nazwy kolorów w tytule są wyświetlane jako kropki w standardowych rodzinach kolorów Shopify, a po najechaniu kursorem pojawia się nazwa. Jeśli tytuł zawiera kolor, którego motyw nie zna, kolory pozostają tekstem.",
     "link_hover_effect": "Dotyczy linków bez menu rozwijanego.",
     "back_to_top_style": "Pierścień koła wypełnia się w miarę przewijania strony w dół.",
     "breadcrumbs_skip_collections": "Comma-separated collection handles that are too broad to show, for example all, sale.",

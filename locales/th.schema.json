@@ -722,6 +722,8 @@
     "selected_button_style": "สไตล์ปุ่มที่เลือก",
     "open_by_default": "เปิดตามค่าเริ่มต้น",
     "title_preset": "พรีเซ็ตชื่อ",
+    "title_style": "รูปแบบชื่อ",
+    "show_color_dots": "แสดงสีเป็นจุด",
     "customer_account_menu": "เมนูบัญชีผู้ใช้ของลูกค้า"
   },
   "options": {
@@ -845,6 +847,8 @@
     "start": "เริ่มต้น",
     "stopwatch": "นาฬิกาจับเวลา",
     "tiktok": "TikTok",
+    "title_style_full": "ชื่อเต็ม",
+    "title_style_name_details": "ชื่อรุ่นและรายละเอียด",
     "truck": "รถบรรทุก",
     "tumblr": "Tumblr",
     "twitter": "X (Twitter)",
@@ -1338,6 +1342,8 @@
     "disclosures": "การเปิดเผยข้อมูล"
   },
   "info": {
+    "title_style": "แสดงข้อความก่อน “ - ” ตัวแรกเป็นชื่อรุ่น พร้อมสภาพ ความจุ และรายละเอียดอื่นๆ ในบรรทัดด้านล่าง ชื่อที่ไม่มี “ - ” จะแสดงแบบเต็ม",
+    "show_color_dots": "ชื่อสีในชื่อสินค้าจะแสดงเป็นจุดตามกลุ่มสีมาตรฐานของ Shopify และแสดงชื่อเมื่อวางเมาส์ หากชื่อสินค้ามีชื่อสีที่ธีมไม่รู้จัก สีเหล่านั้นจะยังเป็นข้อความ",
     "link_hover_effect": "ใช้กับลิงก์ที่ไม่มีเมนูแบบเลื่อนลง",
     "back_to_top_style": "วงแหวนของวงกลมจะเต็มขึ้นเมื่อลูกค้าเลื่อนหน้าลง",
     "breadcrumbs_skip_collections": "Comma-separated collection handles that are too broad to show, for example all, sale.",

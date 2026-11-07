@@ -722,6 +722,8 @@
     "selected_button_style": "Styl vybraného tlačítka",
     "open_by_default": "Otevřeno ve výchozím stavu",
     "title_preset": "Předvolba nadpisu",
+    "title_style": "Styl názvu",
+    "show_color_dots": "Zobrazit barvy jako tečky",
     "customer_account_menu": "Nabídka zákaznického účtu"
   },
   "options": {
@@ -845,6 +847,8 @@
     "start": "Začátek",
     "stopwatch": "Stopky",
     "tiktok": "TikTok",
+    "title_style_full": "Celý název",
+    "title_style_name_details": "Název modelu a podrobnosti",
     "truck": "Nákladní auto",
     "tumblr": "Tumblr",
     "twitter": "X (Twitter)",
@@ -1338,6 +1342,8 @@
     "disclosures": "Prohlášení"
   },
   "info": {
+    "title_style": "Text před prvním „ - “ se zobrazí jako název modelu a stav, úložiště a další podrobnosti na řádku pod ním. Názvy bez „ - “ zůstanou celé.",
+    "show_color_dots": "Názvy barev v názvu produktu se zobrazí jako tečky ve standardních barevných skupinách Shopify a po najetí myší se ukáže název. Pokud název obsahuje barvu, kterou šablona nezná, barvy zůstanou jako text.",
     "link_hover_effect": "Platí pro odkazy bez rozbalovací nabídky.",
     "back_to_top_style": "Prstenec kruhu se postupně vyplňuje, jak zákazníci posouvají stránku dolů.",
     "breadcrumbs_skip_collections": "Comma-separated collection handles that are too broad to show, for example all, sale.",

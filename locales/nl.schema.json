@@ -722,6 +722,8 @@
     "selected_button_style": "Geselecteerde knopstijl",
     "open_by_default": "Standaard geopend",
     "title_preset": "Titelvoorinstelling",
+    "title_style": "Titelstijl",
+    "show_color_dots": "Kleuren als stippen tonen",
     "customer_account_menu": "Klantaccountmenu"
   },
   "options": {
@@ -829,6 +831,8 @@
     "start": "Begin",
     "stopwatch": "Stopwatch",
     "tiktok": "TikTok",
+    "title_style_full": "Volledige titel",
+    "title_style_name_details": "Modelnaam en details",
     "truck": "Vrachtwagen",
     "tumblr": "Tumblr",
     "twitter": "X (Twitter)",
@@ -1338,6 +1342,8 @@
     "disclosures": "Toelichtingen"
   },
   "info": {
+    "title_style": "Toont de tekst vóór de eerste ‘ - ’ als modelnaam, met de staat, opslag en andere details op een regel eronder. Titels zonder ‘ - ’ blijven volledig.",
+    "show_color_dots": "Kleurnamen in de titel worden stippen in de standaard kleurfamilies van Shopify, met de naam bij aanwijzen. Als een titel een kleurnaam bevat die het thema niet kent, blijven de kleuren tekst.",
     "link_hover_effect": "Geldt voor links zonder vervolgkeuzemenu.",
     "back_to_top_style": "De ring van de cirkel vult zich terwijl klanten naar beneden scrollen.",
     "breadcrumbs_skip_collections": "Comma-separated collection handles that are too broad to show, for example all, sale.",
