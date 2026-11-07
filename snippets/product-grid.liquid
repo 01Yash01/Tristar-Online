@@ -348,6 +348,23 @@
     [product-grid-view='list'] .product-grid__card .card-gallery__hover-media {
       inset-inline-end: auto;
     }
+
+    /* Beside the photo the text starts at the photo's edge, whatever alignment the card's blocks use for the grid,
+       and the price follows the title instead of keeping to the bottom of the row */
+    [product-grid-view='list'] .product-grid__card .text-block,
+    [product-grid-view='list'] .product-grid__card .text-block > * {
+      --text-align: start;
+
+      text-align: start;
+    }
+
+    [product-grid-view='list'] .product-grid__card .text-block > * {
+      margin-inline: 0;
+    }
+
+    [product-grid-view='list'] .product-grid__card product-price {
+      margin-block-start: 0;
+    }
   }
   }
 
