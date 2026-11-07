@@ -1359,6 +1359,17 @@
         "default": "text"
       },
       {
+        "type": "range",
+        "id": "badge_sale_min_percent",
+        "min": 0,
+        "max": 20,
+        "step": 1,
+        "unit": "%",
+        "label": "t:settings.badge_sale_min_percent",
+        "info": "t:info.badge_sale_min_percent",
+        "default": 0
+      },
+      {
         "type": "checkbox",
         "id": "badge_new_enabled",
         "label": "t:settings.badge_new_enabled",

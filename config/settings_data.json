@@ -55,6 +55,7 @@
     "badge_position": "top-left",
     "badge_corner_radius": 100,
     "badge_sale_style": "percentage",
+    "badge_sale_min_percent": 5,
     "badge_sale_background_color": "#C8202F",
     "badge_sale_text_color": "{{ settings.color_palette.color2 }}",
     "badge_sold_out_background_color": "#EBE8E2",

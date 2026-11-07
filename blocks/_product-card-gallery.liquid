@@ -14,11 +14,39 @@
       assign show_new_badge = true
     endif
   endif
+
+  # A sale badge only when the saving reaches Theme settings > Badges > Hide sale badge below. Savings come from
+  # the variant shown on the card, as its price does, falling back to the product's lowest prices
+  assign show_sale_badge = false
+  if product.available
+    assign badge_variant = product.selected_or_first_available_variant
+    assign badge_compare = badge_variant.compare_at_price
+    assign badge_price = badge_variant.price
+    unless badge_compare > badge_price
+      assign badge_compare = product.compare_at_price
+      assign badge_price = product.price
+    endunless
+    if badge_compare > badge_price
+      assign badge_saving = badge_compare | minus: badge_price
+      assign badge_percent = badge_saving | times: 100.0 | divided_by: badge_compare | round
+      assign badge_min_percent = settings.badge_sale_min_percent | default: 0
+      if badge_percent >= badge_min_percent
+        assign show_sale_badge = true
+      endif
+    endif
+  endif
+
+  assign show_badges = false
+  if product != blank
+    if product.available == false or show_sale_badge or show_new_badge
+      assign show_badges = true
+    endif
+  endif
 %}
 
 {% capture children %}
   {% unless product == blank %}
-    {%- if product.available == false or product.compare_at_price > product.price or show_new_badge -%}
+    {%- if show_badges -%}
       <div
         class="product-badges product-badges--{{ settings.badge_position }}"
         style="
@@ -26,28 +54,17 @@
             --badge-font-family: var(--font-{{ settings.badge_font_family }}--family); --badge-font-weight: var(--font-{{ settings.badge_font_family }}--weight); --badge-text-transform: {{ settings.badge_text_transform }};
         "
       >
-        {%- if product.available == false or product.compare_at_price > product.price -%}
+        {%- if product.available == false or show_sale_badge -%}
         <div
           class="
             product-badges__badge product-badges__badge--rectangle
-            {% if product.available == false %} color-custom-badge-sold-out{% elsif product.compare_at_price > product.price %} color-custom-badge-sale{% endif %}
+            {% if product.available == false %} color-custom-badge-sold-out{% else %} color-custom-badge-sale{% endif %}
           "
         >
           {%- if product.available == false -%}
             {{ 'content.product_badge_sold_out' | t }}
-          {%- elsif product.compare_at_price > product.price -%}
+          {%- else -%}
             {%- liquid
-              # Savings come from the variant shown on the card, falling back to the product's lowest prices
-              assign badge_variant = product.selected_or_first_available_variant
-              assign badge_compare = badge_variant.compare_at_price
-              assign badge_price = badge_variant.price
-              unless badge_compare > badge_price
-                assign badge_compare = product.compare_at_price
-                assign badge_price = product.price
-              endunless
-              assign badge_saving = badge_compare | minus: badge_price
-              assign badge_percent = badge_saving | times: 100.0 | divided_by: badge_compare | round
-
               case settings.badge_sale_style
                 when 'percentage'
                   if badge_percent > 0
@@ -78,7 +95,7 @@
   {% endunless %}
 {% endcapture %}
 
-{% render 'card-gallery', children: children %}
+{% render 'card-gallery', children: children, show_badges: show_badges %}
 
 {% # Title for the zoomed out grid view %}
 <h3 class="product-grid-view-zoom-out--details">
