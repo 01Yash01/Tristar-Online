@@ -269,6 +269,10 @@
     height: calc(100svh * var(--revealed-image-length));
   }
 
+  .revealed-image--fast {
+    --revealed-image-length: 1.25;
+  }
+
   .revealed-image--short {
     --revealed-image-length: 1.5;
   }
@@ -844,6 +848,10 @@
       "label": "t:settings.scroll_length",
       "options": [
         {
+          "value": "fast",
+          "label": "Fast"
+        },
+        {
           "value": "short",
           "label": "t:options.short"
         },
@@ -856,7 +864,7 @@
           "label": "t:options.long"
         }
       ],
-      "default": "normal"
+      "default": "fast"
     },
     {
       "type": "checkbox",
