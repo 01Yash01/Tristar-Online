@@ -52,6 +52,21 @@
         }
     {% endcase %}
 
+    {%- comment -%}
+      Roomy side space (Theme settings > Page layout) narrows laptop pages by up to about 10%. From
+      1100px up the minimum card is 8% smaller, so laptops keep the cards per row they had; below that,
+      and where the page width limit takes over, the counts already match. Kept before the rules below
+      so the two-column fallback, zoom-out and list views still win.
+    {%- endcomment -%}
+    {%- if settings.page_side_space == 'roomy' and section.settings.layout_type == 'grid' -%}
+      {%- assign roomy_card_size = product_card_size | remove: 'px' | times: 0.92 | round | append: 'px' -%}
+      @media screen and (min-width: 1100px) {
+        .product-grid--{{ section.id }}:is(.product-grid--grid) {
+          --product-grid-columns-desktop: repeat(auto-fill, minmax({{ roomy_card_size }}, 1fr));
+        }
+      }
+    {%- endif -%}
+
     /* This logic helps prevent displaying one column for an large or extra-large product card size on a small screen. We want it to display at least two columns. */
     {% case section.settings.product_card_size %}
       {% when 'extra-large' or 'large' %}

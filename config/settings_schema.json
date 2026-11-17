@@ -1125,6 +1125,27 @@
           }
         ],
         "default": "narrow"
+      },
+      {
+        "type": "select",
+        "id": "page_side_space",
+        "label": "t:settings.page_side_space",
+        "info": "t:info.page_side_space",
+        "options": [
+          {
+            "value": "standard",
+            "label": "t:options.standard"
+          },
+          {
+            "value": "comfortable",
+            "label": "t:options.comfortable"
+          },
+          {
+            "value": "roomy",
+            "label": "t:options.roomy"
+          }
+        ],
+        "default": "standard"
       }
     ]
   },

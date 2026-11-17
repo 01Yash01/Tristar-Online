@@ -283,6 +283,26 @@ p:empty {
   .page-width-content {
     --page-margin: max(40px, var(--safe-area-inset-left, 0px), var(--safe-area-inset-right, 0px));
   }
+
+  /* Theme settings > Page layout > Side space on laptops and tablets. The margin grows with the screen
+     and hands over to the page width limit on wide screens, so phones and large monitors don't change. */
+  .page-side-space-comfortable:is(.page-width-wide, .page-width-normal, .page-width-narrow, .page-width-content),
+  .page-side-space-comfortable :is(.page-width-wide, .page-width-normal, .page-width-narrow, .page-width-content) {
+    --page-margin: max(
+      clamp(40px, 5vw, 96px),
+      var(--safe-area-inset-left, 0px),
+      var(--safe-area-inset-right, 0px)
+    );
+  }
+
+  .page-side-space-roomy:is(.page-width-wide, .page-width-normal, .page-width-narrow, .page-width-content),
+  .page-side-space-roomy :is(.page-width-wide, .page-width-normal, .page-width-narrow, .page-width-content) {
+    --page-margin: max(
+      clamp(40px, calc(40px + (100vw - 750px) * 0.094), 120px),
+      var(--safe-area-inset-left, 0px),
+      var(--safe-area-inset-right, 0px)
+    );
+  }
 }
 
 .page-width-wide {
