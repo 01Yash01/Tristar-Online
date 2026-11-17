@@ -1,0 +1,216 @@
+{% comment %}
+  Section contract.
+  The contact page body: the store's contact details in a colored card beside a white card holding the
+  contact form, and a row of help link cards underneath. Details and form are static blocks; help
+  links are blocks the merchant adds. Two columns when there is room, stacked on narrow screens with
+  the details first.
+  @example
+  <!-- Contact page template: add section > Contact page, then fill in the Contact details block -->
+{% endcomment %}
+
+{%- capture links -%}
+  {% content_for 'blocks' %}
+{%- endcapture -%}
+
+<div
+  class="section section--page-width contact-page spacing-style"
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+    --contact-page-details-background: {{ section.settings.details_background }};
+    --contact-page-details-text: {{ section.settings.details_text }};
+    --contact-page-accent: {{ section.settings.accent_color }};
+    --contact-page-card-background: {{ section.settings.card_background }};
+  "
+>
+  <div class="contact-page__inner">
+    <div class="contact-page__grid">
+      {% content_for 'block', type: '_contact-details', id: 'details' %}
+
+      <div class="contact-page__form-card">
+        {%- if section.settings.form_heading != blank -%}
+          <h2 class="contact-page__form-heading">{{ section.settings.form_heading | escape }}</h2>
+        {%- endif -%}
+        {%- if section.settings.form_text != blank -%}
+          <p class="contact-page__form-text">{{ section.settings.form_text | escape }}</p>
+        {%- endif -%}
+        {% content_for 'block', type: 'contact-form', id: 'form' %}
+      </div>
+    </div>
+
+    {%- if links != blank -%}
+      <div class="contact-page__links">{{ links }}</div>
+    {%- endif -%}
+  </div>
+</div>
+
+{% stylesheet %}
+  .contact-page__inner {
+    container-type: inline-size;
+    display: grid;
+    gap: clamp(20px, 2.5vw, 28px);
+    min-width: 0;
+  }
+
+  /* Stacked by default, details first; side by side once the page is wide enough */
+  .contact-page__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(20px, 2.5vw, 28px);
+    align-items: start;
+  }
+
+  @container (min-width: 52rem) {
+    .contact-page__grid {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    }
+  }
+
+  .contact-page__form-card {
+    display: grid;
+    gap: 12px;
+    min-width: 0;
+    padding: clamp(22px, 3vw, 32px);
+    border: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-10));
+    border-radius: var(--contact-page-radius, 16px);
+    background: var(--contact-page-card-background, #ffffff);
+  }
+
+  .contact-page__form-heading {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-style: var(--font-heading--style);
+    font-weight: var(--font-heading--weight);
+    font-size: clamp(1.3rem, 1.1rem + 0.6vw, 1.6rem);
+    line-height: 1.2;
+  }
+
+  .contact-page__form-text {
+    margin: 0 0 8px;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
+  }
+
+  .contact-page__form-card .contact-form {
+    width: 100%;
+  }
+
+  /* Help links: as many per row as fit, at least about 15rem each */
+  .contact-page__links {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: clamp(10px, 1.5vw, 16px);
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.contact_page",
+  "class": "contact-page-section",
+  "blocks": [
+    {
+      "type": "_contact-link"
+    }
+  ],
+  "max_blocks": 4,
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:content.form"
+    },
+    {
+      "type": "text",
+      "id": "form_heading",
+      "label": "t:settings.heading",
+      "default": "Send us a message"
+    },
+    {
+      "type": "text",
+      "id": "form_text",
+      "label": "t:settings.text",
+      "default": "Fill in the form and our team will get back to you by email."
+    },
+    {
+      "type": "header",
+      "content": "t:content.colors"
+    },
+    {
+      "type": "color",
+      "id": "details_background",
+      "label": "t:settings.background_color",
+      "default": "#0b1f44"
+    },
+    {
+      "type": "color",
+      "id": "details_text",
+      "label": "t:settings.text_color",
+      "default": "#ffffff"
+    },
+    {
+      "type": "color",
+      "id": "accent_color",
+      "label": "t:settings.accent_color",
+      "default": "#e9c46a"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "t:settings.card_background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 64
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:names.contact_page",
+      "category": "t:categories.forms",
+      "blocks": {
+        "details": {
+          "type": "_contact-details",
+          "static": true
+        },
+        "form": {
+          "type": "contact-form",
+          "static": true,
+          "settings": {
+            "width": "custom",
+            "custom_width": 100,
+            "width_mobile": "custom",
+            "custom_width_mobile": 100
+          }
+        },
+        "link_1": {
+          "type": "_contact-link",
+          "settings": {
+            "icon": "box",
+            "title": "Track your order",
+            "text": "See where your parcel is"
+          }
+        }
+      },
+      "block_order": ["link_1"]
+    }
+  ]
+}
+{% endschema %}

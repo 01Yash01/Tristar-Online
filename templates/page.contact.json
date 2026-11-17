@@ -6,7 +6,8 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
- */{
+ */
+{
   "sections": {
     "main": {
       "type": "main-page",
@@ -19,12 +20,16 @@
             "width": "100%",
             "max_width": "normal",
             "alignment": "center",
+            "show_on_mobile": true,
             "type_preset": "h2",
             "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "font_size_mobile": "",
             "line_height": "normal",
             "letter_spacing": "normal",
             "case": "none",
             "wrap": "pretty",
+            "text_color": "",
             "background": false,
             "background_color": "#00000026",
             "corner_radius": 0,
@@ -43,12 +48,44 @@
             "width": "100%",
             "max_width": "narrow",
             "alignment": "center",
+            "show_on_mobile": true,
             "type_preset": "rte",
             "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "font_size_mobile": "",
             "line_height": "normal",
             "letter_spacing": "normal",
             "case": "none",
             "wrap": "pretty",
+            "text_color": "",
+            "background": false,
+            "background_color": "#00000026",
+            "corner_radius": 0,
+            "padding-block-start": 0,
+            "padding-block-end": 0,
+            "padding-inline-start": 0,
+            "padding-inline-end": 0
+          },
+          "blocks": {}
+        },
+        "text_zkdnz3": {
+          "type": "text",
+          "name": "t:names.text",
+          "settings": {
+            "text": "<p>Questions about an order, a product or a return? Our team in Australia is here to help.</p>",
+            "width": "100%",
+            "max_width": "narrow",
+            "alignment": "center",
+            "show_on_mobile": true,
+            "type_preset": "rte",
+            "font": "var(--font-body--family)",
+            "font_size": "1rem",
+            "font_size_mobile": "",
+            "line_height": "normal",
+            "letter_spacing": "normal",
+            "case": "none",
+            "wrap": "pretty",
+            "text_color": "",
             "background": false,
             "background_color": "#00000026",
             "corner_radius": 0,
@@ -62,27 +99,59 @@
       },
       "block_order": [
         "title",
-        "content"
+        "content",
+        "text_zkdnz3"
       ],
       "settings": {
         "content_direction": "column",
         "gap": 32,
-        "background_color": "{{ settings.color_palette.background }}",
+        "background_color": "",
         "padding-block-start": 40,
         "padding-block-end": 0
       }
     },
-    "form": {
-      "type": "section",
+    "contact": {
+      "type": "contact-page",
       "blocks": {
-        "contact_form_UwiCkQ": {
+        "details": {
+          "type": "_contact-details",
+          "static": true,
+          "settings": {
+            "heading": "Get in touch",
+            "phone_label": "Call us",
+            "phone": "1800 952 953",
+            "email_label": "Email us",
+            "email": "info@tristaronline.com.au",
+            "address_label": "Visit our store",
+            "address": "Shop 3, 219 Parramatta Rd\nAuburn NSW 2144",
+            "show_directions_link": true,
+            "directions_text": "Get directions",
+            "warehouses_label": "Warehouses",
+            "warehouses": "Adelaide and Sydney",
+            "hours_label": "Opening hours",
+            "hours": "",
+            "business_name": "Tristar Online Pty Ltd",
+            "abn": "69 640 433 423",
+            "show_abn_lookup": true,
+            "abn_lookup_text": "ABN Lookup"
+          },
+          "blocks": {}
+        },
+        "form": {
           "type": "contact-form",
+          "static": true,
           "settings": {
             "width": "custom",
-            "custom_width": 50,
+            "custom_width": 100,
             "width_mobile": "custom",
             "custom_width_mobile": 100,
+            "background_color": "",
             "input_style": "default",
+            "input_background_color": "{{ settings.color_palette.background }}",
+            "input_text_color": "{{ settings.color_palette.foreground }}",
+            "input_border_color": "{{ settings.color_palette.foreground }}",
+            "border_width": 1,
+            "border_radius": 0,
             "padding-block-start": 0,
             "padding-block-end": 0,
             "padding-inline-start": 0,
@@ -94,7 +163,10 @@
               "static": true,
               "settings": {
                 "label": "Submit",
-                "style_class": "button",
+                "style_class": "button-secondary",
+                "custom_button_background": "{{ settings.color_palette.foreground }}",
+                "custom_button_text": "{{ settings.color_palette.background }}",
+                "custom_button_border": "{{ settings.color_palette.background }}",
                 "width": "fit-content",
                 "custom_width": 100,
                 "width_mobile": "fit-content",
@@ -102,44 +174,59 @@
               },
               "blocks": {}
             }
+          }
+        },
+        "link_track": {
+          "type": "_contact-link",
+          "settings": {
+            "icon": "box",
+            "title": "Track your order",
+            "text": "See where your parcel is",
+            "link": "shopify://pages/order-status"
           },
-          "block_order": []
+          "blocks": {}
+        },
+        "link_shipping": {
+          "type": "_contact-link",
+          "settings": {
+            "icon": "truck",
+            "title": "Shipping",
+            "text": "Free shipping across Australia",
+            "link": "/policies/shipping-policy"
+          },
+          "blocks": {}
+        },
+        "link_returns": {
+          "type": "_contact-link",
+          "settings": {
+            "icon": "return",
+            "title": "Returns and refunds",
+            "text": "How returns and refunds work",
+            "link": "/policies/refund-policy"
+          },
+          "blocks": {}
         }
       },
       "block_order": [
-        "contact_form_UwiCkQ"
+        "link_track",
+        "link_shipping",
+        "link_returns"
       ],
-      "name": "t:names.contact_form",
+      "name": "t:names.contact_page",
       "settings": {
-        "content_direction": "column",
-        "vertical_on_mobile": true,
-        "horizontal_alignment": "flex-start",
-        "vertical_alignment": "center",
-        "align_baseline": false,
-        "horizontal_alignment_flex_direction_column": "center",
-        "vertical_alignment_flex_direction_column": "center",
-        "gap": 32,
-        "section_width": "page-width",
-        "section_height_custom": 50,
-        "background_media": "none",
-        "background_color": "{{ settings.color_palette.background }}",
-        "video_position": "cover",
-        "background_image_position": "cover",
-        "border": "none",
-        "border_width": 1,
-        "border_opacity": 100,
-        "border_radius": 0,
-        "toggle_overlay": false,
-        "overlay_color": "#00000026",
-        "overlay_style": "solid",
-        "gradient_direction": "to top",
-        "padding-block-start": 32,
-        "padding-block-end": 84
+        "form_heading": "Send us a message",
+        "form_text": "Fill in the form and our team will get back to you by email.",
+        "details_background": "#0b1f44",
+        "details_text": "#ffffff",
+        "accent_color": "#e9c46a",
+        "card_background": "#ffffff",
+        "padding-block-start": 24,
+        "padding-block-end": 64
       }
     }
   },
   "order": [
     "main",
-    "form"
+    "contact"
   ]
 }
