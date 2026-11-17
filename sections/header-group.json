@@ -60,8 +60,8 @@
           "type": "_header-menu",
           "static": true,
           "settings": {
-            "menu": "mega1",
-            "background_color": "#DCDADB",
+            "menu": "main-header-horizon-gv",
+            "background_color": "#dcdadb",
             "text_color": "{{ settings.color_palette.foreground }}",
             "type_font_primary_size": "0.875rem",
             "menu_font_style": "inverse",
@@ -85,15 +85,16 @@
               "type": "_mega-menu",
               "static": true,
               "settings": {
-                "layout": "tabs",
+                "layout": "promos",
                 "tabs_columns": 4,
                 "tabs_show_images": true,
                 "tabs_image_ratio": "square",
                 "tabs_image_radius": 12,
                 "tabs_show_view_all": true,
                 "promos_position": "end",
-                "promos_columns": 3,
-                "promo_image_ratio": "landscape",
+                "promos_columns": 4,
+                "promos_size": 80,
+                "promo_image_ratio": "square",
                 "promo_radius": 12,
                 "products_collection": "",
                 "products_count": 4,
@@ -103,20 +104,92 @@
                 "products_image_radius": 8,
                 "products_view_all": true
               },
-              "blocks": {}
+              "blocks": {
+                "mega_menu_promo_6fyiKt": {
+                  "type": "_mega-menu-promo",
+                  "name": "t:names.menu_promo",
+                  "settings": {
+                    "image": "shopify://shop_images/apple-iphone-18-pro-max-international-version-256gb-512gb-1tb-2tb-all-colours-5-5_93c53ba8-65bc-4baa-a5e4-ddd22d2321f9.jpg",
+                    "link": "shopify://collections/mobile-phones",
+                    "heading": "Mobile Phones",
+                    "text": "",
+                    "button_label": "",
+                    "content_position": "bottom",
+                    "alignment": "center",
+                    "text_color": "light",
+                    "overlay_opacity": 40
+                  },
+                  "blocks": {}
+                },
+                "mega_menu_promo_eqDTjX": {
+                  "type": "_mega-menu-promo",
+                  "name": "t:names.menu_promo",
+                  "settings": {
+                    "image": "shopify://shop_images/dji-osmo-pocket-4p-vlog-combo-dual-lens-4k-gimbal-camera.webp",
+                    "link": "shopify://collections/camera-and-lens",
+                    "heading": "Cameras",
+                    "text": "",
+                    "button_label": "",
+                    "content_position": "bottom",
+                    "alignment": "center",
+                    "text_color": "light",
+                    "overlay_opacity": 40
+                  },
+                  "blocks": {}
+                },
+                "mega_menu_promo_9K4YFt": {
+                  "type": "_mega-menu-promo",
+                  "name": "t:names.menu_promo",
+                  "settings": {
+                    "image": "shopify://shop_images/garmin-forerunner-570-gps-running-watch-42mm-47mm-cloud-blue-raspberry-slate.jpg",
+                    "link": "shopify://collections/devices-and-accessories-watches-smart-watches",
+                    "heading": "Smart Watches",
+                    "text": "",
+                    "button_label": "",
+                    "content_position": "bottom",
+                    "alignment": "center",
+                    "text_color": "light",
+                    "overlay_opacity": 40
+                  },
+                  "blocks": {}
+                },
+                "mega_menu_promo_DeqMiV": {
+                  "type": "_mega-menu-promo",
+                  "name": "t:names.menu_promo",
+                  "settings": {
+                    "image": "shopify://shop_images/asus-rog-xbox-ally-x-1tb-ssd-24gb-ram-black-handheld-gaming-console-pristine.jpg",
+                    "link": "shopify://collections/games-and-accessories-gaming-consoles",
+                    "heading": "Gaming",
+                    "text": "",
+                    "button_label": "",
+                    "content_position": "bottom",
+                    "alignment": "center",
+                    "text_color": "light",
+                    "overlay_opacity": 40
+                  },
+                  "blocks": {}
+                }
+              },
+              "block_order": [
+                "mega_menu_promo_6fyiKt",
+                "mega_menu_promo_eqDTjX",
+                "mega_menu_promo_9K4YFt",
+                "mega_menu_promo_DeqMiV"
+              ]
             },
             "menu-panel-2": {
               "type": "_mega-menu",
               "static": true,
               "settings": {
-                "layout": "links_promos",
+                "layout": "tabs",
                 "tabs_columns": 4,
                 "tabs_show_images": true,
-                "tabs_image_ratio": "landscape",
-                "tabs_image_radius": 8,
+                "tabs_image_ratio": "square",
+                "tabs_image_radius": 12,
                 "tabs_show_view_all": true,
                 "promos_position": "end",
                 "promos_columns": 4,
+                "promos_size": 100,
                 "promo_image_ratio": "square",
                 "promo_radius": 12,
                 "products_collection": "",
@@ -212,6 +285,7 @@
                 "tabs_show_view_all": true,
                 "promos_position": "end",
                 "promos_columns": 3,
+                "promos_size": 100,
                 "promo_image_ratio": "landscape",
                 "promo_radius": 12,
                 "products_collection": "",
@@ -228,7 +302,7 @@
               "type": "_mega-menu",
               "static": true,
               "settings": {
-                "layout": "promos",
+                "layout": "default",
                 "tabs_columns": 4,
                 "tabs_show_images": true,
                 "tabs_image_ratio": "landscape",
@@ -236,6 +310,7 @@
                 "tabs_show_view_all": true,
                 "promos_position": "end",
                 "promos_columns": 4,
+                "promos_size": 100,
                 "promo_image_ratio": "square",
                 "promo_radius": 12,
                 "products_collection": "",
@@ -246,78 +321,7 @@
                 "products_image_radius": 8,
                 "products_view_all": true
               },
-              "blocks": {
-                "mega_menu_promo_XfBA8N": {
-                  "type": "_mega-menu-promo",
-                  "name": "t:names.menu_promo",
-                  "settings": {
-                    "image": "shopify://shop_images/apple-airpods-max-1st-generation-2020-lightning-space-gray-silver-green-sky-blue-6.jpg",
-                    "link": "",
-                    "heading": "New arrivals",
-                    "text": "",
-                    "button_label": "Shop now",
-                    "content_position": "bottom",
-                    "alignment": "start",
-                    "text_color": "light",
-                    "overlay_opacity": 40
-                  },
-                  "blocks": {}
-                },
-                "mega_menu_promo_bPL4Bx": {
-                  "type": "_mega-menu-promo",
-                  "name": "t:names.menu_promo",
-                  "settings": {
-                    "image": "shopify://shop_images/cy3756cymcc-cygnett-magcharge-1-2m-magnetic-wireless-charging-cable-2.avif",
-                    "link": "",
-                    "heading": "New arrivals",
-                    "text": "",
-                    "button_label": "Shop now",
-                    "content_position": "bottom",
-                    "alignment": "start",
-                    "text_color": "light",
-                    "overlay_opacity": 40
-                  },
-                  "blocks": {}
-                },
-                "mega_menu_promo_AHrTRP": {
-                  "type": "_mega-menu-promo",
-                  "name": "t:names.menu_promo",
-                  "settings": {
-                    "image": "shopify://shop_images/jbl-wave-buds-tws-wireless-earbuds-mint-good-refurbished-2.jpg",
-                    "link": "",
-                    "heading": "New arrivals",
-                    "text": "",
-                    "button_label": "Shop now",
-                    "content_position": "bottom",
-                    "alignment": "start",
-                    "text_color": "light",
-                    "overlay_opacity": 40
-                  },
-                  "blocks": {}
-                },
-                "mega_menu_promo_yLe4mG": {
-                  "type": "_mega-menu-promo",
-                  "name": "t:names.menu_promo",
-                  "settings": {
-                    "image": "shopify://shop_images/jbl-go-4-bluetooth-speaker-blue-red-pink-squad-camouflage-pristine-refurbished-3.png",
-                    "link": "",
-                    "heading": "New arrivals",
-                    "text": "",
-                    "button_label": "Shop now",
-                    "content_position": "bottom",
-                    "alignment": "start",
-                    "text_color": "light",
-                    "overlay_opacity": 40
-                  },
-                  "blocks": {}
-                }
-              },
-              "block_order": [
-                "mega_menu_promo_XfBA8N",
-                "mega_menu_promo_bPL4Bx",
-                "mega_menu_promo_AHrTRP",
-                "mega_menu_promo_yLe4mG"
-              ]
+              "blocks": {}
             },
             "menu-panel-5": {
               "type": "_mega-menu",
@@ -331,6 +335,7 @@
                 "tabs_show_view_all": true,
                 "promos_position": "end",
                 "promos_columns": 3,
+                "promos_size": 100,
                 "promo_image_ratio": "square",
                 "promo_radius": 12,
                 "products_collection": "",
@@ -355,6 +360,7 @@
                 "tabs_show_view_all": true,
                 "promos_position": "end",
                 "promos_columns": 3,
+                "promos_size": 100,
                 "promo_image_ratio": "landscape",
                 "promo_radius": 12,
                 "products_collection": "",
@@ -379,6 +385,7 @@
                 "tabs_show_view_all": true,
                 "promos_position": "end",
                 "promos_columns": 3,
+                "promos_size": 100,
                 "promo_image_ratio": "landscape",
                 "promo_radius": 12,
                 "products_collection": "",
@@ -403,6 +410,7 @@
                 "tabs_show_view_all": true,
                 "promos_position": "end",
                 "promos_columns": 3,
+                "promos_size": 100,
                 "promo_image_ratio": "landscape",
                 "promo_radius": 12,
                 "products_collection": "",
@@ -427,6 +435,7 @@
                 "tabs_show_view_all": true,
                 "promos_position": "end",
                 "promos_columns": 3,
+                "promos_size": 100,
                 "promo_image_ratio": "landscape",
                 "promo_radius": 12,
                 "products_collection": "",
@@ -451,6 +460,7 @@
                 "tabs_show_view_all": true,
                 "promos_position": "end",
                 "promos_columns": 3,
+                "promos_size": 100,
                 "promo_image_ratio": "landscape",
                 "promo_radius": 12,
                 "products_collection": "",
