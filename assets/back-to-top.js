@@ -13,9 +13,13 @@ import {
  * @property {SVGElement} [ring] - The progress ring, present in the circle style
  */
 
+/** Space between the button and a chat button below it, in pixels */
+const CHAT_GAP = 12;
+
 /**
  * Floating button that appears once the shopper has scrolled a screen down and returns them to the
- * top of the page. Reports scroll progress through `--back-to-top-progress` when a ring is rendered.
+ * top of the page. Reports scroll progress through `--back-to-top-progress` when a ring is rendered,
+ * and lifts itself above a chat button in the same corner through `--back-to-top-chat-clearance`.
  *
  * @extends {Component<BackToTopRefs>}
  */
@@ -32,12 +36,14 @@ class BackToTopComponent extends Component {
     super.connectedCallback();
     this.#bindScroll();
     scrollContainerMediaQuery.addEventListener('change', this.#handleBreakpointChange);
+    window.addEventListener('resize', this.#handleScroll, { passive: true });
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
     this.#unbindScroll();
     scrollContainerMediaQuery.removeEventListener('change', this.#handleBreakpointChange);
+    window.removeEventListener('resize', this.#handleScroll);
   }
 
   /**
@@ -102,10 +108,39 @@ class BackToTopComponent extends Component {
       this.dataset.visible = String(visible);
     }
 
+    // The chat button can appear late or move (its app settings, the preview bar), so check while shown
+    if (visible) this.#updateChatClearance();
+
     if (this.refs.ring) {
       const maxScroll = scrollHeight - clientHeight;
       const progress = maxScroll > 0 ? Math.min(scrollTop / maxScroll, 1) : 0;
       this.style.setProperty('--back-to-top-progress', progress.toFixed(3));
+    }
+  }
+
+  /**
+   * Lifts the button just above a chat button that shares its corner. Shopify Inbox draws its
+   * launcher in an open shadow root; when it isn't there, the button keeps its normal offset.
+   */
+  #updateChatClearance() {
+    const launcher = document.querySelector('shopify-chat')?.shadowRoot?.querySelector('.activator-nudge, .activator');
+    let clearance = '';
+
+    if (launcher instanceof HTMLElement) {
+      const chat = launcher.getBoundingClientRect();
+      const button = this.refs.button.getBoundingClientRect();
+      const sharesCorner = chat.width > 0 && chat.left < button.right && chat.right > button.left;
+
+      if (sharesCorner) {
+        // Measure from layout rather than the painted box, so an animated chat button can't move this one
+        const bottom = parseFloat(getComputedStyle(launcher).bottom);
+        const height = Number.isFinite(bottom) ? bottom + launcher.offsetHeight : window.innerHeight - chat.top;
+        clearance = `${Math.ceil(height + CHAT_GAP)}px`;
+      }
+    }
+
+    if (this.style.getPropertyValue('--back-to-top-chat-clearance') !== clearance) {
+      this.style.setProperty('--back-to-top-chat-clearance', clearance);
     }
   }
 }

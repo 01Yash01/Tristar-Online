@@ -1,6 +1,7 @@
 {%- doc -%}
   Renders the floating back-to-top button configured under Theme settings > Back to top. It stays
-  hidden until the shopper scrolls a screen down, then returns them to the top of the page.
+  hidden until the shopper scrolls a screen down, then returns them to the top of the page. When a
+  chat button (Shopify Inbox) sits in the same corner, the button rests just above it.
 
   @example
   {% if settings.back_to_top_enabled %}
@@ -75,7 +76,11 @@
     --back-to-top-focus-color: var(--color-foreground);
 
     position: fixed;
-    inset-block-end: calc(var(--back-to-top-offset) + var(--safe-area-inset-bottom));
+    /* The chat clearance is set by assets/back-to-top.js when a chat button shares the corner */
+    inset-block-end: max(
+      calc(var(--back-to-top-offset) + var(--safe-area-inset-bottom)),
+      var(--back-to-top-chat-clearance, 0px)
+    );
     z-index: var(--layer-sticky);
     visibility: hidden;
     opacity: 0;
