@@ -1305,6 +1305,103 @@
     ]
   },
   {
+    "name": "t:names.cash_out_tab",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "cash_out_tab_enabled",
+        "label": "t:settings.show_cash_out_tab",
+        "default": true
+      },
+      {
+        "type": "url",
+        "id": "cash_out_tab_link",
+        "label": "t:settings.link",
+        "info": "t:info.cash_out_tab_link",
+        "visible_if": "{{ settings.cash_out_tab_enabled }}"
+      },
+      {
+        "type": "select",
+        "id": "cash_out_tab_style",
+        "label": "t:settings.style",
+        "options": [
+          {
+            "value": "white",
+            "label": "t:options.white"
+          },
+          {
+            "value": "black",
+            "label": "t:options.black"
+          }
+        ],
+        "default": "white",
+        "visible_if": "{{ settings.cash_out_tab_enabled }}"
+      },
+      {
+        "type": "checkbox",
+        "id": "cash_out_tab_show_on_mobile",
+        "label": "t:settings.show_on_mobile",
+        "default": true,
+        "visible_if": "{{ settings.cash_out_tab_enabled }}"
+      },
+      {
+        "type": "image_picker",
+        "id": "cash_out_tab_logo",
+        "label": "t:settings.logo",
+        "info": "t:info.cash_out_tab_logo",
+        "visible_if": "{{ settings.cash_out_tab_enabled }}"
+      },
+      {
+        "type": "text",
+        "id": "cash_out_tab_label",
+        "label": "t:settings.label",
+        "default": "Earn cash",
+        "visible_if": "{{ settings.cash_out_tab_enabled }}"
+      },
+      {
+        "type": "text",
+        "id": "cash_out_tab_hover_text",
+        "label": "t:settings.hover_text",
+        "info": "t:info.cash_out_tab_hover_text",
+        "default": "Earn cash on top deals",
+        "visible_if": "{{ settings.cash_out_tab_enabled }}"
+      },
+      {
+        "type": "header",
+        "content": "t:content.popup",
+        "visible_if": "{{ settings.cash_out_tab_enabled }}"
+      },
+      {
+        "type": "text",
+        "id": "cash_out_tab_subheading",
+        "label": "t:settings.subheading",
+        "default": "Cashout special offers",
+        "visible_if": "{{ settings.cash_out_tab_enabled }}"
+      },
+      {
+        "type": "text",
+        "id": "cash_out_tab_heading",
+        "label": "t:settings.heading",
+        "default": "Who Doesn't Love Earning CASH?",
+        "visible_if": "{{ settings.cash_out_tab_enabled }}"
+      },
+      {
+        "type": "textarea",
+        "id": "cash_out_tab_text",
+        "label": "t:settings.text",
+        "default": "Explore exciting deals, discover cash rewards, and start earning today!",
+        "visible_if": "{{ settings.cash_out_tab_enabled }}"
+      },
+      {
+        "type": "text",
+        "id": "cash_out_tab_button_label",
+        "label": "t:settings.button_label",
+        "default": "Unlock cash rewards",
+        "visible_if": "{{ settings.cash_out_tab_enabled }}"
+      }
+    ]
+  },
+  {
     "name": "t:names.badges",
     "settings": [
       {
