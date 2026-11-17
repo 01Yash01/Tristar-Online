@@ -1,0 +1,14 @@
+{%- comment -%}
+  schema.org condition for a product's Offer, from the field the Google & YouTube
+  app sends to Shopping. Added by picklist scripts/shopify_theme_condition.js.
+{%- endcomment -%}
+{%- liquid
+  assign seo_c = product.metafields['mm-google-shopping'].condition.value | downcase | strip
+  if seo_c == 'refurbished'
+    echo 'RefurbishedCondition'
+  elsif seo_c == 'used'
+    echo 'UsedCondition'
+  else
+    echo 'NewCondition'
+  endif
+-%}

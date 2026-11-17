@@ -1,0 +1,24 @@
+{%- comment -%}
+  Sibling grade listings of this product, in stock, with price. Data from
+  picklist scripts/shopify_grade_siblings.js; added by scripts/shopify_theme_siblings.js.
+{%- endcomment -%}
+{%- assign oc_list = product.metafields.picklist.other_conditions.value -%}
+{%- if oc_list != blank -%}
+  {%- capture oc_items -%}
+    {%- for p in oc_list -%}
+      {%- if p.available -%}
+        <li style="display:flex;justify-content:space-between;gap:1rem;padding:.4rem 0;border-top:1px solid rgba(0,0,0,.08)">
+          <a href="{{ p.url }}" style="text-decoration:underline;color:inherit">{{ p.metafields.picklist.condition_label.value | default: p.title }}</a>
+          <span>{{ p.price | money }}</span>
+        </li>
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endcapture -%}
+  {%- if oc_items != blank -%}
+    {%- comment -%} No font or colour of its own: it takes the theme's. 44rem = Dawn's button width. {%- endcomment -%}
+    <div class="other-conditions" style="margin-top:1rem;max-width:44rem">
+      <p style="font-weight:600;margin:0 0 .25rem">Also available in other conditions</p>
+      <ul style="list-style:none;padding:0;margin:0">{{ oc_items }}</ul>
+    </div>
+  {%- endif -%}
+{%- endif -%}

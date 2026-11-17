@@ -1,7 +1,7 @@
 
 
 <script type="application/ld+json">
-  {{ section.settings.product | structured_data }}
+  {%- capture seo_cond -%}{%- render 'seo-item-condition', product: section.settings.product -%}{%- endcapture -%}{%- assign seo_offer = '"@type":"Offer","itemCondition":"https://schema.org/' | append: seo_cond | append: '",' -%}{{ section.settings.product | structured_data | replace: '"@type":"Offer",', seo_offer }}
 </script>
 
 {%- liquid
