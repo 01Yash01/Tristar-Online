@@ -55,6 +55,9 @@
       assign promo_columns = block_settings.promos_columns | default: 3
       assign promo_columns_tablet = promo_columns | at_most: 2
 
+      # Cards below 100% keep their per-row count and shrink, centred in their area
+      assign promo_size = block_settings.promos_size | default: 100 | divided_by: 100.0
+
       # Share of the panel width the promotions take when they sit beside link columns
       case promo_columns
         when 1
@@ -66,9 +69,12 @@
         when 3
           assign promos_share = '62%'
           assign links_columns = 2
-        else
+        when 4
           assign promos_share = '70%'
           assign links_columns = 2
+        else
+          assign promos_share = '76%'
+          assign links_columns = 1
       endcase
 
       case block_settings.promo_image_ratio
@@ -89,6 +95,7 @@
         style="
           --mega-promos-columns: {{ promo_columns }};
           --mega-promos-columns-tablet: {{ promo_columns_tablet }};
+          --mega-promos-size: {{ promo_size }};
           --mega-promos-share: {{ promos_share }};
           --mega-promo-ratio: {{ promo_ratio }};
           --mega-promo-radius: {{ block_settings.promo_radius }}px;
@@ -259,14 +266,28 @@
     white-space: normal;
   }
 
+  /* Each card is its full-width share times the Card size setting; smaller cards stay centred */
   .mega-promos__cards {
+    --mega-promos-gap: var(--gap-lg, 16px);
+    --mega-promos-count: var(--mega-promos-columns-tablet);
+
     display: grid;
-    grid-template-columns: repeat(var(--mega-promos-columns-tablet), minmax(0, 1fr));
-    gap: var(--gap-lg, 16px);
+    grid-template-columns: repeat(
+      var(--mega-promos-count),
+      minmax(
+        0,
+        calc(
+          (100% - (var(--mega-promos-count) - 1) * var(--mega-promos-gap)) / var(--mega-promos-count) *
+            var(--mega-promos-size, 1)
+        )
+      )
+    );
+    justify-content: center;
+    gap: var(--mega-promos-gap);
     min-width: 0;
 
     @media screen and (min-width: 990px) {
-      grid-template-columns: repeat(var(--mega-promos-columns), minmax(0, 1fr));
+      --mega-promos-count: var(--mega-promos-columns);
     }
   }
 
@@ -506,9 +527,21 @@
       "id": "promos_columns",
       "label": "t:settings.menu_panel_promos_columns",
       "min": 1,
-      "max": 4,
+      "max": 5,
       "step": 1,
       "default": 3,
+      "visible_if": "{{ block.settings.layout == 'promos' or block.settings.layout == 'links_promos' }}"
+    },
+    {
+      "type": "range",
+      "id": "promos_size",
+      "label": "t:settings.menu_panel_promos_size",
+      "info": "t:info.menu_panel_promos_size",
+      "min": 60,
+      "max": 100,
+      "step": 5,
+      "unit": "%",
+      "default": 100,
       "visible_if": "{{ block.settings.layout == 'promos' or block.settings.layout == 'links_promos' }}"
     },
     {
