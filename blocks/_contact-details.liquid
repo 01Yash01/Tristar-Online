@@ -14,8 +14,7 @@
   assign phone_href = s.phone | remove: ' ' | remove: '-' | remove: '(' | remove: ')' | remove: '.'
   assign address_line = s.address | strip | newline_to_br | replace: '<br />', ', ' | strip_newlines | replace: ',,', ','
   assign encoded_address = address_line | url_encode
-  # Opens Google Maps with a route from the shopper's location to the store (the app on phones)
-  assign map_url = 'https://www.google.com/maps/dir/?api=1&destination=' | append: encoded_address
+  assign map_url = 'https://www.google.com/maps/search/?api=1&query=' | append: encoded_address
   assign abn_digits = s.abn | remove: ' '
 -%}
 

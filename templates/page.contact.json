@@ -113,18 +113,48 @@
     "contact": {
       "type": "contact-page",
       "blocks": {
+        "link_track": {
+          "type": "_contact-link",
+          "settings": {
+            "icon": "box",
+            "title": "Track your order",
+            "text": "See where your parcel is",
+            "link": "shopify://pages/order-status"
+          },
+          "blocks": {}
+        },
+        "link_shipping": {
+          "type": "_contact-link",
+          "settings": {
+            "icon": "truck",
+            "title": "Shipping",
+            "text": "Free shipping across Australia",
+            "link": "/policies/shipping-policy"
+          },
+          "blocks": {}
+        },
+        "link_returns": {
+          "type": "_contact-link",
+          "settings": {
+            "icon": "return",
+            "title": "Returns and refunds",
+            "text": "How returns and refunds work",
+            "link": "/policies/refund-policy"
+          },
+          "blocks": {}
+        },
         "details": {
           "type": "_contact-details",
           "static": true,
           "settings": {
             "heading": "Get in touch",
             "phone_label": "Call us",
-            "phone": "1800 952 953",
+            "phone": "",
             "email_label": "Email us",
             "email": "info@tristaronline.com.au",
             "address_label": "Visit our store",
             "address": "Shop 3, 219 Parramatta Rd\nAuburn NSW 2144",
-            "show_directions_link": true,
+            "show_directions_link": false,
             "directions_text": "Get directions",
             "warehouses_label": "Warehouses",
             "warehouses": "Adelaide and Sydney",
@@ -174,37 +204,8 @@
               },
               "blocks": {}
             }
-          }
-        },
-        "link_track": {
-          "type": "_contact-link",
-          "settings": {
-            "icon": "box",
-            "title": "Track your order",
-            "text": "See where your parcel is",
-            "link": "shopify://pages/order-status"
           },
-          "blocks": {}
-        },
-        "link_shipping": {
-          "type": "_contact-link",
-          "settings": {
-            "icon": "truck",
-            "title": "Shipping",
-            "text": "Free shipping across Australia",
-            "link": "/policies/shipping-policy"
-          },
-          "blocks": {}
-        },
-        "link_returns": {
-          "type": "_contact-link",
-          "settings": {
-            "icon": "return",
-            "title": "Returns and refunds",
-            "text": "How returns and refunds work",
-            "link": "/policies/refund-policy"
-          },
-          "blocks": {}
+          "block_order": []
         }
       },
       "block_order": [
