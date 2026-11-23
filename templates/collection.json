@@ -121,7 +121,7 @@
                   "type": "product-description",
                   "name": "t:names.product_description",
                   "settings": {
-                    "text": "<p>Browse our Best Sellers here with the best deals on Mobiles, iPads, Smart Watches, etc.</p>",
+                    "text": "{{ closest.collection.description }}",
                     "width": "100%",
                     "max_width": "normal",
                     "alignment": "center",

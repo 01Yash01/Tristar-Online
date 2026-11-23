@@ -2891,6 +2891,7 @@
             },
             "text": {
               "type": "text",
+              "disabled": true,
               "settings": {
                 "text": "<p>The questions shoppers ask us most, filed where you can find them. Pull a card to read it.</p>",
                 "width": "100%",

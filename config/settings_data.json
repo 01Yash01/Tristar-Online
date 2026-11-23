@@ -58,6 +58,25 @@
     "back_to_top_position": "bottom-end",
     "back_to_top_background_color": "#C8202F",
     "back_to_top_text_color": "{{ settings.color_palette.color2 }}",
+    "rating_badge_enabled": true,
+    "rating_badge_position": "right",
+    "rating_badge_vertical_position": 50,
+    "rating_badge_show_on_mobile": true,
+    "rating_badge_background_color": "#FFFFFF",
+    "rating_badge_text_color": "#0B1F44",
+    "rating_badge_star_color": "#E0A800",
+    "rating_badge_link": "shopify://pages/reviews",
+    "rating_badge_pages": "all",
+    "rating_badge_review_source": "latest",
+    "rating_badge_min_rating": 4,
+    "rating_cart_enabled": true,
+    "rating_popups_enabled": true,
+    "rating_popups_position": "bottom_left",
+    "rating_popups_offset": 24,
+    "rating_popups_delay": 8,
+    "rating_popups_interval": 20,
+    "rating_popups_per_visit": 3,
+    "rating_popups_show_on_mobile": false,
     "cash_out_tab_enabled": true,
     "cash_out_tab_link": "https://cashoutdeals.com.au/deals",
     "cash_out_tab_style": "white",
@@ -171,6 +190,18 @@
           "agent_font_size": 14,
           "agent_activator_font_size": 16,
           "agent_border_radius": 16
+        }
+      },
+      "15181020662106344915": {
+        "type": "shopify://apps/judge-me-reviews/blocks/popup_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": true,
+        "settings": {}
+      },
+      "12120936241911852800": {
+        "type": "shopify://apps/judge-me-reviews/blocks/reviews_tab/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+        "disabled": true,
+        "settings": {
+          "position": "left"
         }
       }
     },
