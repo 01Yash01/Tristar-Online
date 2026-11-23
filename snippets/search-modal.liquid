@@ -87,6 +87,13 @@
               type="hidden"
               value="last"
             >
+            {%- if settings.hide_sold_out_products -%}
+              <input
+                name="options[unavailable_products]"
+                type="hidden"
+                value="hide"
+              >
+            {%- endif -%}
             <span class="svg-wrapper predictive-search__icon">
               {{ 'icon-search.svg' | inline_asset_content }}
             </span>

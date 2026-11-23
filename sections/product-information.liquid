@@ -1,15 +1,14 @@
 
 
 {%- liquid
-  assign product_structured_data = closest.product | structured_data
-
-  # Refurbished stock carries the grade in its title, e.g. "Apple Pencil Pro - Excellent - Refurbished".
-  # Tell Google about it on every offer, so listings don't treat it as new.
-  assign product_title_lower = closest.product.title | downcase
-  if product_title_lower contains 'refurb' or product_title_lower contains 'renewed'
-    assign refurbished_offer = '"@type":"Offer","itemCondition":"https://schema.org/RefurbishedCondition"'
-    assign product_structured_data = product_structured_data | replace: '"@type":"Offer"', refurbished_offer
-  endif
+  # Condition from the field the Google & YouTube app sends to Shopping, same as the
+  # Shopping feed (picklist scripts/shopify_theme_condition.js). 23 Nov 2026: replaced a
+  # title check that marked only refurbished items and left new/used with no condition.
+  capture seo_cond
+    render 'seo-item-condition', product: closest.product
+  endcapture
+  assign seo_offer = '"@type":"Offer","itemCondition":"https://schema.org/' | append: seo_cond | append: '",'
+  assign product_structured_data = closest.product | structured_data | replace: '"@type":"Offer",', seo_offer
 -%}
 <script type="application/ld+json">
   {{ product_structured_data }}

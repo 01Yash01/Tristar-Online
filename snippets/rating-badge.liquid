@@ -1,0 +1,185 @@
+{%- doc -%}
+  Renders the store rating review panel, the phone edge tab that opens it, and the review popups,
+  configured under Theme settings > Rating badge. On larger screens the panel opens from the header
+  link in `snippets/rating-badge-link.liquid`. Ratings come from the shop metafields Judge.me keeps up
+  to date (namespace `judgeme`); review content loads on demand from `sections/rating-reviews.liquid`.
+  Renders nothing while Judge.me has no rating data.
+
+  @example
+  {% render 'rating-badge' %}
+{%- enddoc -%}
+
+{%- capture rating_features -%}{% render 'rating-badge-visible' %}{%- endcapture -%}
+
+{%- liquid
+  assign show_badge = false
+  assign show_popups = false
+  if rating_features contains 'badge'
+    assign show_badge = true
+  endif
+  if rating_features contains 'popups'
+    assign show_popups = true
+  endif
+
+  assign rating = shop.metafields.judgeme.all_reviews_rating.value | plus: 0
+  assign review_count = shop.metafields.judgeme.all_reviews_count.value | plus: 0
+  assign rating_label = rating | round: 2
+  assign rating_percent = rating | times: 20 | round: 1
+  assign side = settings.rating_badge_position | default: 'right'
+-%}
+
+{%- comment -%} The cart line can appear later in a re-rendered cart drawer, so its styles load with the page {%- endcomment -%}
+{%- if rating_features != blank -%}
+  {% render 'rating-badge-styles' %}
+{%- endif -%}
+
+{%- if show_badge or show_popups -%}
+  <script
+    src="{{ 'rating-badge.js' | asset_url }}"
+    type="module"
+  ></script>
+{%- endif -%}
+
+{%- if show_badge -%}
+  <rating-badge-component
+    id="RatingBadge"
+    class="rating-badge rating-badge--{{ side }}{% unless settings.rating_badge_show_on_mobile %} rating-badge--hide-on-mobile{% endunless %}"
+    style="
+      --rating-badge-top: {{ settings.rating_badge_vertical_position | default: 50 }}%;
+      --rating-badge-background: {{ settings.rating_badge_background_color }};
+      --rating-badge-text: {{ settings.rating_badge_text_color }};
+      --rating-star: {{ settings.rating_badge_star_color }};
+    "
+  >
+    <button
+      type="button"
+      class="rating-badge__tab"
+      aria-haspopup="dialog"
+      aria-label="{{ 'accessibility.open_store_reviews' | t: rating: rating_label, count: review_count }}"
+      ref="tab"
+      on:click="/showDialog"
+    >
+      <span
+        class="rating-badge__star"
+        aria-hidden="true"
+      ></span>
+      <span class="rating-badge__score">{{ rating_label }}</span>
+      <span
+        class="rating-badge__divider"
+        aria-hidden="true"
+      ></span>
+      <span class="rating-badge__count">{{ 'content.store_reviews_count' | t: count: review_count }}</span>
+    </button>
+
+    <dialog
+      ref="dialog"
+      class="rating-panel"
+      scroll-lock
+      aria-labelledby="RatingPanelHeading"
+    >
+      <div class="rating-panel__inner">
+        <header class="rating-panel__header">
+          <h2
+            id="RatingPanelHeading"
+            class="rating-panel__heading"
+          >
+            {{ 'content.store_reviews_heading' | t }}
+          </h2>
+          <button
+            type="button"
+            class="rating-panel__close"
+            aria-label="{{ 'accessibility.close_dialog' | t }}"
+            on:click="/closeDialog"
+          >
+            {{- 'icon-close.svg' | inline_asset_content -}}
+          </button>
+        </header>
+
+        <div class="rating-panel__summary">
+          <p class="rating-panel__score">{{ rating_label }}</p>
+          <div class="rating-panel__summary-meta">
+            <span
+              class="rating-stars rating-stars--lg"
+              style="--rating-percent: {{ rating_percent }}%;"
+              role="img"
+              aria-label="{{ 'accessibility.review_rating' | t: rating: rating_label }}"
+            ></span>
+            <p class="rating-panel__based-on">{{ 'content.store_reviews_based_on' | t: count: review_count }}</p>
+          </div>
+        </div>
+
+        <div
+          class="rating-panel__body"
+          ref="panelBody"
+          aria-busy="true"
+        >
+          <div
+            class="rating-panel__loading"
+            aria-hidden="true"
+          >
+            {%- for i in (1..3) -%}
+              <span class="rating-panel__skeleton"></span>
+            {%- endfor -%}
+          </div>
+          <p
+            class="rating-panel__error"
+            hidden
+            ref="panelError"
+          >
+            {{ 'content.store_reviews_error' | t }}
+          </p>
+        </div>
+
+        {%- if settings.rating_badge_link != blank -%}
+          <div class="rating-panel__footer">
+            <a
+              class="rating-panel__button"
+              href="{{ settings.rating_badge_link }}"
+            >
+              {{- 'content.store_reviews_see_all' | t -}}
+            </a>
+          </div>
+        {%- endif -%}
+      </div>
+    </dialog>
+  </rating-badge-component>
+{%- endif -%}
+
+{%- if show_popups -%}
+  <rating-popups-component
+    class="rating-popups rating-popups--{{ settings.rating_popups_position | default: 'bottom_left' }}{% unless settings.rating_popups_show_on_mobile %} rating-popups--hide-on-mobile{% endunless %}"
+    style="--rating-star: {{ settings.rating_badge_star_color }}; --rating-popups-offset: {{ settings.rating_popups_offset | default: 24 }}px;"
+    data-delay="{{ settings.rating_popups_delay | default: 8 }}"
+    data-interval="{{ settings.rating_popups_interval | default: 20 }}"
+    data-max="{{ settings.rating_popups_per_visit | default: 3 }}"
+    hidden
+  >
+    <aside
+      class="rating-popups__card"
+      aria-label="{{ 'content.store_reviews_recent' | t }}"
+      ref="card"
+      on:pointerenter="/pause"
+      on:pointerleave="/resume"
+      on:focus="/pause"
+      on:blur="/resume"
+    >
+      <div
+        class="rating-popups__stage"
+        ref="stage"
+      ></div>
+      <button
+        type="button"
+        class="rating-popups__close"
+        aria-label="{{ 'accessibility.hide_review_popups' | t }}"
+        on:click="/dismiss"
+      >
+        {{- 'icon-close.svg' | inline_asset_content -}}
+      </button>
+      <span
+        class="rating-popups__progress"
+        aria-hidden="true"
+        ref="progress"
+      ></span>
+    </aside>
+  </rating-popups-component>
+{%- endif -%}

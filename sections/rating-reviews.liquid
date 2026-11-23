@@ -1,0 +1,281 @@
+{% comment %}
+  Section contract.
+  Renders the review content behind the rating badge: the rating breakdown and recent reviews for the
+  panel, and the review popup cards. It is never placed on a page; `assets/rating-badge.js` fetches it
+  through the Section Rendering API when the panel opens or the first popup is due, so the large
+  Judge.me review metafield is only read on demand. Styles live in `snippets/rating-badge.liquid`.
+  @example
+  <!-- /?section_id=rating-reviews -->
+{% endcomment %}
+
+{%- liquid
+  assign grid = shop.metafields.judgeme.reviews_grid.value
+  assign summary = shop.metafields.judgeme.store_summary_widget_data.value
+
+  if settings.rating_badge_review_source == 'featured'
+    assign source_reviews = grid.featured_reviews.reviews
+  else
+    assign source_reviews = grid.all_reviews.reviews
+  endif
+
+  assign min_rating = settings.rating_badge_min_rating | default: 4
+  assign panel_limit = 5
+  assign popup_limit = 10
+-%}
+
+{% render 'rating-badge-styles' %}
+
+{%- capture verified_icon -%}
+  <span
+    class="svg-wrapper"
+    aria-hidden="true"
+  >
+    {{- 'icon-checkmark.svg' | inline_asset_content -}}
+  </span>
+{%- endcapture -%}
+
+<div data-rating-panel-content>
+  {%- if summary.histogram.size > 0 -%}
+    <h3 class="rating-panel__subheading">{{ 'content.store_reviews_breakdown' | t }}</h3>
+    <ul class="rating-breakdown">
+      {%- for row in summary.histogram -%}
+        <li class="rating-breakdown__row">
+          <span class="visually-hidden">
+            {{- 'content.store_reviews_breakdown_row' | t: rating: row.rating, count: row.frequency -}}
+          </span>
+          <span
+            class="rating-breakdown__label"
+            aria-hidden="true"
+          >
+            {{- row.rating }}
+            <span class="rating-badge__star"></span>
+          </span>
+          <span
+            class="rating-breakdown__bar"
+            aria-hidden="true"
+          >
+            <span
+              class="rating-breakdown__fill"
+              style="--rating-bar: {{ row.percentage }}%;"
+            ></span>
+          </span>
+          <span
+            class="rating-breakdown__count"
+            aria-hidden="true"
+          >
+            {{- row.frequency -}}
+          </span>
+        </li>
+      {%- endfor -%}
+    </ul>
+  {%- endif -%}
+
+  <h3 class="rating-panel__subheading">{{ 'content.store_reviews_recent' | t }}</h3>
+  <ul class="rating-review-list">
+    {%- assign shown = 0 -%}
+    {%- for review in source_reviews -%}
+      {%- liquid
+        if shown >= panel_limit
+          break
+        endif
+        if review.rating < min_rating or review.body == blank
+          continue
+        endif
+        assign shown = shown | plus: 1
+
+        assign name = review.reviewer_name | strip
+        if review.is_anonymous_reviewer or name == blank or name == 'Anonymous'
+          assign name = 'content.store_review_anonymous' | t
+          assign initial = '★'
+        else
+          assign initial = review.reviewer_initial | default: name | slice: 0
+        endif
+
+        assign product_url = review.product_url | remove_first: shop.url
+        if product_url == blank
+          assign product_url = '/'
+        endif
+      -%}
+      <li class="rating-review">
+        <div class="rating-review__top">
+          <span
+            class="rating-review__avatar"
+            aria-hidden="true"
+          >
+            {{- initial | escape -}}
+          </span>
+          <div class="rating-review__who">
+            <span class="rating-review__name">{{ name | escape }}</span>
+            <span class="rating-review__meta">
+              <span
+                class="rating-stars"
+                style="--rating-percent: {{ review.rating | times: 20 }}%;"
+                role="img"
+                aria-label="{{ 'accessibility.review_rating' | t: rating: review.rating }}"
+              ></span>
+              <time
+                datetime="{{ review.created_at }}"
+                data-relative-time
+              >
+                {{- review.created_at | date: '%-d %b %Y' -}}
+              </time>
+              {%- if review.verified_buyer -%}
+                <span class="rating-review__verified">
+                  {{- verified_icon -}}
+                  {{- 'content.store_review_verified' | t -}}
+                </span>
+              {%- endif -%}
+            </span>
+          </div>
+        </div>
+
+        {%- if review.title != blank -%}
+          <p class="rating-review__title">{{ review.title | escape }}</p>
+        {%- endif -%}
+        <p class="rating-review__body">{{ review.body | strip_newlines | truncate: 320 | escape }}</p>
+
+        {%- unless review.is_shop_review -%}
+          {%- if review.product_in_store -%}
+            <a
+              class="rating-review__product"
+              href="{{ product_url }}"
+            >
+          {%- else -%}
+            <span class="rating-review__product">
+          {%- endif -%}
+          {%- if review.product_pictures_url != blank -%}
+            {%- liquid
+              if review.product_pictures_url contains '?'
+                assign image_src = review.product_pictures_url | append: '&width=96'
+              else
+                assign image_src = review.product_pictures_url | append: '?width=96'
+              endif
+            -%}
+            <img
+              src="{{ image_src }}"
+              alt=""
+              width="40"
+              height="40"
+              loading="lazy"
+            >
+          {%- endif -%}
+          <span class="rating-review__product-title">{{ review.product_title | escape }}</span>
+          {%- if review.product_in_store -%}
+            </a>
+          {%- else -%}
+            </span>
+          {%- endif -%}
+        {%- endunless -%}
+      </li>
+    {%- endfor -%}
+  </ul>
+</div>
+
+<div
+  data-rating-popups
+  hidden
+>
+  {%- assign shown = 0 -%}
+  {%- for review in source_reviews -%}
+    {%- liquid
+      if shown >= popup_limit
+        break
+      endif
+      if review.rating < min_rating or review.body == blank
+        continue
+      endif
+      assign shown = shown | plus: 1
+
+      assign name = review.reviewer_name | strip
+      if review.is_anonymous_reviewer or name == blank or name == 'Anonymous'
+        assign name = 'content.store_review_anonymous' | t
+        assign initial = '★'
+      else
+        assign initial = review.reviewer_initial | default: name | slice: 0
+      endif
+
+      assign product_url = review.product_url | remove_first: shop.url
+      if product_url == blank
+        assign product_url = '/'
+      endif
+    -%}
+    <div
+      class="rating-popup"
+      data-review-id="{{ review.uuid | escape }}"
+    >
+      <span
+        class="rating-popup__media"
+        aria-hidden="true"
+      >
+        {%- if review.product_pictures_url != blank and review.is_shop_review == false -%}
+          {%- liquid
+            if review.product_pictures_url contains '?'
+              assign image_src = review.product_pictures_url | append: '&width=112'
+            else
+              assign image_src = review.product_pictures_url | append: '?width=112'
+            endif
+          -%}
+          <img
+            src="{{ image_src }}"
+            alt=""
+            width="56"
+            height="56"
+            loading="lazy"
+          >
+        {%- else -%}
+          <span class="rating-popup__initial">{{ initial | escape }}</span>
+        {%- endif -%}
+      </span>
+      <div class="rating-popup__content">
+        <p class="rating-popup__line">
+          <span class="rating-popup__name">{{ name | escape }}</span>
+          <span
+            class="rating-stars"
+            style="--rating-percent: {{ review.rating | times: 20 }}%;"
+            role="img"
+            aria-label="{{ 'accessibility.review_rating' | t: rating: review.rating }}"
+          ></span>
+        </p>
+        <p class="rating-popup__quote">“{{ review.body | strip_newlines | truncate: 140 | escape }}”</p>
+        {%- if review.is_shop_review == false and review.product_in_store -%}
+          <a
+            class="rating-popup__product"
+            href="{{ product_url }}"
+          >
+            {{- review.product_title | escape -}}
+          </a>
+        {%- endif -%}
+        <p class="rating-popup__foot">
+          {%- if review.verified_buyer -%}
+            <span class="rating-popup__verified">
+              {{- verified_icon -}}
+              {{- 'content.store_review_verified' | t -}}
+            </span>
+          {%- endif -%}
+          <time
+            datetime="{{ review.created_at }}"
+            data-relative-time
+          >
+            {{- review.created_at | date: '%-d %b %Y' -}}
+          </time>
+          {%- if settings.rating_badge_enabled -%}
+            <button
+              type="button"
+              class="rating-popup__more"
+              on:click="#RatingBadge/showDialog"
+            >
+              {{- 'content.store_reviews_read_more' | t -}}
+            </button>
+          {%- endif -%}
+        </p>
+      </div>
+    </div>
+  {%- endfor -%}
+</div>
+
+{% schema %}
+{
+  "name": "t:names.rating_badge",
+  "class": "rating-reviews-section"
+}
+{% endschema %}

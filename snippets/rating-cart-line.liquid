@@ -1,0 +1,36 @@
+{%- doc -%}
+  Renders a quiet store rating line under the cart's checkout buttons, from the Judge.me rating in
+  the shop metafields. Controlled by Theme settings > Rating badge > Show rating in cart.
+
+  @example
+  {% render 'rating-cart-line' %}
+{%- enddoc -%}
+
+{%- capture rating_features -%}{% render 'rating-badge-visible' %}{%- endcapture -%}
+
+{%- if rating_features contains 'cart' -%}
+  {%- liquid
+    assign rating = shop.metafields.judgeme.all_reviews_rating.value | plus: 0
+    assign review_count = shop.metafields.judgeme.all_reviews_count.value | plus: 0
+    assign rating_label = rating | round: 2
+    assign rating_percent = rating | times: 20 | round: 1
+  -%}
+  {% render 'rating-badge-styles' %}
+  <p
+    class="rating-cart-line"
+    style="--rating-star: {{ settings.rating_badge_star_color }};"
+  >
+    <span
+      class="rating-stars"
+      style="--rating-percent: {{ rating_percent }}%;"
+      aria-hidden="true"
+    ></span>
+    <span aria-hidden="true">
+      <strong class="rating-cart-line__score">{{ rating_label }}</strong>
+      {{ 'content.store_reviews_from' | t: count: review_count }}
+    </span>
+    <span class="visually-hidden">
+      {{- 'accessibility.store_rating_summary' | t: rating: rating_label, count: review_count -}}
+    </span>
+  </p>
+{%- endif -%}

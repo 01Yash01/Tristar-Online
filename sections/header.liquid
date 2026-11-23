@@ -138,6 +138,12 @@
       endif
     endif
   endif
+  # The store rating link sits at the end of the menu's row, before the actions in the top row
+  assign order = order | replace: 'actions', 'rating,actions'
+  capture rating
+    render 'rating-badge-link'
+  endcapture
+
   capture search
     if search_bar
       # A bottom-row bar is hidden on mobile, so drawer_search adds a top-row copy there
@@ -474,7 +480,8 @@
         actions: actions,
         localization: localization_markup,
         search: search,
-        drawer_search: drawer_search
+        drawer_search: drawer_search,
+        rating: rating
       %}
     {% endcapture %}
 

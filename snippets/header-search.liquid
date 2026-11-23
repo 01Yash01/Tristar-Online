@@ -95,6 +95,13 @@
         type="hidden"
         value="last"
       >
+      {%- if settings.hide_sold_out_products -%}
+        <input
+          name="options[unavailable_products]"
+          type="hidden"
+          value="hide"
+        >
+      {%- endif -%}
 
       {%- if hint_terms.size > 0 -%}
         <span

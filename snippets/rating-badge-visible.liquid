@@ -1,0 +1,46 @@
+{%- doc -%}
+  Outputs which store rating features show on the current page, as space-separated words: `badge`
+  (the header link, the phone tab and their review panel), `popups` and `cart`. Shared by
+  `rating-badge`, `rating-badge-link` and `rating-cart-line` so they always agree. Outputs nothing
+  while Judge.me has no rating data in the shop metafields.
+
+  @example
+  {%- capture rating_features -%}{% render 'rating-badge-visible' %}{%- endcapture -%}
+  {%- if rating_features contains 'badge' -%}…{%- endif -%}
+{%- enddoc -%}
+
+{%- liquid
+  assign rating = shop.metafields.judgeme.all_reviews_rating.value | plus: 0
+  assign review_count = shop.metafields.judgeme.all_reviews_count.value | plus: 0
+
+  if rating > 0 and review_count > 0
+    if settings.rating_cart_enabled
+      echo 'cart '
+    endif
+
+    assign show_on_page = true
+    case settings.rating_badge_pages
+      when 'home'
+        unless template.name == 'index'
+          assign show_on_page = false
+        endunless
+      when 'product'
+        unless template.name == 'product'
+          assign show_on_page = false
+        endunless
+      when 'home_and_product'
+        unless template.name == 'index' or template.name == 'product'
+          assign show_on_page = false
+        endunless
+    endcase
+
+    if show_on_page
+      if settings.rating_badge_enabled
+        echo 'badge '
+      endif
+      if settings.rating_popups_enabled
+        echo 'popups '
+      endif
+    endif
+  endif
+-%}

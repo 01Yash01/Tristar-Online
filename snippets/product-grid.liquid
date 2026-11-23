@@ -150,6 +150,7 @@
         ref="grid"
         role="list"
         data-last-page="{{ paginate.pages }}"
+        data-current-page="{{ paginate.current_page }}"
         data-product-card-size="{{ section.settings.product_card_size }}"
         style="--mobile-columns: {% if section.settings.mobile_product_card_size == 'large' %}1{% else %}2{% endif %};"
       >

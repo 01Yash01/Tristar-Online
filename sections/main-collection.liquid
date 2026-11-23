@@ -46,26 +46,47 @@
     <div
       class="collection-wrapper grid gap-style{% if section.settings.product_grid_width == 'full-width' %} collection-wrapper--grid-full-width{% endif %}"
     >
+      {%- liquid
+        assign products_per_page = 24
+
+        if section.settings.enable_infinite_scroll == false
+          assign products_per_page = section.settings.products_per_page
+        endif
+
+        # Shopify counts sold out products too. A collection that fits on one page is counted again from
+        # the products that remain; a longer one keeps Shopify's count, which can run a little high.
+        assign results_size = collection.products_count
+        if settings.hide_sold_out_products and results_size <= products_per_page
+          assign results_size = collection.products | where: 'available' | size
+        endif
+      -%}
+
       {% content_for 'block',
         type: 'filters',
         id: 'filters',
         results: collection,
-        results_size: collection.products_count
+        results_size: results_size
       %}
-
-      {% assign products_per_page = 24 %}
-
-      {% if section.settings.enable_infinite_scroll == false %}
-        {% assign products_per_page = section.settings.products_per_page %}
-      {% endif %}
 
       {% paginate collection.products by products_per_page %}
         {%- liquid
-          # Sold out products follow the ones shoppers can buy, each group in the collection's own order.
+          # Sold out products are left out when Theme settings > Product cards hides them. Otherwise they
+          # follow the ones shoppers can buy, each group in the collection's own order, and
           # paginated-list.js keeps that order as more pages load.
           assign available_products = collection.products | where: 'available'
-          assign sold_out_products = collection.products | reject: 'available'
-          assign ordered_products = available_products | concat: sold_out_products
+          if settings.hide_sold_out_products
+            assign ordered_products = available_products
+          else
+            assign sold_out_products = collection.products | reject: 'available'
+            assign ordered_products = available_products | concat: sold_out_products
+          endif
+
+          # A page with nothing left still renders its grid when more pages exist, so paginated-list.js
+          # carries on to them. Only a collection with nothing to show at all gets the empty message.
+          assign grid_products = collection.products
+          if settings.hide_sold_out_products and ordered_products.size == 0 and paginate.pages == 1
+            assign grid_products = ordered_products
+          endif
         -%}
         {% capture children %}
           {% for product in ordered_products %}
@@ -92,7 +113,7 @@
         {% render 'product-grid',
           section: section,
           children: children,
-          products: collection.products,
+          products: grid_products,
           paginate: paginate,
           enable_infinite_scroll: section.settings.enable_infinite_scroll
         %}

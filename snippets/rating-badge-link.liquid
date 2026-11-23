@@ -1,0 +1,50 @@
+{%- doc -%}
+  Renders the store rating link for the header: gold stars, the average and the review count at the
+  end of the menu's row on larger screens. It opens the review panel rendered by
+  `snippets/rating-badge.liquid` (#RatingBadge). Phones use that snippet's edge tab instead.
+
+  @example
+  {% render 'rating-badge-link' %}
+{%- enddoc -%}
+
+{%- capture rating_features -%}{% render 'rating-badge-visible' %}{%- endcapture -%}
+
+{%- if rating_features contains 'badge' -%}
+  {%- liquid
+    assign rating = shop.metafields.judgeme.all_reviews_rating.value | plus: 0
+    assign review_count = shop.metafields.judgeme.all_reviews_count.value | plus: 0
+    assign rating_label = rating | round: 2
+    assign rating_percent = rating | times: 20 | round: 1
+  -%}
+  {% render 'rating-badge-styles' %}
+  <button
+    type="button"
+    class="rating-link mobile:hidden"
+    style="--rating-star: {{ settings.rating_badge_star_color }};"
+    aria-haspopup="dialog"
+    aria-label="{{ 'accessibility.open_store_reviews' | t: rating: rating_label, count: review_count }}"
+    on:click="#RatingBadge/showDialog"
+  >
+    <span
+      class="rating-stars"
+      style="--rating-percent: {{ rating_percent }}%;"
+      aria-hidden="true"
+    ></span>
+    <span
+      class="rating-link__score"
+      aria-hidden="true"
+    >
+      {{- rating_label -}}
+    </span>
+    <span
+      class="rating-link__divider"
+      aria-hidden="true"
+    ></span>
+    <span
+      class="rating-link__count"
+      aria-hidden="true"
+    >
+      {{- 'content.store_reviews_count' | t: count: review_count -}}
+    </span>
+  </button>
+{%- endif -%}

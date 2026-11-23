@@ -47,11 +47,24 @@
       {% endif %}
 
       {%- liquid
-        # Sold out products follow the ones shoppers can buy, each group in the results' own order.
-        # paginated-list.js keeps that order as more pages load.
+        # Sold out products are left out when Theme settings > Product cards hides them. Otherwise they
+        # follow the ones shoppers can buy, each group in the results' own order, and paginated-list.js
+        # keeps that order as more pages load. The search forms also ask Shopify to leave them out, so
+        # counts and pages stay right; this covers search links that arrive without that option.
         assign available_products = products | where: 'available'
-        assign sold_out_products = products | reject: 'available'
-        assign ordered_products = available_products | concat: sold_out_products
+        if settings.hide_sold_out_products
+          assign ordered_products = available_products
+        else
+          assign sold_out_products = products | reject: 'available'
+          assign ordered_products = available_products | concat: sold_out_products
+        endif
+
+        # A page with nothing left still renders its grid when more pages exist, so paginated-list.js
+        # carries on to them. Only results with nothing to show at all get the empty message.
+        assign grid_products = products
+        if settings.hide_sold_out_products and ordered_products.size == 0 and paginate.pages == 1
+          assign grid_products = ordered_products
+        endif
       -%}
       {% capture children %}
         {% for product in ordered_products %}
@@ -78,7 +91,7 @@
       {% render 'product-grid',
         section: section,
         children: children,
-        products: products,
+        products: grid_products,
         paginate: paginate,
         enable_infinite_scroll: section.settings.enable_infinite_scroll,
         title: title
