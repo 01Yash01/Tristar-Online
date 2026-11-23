@@ -11,6 +11,12 @@ import { CollectionUpdateEvent, SearchUpdateEvent, StandardEvents } from '@shopi
 const SEARCH_QUERY = 'q';
 
 /**
+ * Search option that leaves sold out products out of the results.
+ * @type {string}
+ */
+const UNAVAILABLE_PRODUCTS = 'options[unavailable_products]';
+
+/**
  * Handles the main facets form functionality
  *
  * @typedef {Object} FacetsFormRefs
@@ -61,6 +67,10 @@ class FacetsFormComponent extends Component {
 
     const searchQuery = this.#getSearchQuery();
     if (searchQuery) newParameters.set(SEARCH_QUERY, searchQuery);
+
+    // The filter form doesn't carry this search option, so keep it from the page's address
+    const unavailableProducts = new URL(window.location.href).searchParams.get(UNAVAILABLE_PRODUCTS);
+    if (unavailableProducts) newParameters.set(UNAVAILABLE_PRODUCTS, unavailableProducts);
 
     return newParameters;
   }

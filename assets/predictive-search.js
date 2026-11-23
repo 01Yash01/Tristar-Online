@@ -238,6 +238,8 @@ class PredictiveSearchComponent extends Component {
           searchUrl.searchParams.set('q', this.refs.searchInput.value);
           // Match the form submit so partial words ("iph") still find products.
           searchUrl.searchParams.set('options[prefix]', 'last');
+          const unavailableProducts = this.#unavailableProducts;
+          if (unavailableProducts) searchUrl.searchParams.set('options[unavailable_products]', unavailableProducts);
           window.location.href = searchUrl.toString();
         }
         break;
@@ -313,6 +315,16 @@ class PredictiveSearchComponent extends Component {
   }
 
   /**
+   * The value of the option that asks Shopify to leave sold out products out of the results, when the search form
+   * carries it. Theme settings > Product cards turns it on.
+   * @returns {string | undefined}
+   */
+  get #unavailableProducts() {
+    const input = this.querySelector('input[name="options[unavailable_products]"]');
+    return input instanceof HTMLInputElement && input.value ? input.value : undefined;
+  }
+
+  /**
    * Fetch search results using the section renderer and update the results container.
    * @param {string} searchTerm - The term to search for
    */
@@ -322,6 +334,8 @@ class PredictiveSearchComponent extends Component {
     const url = new URL(Theme.routes.predictive_search_url, location.origin);
     url.searchParams.set('q', searchTerm);
     url.searchParams.set('resources[limit_scope]', 'each');
+    const unavailableProducts = this.#unavailableProducts;
+    if (unavailableProducts) url.searchParams.set('resources[options][unavailable_products]', unavailableProducts);
 
     const { predictiveSearchResults } = this.refs;
 

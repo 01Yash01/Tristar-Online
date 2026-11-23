@@ -38,19 +38,20 @@ export default class PaginatedList extends Component {
   /** @type {((value: void) => void) | null} */
   #resolvePreviousPagePromise = null;
 
-  /** @type {PaginatedListAspectRatioHelper} */
+  /** @type {PaginatedListAspectRatioHelper | undefined} */
   #aspectRatioHelper;
+
+  /**
+   * Pages that were added without a single card, because every product on them was left out. They still count as
+   * loaded, so the next page to fetch moves on instead of asking for the same one again.
+   * @type {Set<number>}
+   */
+  #emptyPages = new Set();
 
   connectedCallback() {
     super.connectedCallback();
 
-    /** @type {HTMLElement | null} */
-    const templateCard = this.querySelector('[ref="cardGallery"]');
-    if (templateCard) {
-      this.#aspectRatioHelper = new PaginatedListAspectRatioHelper({
-        templateCard,
-      });
-    }
+    this.#ensureAspectRatioHelper();
 
     this.#fetchPage('next');
     this.#fetchPage('previous');
@@ -77,6 +78,19 @@ export default class PaginatedList extends Component {
     // Remove the filter update listeners
     document.removeEventListener(StandardEvents.searchUpdate, this.#handleFilterUpdate);
     document.removeEventListener(StandardEvents.collectionUpdate, this.#handleFilterUpdate);
+  }
+
+  /**
+   * Starts the aspect ratio helper once there is a card to read the image ratio from. A grid whose first page has no
+   * cards left has none yet.
+   */
+  #ensureAspectRatioHelper() {
+    if (this.#aspectRatioHelper) return;
+
+    const templateCard = this.querySelector('[ref="cardGallery"]');
+    if (templateCard instanceof HTMLElement) {
+      this.#aspectRatioHelper = new PaginatedListAspectRatioHelper({ templateCard });
+    }
   }
 
   #observeViewMore() {
@@ -228,9 +242,13 @@ export default class PaginatedList extends Component {
       if (!nextPageItemElements) return false;
     }
 
+    const hasCards = nextPageItemElements.length > 0;
+    if (!hasCards) this.#emptyPages.add(nextPage.page);
+
     this.#insertPage(nextPageItemElements, 'next');
 
-    this.#aspectRatioHelper.processNewElements();
+    this.#ensureAspectRatioHelper();
+    this.#aspectRatioHelper?.processNewElements();
 
     // Once the last page is in there is nothing left to load, so the placeholder row goes
     if (nextPage.page >= Number(grid.dataset.lastPage)) {
@@ -239,7 +257,8 @@ export default class PaginatedList extends Component {
 
     await yieldToMainThread();
 
-    history.pushState('', '', nextPage.url.toString());
+    // A page with no cards has nothing for the shopper to come back to
+    if (hasCards) history.pushState('', '', nextPage.url.toString());
 
     requestIdleCallback(() => {
       this.#fetchPage('next');
@@ -253,11 +272,17 @@ export default class PaginatedList extends Component {
    * observer's margin, where the observer won't report it again on its own and the next page would never load.
    */
   #recheckViewMoreNext() {
-    const { viewMoreNext } = this.refs;
-    if (!viewMoreNext || !this.infinityScrollObserver) return;
+    this.#recheckMarker(this.refs.viewMoreNext);
+  }
 
-    this.infinityScrollObserver.unobserve(viewMoreNext);
-    this.infinityScrollObserver.observe(viewMoreNext);
+  /**
+   * @param {HTMLElement | undefined} marker - The view more marker to observe again
+   */
+  #recheckMarker(marker) {
+    if (!marker || !this.infinityScrollObserver) return;
+
+    this.infinityScrollObserver.unobserve(marker);
+    this.infinityScrollObserver.observe(marker);
   }
 
   /**
@@ -296,10 +321,14 @@ export default class PaginatedList extends Component {
     const firstElement = grid.firstElementChild;
     const oldHeight = firstElement ? firstElement.getBoundingClientRect().top + currentScrollTop : 0;
 
+    const hasCards = previousPageItemElements.length > 0;
+    if (!hasCards) this.#emptyPages.add(previousPage.page);
+
     // Prepend the new elements
     this.#insertPage(previousPageItemElements, 'previous');
 
-    this.#aspectRatioHelper.processNewElements();
+    this.#ensureAspectRatioHelper();
+    this.#aspectRatioHelper?.processNewElements();
 
     // Calculate and adjust scroll position to maintain the same view
     if (firstElement) {
@@ -313,11 +342,14 @@ export default class PaginatedList extends Component {
 
     await yieldToMainThread();
 
-    history.pushState('', '', previousPage.url.toString());
+    if (hasCards) history.pushState('', '', previousPage.url.toString());
 
     requestIdleCallback(() => {
       this.#fetchPage('previous');
     });
+
+    // With nothing added above, the marker stays in view and won't report again, so look at it once more
+    if (!hasCards) this.#recheckMarker(this.refs.viewMorePrevious);
   }
 
   /**
@@ -355,14 +387,20 @@ export default class PaginatedList extends Component {
    * @returns {{ page: number, url: URL } | undefined}
    */
   #getPage(type) {
-    const { cards } = this.refs;
+    const { cards, grid } = this.refs;
     const isPrevious = type === 'previous';
-
-    if (!Array.isArray(cards)) return;
 
     // Sold out cards sit after every page's other cards, so the loaded pages come from the cards' page numbers
     // rather than from the first and last card in the grid
-    const loadedPages = cards.map((card) => Number(card.dataset.page)).filter((page) => !Number.isNaN(page));
+    const loadedPages = (Array.isArray(cards) ? cards : [])
+      .map((card) => Number(card.dataset.page))
+      .filter((page) => !Number.isNaN(page));
+
+    // Pages without cards leave no page number behind in the grid, so the page the grid was rendered for and the
+    // empty pages added since are counted too
+    const renderedPage = Number(grid?.dataset.currentPage);
+    if (renderedPage > 0) loadedPages.push(renderedPage);
+    loadedPages.push(...this.#emptyPages);
 
     if (!loadedPages.length) return;
 
@@ -411,6 +449,7 @@ export default class PaginatedList extends Component {
     const eventSection = /** @type {Element | null} */ (event.target)?.closest('[id^="shopify-section-"]');
     if (eventSection && eventSection.id !== `shopify-section-${this.sectionId}`) return;
     this.pages.clear();
+    this.#emptyPages.clear();
 
     // Resolve any pending promises to unblock waiting renders
     this.#resolveNextPagePromise?.();
