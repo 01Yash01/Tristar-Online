@@ -9,6 +9,7 @@
  */
 {
   "names": {
+    "rating_badge": "Rating badge",
     "back_to_top": "Terug naar boven",
     "cash_out_tab": "Cash Out-tabblad",
     "breadcrumbs": "Breadcrumbs",
@@ -196,6 +197,19 @@
     "disclosures": "Toelichtingen"
   },
   "settings": {
+    "show_rating_in_cart": "Show rating in cart",
+    "show_rating_badge": "Show rating badge",
+    "vertical_position": "Vertical position",
+    "star_color": "Star color",
+    "reviews_link": "\"See all reviews\" link",
+    "show_on": "Show on",
+    "review_source": "Reviews to show",
+    "minimum_rating": "Minimum star rating",
+    "show_review_popups": "Show review popups",
+    "bottom_offset": "Distance from bottom",
+    "first_popup_delay": "First popup after",
+    "popup_interval": "Time between popups",
+    "popups_per_visit": "Popups per visit",
     "link_hover_effect": "Hover-effect voor links",
     "show_dropdown_arrows": "Pijlen voor vervolgkeuzemenu’s weergeven",
     "show_back_to_top": "Knop Terug naar boven weergeven",
@@ -532,6 +546,8 @@
     "product_templates": "Producttemplates",
     "products": "Producten",
     "quick_add": "Snel toevoegen",
+    "hide_sold_out_products": "Uitverkochte producten verbergen",
+    "hide_sold_out_products_info": "Verwijdert uitverkochte producten uit collectiepagina’s en zoekresultaten. De getallen naast filteropties kunnen ze nog steeds meetellen.",
     "ratio": "Verhouding",
     "regular": "Normaal",
     "review_count": "Aantal beoordelingen",
@@ -745,6 +761,12 @@
     "customer_account_menu": "Klantaccountmenu"
   },
   "options": {
+    "all_pages": "All pages",
+    "home_and_product_pages": "Home and product pages",
+    "home_page_only": "Home page only",
+    "product_pages_only": "Product pages only",
+    "latest_reviews": "Latest",
+    "featured_reviews": "Featured",
     "roll_up": "Omhoog rollen",
     "condition_show_new": "Show as brand new",
     "condition_hide": "Hide",
@@ -1076,6 +1098,8 @@
     "input_field": "Invoerveld"
   },
   "content": {
+    "reviews_shown": "Reviews",
+    "review_popups": "Review popups",
     "condition_guide": "Condition guide",
     "menu_panel_products": "Products",
     "menu_panel_promos": "Promotions",
@@ -1370,6 +1394,9 @@
     "disclosures": "Toelichtingen"
   },
   "info": {
+    "rating_badge": "Shows your Judge.me store rating: in the header menu bar on computers and as a tab on the screen edge on phones. Hidden while Judge.me has no rating data.",
+    "rating_badge_link": "Leave empty to hide the \"See all reviews\" button.",
+    "rating_badge_min_rating": "Lower-rated reviews are left out of the panel and popups.",
     "title_style": "Toont de tekst vóór de eerste ‘ - ’ als modelnaam, met de staat, opslag en andere details op een regel eronder. Titels zonder ‘ - ’ blijven volledig.",
     "show_color_dots": "Kleurnamen in de titel worden stippen in de standaard kleurfamilies van Shopify, met de naam bij aanwijzen. Als een titel een kleurnaam bevat die het thema niet kent, blijven de kleuren tekst.",
     "link_hover_effect": "Geldt voor links zonder vervolgkeuzemenu.",

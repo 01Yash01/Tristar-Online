@@ -9,6 +9,7 @@
  */
 {
   "names": {
+    "rating_badge": "Rating badge",
     "back_to_top": "Tillbaka till toppen",
     "cash_out_tab": "Cash Out-flik",
     "breadcrumbs": "Breadcrumbs",
@@ -196,6 +197,19 @@
     "disclosures": "Upplysningar"
   },
   "settings": {
+    "show_rating_in_cart": "Show rating in cart",
+    "show_rating_badge": "Show rating badge",
+    "vertical_position": "Vertical position",
+    "star_color": "Star color",
+    "reviews_link": "\"See all reviews\" link",
+    "show_on": "Show on",
+    "review_source": "Reviews to show",
+    "minimum_rating": "Minimum star rating",
+    "show_review_popups": "Show review popups",
+    "bottom_offset": "Distance from bottom",
+    "first_popup_delay": "First popup after",
+    "popup_interval": "Time between popups",
+    "popups_per_visit": "Popups per visit",
     "link_hover_effect": "Hovringseffekt för länkar",
     "show_dropdown_arrows": "Visa pilar för rullgardinsmenyer",
     "show_back_to_top": "Visa knappen Tillbaka till toppen",
@@ -531,6 +545,8 @@
     "product_templates": "Produktmallar",
     "products": "Produkter",
     "quick_add": "Snabbtillägg",
+    "hide_sold_out_products": "Dölj slutsålda produkter",
+    "hide_sold_out_products_info": "Tar bort slutsålda produkter från kollektionssidor och sökresultat. Siffrorna vid filteralternativen kan fortfarande inkludera dem.",
     "ratio": "Förhållande",
     "regular": "Normal",
     "review_count": "Antal recensioner",
@@ -745,6 +761,12 @@
     "customer_account_menu": "Kundkontomeny"
   },
   "options": {
+    "all_pages": "All pages",
+    "home_and_product_pages": "Home and product pages",
+    "home_page_only": "Home page only",
+    "product_pages_only": "Product pages only",
+    "latest_reviews": "Latest",
+    "featured_reviews": "Featured",
     "roll_up": "Rulla upp",
     "condition_show_new": "Show as brand new",
     "condition_hide": "Hide",
@@ -1076,6 +1098,8 @@
     "direction_top_start": "Uppe till vänster"
   },
   "content": {
+    "reviews_shown": "Reviews",
+    "review_popups": "Review popups",
     "condition_guide": "Condition guide",
     "menu_panel_products": "Products",
     "menu_panel_promos": "Promotions",
@@ -1370,6 +1394,9 @@
     "disclosures": "Upplysningar"
   },
   "info": {
+    "rating_badge": "Shows your Judge.me store rating: in the header menu bar on computers and as a tab on the screen edge on phones. Hidden while Judge.me has no rating data.",
+    "rating_badge_link": "Leave empty to hide the \"See all reviews\" button.",
+    "rating_badge_min_rating": "Lower-rated reviews are left out of the panel and popups.",
     "title_style": "Visar texten före det första ” - ” som modellnamn, med skick, lagring och andra detaljer på en rad under. Titlar utan ” - ” visas i sin helhet.",
     "show_color_dots": "Färgnamn i titeln visas som prickar i Shopifys standardfärgfamiljer, med namnet när du håller pekaren över. Om en titel har ett färgnamn som temat inte känner till förblir färgerna text.",
     "link_hover_effect": "Gäller länkar utan rullgardinsmeny.",

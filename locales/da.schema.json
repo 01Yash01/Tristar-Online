@@ -9,6 +9,7 @@
  */
 {
   "names": {
+    "rating_badge": "Rating badge",
     "back_to_top": "Tilbage til toppen",
     "cash_out_tab": "Cash Out-fane",
     "breadcrumbs": "Breadcrumbs",
@@ -196,6 +197,19 @@
     "disclosures": "Oplysninger"
   },
   "settings": {
+    "show_rating_in_cart": "Show rating in cart",
+    "show_rating_badge": "Show rating badge",
+    "vertical_position": "Vertical position",
+    "star_color": "Star color",
+    "reviews_link": "\"See all reviews\" link",
+    "show_on": "Show on",
+    "review_source": "Reviews to show",
+    "minimum_rating": "Minimum star rating",
+    "show_review_popups": "Show review popups",
+    "bottom_offset": "Distance from bottom",
+    "first_popup_delay": "First popup after",
+    "popup_interval": "Time between popups",
+    "popups_per_visit": "Popups per visit",
     "link_hover_effect": "Hover-effekt for links",
     "show_dropdown_arrows": "Vis pile ved rullemenuer",
     "show_back_to_top": "Vis knappen Tilbage til toppen",
@@ -516,6 +530,8 @@
     "product_templates": "Produktskabeloner",
     "products": "Produkter",
     "quick_add": "Hurtigt køb",
+    "hide_sold_out_products": "Skjul udsolgte produkter",
+    "hide_sold_out_products_info": "Fjerner udsolgte produkter fra kollektionssider og søgeresultater. Tallene ved filterindstillingerne kan stadig indeholde dem.",
     "ratio": "Forhold",
     "regular": "Almindelig",
     "review_count": "Antal anmeldelser",
@@ -745,6 +761,12 @@
     "customer_account_menu": "Kundekontomenu"
   },
   "options": {
+    "all_pages": "All pages",
+    "home_and_product_pages": "Home and product pages",
+    "home_page_only": "Home page only",
+    "product_pages_only": "Product pages only",
+    "latest_reviews": "Latest",
+    "featured_reviews": "Featured",
     "roll_up": "Rul op",
     "condition_show_new": "Show as brand new",
     "condition_hide": "Hide",
@@ -1076,6 +1098,8 @@
     "direction_top_start": "Øverst til venstre"
   },
   "content": {
+    "reviews_shown": "Reviews",
+    "review_popups": "Review popups",
     "condition_guide": "Condition guide",
     "menu_panel_products": "Products",
     "menu_panel_promos": "Promotions",
@@ -1370,6 +1394,9 @@
     "disclosures": "Oplysninger"
   },
   "info": {
+    "rating_badge": "Shows your Judge.me store rating: in the header menu bar on computers and as a tab on the screen edge on phones. Hidden while Judge.me has no rating data.",
+    "rating_badge_link": "Leave empty to hide the \"See all reviews\" button.",
+    "rating_badge_min_rating": "Lower-rated reviews are left out of the panel and popups.",
     "title_style": "Viser teksten før det første “ - ” som modelnavn med stand, lagerplads og andre detaljer på en linje nedenunder. Titler uden “ - ” vises i fuld længde.",
     "show_color_dots": "Farvenavne i titlen vises som prikker i Shopifys standardfarvefamilier med navnet, når du holder markøren over. Hvis en titel har et farvenavn, temaet ikke kender, forbliver farverne tekst.",
     "link_hover_effect": "Gælder for links uden en rullemenu.",

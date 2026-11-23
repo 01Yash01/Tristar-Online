@@ -30,6 +30,8 @@
     "text": "نص"
   },
   "content": {
+    "reviews_shown": "Reviews",
+    "review_popups": "Review popups",
     "condition_guide": "Condition guide",
     "menu_panel_products": "Products",
     "menu_panel_promos": "Promotions",
@@ -253,6 +255,9 @@
     "work_quickly_to_ship": "<p>سنعمل بسرعة لشحن طلبك في أقرب وقت ممكن. بمجرد شحن طلبك، ستتلقى رسالة بريد إلكتروني تحتوي على مزيد من المعلومات. تختلف أوقات التوصيل حسب موقعك.</p>"
   },
   "info": {
+    "rating_badge": "Shows your Judge.me store rating: in the header menu bar on computers and as a tab on the screen edge on phones. Hidden while Judge.me has no rating data.",
+    "rating_badge_link": "Leave empty to hide the \"See all reviews\" button.",
+    "rating_badge_min_rating": "Lower-rated reviews are left out of the panel and popups.",
     "title_style": "يعرض النص الذي يسبق أول “ - ” كاسم للطراز، مع الحالة والسعة والتفاصيل الأخرى في سطر أسفله. تظهر العناوين التي لا تحتوي على “ - ” كاملة.",
     "show_color_dots": "تظهر أسماء الألوان في العنوان كنقاط بعائلات الألوان القياسية في Shopify، مع ظهور الاسم عند التمرير. إذا احتوى العنوان على اسم لون لا يعرفه القالب، تبقى ألوانه نصًا.",
     "link_hover_effect": "ينطبق على الروابط التي ليس لها قائمة منسدلة.",
@@ -343,6 +348,7 @@
     "media_type_info": "تمت تعبئة الميزات من روابط القائمة الخاصة بك"
   },
   "names": {
+    "rating_badge": "Rating badge",
     "back_to_top": "العودة إلى الأعلى",
     "cash_out_tab": "علامة تبويب Cash Out",
     "breadcrumbs": "Breadcrumbs",
@@ -530,6 +536,12 @@
     "comparison_slider": "شريط تمرير المقارنة"
   },
   "options": {
+    "all_pages": "All pages",
+    "home_and_product_pages": "Home and product pages",
+    "home_page_only": "Home page only",
+    "product_pages_only": "Product pages only",
+    "latest_reviews": "Latest",
+    "featured_reviews": "Featured",
     "roll_up": "انزلاق لأعلى",
     "condition_show_new": "Show as brand new",
     "condition_hide": "Hide",
@@ -861,6 +873,19 @@
     "below_media": "أسفل الوسائط"
   },
   "settings": {
+    "show_rating_in_cart": "Show rating in cart",
+    "show_rating_badge": "Show rating badge",
+    "vertical_position": "Vertical position",
+    "star_color": "Star color",
+    "reviews_link": "\"See all reviews\" link",
+    "show_on": "Show on",
+    "review_source": "Reviews to show",
+    "minimum_rating": "Minimum star rating",
+    "show_review_popups": "Show review popups",
+    "bottom_offset": "Distance from bottom",
+    "first_popup_delay": "First popup after",
+    "popup_interval": "Time between popups",
+    "popups_per_visit": "Popups per visit",
     "link_hover_effect": "تأثير تمرير المؤشر على الروابط",
     "show_dropdown_arrows": "إظهار أسهم القوائم المنسدلة",
     "show_back_to_top": "إظهار زر العودة إلى الأعلى",
@@ -1260,6 +1285,8 @@
       "checkbox_preset": "تسمية مربع الاختيار"
     },
     "quick_add": "إضافة سريعة",
+    "hide_sold_out_products": "إخفاء المنتجات النافدة",
+    "hide_sold_out_products_info": "يزيل المنتجات النافدة من صفحات المجموعات ونتائج البحث. قد تظل الأرقام بجانب خيارات التصفية تشملها.",
     "quick_add_colors": "ألوان الإضافة السريعة",
     "ratio": "النسبة",
     "read_only": "للقراءة فقط",

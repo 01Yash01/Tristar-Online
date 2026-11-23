@@ -29,6 +29,10 @@
     "slider_label": "Kaydırıcı"
   },
   "accessibility": {
+    "store_rating_summary": "Rated {{ rating }} out of 5 from {{ count }} reviews",
+    "open_store_reviews": "Store rating {{ rating }} out of 5 from {{ count }} reviews. Open customer reviews",
+    "review_rating": "Rated {{ rating }} out of 5",
+    "hide_review_popups": "Hide review popups",
     "back_to_top": "Yukarı çık",
     "breadcrumbs": "Breadcrumbs",
     "condition_guide": "What does this condition mean?",
@@ -136,6 +140,27 @@
     "zoom_media": "Medyayı yakınlaştır: {{ index }}"
   },
   "content": {
+    "store_reviews_from": {
+      "one": "from {{ count }} review",
+      "other": "from {{ count }} reviews"
+    },
+    "store_reviews_count": {
+      "one": "{{ count }} review",
+      "other": "{{ count }} reviews"
+    },
+    "store_reviews_heading": "Customer reviews",
+    "store_reviews_based_on": {
+      "one": "Based on {{ count }} review",
+      "other": "Based on {{ count }} reviews"
+    },
+    "store_reviews_error": "Reviews couldn't load. Please try again.",
+    "store_reviews_see_all": "See all reviews",
+    "store_reviews_recent": "Recent reviews",
+    "store_reviews_breakdown": "Rating breakdown",
+    "store_reviews_breakdown_row": "{{ rating }} stars: {{ count }} reviews",
+    "store_review_anonymous": "A customer",
+    "store_review_verified": "Verified buyer",
+    "store_reviews_read_more": "Read reviews",
     "back_to_top_label": "Yukarı",
     "breadcrumb_home": "Home",
     "delivery_estimate_html": "Arrives {{ start }} – {{ end }}",

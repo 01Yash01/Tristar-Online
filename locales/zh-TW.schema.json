@@ -9,6 +9,7 @@
  */
 {
   "names": {
+    "rating_badge": "Rating badge",
     "back_to_top": "回到頂端",
     "cash_out_tab": "Cash Out 標籤",
     "breadcrumbs": "Breadcrumbs",
@@ -196,6 +197,19 @@
     "disclosures": "資訊揭露"
   },
   "settings": {
+    "show_rating_in_cart": "Show rating in cart",
+    "show_rating_badge": "Show rating badge",
+    "vertical_position": "Vertical position",
+    "star_color": "Star color",
+    "reviews_link": "\"See all reviews\" link",
+    "show_on": "Show on",
+    "review_source": "Reviews to show",
+    "minimum_rating": "Minimum star rating",
+    "show_review_popups": "Show review popups",
+    "bottom_offset": "Distance from bottom",
+    "first_popup_delay": "First popup after",
+    "popup_interval": "Time between popups",
+    "popups_per_visit": "Popups per visit",
     "link_hover_effect": "連結滑過效果",
     "show_dropdown_arrows": "顯示下拉箭頭",
     "show_back_to_top": "顯示回到頂端按鈕",
@@ -528,6 +542,8 @@
     "product_templates": "產品範本",
     "products": "產品",
     "quick_add": "快速加入",
+    "hide_sold_out_products": "隱藏已售完商品",
+    "hide_sold_out_products_info": "從系列頁面和搜尋結果中移除已售完商品。篩選選項旁的數字可能仍包含這些商品。",
     "ratio": "比例",
     "regular": "一般",
     "review_count": "評論數",
@@ -745,6 +761,12 @@
     "customer_account_menu": "顧客帳號選單"
   },
   "options": {
+    "all_pages": "All pages",
+    "home_and_product_pages": "Home and product pages",
+    "home_page_only": "Home page only",
+    "product_pages_only": "Product pages only",
+    "latest_reviews": "Latest",
+    "featured_reviews": "Featured",
     "roll_up": "向上捲動",
     "condition_show_new": "Show as brand new",
     "condition_hide": "Hide",
@@ -1076,6 +1098,8 @@
     "direction_top_start": "左上"
   },
   "content": {
+    "reviews_shown": "Reviews",
+    "review_popups": "Review popups",
     "condition_guide": "Condition guide",
     "menu_panel_products": "Products",
     "menu_panel_promos": "Promotions",
@@ -1370,6 +1394,9 @@
     "disclosures": "資訊揭露"
   },
   "info": {
+    "rating_badge": "Shows your Judge.me store rating: in the header menu bar on computers and as a tab on the screen edge on phones. Hidden while Judge.me has no rating data.",
+    "rating_badge_link": "Leave empty to hide the \"See all reviews\" button.",
+    "rating_badge_min_rating": "Lower-rated reviews are left out of the panel and popups.",
     "title_style": "將第一個「 - 」之前的文字顯示為型號名稱，並在下方一行顯示狀況、儲存容量和其他詳細資料。不含「 - 」的標題會完整顯示。",
     "show_color_dots": "標題中的顏色名稱會以 Shopify 標準顏色系列的圓點顯示，游標移上時顯示名稱。如果標題包含佈景主題無法辨識的顏色名稱，這些顏色仍以文字顯示。",
     "link_hover_effect": "適用於沒有下拉選單的連結。",

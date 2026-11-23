@@ -9,6 +9,7 @@
  */
 {
   "names": {
+    "rating_badge": "Rating badge",
     "back_to_top": "Takaisin ylös",
     "cash_out_tab": "Cash Out -välilehti",
     "breadcrumbs": "Breadcrumbs",
@@ -196,6 +197,19 @@
     "disclosures": "Ilmoitukset"
   },
   "settings": {
+    "show_rating_in_cart": "Show rating in cart",
+    "show_rating_badge": "Show rating badge",
+    "vertical_position": "Vertical position",
+    "star_color": "Star color",
+    "reviews_link": "\"See all reviews\" link",
+    "show_on": "Show on",
+    "review_source": "Reviews to show",
+    "minimum_rating": "Minimum star rating",
+    "show_review_popups": "Show review popups",
+    "bottom_offset": "Distance from bottom",
+    "first_popup_delay": "First popup after",
+    "popup_interval": "Time between popups",
+    "popups_per_visit": "Popups per visit",
     "link_hover_effect": "Linkkien hover-tehoste",
     "show_dropdown_arrows": "Näytä pudotusvalikkojen nuolet",
     "show_back_to_top": "Näytä Takaisin ylös -painike",
@@ -528,6 +542,8 @@
     "product_templates": "Tuotemallit",
     "products": "Tuotteet",
     "quick_add": "Pikalisäys",
+    "hide_sold_out_products": "Piilota loppuunmyydyt tuotteet",
+    "hide_sold_out_products_info": "Poistaa loppuunmyydyt tuotteet kokoelmasivuilta ja hakutuloksista. Suodatinvaihtoehtojen vieressä olevat luvut voivat silti sisältää ne.",
     "ratio": "Suhde",
     "regular": "Normaali",
     "review_count": "Arvostelujen määrä",
@@ -745,6 +761,12 @@
     "customer_account_menu": "Asiakastilin valikko"
   },
   "options": {
+    "all_pages": "All pages",
+    "home_and_product_pages": "Home and product pages",
+    "home_page_only": "Home page only",
+    "product_pages_only": "Product pages only",
+    "latest_reviews": "Latest",
+    "featured_reviews": "Featured",
     "roll_up": "Rullaa ylös",
     "condition_show_new": "Show as brand new",
     "condition_hide": "Hide",
@@ -1076,6 +1098,8 @@
     "direction_top_start": "Ylhäällä vasemmalla"
   },
   "content": {
+    "reviews_shown": "Reviews",
+    "review_popups": "Review popups",
     "condition_guide": "Condition guide",
     "menu_panel_products": "Products",
     "menu_panel_promos": "Promotions",
@@ -1370,6 +1394,9 @@
     "disclosures": "Ilmoitukset"
   },
   "info": {
+    "rating_badge": "Shows your Judge.me store rating: in the header menu bar on computers and as a tab on the screen edge on phones. Hidden while Judge.me has no rating data.",
+    "rating_badge_link": "Leave empty to hide the \"See all reviews\" button.",
+    "rating_badge_min_rating": "Lower-rated reviews are left out of the panel and popups.",
     "title_style": "Näyttää ensimmäistä ” - ” -merkkiä edeltävän tekstin mallin nimenä ja kunnon, tallennustilan ja muut tiedot sen alla olevalla rivillä. Otsikot ilman ” - ” -merkkiä näytetään kokonaan.",
     "show_color_dots": "Otsikon värinimet näytetään pisteinä Shopifyn vakioväriperheiden väreissä, ja nimi näkyy, kun osoitin viedään pisteen päälle. Jos otsikossa on väri, jota teema ei tunne, sen värit jäävät tekstiksi.",
     "link_hover_effect": "Koskee linkkejä, joilla ei ole pudotusvalikkoa.",

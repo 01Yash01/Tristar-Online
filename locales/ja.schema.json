@@ -9,6 +9,7 @@
  */
 {
   "names": {
+    "rating_badge": "Rating badge",
     "back_to_top": "トップへ戻る",
     "cash_out_tab": "Cash Out タブ",
     "breadcrumbs": "Breadcrumbs",
@@ -196,6 +197,19 @@
     "disclosures": "開示情報"
   },
   "settings": {
+    "show_rating_in_cart": "Show rating in cart",
+    "show_rating_badge": "Show rating badge",
+    "vertical_position": "Vertical position",
+    "star_color": "Star color",
+    "reviews_link": "\"See all reviews\" link",
+    "show_on": "Show on",
+    "review_source": "Reviews to show",
+    "minimum_rating": "Minimum star rating",
+    "show_review_popups": "Show review popups",
+    "bottom_offset": "Distance from bottom",
+    "first_popup_delay": "First popup after",
+    "popup_interval": "Time between popups",
+    "popups_per_visit": "Popups per visit",
     "link_hover_effect": "リンクのホバー効果",
     "show_dropdown_arrows": "ドロップダウンの矢印を表示",
     "show_back_to_top": "「トップへ戻る」ボタンを表示",
@@ -532,6 +546,8 @@
     "product_templates": "商品テンプレート",
     "products": "商品",
     "quick_add": "クイック追加",
+    "hide_sold_out_products": "売り切れ商品を非表示にする",
+    "hide_sold_out_products_info": "コレクションページと検索結果から売り切れ商品を除外します。フィルターオプションの横の数字には、売り切れ商品が含まれる場合があります。",
     "ratio": "比率",
     "regular": "標準",
     "review_count": "レビュー数",
@@ -745,6 +761,12 @@
     "customer_account_menu": "お客様アカウントメニュー"
   },
   "options": {
+    "all_pages": "All pages",
+    "home_and_product_pages": "Home and product pages",
+    "home_page_only": "Home page only",
+    "product_pages_only": "Product pages only",
+    "latest_reviews": "Latest",
+    "featured_reviews": "Featured",
     "roll_up": "ロールアップ",
     "condition_show_new": "Show as brand new",
     "condition_hide": "Hide",
@@ -1076,6 +1098,8 @@
     "input_field": "入力フィールド"
   },
   "content": {
+    "reviews_shown": "Reviews",
+    "review_popups": "Review popups",
     "condition_guide": "Condition guide",
     "menu_panel_products": "Products",
     "menu_panel_promos": "Promotions",
@@ -1370,6 +1394,9 @@
     "disclosures": "開示情報"
   },
   "info": {
+    "rating_badge": "Shows your Judge.me store rating: in the header menu bar on computers and as a tab on the screen edge on phones. Hidden while Judge.me has no rating data.",
+    "rating_badge_link": "Leave empty to hide the \"See all reviews\" button.",
+    "rating_badge_min_rating": "Lower-rated reviews are left out of the panel and popups.",
     "title_style": "最初の「 - 」より前のテキストをモデル名として表示し、状態、容量、その他の詳細をその下の行に表示します。「 - 」を含まないタイトルはそのまま表示されます。",
     "show_color_dots": "タイトル内のカラー名を Shopify の標準カラーファミリーのドットで表示し、カーソルを合わせると名前が表示されます。テーマが認識できないカラー名を含むタイトルでは、カラーはテキストのまま表示されます。",
     "link_hover_effect": "ドロップダウンメニューのないリンクに適用されます。",

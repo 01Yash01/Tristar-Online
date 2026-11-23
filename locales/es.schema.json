@@ -9,6 +9,7 @@
  */
 {
   "names": {
+    "rating_badge": "Rating badge",
     "back_to_top": "Volver arriba",
     "cash_out_tab": "Pestaña de Cash Out",
     "breadcrumbs": "Breadcrumbs",
@@ -196,6 +197,19 @@
     "disclosures": "Divulgaciones"
   },
   "settings": {
+    "show_rating_in_cart": "Show rating in cart",
+    "show_rating_badge": "Show rating badge",
+    "vertical_position": "Vertical position",
+    "star_color": "Star color",
+    "reviews_link": "\"See all reviews\" link",
+    "show_on": "Show on",
+    "review_source": "Reviews to show",
+    "minimum_rating": "Minimum star rating",
+    "show_review_popups": "Show review popups",
+    "bottom_offset": "Distance from bottom",
+    "first_popup_delay": "First popup after",
+    "popup_interval": "Time between popups",
+    "popups_per_visit": "Popups per visit",
     "link_hover_effect": "Efecto al pasar el cursor por los enlaces",
     "show_dropdown_arrows": "Mostrar flechas de menús desplegables",
     "show_back_to_top": "Mostrar botón Volver arriba",
@@ -530,6 +544,8 @@
     "product_templates": "Plantillas de producto",
     "products": "Productos",
     "quick_add": "Agregar rápido",
+    "hide_sold_out_products": "Ocultar productos agotados",
+    "hide_sold_out_products_info": "Quita los productos agotados de las páginas de colección y de los resultados de búsqueda. Los números junto a las opciones de filtro pueden seguir incluyéndolos.",
     "ratio": "Relación",
     "regular": "Regular",
     "review_count": "Número de reseñas",
@@ -745,6 +761,12 @@
     "customer_account_menu": "Menú de la cuenta de cliente"
   },
   "options": {
+    "all_pages": "All pages",
+    "home_and_product_pages": "Home and product pages",
+    "home_page_only": "Home page only",
+    "product_pages_only": "Product pages only",
+    "latest_reviews": "Latest",
+    "featured_reviews": "Featured",
     "roll_up": "Desplazar hacia arriba",
     "condition_show_new": "Show as brand new",
     "condition_hide": "Hide",
@@ -1076,6 +1098,8 @@
     "input_field": "Campo de entrada"
   },
   "content": {
+    "reviews_shown": "Reviews",
+    "review_popups": "Review popups",
     "condition_guide": "Condition guide",
     "menu_panel_products": "Products",
     "menu_panel_promos": "Promotions",
@@ -1370,6 +1394,9 @@
     "disclosures": "Divulgaciones"
   },
   "info": {
+    "rating_badge": "Shows your Judge.me store rating: in the header menu bar on computers and as a tab on the screen edge on phones. Hidden while Judge.me has no rating data.",
+    "rating_badge_link": "Leave empty to hide the \"See all reviews\" button.",
+    "rating_badge_min_rating": "Lower-rated reviews are left out of the panel and popups.",
     "title_style": "Muestra el texto anterior al primer “ - ” como nombre del modelo, con el estado, el almacenamiento y otros detalles en una línea debajo. Los títulos sin “ - ” se muestran completos.",
     "show_color_dots": "Los nombres de color del título se muestran como puntos con las familias de colores estándar de Shopify, con el nombre al pasar el cursor. Si un título tiene un color que el tema no reconoce, sus colores se quedan como texto.",
     "link_hover_effect": "Se aplica a los enlaces sin menú desplegable.",

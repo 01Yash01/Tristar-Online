@@ -30,6 +30,8 @@
     "text": "טקסט"
   },
   "content": {
+    "reviews_shown": "Reviews",
+    "review_popups": "Review popups",
     "condition_guide": "Condition guide",
     "menu_panel_products": "Products",
     "menu_panel_promos": "Promotions",
@@ -253,6 +255,9 @@
     "work_quickly_to_ship": "<p>נעבוד מהר כדי לשלוח את ההזמנה שלך בהקדם האפשרי. לאחר שההזמנה שלך תישלח, תקבל דוא&quot;ל עם מידע נוסף. זמני האספקה משתנים בהתאם למיקומך.</p>"
   },
   "info": {
+    "rating_badge": "Shows your Judge.me store rating: in the header menu bar on computers and as a tab on the screen edge on phones. Hidden while Judge.me has no rating data.",
+    "rating_badge_link": "Leave empty to hide the \"See all reviews\" button.",
+    "rating_badge_min_rating": "Lower-rated reviews are left out of the panel and popups.",
     "title_style": "מציג את הטקסט שלפני ה-“ - ” הראשון כשם הדגם, ואת המצב, האחסון ופרטים נוספים בשורה מתחתיו. כותרות ללא “ - ” מוצגות במלואן.",
     "show_color_dots": "שמות הצבעים בכותרת מוצגים כנקודות בקבוצות הצבעים הסטנדרטיות של Shopify, והשם מופיע במעבר עם העכבר. אם בכותרת יש שם צבע שהערכה לא מכירה, הצבעים נשארים כטקסט.",
     "link_hover_effect": "חל על קישורים ללא תפריט נפתח.",
@@ -343,6 +348,7 @@
     "media_type_info": "התכונות מאוכלסות מקישורי התפריט שלך"
   },
   "names": {
+    "rating_badge": "Rating badge",
     "back_to_top": "חזרה למעלה",
     "cash_out_tab": "לשונית Cash Out",
     "breadcrumbs": "Breadcrumbs",
@@ -530,6 +536,12 @@
     "comparison_slider": "מחוון השוואה"
   },
   "options": {
+    "all_pages": "All pages",
+    "home_and_product_pages": "Home and product pages",
+    "home_page_only": "Home page only",
+    "product_pages_only": "Product pages only",
+    "latest_reviews": "Latest",
+    "featured_reviews": "Featured",
     "roll_up": "גלילה למעלה",
     "condition_show_new": "Show as brand new",
     "condition_hide": "Hide",
@@ -861,6 +873,19 @@
     "direction_top_start": "למעלה, התחלה"
   },
   "settings": {
+    "show_rating_in_cart": "Show rating in cart",
+    "show_rating_badge": "Show rating badge",
+    "vertical_position": "Vertical position",
+    "star_color": "Star color",
+    "reviews_link": "\"See all reviews\" link",
+    "show_on": "Show on",
+    "review_source": "Reviews to show",
+    "minimum_rating": "Minimum star rating",
+    "show_review_popups": "Show review popups",
+    "bottom_offset": "Distance from bottom",
+    "first_popup_delay": "First popup after",
+    "popup_interval": "Time between popups",
+    "popups_per_visit": "Popups per visit",
     "link_hover_effect": "אפקט ריחוף על קישורים",
     "show_dropdown_arrows": "הצגת חיצים לתפריטים נפתחים",
     "show_back_to_top": "הצגת כפתור חזרה למעלה",
@@ -1260,6 +1285,8 @@
       "checkbox_preset": "תווית לתיבת סימון"
     },
     "quick_add": "הוספה מהירה",
+    "hide_sold_out_products": "הסתרת מוצרים שאזלו",
+    "hide_sold_out_products_info": "מסיר מוצרים שאזלו מדפי האוספים ומתוצאות החיפוש. המספרים ליד אפשרויות הסינון עשויים עדיין לכלול אותם.",
     "quick_add_colors": "צבעי הוספה מהירה",
     "ratio": "יחס",
     "read_only": "קריאה בלבד",

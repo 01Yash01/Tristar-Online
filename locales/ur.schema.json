@@ -30,6 +30,8 @@
     "text": "ٹیکسٹ"
   },
   "content": {
+    "reviews_shown": "Reviews",
+    "review_popups": "Review popups",
     "condition_guide": "Condition guide",
     "menu_panel_products": "Products",
     "menu_panel_promos": "Promotions",
@@ -253,6 +255,9 @@
     "work_quickly_to_ship": "<p>ہم جلد از جلد آپ کا آرڈر شپ کرنے کے لیے تیزی سے کام کریں گے۔ آپ کا آرڈر شپ ہونے کے بعد، آپ کو مزید معلومات کے ساتھ ایک ای میل موصول ہوگی۔ آپ کے مقام کے لحاظ سے ترسیل کے اوقات مختلف ہو سکتے ہیں۔</p>"
   },
   "info": {
+    "rating_badge": "Shows your Judge.me store rating: in the header menu bar on computers and as a tab on the screen edge on phones. Hidden while Judge.me has no rating data.",
+    "rating_badge_link": "Leave empty to hide the \"See all reviews\" button.",
+    "rating_badge_min_rating": "Lower-rated reviews are left out of the panel and popups.",
     "title_style": "پہلے “ - ” سے پہلے کا متن ماڈل کے نام کے طور پر دکھاتا ہے، اور حالت، اسٹوریج اور دیگر تفصیلات اس کے نیچے والی سطر میں۔ جن عنوانات میں “ - ” نہ ہو وہ پورے دکھائے جاتے ہیں۔",
     "show_color_dots": "عنوان میں رنگوں کے نام Shopify کے معیاری رنگوں کے گروپس میں نقطوں کی صورت میں دکھائے جاتے ہیں، اور ماؤس لے جانے پر نام ظاہر ہوتا ہے۔ اگر عنوان میں کوئی ایسا رنگ ہو جسے تھیم نہیں جانتی تو رنگ متن ہی رہتے ہیں۔",
     "link_hover_effect": "ان لنکس پر لاگو ہوتا ہے جن کا ڈراپ ڈاؤن مینو نہیں ہے۔",
@@ -343,6 +348,7 @@
     "media_type_info": "خصوصیات آپ کے مینو کے لنک سے پُر کی گئی ہیں"
   },
   "names": {
+    "rating_badge": "Rating badge",
     "back_to_top": "اوپر واپس جائیں",
     "cash_out_tab": "Cash Out ٹیب",
     "breadcrumbs": "Breadcrumbs",
@@ -530,6 +536,12 @@
     "comparison_slider": "موازنہ کرنے والا سلائیڈر"
   },
   "options": {
+    "all_pages": "All pages",
+    "home_and_product_pages": "Home and product pages",
+    "home_page_only": "Home page only",
+    "product_pages_only": "Product pages only",
+    "latest_reviews": "Latest",
+    "featured_reviews": "Featured",
     "roll_up": "اوپر رول کریں",
     "condition_show_new": "Show as brand new",
     "condition_hide": "Hide",
@@ -861,6 +873,19 @@
     "below_media": "میڈیا کے نیچے"
   },
   "settings": {
+    "show_rating_in_cart": "Show rating in cart",
+    "show_rating_badge": "Show rating badge",
+    "vertical_position": "Vertical position",
+    "star_color": "Star color",
+    "reviews_link": "\"See all reviews\" link",
+    "show_on": "Show on",
+    "review_source": "Reviews to show",
+    "minimum_rating": "Minimum star rating",
+    "show_review_popups": "Show review popups",
+    "bottom_offset": "Distance from bottom",
+    "first_popup_delay": "First popup after",
+    "popup_interval": "Time between popups",
+    "popups_per_visit": "Popups per visit",
     "link_hover_effect": "لنک ہوور اثر",
     "show_dropdown_arrows": "ڈراپ ڈاؤن تیر دکھائیں",
     "show_back_to_top": "اوپر واپس جائیں بٹن دکھائیں",
@@ -1260,6 +1285,8 @@
       "checkbox_preset": "چیک باکس کا لیبل"
     },
     "quick_add": "فوری ایڈ",
+    "hide_sold_out_products": "ختم شدہ مصنوعات چھپائیں",
+    "hide_sold_out_products_info": "ختم شدہ مصنوعات کو کلیکشن صفحات اور تلاش کے نتائج سے ہٹا دیتا ہے۔ فلٹر کے اختیارات کے ساتھ دیے گئے اعداد میں وہ اب بھی شامل ہو سکتی ہیں۔",
     "quick_add_colors": "فوری ایڈ کے رنگ",
     "ratio": "تناسب",
     "read_only": "صرف پڑھنے کے لیے",
