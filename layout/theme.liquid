@@ -183,6 +183,10 @@
     {% endif %}
     {% render 'cashout-deals-tab' %}
     {% render 'rating-badge' %}
+    {%- comment -%} The Frequently Bought Together app embed builds its widget on product pages {%- endcomment -%}
+    {%- if template.name == 'product' and settings.fbt_restyle -%}
+      {% render 'frequently-bought-styles' %}
+    {%- endif -%}
       {% comment %} <script src="https://supportcsops.com/chat/widget.js" async data-channel="tristaronline.com.au" data-title="Tristar Online" data-color="#121212"></script> {% endcomment %}
 <script src="https://supportcsops.com/chat/widget.js" async
         data-channel="tristaronline.com.au" data-title="Tristar Online" data-color="#0f766e"></script>

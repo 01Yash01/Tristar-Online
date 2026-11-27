@@ -1,0 +1,285 @@
+{%- doc -%}
+  Renders one review card for the Store reviews section: the reviewer, stars and date, the review
+  title and text, customer photos, the product reviewed and any store reply. Its styles live in
+  `sections/store-reviews.liquid`.
+
+  With `review`, it shows that review from the Judge.me `reviews_grid` shop metafield. Without it, it
+  renders an empty card holding every optional part. The section keeps that card in a `<template>`,
+  and `assets/store-reviews.js` copies and fills it for reviews it loads from Judge.me, so keep the
+  `data-field` names in step with that script.
+
+  @param {string} section_id - The section's ID, for unique element IDs
+  @param {object} [review] - A Judge.me review from the `reviews_grid` shop metafield
+
+  @example
+  {% render 'store-review-card', review: review, section_id: section.id %}
+{%- enddoc -%}
+
+{%- liquid
+  assign is_template = true
+  assign name = ''
+  assign initial = ''
+  assign rating = 5
+  assign title = ''
+  assign body = ''
+  assign body_id = ''
+  assign reply_name = shop.name
+
+  if review != blank
+    assign is_template = false
+    assign name = review.reviewer_name | strip
+    if review.is_anonymous_reviewer or name == blank or name == 'Anonymous'
+      assign name = 'content.store_review_anonymous' | t
+    endif
+    assign initial = name | slice: 0 | upcase
+    assign rating = review.rating | plus: 0
+    assign title = review.title | strip
+    assign body = review.body | strip
+    assign body_id = 'StoreReviewBody-' | append: section_id | append: '-' | append: review.uuid
+    assign reply_name = review.shop_reply_name | default: shop.name
+
+    assign product_url = review.product_url | remove_first: shop.url
+    assign product_title = review.product_title | strip
+  endif
+
+  assign photo_alt = 'accessibility.store_review_photo' | t: name: name
+-%}
+
+{%- capture product_icon -%}
+  <span
+    class="svg-wrapper store-review__product-icon"
+    aria-hidden="true"
+  >
+    {{- 'icon-orders.svg' | inline_asset_content -}}
+  </span>
+{%- endcapture -%}
+
+<li class="store-reviews__item">
+  <article
+    class="store-review"
+    tabindex="-1"
+    {% unless is_template %}
+      data-review-id="{{ review.uuid | escape }}"
+    {% endunless %}
+  >
+    <div class="store-review__author">
+      <span
+        class="store-review__avatar"
+        aria-hidden="true"
+        data-field="initial"
+      >
+        {{- initial | escape -}}
+      </span>
+      <div class="store-review__who">
+        <p
+          class="store-review__name"
+          data-field="name"
+        >
+          {{- name | escape -}}
+        </p>
+        {%- if is_template or review.verified_buyer -%}
+          <p
+            class="store-review__verified"
+            data-field="verified"
+          >
+            <span
+              class="svg-wrapper"
+              aria-hidden="true"
+            >
+              {{- 'icon-checkmark.svg' | inline_asset_content -}}
+            </span>
+            {{- 'content.store_review_verified' | t -}}
+          </p>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="store-review__content">
+      <div class="store-review__meta">
+        <span
+          class="rating-stars"
+          style="--rating-percent: {{ rating | times: 20 }}%;"
+          role="img"
+          aria-label="{{ 'accessibility.review_rating' | t: rating: rating }}"
+          data-field="rating"
+        ></span>
+        <time
+          class="store-review__date"
+          data-field="date"
+          {% unless is_template %}
+            datetime="{{ review.created_at | date: '%Y-%m-%d' }}"
+          {% endunless %}
+        >
+          {%- unless is_template -%}
+            {{- review.created_at | date: '%-d %b %Y' -}}
+          {%- endunless -%}
+        </time>
+      </div>
+
+      {%- if is_template or title != blank -%}
+        <h3
+          class="store-review__title"
+          data-field="title"
+        >
+          {{- title | escape -}}
+        </h3>
+      {%- endif -%}
+
+      {%- if is_template or body != blank -%}
+        <p
+          class="store-review__body"
+          data-field="body"
+          {% if body_id != blank %}
+            id="{{ body_id | escape }}"
+          {% endif %}
+        >
+          {{- body | escape -}}
+        </p>
+        {%- comment -%} Hidden by CSS until the script finds the text runs past the clamp {%- endcomment -%}
+        <button
+          type="button"
+          class="store-review__more"
+          data-field="more"
+          aria-expanded="false"
+          {% if body_id != blank %}
+            aria-controls="{{ body_id | escape }}"
+          {% endif %}
+          on:click="/toggleReview"
+        >
+          {{- 'content.store_review_read_more' | t -}}
+        </button>
+      {%- endif -%}
+
+      {%- capture photos -%}
+        {%- if is_template -%}
+          <li>
+            <a
+              class="store-review__photo"
+              href="#"
+              target="_blank"
+              rel="noopener"
+              data-photo
+              on:click="/openPhoto"
+            >
+              <img
+                src="data:,"
+                alt=""
+                width="72"
+                height="72"
+                sizes="72px"
+                loading="lazy"
+              >
+            </a>
+          </li>
+        {%- else -%}
+          {%- for picture in review.pictures_urls -%}
+            {%- liquid
+              # Only Judge.me-hosted photos: photos on imported reviews can point at sites that no longer serve them
+              assign base = picture.original | default: picture.huge | split: '?' | first
+              unless base contains '://review-images.judgeme.com/'
+                continue
+              endunless
+            -%}
+            <li>
+              <a
+                class="store-review__photo"
+                href="{{ base }}?quality=80&width=1200"
+                target="_blank"
+                rel="noopener"
+                data-photo
+                data-full="{{ base }}?quality=80&width=1200"
+                data-name="{{ name | escape }}"
+                data-rating="{{ rating }}"
+                data-title="{{ title | escape }}"
+                data-body="{{ body | truncate: 220 | escape }}"
+                on:click="/openPhoto"
+              >
+                <img
+                  src="{{ base }}?quality=80&width=160"
+                  srcset="{{ base }}?quality=80&width=160 160w, {{ base }}?quality=80&width=240 240w"
+                  sizes="72px"
+                  alt="{{ photo_alt | escape }}"
+                  width="72"
+                  height="72"
+                  loading="lazy"
+                >
+              </a>
+            </li>
+          {%- endfor -%}
+        {%- endif -%}
+      {%- endcapture -%}
+
+      {%- if photos != blank -%}
+        <ul
+          class="store-review__photos"
+          role="list"
+          data-field="photos"
+          data-photo-set
+        >
+          {{- photos -}}
+        </ul>
+      {%- endif -%}
+
+      {%- if is_template -%}
+        <a
+          class="store-review__product"
+          href="#"
+          data-field="product-link"
+        >
+          {{- product_icon -}}
+          <span
+            class="store-review__product-title"
+            data-field="product-title"
+          ></span>
+        </a>
+        <p
+          class="store-review__product"
+          data-field="product-text"
+        >
+          {{- product_icon -}}
+          <span
+            class="store-review__product-title"
+            data-field="product-text-title"
+          ></span>
+        </p>
+      {%- elsif review.is_shop_review -%}
+        <p class="store-review__product">
+          {{- product_icon -}}
+          <span class="store-review__product-title">{{ 'content.store_review_store' | t }}</span>
+        </p>
+      {%- elsif product_title != blank -%}
+        {%- if review.product_in_store and product_url contains '/products/' -%}
+          <a
+            class="store-review__product"
+            href="{{ product_url | escape }}"
+          >
+            {{- product_icon -}}
+            <span class="store-review__product-title">{{ product_title | escape }}</span>
+          </a>
+        {%- else -%}
+          <p class="store-review__product">
+            {{- product_icon -}}
+            <span class="store-review__product-title">{{ product_title | escape }}</span>
+          </p>
+        {%- endif -%}
+      {%- endif -%}
+
+      {%- if is_template or review.reply_content != blank -%}
+        <div
+          class="store-review__reply"
+          data-field="reply"
+        >
+          <p class="store-review__reply-heading">{{ 'content.store_review_reply' | t: name: reply_name }}</p>
+          <p
+            class="store-review__reply-body"
+            data-field="reply-body"
+          >
+            {%- unless is_template -%}
+              {{- review.reply_content | strip_html | strip | escape -}}
+            {%- endunless -%}
+          </p>
+        </div>
+      {%- endif -%}
+    </div>
+  </article>
+</li>

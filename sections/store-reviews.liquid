@@ -1,0 +1,1613 @@
+{% comment %}
+  Section contract.
+  The store reviews page. A heading sits above two columns: a colored rating summary (score, a star
+  breakdown that filters the list, and trust figures) stays in view beside customer photos and the
+  review list, and the summary stacks on top on narrow screens. The newest 25 reviews render here
+  from the Judge.me shop metafields, so they show without JavaScript and search engines can read
+  them. `assets/store-reviews.js` loads the rest, other sort orders and star filters from Judge.me's
+  public review feed (the one its free All Reviews widget reads), and opens customer photos in a
+  viewer. Card markup is `snippets/store-review-card.liquid`; star styles come from
+  `snippets/rating-badge-styles.liquid`.
+  @example
+  <!-- templates/page.judgeme_all_reviews.json, the template the Reviews page already uses -->
+{% endcomment %}
+
+{%- liquid
+  assign judgeme = shop.metafields.judgeme
+  assign grid = judgeme.reviews_grid.value
+  assign summary = judgeme.store_summary_widget_data.value
+  assign rating = judgeme.all_reviews_rating.value | plus: 0
+  assign review_count = judgeme.all_reviews_count.value | plus: 0
+  assign rating_label = rating | round: 2
+  assign rating_percent = rating | times: 20 | round: 1
+  assign verified_count = judgeme['trust_badge.verified_reviews_count'].value | plus: 0
+  assign reviews = grid.all_reviews.reviews
+  assign photo_reviews = grid.all_reviews.media_only.reviews
+  assign photo_limit = 12
+
+  assign has_reviews = false
+  if rating > 0 and review_count > 0
+    assign has_reviews = true
+  endif
+
+  # Ratings of 4 and 5 stars, and the count per star for the script's "Showing x of y"
+  assign positive_count = 0
+  assign counts = ''
+  for row in summary.histogram
+    assign row_rating = row.rating | plus: 0
+    if row_rating >= 4
+      assign positive_count = positive_count | plus: row.frequency
+    endif
+    assign counts = counts | append: row_rating | append: ':' | append: row.frequency | append: ','
+  endfor
+  assign positive_percent = 0
+  if review_count > 0
+    assign positive_percent = positive_count | times: 100.0 | divided_by: review_count | round
+  endif
+
+  assign heading = section.settings.heading | default: page.title
+  assign summary_heading_id = 'StoreReviewsSummary-' | append: section.id
+  assign photos_heading_id = 'StoreReviewsPhotos-' | append: section.id
+  assign list_heading_id = 'StoreReviewsList-' | append: section.id
+  assign sort_id = 'StoreReviewsSort-' | append: section.id
+  assign viewer_caption_id = 'StoreReviewsViewerCaption-' | append: section.id
+-%}
+
+{% render 'rating-badge-styles' %}
+
+{%- capture photo_items -%}
+  {%- if section.settings.show_photos -%}
+    {%- assign photo_total = 0 -%}
+    {%- for review in photo_reviews -%}
+      {%- liquid
+        if photo_total >= photo_limit
+          break
+        endif
+
+        # Only Judge.me-hosted photos: photos on imported reviews can point at sites that no longer serve them
+        assign picture = review.pictures_urls.first
+        assign base = picture.original | default: picture.huge | split: '?' | first
+        unless base contains '://review-images.judgeme.com/'
+          continue
+        endunless
+        assign photo_total = photo_total | plus: 1
+
+        assign name = review.reviewer_name | strip
+        if review.is_anonymous_reviewer or name == blank or name == 'Anonymous'
+          assign name = 'content.store_review_anonymous' | t
+        endif
+        assign photo_alt = 'accessibility.store_review_photo' | t: name: name
+      -%}
+      <li>
+        <a
+          class="store-reviews__photo"
+          href="{{ base }}?quality=80&width=1200"
+          target="_blank"
+          rel="noopener"
+          data-photo
+          data-full="{{ base }}?quality=80&width=1200"
+          data-name="{{ name | escape }}"
+          data-rating="{{ review.rating }}"
+          data-title="{{ review.title | strip | escape }}"
+          data-body="{{ review.body | strip | truncate: 220 | escape }}"
+          on:click="/openPhoto"
+        >
+          <img
+            src="{{ base }}?quality=80&width=240"
+            srcset="{{ base }}?quality=80&width=160 160w, {{ base }}?quality=80&width=240 240w, {{ base }}?quality=80&width=320 320w"
+            sizes="(min-width: 990px) 140px, 25vw"
+            alt="{{ photo_alt | escape }}"
+            width="160"
+            height="160"
+            loading="lazy"
+          >
+        </a>
+      </li>
+    {%- endfor -%}
+  {%- endif -%}
+{%- endcapture -%}
+
+<store-reviews-component
+  id="StoreReviews-{{ section.id }}"
+  class="section section--page-width store-reviews spacing-style"
+  style="
+    {% render 'spacing-style', settings: section.settings %}
+    --store-reviews-summary-background: {{ section.settings.summary_background }};
+    --store-reviews-summary-text: {{ section.settings.summary_text }};
+    --store-reviews-card-background: {{ section.settings.card_background }};
+    --rating-star: {{ settings.rating_badge_star_color }};
+  "
+  data-section-id="{{ section.id }}"
+  data-shop-domain="{{ shop.permanent_domain }}"
+  data-total="{{ review_count }}"
+  data-counts="{{ counts }}"
+  data-showing-one="{{ 'content.store_reviews_showing' | t: count: 1, shown: '[shown]', total: '[total]' }}"
+  data-showing-other="{{ 'content.store_reviews_showing' | t: count: 2, shown: '[shown]', total: '[total]' }}"
+  data-chip="{{ 'content.store_reviews_filter_chip' | t: rating: '[rating]' }}"
+  data-chip-label="{{ 'accessibility.store_reviews_clear_filter' | t: rating: '[rating]' }}"
+  data-rating-label="{{ 'accessibility.review_rating' | t: rating: '[rating]' }}"
+  data-photo-label="{{ 'accessibility.store_review_photo' | t: name: '[name]' }}"
+  data-photo-position="{{ 'accessibility.store_review_photo_position' | t: index: '[index]', count: '[count]' }}"
+  data-anonymous="{{ 'content.store_review_anonymous' | t }}"
+  data-store-review="{{ 'content.store_review_store' | t }}"
+  data-read-more="{{ 'content.store_review_read_more' | t }}"
+  data-read-less="{{ 'content.store_review_read_less' | t }}"
+>
+  <div class="store-reviews__inner">
+    <header class="store-reviews__hero">
+      {%- if heading != blank -%}
+        <h1 class="store-reviews__heading">{{ heading | escape }}</h1>
+      {%- endif -%}
+      {%- if section.settings.text != blank -%}
+        <p class="store-reviews__intro">{{ section.settings.text | escape }}</p>
+      {%- endif -%}
+      {%- if page.content != blank -%}
+        <div class="store-reviews__page-content rte">{{ page.content }}</div>
+      {%- endif -%}
+    </header>
+
+    {%- if has_reviews -%}
+      <div class="store-reviews__layout">
+        <aside
+          class="store-reviews__aside"
+          aria-labelledby="{{ summary_heading_id }}"
+        >
+          <div class="store-reviews__summary">
+            <h2
+              class="store-reviews__summary-heading"
+              id="{{ summary_heading_id }}"
+            >
+              {{- 'content.store_reviews_heading' | t -}}
+            </h2>
+
+            <div class="store-reviews__score-row">
+              <p
+                class="store-reviews__score"
+                aria-hidden="true"
+              >
+                {{- rating_label -}}
+              </p>
+              <div class="store-reviews__score-meta">
+                <span
+                  class="rating-stars rating-stars--lg"
+                  style="--rating-percent: {{ rating_percent }}%;"
+                  aria-hidden="true"
+                ></span>
+                <p
+                  class="store-reviews__based-on"
+                  aria-hidden="true"
+                >
+                  {{- 'content.store_reviews_based_on' | t: count: review_count -}}
+                </p>
+              </div>
+              <p class="visually-hidden">
+                {{- 'accessibility.store_rating_summary' | t: rating: rating_label, count: review_count -}}
+              </p>
+            </div>
+
+            {%- if summary.histogram.size > 0 -%}
+              <div class="store-reviews__breakdown-block">
+                <h3 class="visually-hidden">{{ 'content.store_reviews_breakdown' | t }}</h3>
+                <ul
+                  class="store-reviews__breakdown"
+                  role="list"
+                >
+                  {%- for row in summary.histogram -%}
+                    <li>
+                      {%- comment -%} Enabled by the script, which runs the filter {%- endcomment -%}
+                      <button
+                        type="button"
+                        class="store-reviews__filter"
+                        ref="filters[]"
+                        data-rating="{{ row.rating }}"
+                        aria-pressed="false"
+                        aria-label="{{ 'accessibility.store_reviews_filter' | t: rating: row.rating, count: row.frequency }}"
+                        on:click="/filterRating/{{ row.rating }}"
+                        disabled
+                      >
+                        <span class="store-reviews__filter-label">
+                          {{- row.rating -}}
+                          <span
+                            class="rating-stars store-reviews__filter-star"
+                            aria-hidden="true"
+                          ></span>
+                        </span>
+                        <span class="store-reviews__bar">
+                          <span
+                            class="store-reviews__bar-fill"
+                            style="--store-reviews-bar: {{ row.percentage }}%;"
+                          ></span>
+                        </span>
+                        <span class="store-reviews__filter-count">{{ row.frequency }}</span>
+                      </button>
+                    </li>
+                  {%- endfor -%}
+                </ul>
+              </div>
+            {%- endif -%}
+
+            {%- if verified_count > 0 or positive_percent > 0 -%}
+              <ul
+                class="store-reviews__stats"
+                role="list"
+              >
+                {%- if verified_count > 0 -%}
+                  <li>
+                    <strong class="store-reviews__stat-value">{{ verified_count }}</strong>
+                    <span class="store-reviews__stat-label">
+                      {{- 'content.store_reviews_verified_label' | t: count: verified_count -}}
+                    </span>
+                  </li>
+                {%- endif -%}
+                {%- if positive_percent > 0 -%}
+                  <li>
+                    <strong class="store-reviews__stat-value">{{ positive_percent }}%</strong>
+                    <span class="store-reviews__stat-label">{{ 'content.store_reviews_positive_label' | t }}</span>
+                  </li>
+                {%- endif -%}
+              </ul>
+            {%- endif -%}
+
+            <p class="store-reviews__source">{{ 'content.store_reviews_collected_by' | t }}</p>
+          </div>
+        </aside>
+
+        <div class="store-reviews__main">
+          {%- if photo_items != blank -%}
+            <section
+              class="store-reviews__photos"
+              aria-labelledby="{{ photos_heading_id }}"
+            >
+              <h2
+                class="store-reviews__section-heading"
+                id="{{ photos_heading_id }}"
+              >
+                {{- 'content.store_reviews_photos' | t -}}
+              </h2>
+              <ul
+                class="store-reviews__photo-grid"
+                role="list"
+                data-photo-set
+              >
+                {{- photo_items -}}
+              </ul>
+            </section>
+          {%- endif -%}
+
+          <section
+            class="store-reviews__list-section"
+            aria-labelledby="{{ list_heading_id }}"
+          >
+            <h2
+              class="visually-hidden"
+              id="{{ list_heading_id }}"
+            >
+              {{- 'content.store_reviews_all' | t -}}
+            </h2>
+
+            <div
+              class="store-reviews__toolbar"
+              ref="toolbar"
+            >
+              <div class="store-reviews__status">
+                <p
+                  class="store-reviews__count"
+                  ref="count"
+                  role="status"
+                >
+                  {{- 'content.store_reviews_showing' | t: count: review_count, shown: reviews.size, total: review_count -}}
+                </p>
+                <button
+                  type="button"
+                  class="store-reviews__chip"
+                  ref="chip"
+                  on:click="/clearFilter"
+                  hidden
+                >
+                  <span ref="chipText"></span>
+                  <span
+                    class="svg-wrapper"
+                    aria-hidden="true"
+                  >
+                    {{- 'icon-close.svg' | inline_asset_content -}}
+                  </span>
+                </button>
+              </div>
+
+              {%- comment -%} Shown by the script, which runs the sorting {%- endcomment -%}
+              <div
+                class="store-reviews__sort"
+                ref="sortControl"
+                hidden
+              >
+                <label for="{{ sort_id }}">{{ 'content.store_reviews_sort' | t }}</label>
+                <span class="store-reviews__select">
+                  <select
+                    id="{{ sort_id }}"
+                    ref="sort"
+                    on:change="/changeSort"
+                  >
+                    <option
+                      value="newest"
+                      selected
+                    >
+                      {{- 'content.store_reviews_sort_newest' | t -}}
+                    </option>
+                    <option value="highest">{{ 'content.store_reviews_sort_highest' | t }}</option>
+                    <option value="lowest">{{ 'content.store_reviews_sort_lowest' | t }}</option>
+                    <option value="photos">{{ 'content.store_reviews_sort_photos' | t }}</option>
+                  </select>
+                  <span
+                    class="svg-wrapper"
+                    aria-hidden="true"
+                  >
+                    {{- 'icon-caret.svg' | inline_asset_content -}}
+                  </span>
+                </span>
+              </div>
+            </div>
+
+            <ul
+              class="store-reviews__list"
+              role="list"
+              ref="list"
+            >
+              {%- for review in reviews -%}
+                {% render 'store-review-card', review: review, section_id: section.id %}
+              {%- endfor -%}
+            </ul>
+
+            <p
+              class="store-reviews__empty"
+              ref="empty"
+              hidden
+            >
+              {{- 'content.store_reviews_no_match' | t -}}
+            </p>
+
+            <div class="store-reviews__more">
+              <div
+                class="store-reviews__error"
+                ref="error"
+                hidden
+              >
+                <p role="alert">{{ 'content.store_reviews_load_error' | t }}</p>
+                <button
+                  type="button"
+                  class="button button-secondary"
+                  on:click="/retry"
+                >
+                  {{- 'content.store_reviews_retry' | t -}}
+                </button>
+              </div>
+              {%- comment -%} Shown by the script when Judge.me has more reviews {%- endcomment -%}
+              <button
+                type="button"
+                class="button button-secondary store-reviews__more-button"
+                ref="more"
+                on:click="/showMore"
+                hidden
+              >
+                <span class="store-reviews__more-label">{{ 'content.store_reviews_show_more' | t }}</span>
+                <span
+                  class="store-reviews__spinner"
+                  aria-hidden="true"
+                ></span>
+              </button>
+            </div>
+
+            <template ref="cardTemplate">
+              {%- render 'store-review-card', section_id: section.id -%}
+            </template>
+          </section>
+        </div>
+      </div>
+
+      <dialog-component
+        class="store-reviews__viewer"
+        ref="viewer"
+      >
+        <dialog
+          ref="dialog"
+          class="store-reviews-viewer"
+          aria-label="{{ 'accessibility.store_review_photos' | t }}"
+          aria-describedby="{{ viewer_caption_id }}"
+          on:keydown="#StoreReviews-{{ section.id }}/handlePhotoKey"
+        >
+          <div class="store-reviews-viewer__inner">
+            <button
+              type="button"
+              class="store-reviews-viewer__close"
+              aria-label="{{ 'actions.close' | t }}"
+              on:click="/closeDialog"
+            >
+              <span
+                class="svg-wrapper"
+                aria-hidden="true"
+              >
+                {{- 'icon-close.svg' | inline_asset_content -}}
+              </span>
+            </button>
+
+            <div class="store-reviews-viewer__stage">
+              <img
+                class="store-reviews-viewer__image"
+                data-viewer="image"
+                src="data:,"
+                alt=""
+                width="1200"
+                height="1200"
+              >
+              <button
+                type="button"
+                class="store-reviews-viewer__nav store-reviews-viewer__nav--prev"
+                data-viewer="prev"
+                aria-label="{{ 'accessibility.store_review_previous_photo' | t }}"
+                on:click="#StoreReviews-{{ section.id }}/stepPhoto/-1"
+              >
+                <span
+                  class="svg-wrapper"
+                  aria-hidden="true"
+                >
+                  {{- 'icon-chevron-left.svg' | inline_asset_content -}}
+                </span>
+              </button>
+              <button
+                type="button"
+                class="store-reviews-viewer__nav store-reviews-viewer__nav--next"
+                data-viewer="next"
+                aria-label="{{ 'accessibility.store_review_next_photo' | t }}"
+                on:click="#StoreReviews-{{ section.id }}/stepPhoto/1"
+              >
+                <span
+                  class="svg-wrapper"
+                  aria-hidden="true"
+                >
+                  {{- 'icon-chevron-right.svg' | inline_asset_content -}}
+                </span>
+              </button>
+            </div>
+
+            <div
+              class="store-reviews-viewer__caption"
+              id="{{ viewer_caption_id }}"
+            >
+              <span
+                class="rating-stars"
+                data-viewer="stars"
+                role="img"
+              ></span>
+              <p
+                class="store-reviews-viewer__name"
+                data-viewer="name"
+              ></p>
+              <p
+                class="store-reviews-viewer__title"
+                data-viewer="title"
+              ></p>
+              <p
+                class="store-reviews-viewer__body"
+                data-viewer="body"
+              ></p>
+              <p
+                class="store-reviews-viewer__position"
+                data-viewer="position"
+              ></p>
+            </div>
+          </div>
+        </dialog>
+      </dialog-component>
+    {%- else -%}
+      <p class="store-reviews__none">{{ 'content.store_reviews_none' | t }}</p>
+    {%- endif -%}
+  </div>
+</store-reviews-component>
+
+{%- if has_reviews -%}
+  <script
+    src="{{ 'store-reviews.js' | asset_url }}"
+    type="module"
+  ></script>
+{%- endif -%}
+
+{% stylesheet %}
+  .store-reviews {
+    --store-reviews-radius: 16px;
+    --store-reviews-border: rgb(var(--color-foreground-rgb) / var(--opacity-10));
+    --store-reviews-muted: rgb(var(--color-foreground-rgb) / var(--opacity-70));
+  }
+
+  .store-reviews__inner {
+    container-type: inline-size;
+    display: grid;
+    gap: clamp(28px, 3.5vw, 48px);
+    min-width: 0;
+  }
+
+  /* ================= Heading ================= */
+  .store-reviews__hero {
+    display: grid;
+    justify-items: center;
+    gap: 12px;
+    max-inline-size: 46rem;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .store-reviews__heading {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-style: var(--font-heading--style);
+    font-weight: var(--font-heading--weight);
+    font-size: clamp(1.875rem, 1.35rem + 1.8vw, 2.875rem);
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+
+  .store-reviews__intro {
+    margin: 0;
+    color: var(--store-reviews-muted);
+    font-size: clamp(1rem, 0.95rem + 0.2vw, 1.0625rem);
+    text-wrap: pretty;
+  }
+
+  .store-reviews__page-content {
+    color: var(--store-reviews-muted);
+  }
+
+  /* ================= Layout ================= */
+  /* Stacked by default; the summary stays beside the list once there is room */
+  .store-reviews__layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: clamp(20px, 3vw, 40px);
+    align-items: start;
+  }
+
+  @container (min-width: 56rem) {
+    .store-reviews__layout {
+      grid-template-columns: minmax(17rem, 22rem) minmax(0, 1fr);
+    }
+
+    .store-reviews__aside {
+      position: sticky;
+      inset-block-start: calc(var(--sticky-header-offset, 0px) + 24px);
+      transition: inset-block-start var(--animation-speed) var(--animation-easing);
+    }
+  }
+
+  /* Keep the summary, and anything scrolled to, below the header while it shows. Same pattern as the
+     blog and product pages: #header-group is the :has() subject, so header changes don't restyle the page. */
+  #header-group:has(> .header-section > #header-component[data-sticky-state='active']) ~ * .store-reviews {
+    --sticky-header-offset: var(--header-height);
+  }
+
+  .store-reviews__aside,
+  .store-reviews__main {
+    min-width: 0;
+  }
+
+  .store-reviews__main {
+    display: grid;
+    gap: clamp(24px, 3vw, 36px);
+  }
+
+  /* ================= Summary ================= */
+  /* Every colour here follows the two summary colour settings, so the merchant can restyle it */
+  .store-reviews__summary {
+    --store-reviews-on-summary-muted: color-mix(in srgb, var(--store-reviews-summary-text) 74%, transparent);
+    --store-reviews-on-summary-line: color-mix(in srgb, var(--store-reviews-summary-text) 14%, transparent);
+
+    display: grid;
+    gap: 22px;
+    padding: clamp(22px, 2.6vw, 30px);
+    border-radius: var(--store-reviews-radius);
+    background: var(--store-reviews-summary-background);
+    color: var(--store-reviews-summary-text);
+  }
+
+  .store-reviews__summary .rating-stars {
+    --rating-star-empty: color-mix(in srgb, var(--store-reviews-summary-text) 16%, transparent);
+  }
+
+  .store-reviews__summary-heading {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-style: var(--font-heading--style);
+    font-weight: var(--font-heading--weight);
+    font-size: 1.125rem;
+    line-height: 1.25;
+  }
+
+  .store-reviews__score-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px 18px;
+  }
+
+  .store-reviews__score {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-size: clamp(2.75rem, 2.3rem + 1.6vw, 3.5rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .store-reviews__score-meta {
+    display: grid;
+    gap: 6px;
+  }
+
+  .store-reviews__based-on {
+    margin: 0;
+    color: var(--store-reviews-on-summary-muted);
+    font-size: 0.875rem;
+  }
+
+  .store-reviews__breakdown {
+    display: grid;
+    gap: 2px;
+    margin: 0 -10px;
+    padding: 0;
+    list-style: none;
+  }
+
+  .store-reviews__filter {
+    display: grid;
+    grid-template-columns: 2.5rem minmax(0, 1fr) 2.75rem;
+    align-items: center;
+    gap: 12px;
+    inline-size: 100%;
+    min-block-size: 34px;
+    margin: 0;
+    padding: 6px 10px;
+    border: 0;
+    border-radius: 8px;
+    background: transparent;
+    color: inherit;
+    font: inherit;
+    font-size: 0.875rem;
+    text-align: start;
+    cursor: pointer;
+    transition: background-color var(--animation-speed) var(--animation-easing),
+      box-shadow var(--animation-speed) var(--animation-easing);
+  }
+
+  /* Without the script the rows read as a chart */
+  .store-reviews__filter:disabled {
+    cursor: default;
+  }
+
+  .store-reviews__filter:not(:disabled):hover {
+    background: color-mix(in srgb, var(--store-reviews-summary-text) 6%, transparent);
+  }
+
+  .store-reviews__filter[aria-pressed='true'] {
+    background: color-mix(in srgb, var(--store-reviews-summary-text) 9%, transparent);
+    box-shadow: inset 0 0 0 1px var(--store-reviews-summary-text);
+  }
+
+  .store-reviews__filter:focus-visible {
+    outline: 2px solid var(--store-reviews-summary-text);
+    outline-offset: 1px;
+  }
+
+  .store-reviews__filter-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    font-weight: 700;
+  }
+
+  /* One star from the shared five-star row (two classes, so it wins over the row's width) */
+  .rating-stars.store-reviews__filter-star {
+    inline-size: 1em;
+    font-size: 0.8125rem;
+  }
+
+  .store-reviews__bar {
+    display: block;
+    block-size: 6px;
+    border-radius: 3px;
+    background: color-mix(in srgb, var(--store-reviews-summary-text) 12%, transparent);
+    overflow: hidden;
+  }
+
+  .store-reviews__bar-fill {
+    display: block;
+    inline-size: var(--store-reviews-bar, 0%);
+    block-size: 100%;
+    border-radius: inherit;
+    background: var(--store-reviews-summary-text);
+  }
+
+  .store-reviews__filter-count {
+    color: var(--store-reviews-on-summary-muted);
+    font-variant-numeric: tabular-nums;
+    text-align: end;
+  }
+
+  /* Two plain figures side by side, split by a thin rule */
+  .store-reviews__stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr));
+    margin: 0;
+    padding: 18px 0 0;
+    border-block-start: 1px solid var(--store-reviews-on-summary-line);
+    list-style: none;
+  }
+
+  .store-reviews__stats li {
+    display: grid;
+    align-content: start;
+    gap: 2px;
+    padding-inline-end: 12px;
+  }
+
+  .store-reviews__stats li + li {
+    padding-inline-start: 18px;
+    border-inline-start: 1px solid var(--store-reviews-on-summary-line);
+  }
+
+  .store-reviews__stat-value {
+    font-family: var(--font-heading--family);
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .store-reviews__stat-label {
+    color: var(--store-reviews-on-summary-muted);
+    font-size: 0.8125rem;
+    line-height: 1.35;
+  }
+
+  .store-reviews__source {
+    margin: 0;
+    color: var(--store-reviews-on-summary-muted);
+    font-size: 0.75rem;
+  }
+
+  /* ================= Customer photos ================= */
+  .store-reviews__photos {
+    display: grid;
+    gap: 14px;
+    container-type: inline-size;
+  }
+
+  .store-reviews__section-heading {
+    margin: 0;
+    font-family: var(--font-heading--family);
+    font-style: var(--font-heading--style);
+    font-weight: var(--font-heading--weight);
+    font-size: clamp(1.125rem, 1rem + 0.4vw, 1.3125rem);
+    line-height: 1.25;
+  }
+
+  .store-reviews__photo-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 8px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @container (min-width: 34rem) {
+    .store-reviews__photo-grid {
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+    }
+  }
+
+  .store-reviews__photo,
+  .store-review__photo {
+    display: block;
+    aspect-ratio: 1;
+    border-radius: 12px;
+    background: rgb(var(--color-foreground-rgb) / var(--opacity-5));
+    overflow: hidden;
+  }
+
+  .store-reviews__photo img,
+  .store-review__photo img {
+    display: block;
+    inline-size: 100%;
+    block-size: 100%;
+    object-fit: cover;
+    transition: transform var(--animation-speed-slow) var(--ease-out-cubic);
+  }
+
+  .store-reviews__photo:hover img,
+  .store-review__photo:hover img {
+    transform: scale(1.05);
+  }
+
+  .store-reviews__photo:focus-visible,
+  .store-review__photo:focus-visible {
+    outline: var(--focus-outline-width) solid var(--color-foreground);
+    outline-offset: var(--focus-outline-offset);
+  }
+
+  /* ================= Toolbar ================= */
+  .store-reviews__list-section {
+    display: grid;
+    gap: 16px;
+    min-width: 0;
+  }
+
+  .store-reviews__toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 20px;
+    padding-block-end: 16px;
+    border-block-end: 1px solid var(--store-reviews-border);
+    scroll-margin-block-start: calc(var(--sticky-header-offset, 0px) + 16px);
+  }
+
+  .store-reviews__status {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .store-reviews__count {
+    margin: 0;
+    font-weight: 600;
+  }
+
+  .store-reviews__chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-block-size: 32px;
+    margin: 0;
+    padding: 4px 10px 4px 14px;
+    border: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-25));
+    border-radius: 999px;
+    background: var(--store-reviews-card-background);
+    color: inherit;
+    font: inherit;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color var(--animation-speed) var(--animation-easing);
+  }
+
+  .store-reviews__chip[hidden] {
+    display: none;
+  }
+
+  .store-reviews__chip:hover {
+    border-color: var(--color-foreground);
+  }
+
+  .store-reviews__chip .svg-wrapper {
+    inline-size: 14px;
+    block-size: 14px;
+  }
+
+  .store-reviews__sort {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.875rem;
+  }
+
+  .store-reviews__sort[hidden] {
+    display: none;
+  }
+
+  .store-reviews__sort label {
+    color: var(--store-reviews-muted);
+    white-space: nowrap;
+  }
+
+  .store-reviews__select {
+    position: relative;
+    display: inline-flex;
+  }
+
+  .store-reviews__select select {
+    min-block-size: 40px;
+    margin: 0;
+    padding-block: 8px;
+    padding-inline: 16px 40px;
+    border: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-25));
+    border-radius: 999px;
+    background: var(--store-reviews-card-background);
+    color: var(--color-foreground);
+    font: inherit;
+    font-weight: 600;
+    appearance: none;
+    cursor: pointer;
+    transition: border-color var(--animation-speed) var(--animation-easing);
+  }
+
+  .store-reviews__select select:hover {
+    border-color: var(--color-foreground);
+  }
+
+  .store-reviews__select select:focus-visible {
+    outline: var(--focus-outline-width) solid var(--color-foreground);
+    outline-offset: var(--focus-outline-offset);
+  }
+
+  .store-reviews__select .svg-wrapper {
+    position: absolute;
+    inset-block-start: 50%;
+    inset-inline-end: 16px;
+    inline-size: 12px;
+    block-size: 12px;
+    translate: 0 -50%;
+    pointer-events: none;
+  }
+
+  /* ================= Review list ================= */
+  .store-reviews__list {
+    container-type: inline-size;
+    display: grid;
+    gap: 14px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    transition: opacity var(--animation-speed) var(--animation-easing);
+  }
+
+  .store-reviews__list[aria-busy='true'] {
+    opacity: 0.5;
+  }
+
+  .store-reviews__item {
+    min-width: 0;
+  }
+
+  .store-review {
+    display: grid;
+    gap: 16px 32px;
+    min-width: 0;
+    padding: clamp(18px, 2.4vw, 28px);
+    border: 1px solid var(--store-reviews-border);
+    border-radius: var(--store-reviews-radius);
+    background: var(--store-reviews-card-background);
+    scroll-margin-block-start: calc(var(--sticky-header-offset, 0px) + 16px);
+  }
+
+  .store-review:focus {
+    outline: none;
+  }
+
+  .store-review:focus-visible {
+    outline: var(--focus-outline-width) solid var(--color-foreground);
+    outline-offset: var(--focus-outline-offset);
+  }
+
+  .store-review__author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 0;
+  }
+
+  /* Reviewer beside the review once the list is wide enough */
+  @container (min-width: 40rem) {
+    .store-review {
+      grid-template-columns: 11rem minmax(0, 1fr);
+    }
+
+    .store-review__author {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
+
+  .store-review__avatar {
+    display: grid;
+    flex: none;
+    place-items: center;
+    inline-size: 44px;
+    block-size: 44px;
+    border-radius: 50%;
+    background: color-mix(in srgb, var(--store-reviews-summary-text) 8%, var(--store-reviews-card-background));
+    color: var(--store-reviews-summary-text);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .store-review__who {
+    display: grid;
+    gap: 4px;
+    min-width: 0;
+  }
+
+  .store-review__name {
+    margin: 0;
+    font-weight: 700;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+  }
+
+  .store-review__verified {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    margin: 0;
+    color: var(--store-reviews-muted);
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.2;
+  }
+
+  .store-review__verified .svg-wrapper {
+    inline-size: 16px;
+    block-size: 16px;
+    color: var(--color-success, #1d7a46);
+  }
+
+  .store-review__content {
+    display: grid;
+    align-content: start;
+    gap: 10px;
+    min-width: 0;
+  }
+
+  .store-review__meta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px 12px;
+  }
+
+  .store-review__meta .rating-stars {
+    font-size: 1rem;
+  }
+
+  .store-review__date {
+    color: var(--store-reviews-muted);
+    font-size: 0.8125rem;
+  }
+
+  .store-review__title {
+    margin: 2px 0 0;
+    font-family: var(--font-body--family);
+    font-size: 1.0625rem;
+    font-weight: 700;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+  }
+
+  .store-review__body {
+    margin: 0;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-85));
+    line-height: 1.6;
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+  }
+
+  /* `--long` is set by the script; keep its line count in step with CLAMP_LINES there */
+  .store-review--long:not(.store-review--expanded) .store-review__body {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 6;
+    line-clamp: 6;
+    overflow: hidden;
+  }
+
+  .store-review__more {
+    display: none;
+    justify-self: start;
+    margin: -2px 0 0;
+    padding: 2px 0;
+    border: 0;
+    background: none;
+    color: var(--color-foreground);
+    font: inherit;
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+  }
+
+  .store-review--long .store-review__more {
+    display: inline-block;
+  }
+
+  .store-review__more:focus-visible {
+    outline: var(--focus-outline-width) solid var(--color-foreground);
+    outline-offset: 2px;
+  }
+
+  .store-review__photos {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 4px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .store-review__photo {
+    inline-size: 72px;
+    block-size: 72px;
+    border-radius: 10px;
+  }
+
+  .store-review__product {
+    display: inline-flex;
+    justify-self: start;
+    align-items: center;
+    gap: 8px;
+    max-inline-size: 100%;
+    margin: 4px 0 0;
+    padding: 7px 12px;
+    border-radius: 10px;
+    background: rgb(var(--color-foreground-rgb) / var(--opacity-5));
+    color: var(--color-foreground);
+    font-size: 0.8125rem;
+    line-height: 1.35;
+    text-decoration: none;
+    transition: background-color var(--animation-speed) var(--animation-easing);
+  }
+
+  a.store-review__product:hover {
+    background: rgb(var(--color-foreground-rgb) / var(--opacity-10));
+  }
+
+  a.store-review__product:focus-visible {
+    outline: var(--focus-outline-width) solid var(--color-foreground);
+    outline-offset: var(--focus-outline-offset);
+  }
+
+  .store-review__product-icon {
+    flex: none;
+    inline-size: 16px;
+    block-size: 16px;
+    color: var(--store-reviews-muted);
+  }
+
+  .store-review__product-title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    min-width: 0;
+    overflow: hidden;
+    overflow-wrap: anywhere;
+  }
+
+  a.store-review__product .store-review__product-title {
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 2px;
+    transition: text-decoration-color var(--animation-speed) var(--animation-easing);
+  }
+
+  a.store-review__product:hover .store-review__product-title {
+    text-decoration-color: currentColor;
+  }
+
+  .store-review__reply {
+    display: grid;
+    gap: 4px;
+    margin: 4px 0 0;
+    padding: 12px 16px;
+    border-inline-start: 3px solid var(--rating-star);
+    border-start-end-radius: 10px;
+    border-end-end-radius: 10px;
+    background: rgb(var(--color-foreground-rgb) / var(--opacity-5));
+    font-size: 0.875rem;
+  }
+
+  .store-review__reply-heading {
+    margin: 0;
+    font-weight: 700;
+  }
+
+  .store-review__reply-body {
+    margin: 0;
+    color: var(--store-reviews-muted);
+    white-space: pre-line;
+    overflow-wrap: anywhere;
+  }
+
+  .store-reviews__empty,
+  .store-reviews__none {
+    margin: 0;
+    padding: 40px 20px;
+    border: 1px dashed rgb(var(--color-foreground-rgb) / var(--opacity-20));
+    border-radius: var(--store-reviews-radius);
+    color: var(--store-reviews-muted);
+    text-align: center;
+  }
+
+  .store-reviews__empty[hidden] {
+    display: none;
+  }
+
+  /* ================= Show more ================= */
+  .store-reviews__more {
+    display: grid;
+    justify-items: center;
+    gap: 12px;
+  }
+
+  .store-reviews__more-button {
+    display: inline-grid;
+    grid-template-areas: 'stack';
+    place-items: center;
+    min-inline-size: min(100%, 15rem);
+  }
+
+  .store-reviews__more-label,
+  .store-reviews__spinner {
+    grid-area: stack;
+  }
+
+  .store-reviews__spinner {
+    inline-size: 18px;
+    block-size: 18px;
+    border: 2px solid currentColor;
+    border-inline-end-color: transparent;
+    border-radius: 50%;
+    opacity: 0;
+  }
+
+  .store-reviews__more-button[aria-busy='true'] {
+    cursor: progress;
+  }
+
+  .store-reviews__more-button[aria-busy='true'] .store-reviews__more-label {
+    opacity: 0;
+  }
+
+  .store-reviews__more-button[aria-busy='true'] .store-reviews__spinner {
+    opacity: 1;
+  }
+
+  .store-reviews__error {
+    display: grid;
+    justify-items: center;
+    gap: 12px;
+    text-align: center;
+  }
+
+  .store-reviews__error[hidden] {
+    display: none;
+  }
+
+  .store-reviews__error p {
+    margin: 0;
+    color: var(--color-error, #8b0000);
+    font-size: 0.875rem;
+  }
+
+  /* ================= Photo viewer ================= */
+  .store-reviews-viewer {
+    inline-size: min(60rem, calc(100vw - 32px));
+    max-inline-size: none;
+    max-block-size: calc(100dvh - 32px);
+    margin: auto;
+    padding: 0;
+    border: 0;
+    border-radius: 20px;
+    background: var(--store-reviews-card-background);
+    color: var(--color-foreground);
+    box-shadow: 0 30px 80px -24px rgb(0 0 0 / 0.55);
+    overflow: hidden;
+  }
+
+  .store-reviews-viewer[open] {
+    display: flex;
+  }
+
+  .store-reviews-viewer::backdrop {
+    background: rgb(10 10 15 / 0.72);
+    backdrop-filter: blur(3px);
+  }
+
+  .store-reviews-viewer__inner {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    inline-size: 100%;
+    min-block-size: 0;
+    overflow: auto;
+  }
+
+  @media screen and (min-width: 750px) {
+    .store-reviews-viewer__inner {
+      grid-template-columns: minmax(0, 1.55fr) minmax(16rem, 1fr);
+      grid-template-rows: minmax(0, 1fr);
+    }
+  }
+
+  .store-reviews-viewer__stage {
+    position: relative;
+    display: grid;
+    place-items: center;
+    min-block-size: 0;
+    background: #0d0f14;
+  }
+
+  .store-reviews-viewer__image {
+    display: block;
+    inline-size: 100%;
+    block-size: min(56dvh, 30rem);
+    object-fit: contain;
+  }
+
+  @media screen and (min-width: 750px) {
+    .store-reviews-viewer__image {
+      block-size: min(76dvh, 40rem);
+    }
+  }
+
+  .store-reviews-viewer__close,
+  .store-reviews-viewer__nav {
+    display: grid;
+    place-items: center;
+    inline-size: 40px;
+    block-size: 40px;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 50%;
+    background: rgb(255 255 255 / 0.94);
+    color: #0d0f14;
+    box-shadow: 0 6px 18px -6px rgb(0 0 0 / 0.45);
+    cursor: pointer;
+    transition: transform var(--animation-speed) var(--animation-easing);
+  }
+
+  .store-reviews-viewer__close:hover,
+  .store-reviews-viewer__nav:hover {
+    transform: scale(1.06);
+  }
+
+  .store-reviews-viewer__close:focus-visible,
+  .store-reviews-viewer__nav:focus-visible {
+    outline: 2px solid #ffffff;
+    outline-offset: 2px;
+  }
+
+  .store-reviews-viewer__close .svg-wrapper,
+  .store-reviews-viewer__nav .svg-wrapper {
+    inline-size: 18px;
+    block-size: 18px;
+  }
+
+  .store-reviews-viewer__close {
+    position: absolute;
+    z-index: 1;
+    inset-block-start: 12px;
+    inset-inline-end: 12px;
+  }
+
+  .store-reviews-viewer__nav {
+    position: absolute;
+    inset-block-start: 50%;
+    translate: 0 -50%;
+  }
+
+  .store-reviews-viewer__nav[hidden] {
+    display: none;
+  }
+
+  .store-reviews-viewer__nav--prev {
+    inset-inline-start: 12px;
+  }
+
+  .store-reviews-viewer__nav--next {
+    inset-inline-end: 12px;
+  }
+
+  .store-reviews-viewer__nav .svg-wrapper:dir(rtl) {
+    scale: -1 1;
+  }
+
+  .store-reviews-viewer__caption {
+    display: grid;
+    align-content: start;
+    gap: 8px;
+    min-width: 0;
+    padding: 24px;
+  }
+
+  @media screen and (min-width: 750px) {
+    .store-reviews-viewer__caption {
+      padding: 64px 28px 28px;
+      overflow: auto;
+    }
+  }
+
+  .store-reviews-viewer__caption .rating-stars {
+    font-size: 1rem;
+  }
+
+  .store-reviews-viewer__caption p {
+    margin: 0;
+    overflow-wrap: anywhere;
+  }
+
+  .store-reviews-viewer__caption p:empty {
+    display: none;
+  }
+
+  .store-reviews-viewer__name {
+    font-weight: 700;
+  }
+
+  .store-reviews-viewer__title {
+    font-size: 1.0625rem;
+    font-weight: 700;
+    line-height: 1.35;
+  }
+
+  .store-reviews-viewer__body {
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-85));
+    line-height: 1.6;
+  }
+
+  .store-reviews-viewer__position {
+    color: var(--store-reviews-muted);
+    font-size: 0.8125rem;
+  }
+
+  /* ================= Motion ================= */
+  @media (prefers-reduced-motion: no-preference) {
+    .store-review--new {
+      animation: store-review-in var(--animation-speed-slow) var(--ease-out-cubic) both;
+    }
+
+    .store-reviews__more-button[aria-busy='true'] .store-reviews__spinner {
+      animation: store-reviews-spin 0.8s linear infinite;
+    }
+
+    .store-reviews-viewer[open] {
+      animation: store-reviews-viewer-in var(--animation-speed-slow) var(--ease-out-cubic) both;
+    }
+
+    .store-reviews-viewer.dialog-closing {
+      animation: store-reviews-viewer-out var(--animation-speed) var(--animation-easing) both;
+    }
+
+    .store-reviews-viewer[open]::backdrop {
+      animation: store-reviews-fade var(--animation-speed-slow) var(--animation-easing) both;
+    }
+
+    .store-reviews-viewer.dialog-closing::backdrop {
+      animation: store-reviews-fade var(--animation-speed) var(--animation-easing) reverse both;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .store-reviews__photo img,
+    .store-review__photo img,
+    .store-reviews-viewer__close,
+    .store-reviews-viewer__nav {
+      transition: none;
+    }
+  }
+
+  @keyframes store-review-in {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+  }
+
+  @keyframes store-reviews-spin {
+    to {
+      transform: rotate(1turn);
+    }
+  }
+
+  @keyframes store-reviews-viewer-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px) scale(0.98);
+    }
+  }
+
+  @keyframes store-reviews-viewer-out {
+    to {
+      opacity: 0;
+      transform: translateY(8px) scale(0.98);
+    }
+  }
+
+  @keyframes store-reviews-fade {
+    from {
+      opacity: 0;
+    }
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "t:names.store_reviews",
+  "class": "store-reviews-section",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "t:info.store_reviews"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:settings.heading",
+      "default": "What our customers say"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "t:settings.text",
+      "default": "Honest reviews from our customers, collected by Judge.me."
+    },
+    {
+      "type": "checkbox",
+      "id": "show_photos",
+      "label": "t:settings.show_customer_photos",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "t:content.colors"
+    },
+    {
+      "type": "color",
+      "id": "summary_background",
+      "label": "t:settings.summary_background",
+      "default": "#ebe8e2"
+    },
+    {
+      "type": "color",
+      "id": "summary_text",
+      "label": "t:settings.summary_text",
+      "default": "#0b1f44"
+    },
+    {
+      "type": "color",
+      "id": "card_background",
+      "label": "t:settings.card_background",
+      "default": "#ffffff"
+    },
+    {
+      "type": "header",
+      "content": "t:content.padding"
+    },
+    {
+      "type": "range",
+      "id": "padding-block-start",
+      "label": "t:settings.top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "padding-block-end",
+      "label": "t:settings.bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "default": 72
+    }
+  ]
+}
+{% endschema %}

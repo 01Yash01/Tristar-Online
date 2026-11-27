@@ -8,6 +8,36 @@
   if block_settings.show_video_controls == false
     assign disable_controls = true
   endif
+
+  # A linked video is a moving banner: the link covers it, so it plays on its own and a small corner
+  # button replaces the controls
+  assign video_link = ''
+  assign video_link_label = ''
+  assign video_autoplay = block_settings.video_autoplay
+  if block_settings.source == 'uploaded' and block_settings.link != blank
+    assign video_link = block_settings.link
+    assign video_autoplay = true
+    assign disable_controls = true
+
+    # Name the link for screen readers: the label setting, the video's alt text, or what it opens
+    assign video_link_label = block_settings.link_label | strip
+    if video_link_label == blank
+      assign video_link_label = block_settings.video.alt | strip
+    endif
+    if video_link_label == blank
+      assign link_handle = video_link | split: '?' | first | split: '#' | first | split: '/' | last
+      if video_link contains '/products/'
+        assign video_link_label = all_products[link_handle].title
+      elsif video_link contains '/collections/'
+        assign video_link_label = collections[link_handle].title
+      elsif video_link contains '/pages/'
+        assign video_link_label = pages[link_handle].title
+      endif
+    endif
+    if video_link_label == blank
+      assign video_link_label = 'accessibility.view_link' | t
+    endif
+  endif
 %}
 
 {% capture video_style %}
@@ -21,9 +51,12 @@
   {% render 'video',
     video: block_settings.video,
     video_class: 'spacing-style size-style border-style',
+    video_autoplay: video_autoplay,
     video_loop: block_settings.video_loop,
     video_style: video_style,
     disable_controls: disable_controls,
+    video_link: video_link,
+    video_link_label: video_link_label,
     video_preview_image: block_settings.video.preview_image,
     additional_attributes: block.shopify_attributes
   %}
@@ -91,7 +124,8 @@
       "id": "video_autoplay",
       "label": "t:settings.video_autoplay",
       "info": "t:info.video_autoplay",
-      "default": false
+      "default": false,
+      "visible_if": "{{ block.settings.source != 'uploaded' or block.settings.link == blank }}"
     },
     {
       "type": "checkbox",
@@ -105,7 +139,21 @@
       "label": "t:settings.show_video_controls",
       "info": "t:info.show_video_controls",
       "default": true,
+      "visible_if": "{{ block.settings.source == 'uploaded' and block.settings.link == blank }}"
+    },
+    {
+      "type": "url",
+      "id": "link",
+      "label": "t:settings.link",
+      "info": "t:info.video_link",
       "visible_if": "{{ block.settings.source == 'uploaded' }}"
+    },
+    {
+      "type": "text",
+      "id": "link_label",
+      "label": "t:settings.video_link_label",
+      "info": "t:info.video_link_label",
+      "visible_if": "{{ block.settings.source == 'uploaded' and block.settings.link != blank }}"
     },
     {
       "type": "image_picker",

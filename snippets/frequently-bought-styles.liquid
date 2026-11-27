@@ -1,0 +1,483 @@
+{%- doc -%}
+  Restyles the Frequently Bought Together app widget (Code Black Belt) on product pages so it matches
+  the theme: a card with the bundle images, a rounded row per product, and a panel with the total and
+  a button like Add to cart. The app builds the widget with its own script and writes inline styles
+  on every element, so these rules target its `cbb-` classes and need `!important`. Nothing here
+  changes how the app works: selection, variants, the bundle discount and add to cart stay the app's.
+
+  Colours come from Theme settings > Frequently bought together (accent and panel) and the sale badge
+  colour. The layout renders this only when "Match the theme's style" is on.
+
+  @example
+  {% render 'frequently-bought-styles' %}
+{%- enddoc -%}
+
+{%- liquid
+  assign accent = settings.fbt_accent_color
+
+  # Button text that reads on the accent, and the theme's hover shift for it
+  if accent.alpha == 0 or accent == blank
+    assign accent = settings.page_text_color
+  endif
+  assign accent_brightness = accent | color_brightness
+  if accent_brightness > 150
+    assign accent_contrast = 'var(--palette-darkest, #000000)'
+  else
+    assign accent_contrast = 'var(--palette-lightest, #ffffff)'
+  endif
+
+  capture button_hover
+    render 'resolve-custom-hover', base_bg: accent, base_border: accent
+  endcapture
+  assign button_hover = button_hover | strip | split: '||'
+-%}
+
+{% style %}
+  .cbb-frequently-bought-container.cbb-product-page-view {
+    --fbt-sale: {{ settings.badge_sale_background_color }};
+    --fbt-ink: {{ accent }};
+    --fbt-ink-rgb: {{ accent.red }} {{ accent.green }} {{ accent.blue }};
+    --fbt-ink-contrast: {{ accent_contrast }};
+    --fbt-ink-hover: {{ button_hover[0] }};
+    --fbt-ink-hover-text: {{ button_hover[1] }};
+    --fbt-panel: {{ settings.fbt_panel_color | default: '#ebe8e2' }};
+  }
+{% endstyle %}
+
+{% stylesheet %}
+  .cbb-frequently-bought-container.cbb-product-page-view {
+    --fbt-surface: var(--palette-lightest, #ffffff);
+    --fbt-border: rgb(var(--color-foreground-rgb) / var(--opacity-10));
+    --fbt-line: rgb(var(--fbt-ink-rgb) / 0.12);
+    --fbt-muted: rgb(var(--color-foreground-rgb) / var(--opacity-70));
+    --fbt-radius: 16px;
+
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    grid-template-areas: 'title' 'discount' 'images' 'list' 'form';
+    gap: 16px 40px;
+    box-sizing: border-box;
+    width: var(--full-page-grid-central-column-width, calc(100% - 32px)) !important;
+    margin: clamp(32px, 4vw, 56px) auto 0 !important;
+    padding: clamp(20px, 2.6vw, 32px) !important;
+    border: 1px solid var(--fbt-border);
+    border-radius: var(--fbt-radius);
+    background: var(--fbt-surface) !important;
+    color: var(--color-foreground);
+    text-align: start !important;
+  }
+
+  /* Larger screens: the total and button sit in a panel beside the products */
+  @media screen and (min-width: 990px) {
+    .cbb-frequently-bought-container.cbb-product-page-view {
+      grid-template-columns: minmax(0, 1fr) minmax(17rem, 21rem) !important;
+      grid-template-areas:
+        'title discount'
+        'images form'
+        'list form';
+      row-gap: 18px;
+    }
+  }
+
+  /* ---------- Heading and saving ---------- */
+  .cbb-product-page-view > .cbb-frequently-bought-title {
+    grid-area: title;
+    align-self: center;
+    margin: 0 !important;
+    font-family: var(--font-heading--family);
+    font-style: var(--font-heading--style);
+    font-weight: var(--font-heading--weight) !important;
+    font-size: clamp(1.25rem, 1.1rem + 0.6vw, 1.625rem) !important;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    text-align: start !important;
+  }
+
+  .cbb-product-page-view > .cbb-frequently-bought-discount-message-container {
+    grid-area: discount;
+    align-self: center;
+    justify-self: start;
+    margin: 0 !important;
+    text-align: start !important;
+  }
+
+  @media screen and (min-width: 990px) {
+    .cbb-product-page-view > .cbb-frequently-bought-discount-message-container {
+      justify-self: end;
+    }
+  }
+
+  .cbb-product-page-view .cbb-frequently-bought-discount-message {
+    display: inline-block !important;
+    padding: 6px 14px !important;
+    border-radius: 999px !important;
+    background: color-mix(in srgb, var(--fbt-sale) 10%, transparent);
+    color: var(--fbt-sale);
+    font-size: 0.8125rem !important;
+    font-weight: 700 !important;
+    line-height: 1.3;
+  }
+
+  /* ---------- Bundle images ---------- */
+  .cbb-product-page-view > .cbb-frequently-bought-recommendations-container {
+    grid-area: images;
+    container-type: inline-size;
+    min-width: 0;
+  }
+
+  .cbb-product-page-view .cbb-frequently-bought-products {
+    /* Four tiles and three + circles (22px plus gaps) fit one line */
+    --fbt-thumb: min(112px, calc((100cqi - 3 * 44px) / 4));
+
+    display: flex !important;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .cbb-product-page-view .cbb-frequently-bought-product {
+    display: flex !important;
+    align-items: center;
+    gap: 10px;
+    margin: 0 !important;
+  }
+
+  /* The app hides an unticked product's tile with an inline style; keep that working */
+  .cbb-product-page-view .cbb-frequently-bought-product[style*='display: none'] {
+    display: none !important;
+  }
+
+  .cbb-product-page-view .cbb-frequently-bought-product > :is(.cbb-frequently-bought-product-image-link, .cbb-frequently-bought-product-image) {
+    flex: none;
+    float: none !important;
+    width: var(--fbt-thumb) !important;
+    height: var(--fbt-thumb) !important;
+    margin: 0 !important;
+    border-radius: 14px;
+  }
+
+  .cbb-product-page-view .cbb-frequently-bought-product-image {
+    box-sizing: border-box;
+    width: var(--fbt-thumb) !important;
+    height: var(--fbt-thumb) !important;
+    padding: 6px;
+    border: 1px solid var(--fbt-border);
+    border-radius: 14px;
+    background-color: var(--fbt-surface) !important;
+    background-origin: content-box !important;
+    transition: border-color var(--animation-speed) var(--animation-easing);
+  }
+
+  /* The first tile is the product on this page */
+  .cbb-product-page-view .cbb-frequently-bought-product:first-child .cbb-frequently-bought-product-image {
+    border: 1.5px solid var(--fbt-ink);
+  }
+
+  .cbb-product-page-view .cbb-frequently-bought-product-image-link:hover .cbb-frequently-bought-product-image {
+    border-color: rgb(var(--fbt-ink-rgb) / 0.45);
+  }
+
+  .cbb-product-page-view .cbb-frequently-bought-product-image-link:focus-visible {
+    outline: var(--focus-outline-width) solid var(--fbt-ink);
+    outline-offset: 2px;
+  }
+
+  .cbb-product-page-view .cbb-frequently-bought-plus-icon {
+    display: grid !important;
+    flex: none;
+    place-items: center;
+    float: none !important;
+    width: 22px !important;
+    height: 22px !important;
+    border: 1px solid var(--fbt-line);
+    border-radius: 50%;
+    background: transparent;
+    color: var(--fbt-ink) !important;
+    font-family: var(--font-body--family) !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    line-height: 1 !important;
+    text-shadow: none !important;
+  }
+
+  /* ---------- One rounded row per product ---------- */
+  .cbb-product-page-view > .cbb-frequently-bought-selector-list {
+    grid-area: list;
+    container-type: inline-size;
+    display: grid !important;
+    gap: 8px;
+    min-width: 0;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Narrow: name, then price, then the variant picker; wide: one line each */
+  .cbb-product-page-view .cbb-frequently-bought-selector-list > li {
+    display: grid !important;
+    grid-template-columns: 20px max-content max-content minmax(0, 1fr);
+    grid-template-areas:
+      'check name name name'
+      '. price compare .'
+      '. variant variant variant';
+    align-items: center;
+    gap: 6px 12px;
+    padding: 12px 14px;
+    border: 1px solid var(--fbt-line);
+    border-radius: 12px;
+    transition: border-color var(--animation-speed) var(--animation-easing),
+      opacity var(--animation-speed) var(--animation-easing) !important;
+  }
+
+  .cbb-product-page-view .cbb-frequently-bought-selector-list > li:hover {
+    border-color: rgb(var(--fbt-ink-rgb) / 0.3);
+  }
+
+  @container (min-width: 40rem) {
+    .cbb-product-page-view .cbb-frequently-bought-selector-list > li {
+      grid-template-columns: 20px minmax(0, 1fr) auto auto auto;
+      grid-template-areas: 'check name variant price compare';
+      column-gap: 14px;
+    }
+  }
+
+  /* Rounded checkbox in the accent colour; still the app's native input underneath */
+  .cbb-product-page-view .cbb-frequently-bought-selector-input {
+    grid-area: check;
+    display: block !important;
+    width: 20px !important;
+    height: 20px !important;
+    margin: 0 !important;
+    border: 1.5px solid rgb(var(--color-foreground-rgb) / var(--opacity-40));
+    border-radius: 6px;
+    background: var(--fbt-surface) no-repeat center / 12px 12px;
+    appearance: none !important;
+    cursor: pointer;
+    transition: background-color var(--animation-speed) var(--animation-easing),
+      border-color var(--animation-speed) var(--animation-easing);
+  }
+
+  .cbb-product-page-view .cbb-frequently-bought-selector-input:checked {
+    border-color: var(--fbt-ink);
+    background-color: var(--fbt-ink);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.2l2.3 2.3 4.7-4.9' fill='none' stroke='white' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  }
+
+  .cbb-product-page-view .cbb-frequently-bought-selector-input:focus-visible {
+    outline: 2px solid var(--fbt-ink);
+    outline-offset: 2px;
+  }
+
+  .cbb-product-page-view .cbb-frequently-bought-selector-list > li > :is(span.translatable, a.cbb-frequently-bought-selector-link) {
+    grid-area: name;
+    display: block !important;
+    min-width: 0;
+    margin: 0 !important;
+    color: var(--color-foreground) !important;
+  }
+
+  .cbb-product-page-view .cbb-frequently-bought-selector-label-name {
+    display: -webkit-box !important;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    margin: 0 !important;
+    overflow: hidden;
+    color: var(--color-foreground) !important;
+    font-family: var(--font-body--family);
+    font-size: 0.9375rem !important;
+    font-weight: 500 !important;
+    line-height: 1.4 !important;
+  }
+
+  .cbb-product-page-view .cbb-frequently-bought-this-item-label {
+    font-weight: 700;
+  }
+
+  .cbb-product-page-view a.cbb-frequently-bought-selector-link:hover .cbb-frequently-bought-selector-label-name {
+    text-decoration: underline !important;
+    text-underline-offset: 3px;
+  }
+
+  .cbb-product-page-view a.cbb-frequently-bought-selector-link:focus-visible {
+    outline: var(--focus-outline-width) solid var(--fbt-ink);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  .cbb-product-page-view .cbb-recommendations-variant-select {
+    grid-area: variant;
+    justify-self: start;
+    width: auto !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 34px !important;
+    max-height: none !important;
+    margin: 0 !important;
+    padding: 6px 30px 6px 12px !important;
+    border: 1px solid rgb(var(--color-foreground-rgb) / var(--opacity-20)) !important;
+    border-radius: 8px !important;
+    background: var(--fbt-surface)
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' fill='none' stroke='%23555' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E")
+      no-repeat right 11px center / 10px 6px !important;
+    color: var(--color-foreground) !important;
+    font-family: var(--font-body--family);
+    font-size: 0.8125rem !important;
+    line-height: 1.3;
+    appearance: none !important;
+    cursor: pointer;
+    transition: border-color var(--animation-speed) var(--animation-easing);
+  }
+
+  .cbb-product-page-view .cbb-recommendations-variant-select:dir(rtl) {
+    padding: 6px 12px 6px 30px !important;
+    background-position: left 11px center !important;
+  }
+
+  .cbb-product-page-view .cbb-recommendations-variant-select:hover {
+    border-color: var(--fbt-ink) !important;
+  }
+
+  .cbb-product-page-view .cbb-recommendations-variant-select:focus-visible {
+    outline: var(--focus-outline-width) solid var(--fbt-ink);
+    outline-offset: 2px;
+  }
+
+  .cbb-product-page-view .cbb-frequently-bought-selector-label-compare-at-price {
+    grid-area: compare;
+    justify-self: start;
+    margin: 0 !important;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-60)) !important;
+    font-size: 0.8125rem;
+    font-weight: 400 !important;
+    white-space: nowrap;
+    text-decoration-thickness: 1px;
+  }
+
+  .cbb-product-page-view .cbb-frequently-bought-selector-list :is(.cbb-frequently-bought-selector-label-sale-price, .cbb-frequently-bought-selector-label-regular-price) {
+    grid-area: price;
+    justify-self: start;
+    margin: 0 !important;
+    font-size: 0.9375rem;
+    font-weight: 700 !important;
+    white-space: nowrap;
+  }
+
+  .cbb-product-page-view .cbb-frequently-bought-selector-label-sale-price {
+    color: var(--fbt-sale) !important;
+  }
+
+  .cbb-product-page-view .cbb-frequently-bought-selector-label-regular-price {
+    color: var(--color-foreground) !important;
+  }
+
+  /* ---------- Total panel and button ---------- */
+  .cbb-product-page-view > .cbb-frequently-bought-form {
+    grid-area: form;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    gap: 16px;
+    padding: 24px;
+    border-radius: 12px;
+    background: var(--fbt-panel);
+  }
+
+  .cbb-product-page-view .cbb-frequently-bought-total-price-box {
+    display: flex !important;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 2px 10px;
+    margin: 0 !important;
+  }
+
+  .cbb-product-page-view .cbb-frequently-bought-total-price-text {
+    flex-basis: 100%;
+    color: rgb(var(--fbt-ink-rgb) / 0.7) !important;
+    font-size: 0.75rem;
+    font-weight: 700 !important;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .cbb-product-page-view :is(.cbb-frequently-bought-total-price-sale-price, .cbb-frequently-bought-total-price-regular-price) {
+    margin: 0 !important;
+    color: var(--fbt-ink) !important;
+    font-family: var(--font-heading--family);
+    font-size: clamp(1.375rem, 1.25rem + 0.4vw, 1.625rem);
+    font-weight: 700 !important;
+    line-height: 1.2;
+  }
+
+  .cbb-product-page-view .cbb-frequently-bought-total-price-was-price {
+    order: 2;
+    margin: 0 !important;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-60)) !important;
+    font-size: 0.875rem;
+    font-weight: 400 !important;
+  }
+
+  .cbb-product-page-view .cbb-frequently-bought-error {
+    margin: 0 !important;
+    border-radius: 8px !important;
+    font-size: 0.875rem;
+  }
+
+  /* The app's button already has the theme's `button` class; the theme's ::before is its hover wipe */
+  .cbb-product-page-view .cbb-frequently-bought-add-button.button {
+    --button-hover-wipe-bg: var(--fbt-ink-hover);
+
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100% !important;
+    max-height: none !important;
+    min-height: 50px;
+    margin: 0 !important;
+    padding: 12px 20px !important;
+    border: 0 !important;
+    border-radius: var(--style-border-radius-buttons-primary) !important;
+    background: var(--fbt-ink) !important;
+    box-shadow: none !important;
+    color: var(--fbt-ink-contrast) !important;
+    font-family: var(--button-font-family-primary) !important;
+    font-size: 0.9375rem !important;
+    font-weight: 600 !important;
+    text-transform: var(--button-text-case-primary) !important;
+  }
+
+  /* Cart icon, the same one as Add to cart */
+  .cbb-product-page-view .cbb-frequently-bought-add-button.button::after {
+    content: '';
+    order: -1;
+    flex: none;
+    width: 18px;
+    height: 18px;
+    background: currentColor;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M16.608 9.421V6.906H3.392v8.016c0 .567.224 1.112.624 1.513.4.402.941.627 1.506.627H8.63M8.818 3h2.333c.618 0 1.212.247 1.649.686a2.35 2.35 0 0 1 .683 1.658v1.562H6.486V5.344c0-.622.246-1.218.683-1.658A2.33 2.33 0 0 1 8.82 3'/%3E%3Cpath stroke='black' stroke-linecap='round' stroke-width='1.5' d='M14.608 12.563v5m2.5-2.5h-5'/%3E%3C/svg%3E")
+      center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none'%3E%3Cpath stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M16.608 9.421V6.906H3.392v8.016c0 .567.224 1.112.624 1.513.4.402.941.627 1.506.627H8.63M8.818 3h2.333c.618 0 1.212.247 1.649.686a2.35 2.35 0 0 1 .683 1.658v1.562H6.486V5.344c0-.622.246-1.218.683-1.658A2.33 2.33 0 0 1 8.82 3'/%3E%3Cpath stroke='black' stroke-linecap='round' stroke-width='1.5' d='M14.608 12.563v5m2.5-2.5h-5'/%3E%3C/svg%3E")
+      center / contain no-repeat;
+  }
+
+  .cbb-product-page-view .cbb-frequently-bought-add-button.button:hover {
+    color: var(--fbt-ink-hover-text) !important;
+  }
+
+  .cbb-product-page-view .cbb-frequently-bought-add-button.button:focus-visible {
+    outline: var(--focus-outline-width) solid var(--fbt-ink);
+    outline-offset: var(--focus-outline-offset);
+  }
+
+  .cbb-product-page-view .cbb-frequently-bought-add-button span {
+    color: inherit !important;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cbb-product-page-view :is(.cbb-frequently-bought-product-image, .cbb-frequently-bought-selector-input, .cbb-recommendations-variant-select) {
+      transition: none;
+    }
+  }
+{% endstylesheet %}

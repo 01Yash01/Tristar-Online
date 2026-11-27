@@ -1,0 +1,324 @@
+{%- doc -%}
+  Message shown on a collection page that has nothing to buy right now. It keeps the shopper moving with an
+  animated "restocking" illustration, a short message, a search box and up to three links. The products to
+  look at instead are placed under it by product-grid.
+
+  @param {object} section - The main collection section. Its settings hold the optional heading, message and links.
+  @example
+  {% render 'collection-empty-state', section: section %}
+{%- enddoc -%}
+
+{%- liquid
+  if section.settings.empty_heading != blank
+    assign empty_heading = section.settings.empty_heading | escape
+  else
+    assign empty_heading = 'content.empty_collection_title' | t
+  endif
+
+  if section.settings.empty_text != blank
+    assign empty_text = section.settings.empty_text | escape | newline_to_br
+  else
+    assign empty_text = 'content.empty_collection_text' | t: collection: collection.title
+  endif
+
+  assign search_id = 'CollectionEmptySearch-' | append: section.id
+
+  # Illustration accent: the section's own colour, else the sale badge colour, else the text colour (in CSS)
+  assign art_color = section.settings.empty_art_color | default: settings.badge_sale_background_color
+-%}
+
+<div
+  class="collection-empty-state"
+  data-collection-empty-state
+>
+  <svg
+    class="collection-empty-state__art"
+    viewBox="0 0 200 160"
+    width="200"
+    height="160"
+    fill="none"
+    aria-hidden="true"
+    focusable="false"
+    {% if art_color != blank %}
+      style="--collection-empty-accent: {{ art_color }};"
+    {% endif %}
+  >
+    <ellipse class="collection-empty-state__shadow" cx="100" cy="146" rx="56" ry="6"/>
+
+    <path class="collection-empty-state__spark collection-empty-state__spark--1" d="M34 38l2.6 7.4 7.4 2.6-7.4 2.6L34 58l-2.6-7.4L24 48l7.4-2.6z"/>
+    <path class="collection-empty-state__spark collection-empty-state__spark--2" d="M166 26l2 5.6 5.6 2-5.6 2-2 5.6-2-5.6-5.6-2 5.6-2z"/>
+    <circle class="collection-empty-state__dot collection-empty-state__dot--1" cx="158" cy="78" r="3"/>
+    <circle class="collection-empty-state__dot collection-empty-state__dot--2" cx="42" cy="96" r="2.5"/>
+
+    <path class="collection-empty-state__box-back" d="M52 86h96l8-16H60z"/>
+
+    <g class="collection-empty-state__item" style="--ces-delay: 0s; --ces-rest: 34px;">
+      <rect x="76" y="6" width="18" height="18" rx="4"/>
+    </g>
+    <g class="collection-empty-state__item" style="--ces-delay: 1.2s; --ces-rest: 22px;">
+      <circle cx="106" cy="16" r="9"/>
+    </g>
+    <g class="collection-empty-state__item" style="--ces-delay: 2.4s; --ces-rest: 30px;">
+      <path d="M130 8l9 16h-18z"/>
+    </g>
+
+    <path class="collection-empty-state__box-front" d="M52 86h96v52a6 6 0 0 1-6 6H58a6 6 0 0 1-6-6z"/>
+    <path class="collection-empty-state__tape" d="M90 86h20v22l-10-7-10 7z"/>
+  </svg>
+
+  <h2 class="collection-empty-state__title h3">{{ empty_heading }}</h2>
+  <p class="collection-empty-state__text">{{ empty_text }}</p>
+
+  <ul class="collection-empty-state__links" role="list">
+    {%- comment -%} A link needs both a label and an address; the first one is the primary button. {%- endcomment -%}
+    {%- assign links_shown = 0 -%}
+    {%- for i in (1..3) -%}
+      {%- assign label_key = 'empty_link_' | append: i | append: '_label' -%}
+      {%- assign url_key = 'empty_link_' | append: i | append: '_url' -%}
+      {%- assign link_label = section.settings[label_key] | strip -%}
+      {%- assign link_url = section.settings[url_key] -%}
+      {%- if link_label != blank and link_url != blank -%}
+        {%- assign links_shown = links_shown | plus: 1 -%}
+        <li>
+          <a
+            class="button{% unless links_shown == 1 %} button-secondary{% endunless %}"
+            href="{{ link_url }}"
+          >
+            {{ link_label | escape }}
+          </a>
+        </li>
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if links_shown == 0 -%}
+      <li>
+        <a
+          class="button"
+          href="{{ routes.collections_url }}"
+        >
+          {{ 'content.empty_collection_browse_all' | t }}
+        </a>
+      </li>
+    {%- endif -%}
+  </ul>
+
+  <form
+    class="collection-empty-state__search"
+    action="{{ routes.search_url }}"
+    method="get"
+    role="search"
+  >
+    <label
+      class="collection-empty-state__search-label"
+      for="{{ search_id }}"
+    >
+      {{ 'content.empty_collection_search_label' | t }}
+    </label>
+    <div class="collection-empty-state__search-field">
+      <input
+        id="{{ search_id }}"
+        class="collection-empty-state__search-input"
+        type="search"
+        name="q"
+        placeholder="{{ 'content.search_bar_placeholder' | t }}"
+        autocomplete="off"
+        enterkeyhint="search"
+      >
+      {%- if settings.hide_sold_out_products -%}
+        <input type="hidden" name="options[unavailable_products]" value="hide">
+      {%- endif -%}
+      <button
+        class="button collection-empty-state__search-button"
+        type="submit"
+      >
+        {{ 'content.search' | t }}
+      </button>
+    </div>
+  </form>
+</div>
+
+{% stylesheet %}
+  .collection-empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--padding-lg);
+    max-inline-size: 36rem;
+    margin-inline: auto;
+    text-align: center;
+  }
+
+  .collection-empty-state__art {
+    inline-size: min(13rem, 60vw);
+    block-size: auto;
+    margin-block-end: var(--padding-xs);
+    overflow: visible;
+    color: var(--color-foreground);
+  }
+
+  .collection-empty-state__title,
+  .collection-empty-state__text {
+    margin: 0;
+  }
+
+  .collection-empty-state__text {
+    max-inline-size: 30rem;
+    overflow-wrap: anywhere;
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
+    text-wrap: pretty;
+  }
+
+  .collection-empty-state__links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--gap-md);
+    margin: var(--padding-xs) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .collection-empty-state__search {
+    display: grid;
+    gap: var(--padding-xs);
+    inline-size: 100%;
+    max-inline-size: 26rem;
+    margin-block-start: var(--padding-2xl);
+  }
+
+  .collection-empty-state__search-label {
+    color: rgb(var(--color-foreground-rgb) / var(--opacity-70));
+    font-size: var(--font-size--sm, 0.875rem);
+  }
+
+  .collection-empty-state__search-field {
+    display: flex;
+    gap: var(--gap-xs, 0.5rem);
+  }
+
+  .collection-empty-state__search-input {
+    flex: 1 1 auto;
+    min-inline-size: 0;
+    padding: var(--input-padding);
+    border: 1px solid var(--color-input-border);
+    border-radius: var(--style-border-radius-inputs);
+    background-color: var(--color-input-background);
+    color: var(--color-input-text);
+    font: inherit;
+  }
+
+  .collection-empty-state__search-button {
+    flex: 0 0 auto;
+  }
+
+  /* Illustration: strokes follow the text colour, the falling items and sparkles follow the accent colour */
+  .collection-empty-state__art :is(.collection-empty-state__box-front, .collection-empty-state__box-back, .collection-empty-state__tape) {
+    stroke: currentcolor;
+    stroke-width: 2.5;
+    stroke-linejoin: round;
+  }
+
+  .collection-empty-state__box-front {
+    fill: var(--color-background);
+  }
+
+  .collection-empty-state__box-back {
+    fill: rgb(var(--color-foreground-rgb) / var(--opacity-10));
+  }
+
+  .collection-empty-state__tape {
+    fill: rgb(var(--color-foreground-rgb) / var(--opacity-10));
+  }
+
+  .collection-empty-state__shadow {
+    fill: rgb(var(--color-foreground-rgb) / var(--opacity-10));
+  }
+
+  .collection-empty-state__item {
+    fill: var(--collection-empty-accent, var(--color-foreground));
+    transform: translateY(var(--ces-rest, 30px));
+  }
+
+  .collection-empty-state__spark,
+  .collection-empty-state__dot {
+    fill: var(--collection-empty-accent, var(--color-foreground));
+    opacity: 0.6;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .collection-empty-state__item {
+      animation: collection-empty-state-drop 3.6s cubic-bezier(0.45, 0, 0.55, 1) var(--ces-delay, 0s) infinite;
+    }
+
+    .collection-empty-state__spark,
+    .collection-empty-state__dot {
+      animation: collection-empty-state-twinkle 2.8s ease-in-out infinite;
+    }
+
+    .collection-empty-state__spark--2 {
+      animation-delay: 0.9s;
+    }
+
+    .collection-empty-state__dot--1 {
+      animation-delay: 0.4s;
+    }
+
+    .collection-empty-state__dot--2 {
+      animation-delay: 1.5s;
+    }
+
+    .collection-empty-state__shadow {
+      transform-box: fill-box;
+      transform-origin: center;
+      animation: collection-empty-state-shadow 3.6s ease-in-out infinite;
+    }
+  }
+
+  /* Items fall from above the box and disappear behind its front */
+  @keyframes collection-empty-state-drop {
+    0% {
+      transform: translateY(-10px);
+      opacity: 0;
+    }
+
+    14% {
+      opacity: 1;
+    }
+
+    64% {
+      transform: translateY(80px);
+      opacity: 1;
+    }
+
+    65%,
+    100% {
+      transform: translateY(80px);
+      opacity: 0;
+    }
+  }
+
+  @keyframes collection-empty-state-twinkle {
+    0%,
+    100% {
+      transform: scale(0.6);
+      opacity: 0.15;
+    }
+
+    50% {
+      transform: scale(1);
+      opacity: 0.7;
+    }
+  }
+
+  @keyframes collection-empty-state-shadow {
+    0%,
+    100% {
+      transform: scaleX(1);
+    }
+
+    50% {
+      transform: scaleX(0.92);
+    }
+  }
+{% endstylesheet %}

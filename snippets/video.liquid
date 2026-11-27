@@ -14,6 +14,8 @@
   @param {string} [additional_attributes] - Any additional HTML attributes
   @param {string} [video_type] - 'youtube' or 'vimeo'
   @param {boolean} [disable_controls] - Whether to disable controls. If true, only play/pause will be usable.
+  @param {string} [video_link] - Makes the whole video a link; play/pause moves to a small corner button. Use with disable_controls.
+  @param {string} [video_link_label] - Accessible name for video_link
   @param {object} video - The Shopify video object or a string containing a YouTube ID or Vimeo ID
   @param {object} [block] - The block object
 
@@ -150,9 +152,18 @@
       </button>
     {% endif %}
 
+    {% if video_link != blank %}
+      {%- comment -%} Covers the video, under the corner play/pause button {%- endcomment -%}
+      <a
+        class="deferred-media__link"
+        href="{{ video_link }}"
+        aria-label="{{ video_link_label | escape }}"
+      ></a>
+    {% endif %}
+
     {% if disable_controls %}
       <button
-        class="button button-unstyled deferred-media__poster-button video-interaction-hint hidden"
+        class="button button-unstyled deferred-media__poster-button video-interaction-hint hidden{% if video_link != blank %} video-interaction-hint--corner{% endif %}"
         ref="toggleMediaButton"
         type="button"
         on:click="/toggleMedia"

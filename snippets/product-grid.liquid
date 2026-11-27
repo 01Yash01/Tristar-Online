@@ -7,6 +7,8 @@
   @param {string} [title] - Header of the collection or search results
   @param {string} children - List or grid of product cards
   @param {boolean} [enable_infinite_scroll] - Whether to enable infinite scroll (default: true)
+  @param {boolean} [empty_state] - When there are no products, show the collection-empty-state message instead of the filter message
+  @param {string} [empty_picks] - Product grid list items to show under the empty-state message
 {%- enddoc -%}
 
 {%- liquid
@@ -127,14 +129,44 @@
       {% render 'text-block-styles' %}
       {% render 'price-styles' %}
       {% render 'product-card-gallery-zoom-details-styles' %}
-      <div class="main-collection-grid__empty">
-        <h2 class="main-collection-grid__empty-title h2">
-          {{ 'content.no_products_found' | t }}
-        </h2>
-        <p>
-          {{ 'content.use_fewer_filters_html' | t: link: collection.url, class: 'main-collection-grid__empty-link' }}
-        </p>
-      </div>
+      {%- comment -%}
+        A collection with nothing to buy (and no filters picked) gets the friendly empty state with a way
+        onward; filters that match nothing keep the plain "use fewer filters" message.
+      {%- endcomment -%}
+      {% if empty_state %}
+        <div class="main-collection-grid__empty main-collection-grid__empty--collection">
+          {% render 'collection-empty-state', section: section %}
+        </div>
+        {% if empty_picks != blank %}
+          <section
+            class="main-collection-grid__picks"
+            aria-labelledby="CollectionEmptyPicks-{{ section.id }}"
+          >
+            <h3
+              id="CollectionEmptyPicks-{{ section.id }}"
+              class="main-collection-grid__picks-title h4"
+            >
+              {{ 'content.empty_collection_picks_title' | t }}
+            </h3>
+            <ul
+              class="product-grid product-grid--{{ section.id }} product-grid--{{ section.settings.layout_type }}"
+              product-grid-view="default"
+              role="list"
+            >
+              {{ empty_picks }}
+            </ul>
+          </section>
+        {% endif %}
+      {% else %}
+        <div class="main-collection-grid__empty">
+          <h2 class="main-collection-grid__empty-title h2">
+            {{ 'content.no_products_found' | t }}
+          </h2>
+          <p>
+            {{ 'content.use_fewer_filters_html' | t: link: collection.url, class: 'main-collection-grid__empty-link' }}
+          </p>
+        </div>
+      {% endif %}
     {% else %}
       {% if enable_infinite_scroll %}
         <span ref="viewMorePrevious"></span>
@@ -514,5 +546,27 @@
 
   .main-collection-grid__empty-title {
     margin: 0;
+  }
+
+  /* Products suggested under the empty-collection message */
+  .main-collection-grid__empty--collection {
+    padding-block-end: var(--padding-6xl);
+  }
+
+  .main-collection-grid__picks {
+    padding-block-end: var(--padding-6xl);
+  }
+
+  /* Four cards at most, centred, at about the size of the cards in a full grid */
+  @media screen and (min-width: 750px) {
+    .main-collection-grid__picks .product-grid {
+      grid-template-columns: repeat(4, minmax(0, 15rem));
+      justify-content: center;
+    }
+  }
+
+  .main-collection-grid__picks-title {
+    margin: 0 0 var(--padding-2xl);
+    text-align: center;
   }
 {% endstylesheet %}

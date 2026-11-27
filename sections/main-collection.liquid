@@ -59,14 +59,40 @@
         if settings.hide_sold_out_products and results_size <= products_per_page
           assign results_size = collection.products | where: 'available' | size
         endif
+
+        # A collection with nothing to buy, and no filters picked, gets the friendly empty state in place
+        # of the filter bar. Filters that match nothing keep the plain "use fewer filters" message.
+        assign filters_applied = false
+        for filter in collection.filters
+          case filter.type
+            when 'price_range'
+              if filter.min_value.value != null or filter.max_value.value != null
+                assign filters_applied = true
+              endif
+            when 'boolean'
+              if filter.active_values[0].value
+                assign filters_applied = true
+              endif
+            else
+              if filter.active_values.size > 0
+                assign filters_applied = true
+              endif
+          endcase
+        endfor
+        assign show_empty_state = false
+        if results_size == 0 and filters_applied == false
+          assign show_empty_state = true
+        endif
       -%}
 
-      {% content_for 'block',
-        type: 'filters',
-        id: 'filters',
-        results: collection,
-        results_size: results_size
-      %}
+      {% unless show_empty_state %}
+        {% content_for 'block',
+          type: 'filters',
+          id: 'filters',
+          results: collection,
+          results_size: results_size
+        %}
+      {% endunless %}
 
       {% paginate collection.products by products_per_page %}
         {%- liquid
@@ -74,7 +100,13 @@
           # follow the ones shoppers can buy, each group in the collection's own order, and
           # paginated-list.js keeps that order as more pages load.
           assign available_products = collection.products | where: 'available'
-          if settings.hide_sold_out_products
+          assign cards_limit = 50
+          if show_empty_state
+            # Nothing to buy here, so a few products from another collection go under the message
+            assign picks_source = section.settings.empty_picks_collection | default: settings.empty_state_collection | default: collections.all
+            assign ordered_products = picks_source.products | where: 'available'
+            assign cards_limit = 4
+          elsif settings.hide_sold_out_products
             assign ordered_products = available_products
           else
             assign sold_out_products = collection.products | reject: 'available'
@@ -84,12 +116,14 @@
           # A page with nothing left still renders its grid when more pages exist, so paginated-list.js
           # carries on to them. Only a collection with nothing to show at all gets the empty message.
           assign grid_products = collection.products
-          if settings.hide_sold_out_products and ordered_products.size == 0 and paginate.pages == 1
+          if show_empty_state
+            assign grid_products = available_products
+          elsif settings.hide_sold_out_products and ordered_products.size == 0 and paginate.pages == 1
             assign grid_products = ordered_products
           endif
         -%}
         {% capture children %}
-          {% for product in ordered_products %}
+          {% for product in ordered_products limit: cards_limit %}
             <li
               id="{{ section.id }}-{{ product.id }}"
               class="product-grid__item product-grid__item--{{ forloop.index0 }}"
@@ -98,7 +132,9 @@
               {% unless product.available %}
                 data-sold-out
               {% endunless %}
-              ref="cards[]"
+              {% unless show_empty_state %}
+                ref="cards[]"
+              {% endunless %}
             >
               {% content_for 'block',
                 type: '_product-card',
@@ -115,7 +151,9 @@
           children: children,
           products: grid_products,
           paginate: paginate,
-          enable_infinite_scroll: section.settings.enable_infinite_scroll
+          enable_infinite_scroll: section.settings.enable_infinite_scroll,
+          empty_state: show_empty_state,
+          empty_picks: children
         %}
       {% endpaginate %}
     </div>
@@ -298,6 +336,66 @@
       "step": 1,
       "unit": "px",
       "default": 8
+    },
+    {
+      "type": "header",
+      "content": "t:content.empty_collection"
+    },
+    {
+      "type": "paragraph",
+      "content": "t:content.empty_collection_help"
+    },
+    {
+      "type": "text",
+      "id": "empty_heading",
+      "label": "t:settings.heading"
+    },
+    {
+      "type": "textarea",
+      "id": "empty_text",
+      "label": "t:settings.text"
+    },
+    {
+      "type": "color",
+      "id": "empty_art_color",
+      "label": "t:settings.empty_collection_art_color",
+      "info": "t:info.empty_collection_art_color"
+    },
+    {
+      "type": "text",
+      "id": "empty_link_1_label",
+      "label": "t:settings.empty_link_label_1"
+    },
+    {
+      "type": "url",
+      "id": "empty_link_1_url",
+      "label": "t:settings.empty_link_url_1"
+    },
+    {
+      "type": "text",
+      "id": "empty_link_2_label",
+      "label": "t:settings.empty_link_label_2"
+    },
+    {
+      "type": "url",
+      "id": "empty_link_2_url",
+      "label": "t:settings.empty_link_url_2"
+    },
+    {
+      "type": "text",
+      "id": "empty_link_3_label",
+      "label": "t:settings.empty_link_label_3"
+    },
+    {
+      "type": "url",
+      "id": "empty_link_3_url",
+      "label": "t:settings.empty_link_url_3"
+    },
+    {
+      "type": "collection",
+      "id": "empty_picks_collection",
+      "label": "t:settings.empty_collection_suggestions",
+      "info": "t:info.empty_collection_suggestions"
     }
   ],
   "presets": []
