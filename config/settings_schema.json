@@ -1423,6 +1423,36 @@
     ]
   },
   {
+    "name": "t:names.frequently_bought",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "t:info.frequently_bought"
+      },
+      {
+        "type": "checkbox",
+        "id": "fbt_restyle",
+        "label": "t:settings.fbt_restyle",
+        "default": true
+      },
+      {
+        "type": "color",
+        "id": "fbt_accent_color",
+        "label": "t:settings.accent_color",
+        "info": "t:info.fbt_accent_color",
+        "default": "#0B1F44",
+        "visible_if": "{{ settings.fbt_restyle }}"
+      },
+      {
+        "type": "color",
+        "id": "fbt_panel_color",
+        "label": "t:settings.fbt_panel_color",
+        "default": "#EBE8E2",
+        "visible_if": "{{ settings.fbt_restyle }}"
+      }
+    ]
+  },
+  {
     "name": "t:names.rating_badge",
     "settings": [
       {
