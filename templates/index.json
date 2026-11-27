@@ -67,7 +67,7 @@
                       "type": "image",
                       "name": "t:names.image",
                       "settings": {
-                        "image": "shopify://shop_images/WhatsApp_Image_2026-11-03_at_08.21.53_1.jpg",
+                        "image": "shopify://shop_images/pixel_banner.jpg",
                         "link": "shopify://collections/google-pixel",
                         "content_direction": "column",
                         "horizontal_alignment_flex_direction_column": "flex-start",
@@ -109,7 +109,7 @@
                       "type": "image",
                       "name": "t:names.image",
                       "settings": {
-                        "image": "shopify://shop_images/WhatsApp_Image_2026-11-03_at_10.38.03.jpg",
+                        "image": "shopify://shop_images/samsung_banner.jpg",
                         "link": "shopify://collections/samsung-mobiles",
                         "content_direction": "column",
                         "horizontal_alignment_flex_direction_column": "flex-start",
@@ -151,7 +151,7 @@
                       "type": "image",
                       "name": "t:names.image",
                       "settings": {
-                        "image": "shopify://shop_images/WhatsApp_Image_2026-11-03_at_08.21.53.jpg",
+                        "image": "shopify://shop_images/iPhone_18.jpg",
                         "link": "shopify://collections/apple-iphone",
                         "content_direction": "column",
                         "horizontal_alignment_flex_direction_column": "flex-start",
@@ -411,6 +411,8 @@
                 "video_autoplay": true,
                 "video_loop": true,
                 "show_video_controls": false,
+                "link": "https://tristaronline.com.au/products/gopro-hero13-black-ultra-wide-edition-5-3k-video-ai-powered-stabilization-waterproof-action-camera",
+                "link_label": "",
                 "alt": "",
                 "custom_width": 98,
                 "custom_width_mobile": 100,
@@ -1080,7 +1082,7 @@
         "product_spotlight_DDYf7d": {
           "type": "product-spotlight",
           "settings": {
-            "product": "valve-steam-deck-oled-512gb-handheld-gaming-console",
+            "product": "sony-fx3a-full-frame-cinema-camera-body-only-black-1",
             "label": "",
             "style": "glass",
             "show_image": true,
@@ -1091,7 +1093,7 @@
         "product_spotlight_8pbafk": {
           "type": "product-spotlight",
           "settings": {
-            "product": "valve-steam-deck-oled-1tb-handheld-gaming-console",
+            "product": "sony-a7-v-mirrorless-camera-body-ilce-7m5",
             "label": "",
             "style": "glass",
             "show_image": true,
@@ -1107,13 +1109,13 @@
       "name": "t:names.video_banner",
       "settings": {
         "media_type_1": "video",
-        "video_1": "shopify://files/videos/Introducing-Steam-Deck-SnapYT.App (1) (1).mp4",
+        "video_1": "shopify://files/videos/Introducing-Alpha-7-SnapYT.App (online-video-cutter.com) (2).mp4",
         "media_type_2": "image",
         "stack_media_on_mobile": false,
         "custom_mobile_media": false,
         "media_type_1_mobile": "image",
         "media_type_2_mobile": "image",
-        "link": "shopify://collections/games-and-accessories-gaming-consoles",
+        "link": "shopify://collections/camera-and-lens",
         "open_in_new_tab": false,
         "content_direction": "row",
         "vertical_on_mobile": true,
@@ -2068,7 +2070,7 @@
               "type": "countdown",
               "name": "t:names.countdown",
               "settings": {
-                "end_date": "2026-11-12",
+                "end_date": "2026-11-31",
                 "end_time": "23:59",
                 "label": "Sale",
                 "show_seconds": true,

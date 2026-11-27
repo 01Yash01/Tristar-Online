@@ -1,0 +1,20 @@
+{
+  "sections": {
+    "main": {
+      "type": "store-reviews",
+      "settings": {
+        "heading": "What our customers say",
+        "text": "Honest reviews from our customers, collected by Judge.me.",
+        "show_photos": true,
+        "summary_background": "#ebe8e2",
+        "summary_text": "#0b1f44",
+        "card_background": "#ffffff",
+        "padding-block-start": 32,
+        "padding-block-end": 72
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

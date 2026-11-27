@@ -454,7 +454,13 @@
         "padding-inline-end": 0,
         "background_color": "{{ settings.color_palette.background }}",
         "padding-block-start": 0,
-        "padding-block-end": 32
+        "padding-block-end": 32,
+        "empty_link_1_label": "Shop best sellers",
+        "empty_link_1_url": "shopify://collections/best-selling",
+        "empty_link_2_label": "New arrivals",
+        "empty_link_2_url": "shopify://collections/new-arrival",
+        "empty_link_3_label": "Ask us about it",
+        "empty_link_3_url": "shopify://pages/contact"
       }
     }
   },
