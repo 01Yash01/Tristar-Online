@@ -29,6 +29,13 @@
     "slider_label": "Controle deslizante"
   },
   "accessibility": {
+    "store_reviews_filter": "Show {{ rating }}-star reviews ({{ count }})",
+    "store_reviews_clear_filter": "Clear filter: {{ rating }}-star reviews",
+    "store_review_photo": "Customer photo from {{ name }}",
+    "store_review_photos": "Customer photos",
+    "store_review_photo_position": "Photo {{ index }} of {{ count }}",
+    "store_review_previous_photo": "Previous photo",
+    "store_review_next_photo": "Next photo",
     "store_rating_summary": "Rated {{ rating }} out of 5 from {{ count }} reviews",
     "open_store_reviews": "Store rating {{ rating }} out of 5 from {{ count }} reviews. Open customer reviews",
     "review_rating": "Rated {{ rating }} out of 5",
@@ -142,6 +149,33 @@
     "back_to_main_menu": "Voltar ao menu principal"
   },
   "content": {
+    "store_reviews_verified_label": {
+      "one": "verified review",
+      "other": "verified reviews"
+    },
+    "store_reviews_positive_label": "gave 4 or 5 stars",
+    "store_reviews_showing": {
+      "one": "Showing {{ shown }} of {{ total }} review",
+      "other": "Showing {{ shown }} of {{ total }} reviews"
+    },
+    "store_reviews_filter_chip": "{{ rating }}-star reviews",
+    "store_reviews_collected_by": "Collected by Judge.me",
+    "store_reviews_photos": "Customer photos",
+    "store_reviews_all": "All reviews",
+    "store_reviews_sort": "Sort by",
+    "store_reviews_sort_newest": "Most recent",
+    "store_reviews_sort_highest": "Highest rated",
+    "store_reviews_sort_lowest": "Lowest rated",
+    "store_reviews_sort_photos": "With photos first",
+    "store_reviews_show_more": "Show more reviews",
+    "store_reviews_load_error": "More reviews couldn't load. Check your connection and try again.",
+    "store_reviews_retry": "Try again",
+    "store_reviews_no_match": "No reviews with this rating yet.",
+    "store_reviews_none": "No reviews yet.",
+    "store_review_read_more": "Read more",
+    "store_review_read_less": "Show less",
+    "store_review_store": "Store review",
+    "store_review_reply": "Reply from {{ name }}",
     "store_reviews_from": {
       "one": "from {{ count }} review",
       "other": "from {{ count }} reviews"

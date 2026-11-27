@@ -255,6 +255,11 @@
     "work_quickly_to_ship": "<p>נעבוד מהר כדי לשלוח את ההזמנה שלך בהקדם האפשרי. לאחר שההזמנה שלך תישלח, תקבל דוא&quot;ל עם מידע נוסף. זמני האספקה משתנים בהתאם למיקומך.</p>"
   },
   "info": {
+    "frequently_bought": "Styles the Frequently Bought Together app's box on product pages. Its products, discount and wording are still set in the app.",
+    "fbt_accent_color": "Checkboxes, total and button",
+    "video_link": "Makes the whole video clickable. A linked video plays on its own, muted, with a small play/pause button in the corner.",
+    "video_link_label": "Read out by screen readers. Leave empty to use the name of the linked collection, product or page.",
+    "store_reviews": "Shows your Judge.me rating and reviews. The newest 25 load with the page; shoppers can sort, filter by stars and load the rest from Judge.me. The star color is in Theme settings > Rating badge.",
     "rating_badge": "Shows your Judge.me store rating: in the header menu bar on computers and as a tab on the screen edge on phones. Hidden while Judge.me has no rating data.",
     "rating_badge_link": "Leave empty to hide the \"See all reviews\" button.",
     "rating_badge_min_rating": "Lower-rated reviews are left out of the panel and popups.",
@@ -348,6 +353,8 @@
     "media_type_info": "התכונות מאוכלסות מקישורי התפריט שלך"
   },
   "names": {
+    "frequently_bought": "Frequently bought together",
+    "store_reviews": "Store reviews",
     "rating_badge": "Rating badge",
     "back_to_top": "חזרה למעלה",
     "cash_out_tab": "לשונית Cash Out",
@@ -873,6 +880,12 @@
     "direction_top_start": "למעלה, התחלה"
   },
   "settings": {
+    "fbt_restyle": "Match the theme's style",
+    "fbt_panel_color": "Total panel background",
+    "video_link_label": "Link label",
+    "show_customer_photos": "Show customer photos",
+    "summary_background": "Summary background",
+    "summary_text": "Summary text",
     "show_rating_in_cart": "Show rating in cart",
     "show_rating_badge": "Show rating badge",
     "vertical_position": "Vertical position",

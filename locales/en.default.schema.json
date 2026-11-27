@@ -80,6 +80,8 @@
     "customer_account": "Customer account",
     "describe_the_video_for": "Describe the video for customers using screen readers. [Learn more](https://help.shopify.com/manual/online-store/themes/theme-structure/theme-features#video-block)",
     "edit_empty_state_collection_in_theme_settings": "Edit empty state collection in [theme settings](/editor?context=theme&category=search)",
+    "empty_collection": "Empty collection",
+    "empty_collection_help": "Shown when a collection has nothing to buy right now. Leave the heading and text blank to use the standard wording.",
     "edit_logo_in_theme_settings": "Edit logo in [theme settings](/editor?context=theme&category=logo%20and%20favicon)",
     "edit_price_in_theme_settings": "Edit price formatting in [theme settings](/editor?context=theme&category=currency%20code)",
     "email_signups_create_customer_profiles": "Signups add [customer profiles](https://help.shopify.com/manual/customers)",
@@ -263,6 +265,11 @@
     "work_quickly_to_ship": "<p>We will work quickly to ship your order as soon as possible. Once your order has shipped, you will receive an email with further information. Delivery times vary depending on your location.</p>"
   },
   "info": {
+    "frequently_bought": "Styles the Frequently Bought Together app's box on product pages. Its products, discount and wording are still set in the app.",
+    "fbt_accent_color": "Checkboxes, total and button",
+    "video_link": "Makes the whole video clickable. A linked video plays on its own, muted, with a small play/pause button in the corner.",
+    "video_link_label": "Read out by screen readers. Leave empty to use the name of the linked collection, product or page.",
+    "store_reviews": "Shows your Judge.me rating and reviews. The newest 25 load with the page; shoppers can sort, filter by stars and load the rest from Judge.me. The star color is in Theme settings > Rating badge.",
     "rating_badge": "Shows your Judge.me store rating: in the header menu bar on computers and as a tab on the screen edge on phones. Hidden while Judge.me has no rating data.",
     "rating_badge_link": "Leave empty to hide the \"See all reviews\" button.",
     "rating_badge_min_rating": "Lower-rated reviews are left out of the panel and popups.",
@@ -329,6 +336,8 @@
     "edit_input_field_in_theme_settings": "Edit input field in [theme settings](/editor?context=theme&category=input%20fields)",
     "edit_presets_in_theme_settings": "Edit presets in [theme settings](/editor?context=theme&category=typography)",
     "edit_variants_in_theme_settings": "Edit variant styling in [theme settings](/editor?context=theme&category=variant%20pickers)",
+    "empty_collection_suggestions": "Products shown under the message. Leave empty to use the empty state collection from theme settings.",
+    "empty_collection_art_color": "Falling items and sparkles. Leave empty to use the sale badge color.",
     "enable_filtering_info": "Customize filters with the [Search & Discovery app](https://help.shopify.com/manual/online-store/search-and-discovery/filters)",
     "grid_layout_on_mobile": "Grid layout is used for mobile",
     "hide_logo_on_home_page_help": "Logo will remain visible when sticky header is active",
@@ -356,6 +365,8 @@
     "media_type_info": "Features are populated from your menu links"
   },
   "names": {
+    "frequently_bought": "Frequently bought together",
+    "store_reviews": "Store reviews",
     "rating_badge": "Rating badge",
     "back_to_top": "Back to top",
     "cash_out_tab": "Cash Out tab",
@@ -931,6 +942,12 @@
     "below_media": "Below media"
   },
   "settings": {
+    "fbt_restyle": "Match the theme's style",
+    "fbt_panel_color": "Total panel background",
+    "video_link_label": "Link label",
+    "show_customer_photos": "Show customer photos",
+    "summary_background": "Summary background",
+    "summary_text": "Summary text",
     "show_rating_in_cart": "Show rating in cart",
     "show_rating_badge": "Show rating badge",
     "vertical_position": "Vertical position",
@@ -1162,6 +1179,14 @@
     // Collection setting for products shown before search input
     "empty_state_collection": "Empty state collection",
     "empty_state_collection_info": "Shown before a search is entered",
+    "empty_collection_suggestions": "Suggested products from",
+    "empty_collection_art_color": "Illustration color",
+    "empty_link_label_1": "Button 1 label",
+    "empty_link_url_1": "Button 1 link",
+    "empty_link_label_2": "Button 2 label",
+    "empty_link_url_2": "Button 2 link",
+    "empty_link_label_3": "Button 3 label",
+    "empty_link_url_3": "Button 3 link",
     "search_popular_collections": "Popular categories",
     "search_trending_terms": "Trending searches",
     "enable_filtering": "Filters",
